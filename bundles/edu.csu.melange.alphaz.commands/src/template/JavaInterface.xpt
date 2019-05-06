@@ -1,0 +1,76 @@
+«IMPORT commandIF»
+«EXTENSION template::JavaInterface»
+«REM»Root node for initial alphaz stuff«ENDREM»
+«DEFINE root FOR Category»
+«FOREACH subcategories AS cat SEPARATOR ' '»«EXPAND category FOR cat-»«ENDFOREACH-»
+«ENDDEFINE»
+ 
+«REM»Expand rule for Category«ENDREM»
+«DEFINE category FOR Category»
+	«IF commands.size>0»
+	«FILE this.getOutputFile()
+»package «this.getPackage()»;
+
+«PROTECT CSTART "/*" CEND "*/" ID this.name+"_imports" »
+//PROTECTED IMPORTS
+«ENDPROTECT»
+/**
+«this.description.javaString()»
+**/
+public class «name.toString().toFirstUpper()» {
+«FOREACH commands AS c SEPARATOR '\n'»«EXPAND command FOR c»«ENDFOREACH»
+}//end «name»
+«ENDFILE» «ENDIF-»
+«EXPAND category FOREACH this.subcategories-»
+«ENDDEFINE»
+
+«REM»Expand rule for BasicCommand, throws Exception until implemented by hand«ENDREM»
+«DEFINE command FOR BasicCommand»
+	/**
+	«this.description.javaString()»
+	**/
+	public static «output» «name»( «FOREACH inputs AS x SEPARATOR ','» «x.type» «x.name» «ENDFOREACH-») {
+		«PROTECT CSTART "/*" CEND "*/" ID this.getProtectID() »
+		//TODO
+		throw new UnsupportedOperationException();
+		«ENDPROTECT»
+	}
+«FOREACH overloads AS O SEPARATOR '\n'»«EXPAND overloads FOR O»«ENDFOREACH-»
+«ENDDEFINE»
+ 
+«REM»Expand rule for Overloading, calls the method it is contained by using default values«ENDREM»
+«DEFINE overloads FOR Overloading»
+	/**
+	«this.description.javaString()»
+	**/
+	public static «this.getOutput()» «this.getName()»(«
+	FOREACH overLoadedInputs AS OO SEPARATOR ','» «OO.type» «OO.name»«
+	ENDFOREACH-») {
+		«IF this.hasReturnValue()»return «ENDIF»«
+		this.getName()»(«FOREACH this.getItems() AS OO SEPARATOR ','»«
+		IF overLoadedInputs.contains(OO) » «((Input)OO).name»«
+		ELSE » «((Input)OO).defaultValue» «ENDIF-»«ENDFOREACH-»);
+	}
+	
+«FOREACH overloads AS O SEPARATOR '\n'»«EXPAND overloads FOR O»«ENDFOREACH-»
+«ENDDEFINE»
+
+«REM»Expand rule for SpecializedOverloading, throws Exception until implemented by hand«ENDREM»
+«DEFINE overloads FOR SpecializedOverloading»
+	/**
+	«this.description.javaString()»
+	**/
+	public static «this.getOutput()» «this.getName()»(«
+	FOREACH overLoadedInputs AS OO SEPARATOR ','» «OO.type» «OO.name»«
+	ENDFOREACH-»«IF overLoadedInputs.size > 0 && additionalInputs.size > 0», «ENDIF»«
+	FOREACH additionalInputs AS OO SEPARATOR ','» «OO.type» «OO.name»«
+	ENDFOREACH-») {
+		«PROTECT CSTART "/*" CEND "*/" ID this.getProtectID() »
+		//TODO
+		throw new UnsupportedOperationException();
+		«ENDPROTECT»
+	}
+«ENDDEFINE»
+
+
+

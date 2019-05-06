@@ -1,0 +1,26 @@
+affine ScanReduce {N| N >=0}
+input
+	long A {i | 0<=i<=N };
+output
+	long ScanA {i | 0<=i<=N};
+	long RedA {|};
+let
+	ScanA[i] = case
+		{i|i==0} : A[0];
+		{i|i>0 } : ScanA[i-1] + A[i];
+	esac;
+	RedA[] = ScanA[N];
+.
+
+
+affine main {N| N>=1}
+input
+	long A {i | 1<= i <=N };
+output
+	long RedA;
+local
+	long dummy {i | 0 <= i <= N-1};
+let
+	use ScanReduce[N-1] ((i->i+1)@A) returns (dummy,RedA);	// TODO: we want "[...] output (,RedA);"
+															// => Don't care about the first output... 
+.

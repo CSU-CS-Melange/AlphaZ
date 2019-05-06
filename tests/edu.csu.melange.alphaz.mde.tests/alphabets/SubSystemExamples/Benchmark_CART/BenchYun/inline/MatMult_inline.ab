@@ -1,0 +1,19 @@
+affine matrix_product {Pb,Qb,Rb,Pl,Ql,Rl,b|Rl==0 && Ql==0 && Pl==0 && Pb>=1 && Qb>=1 && Rb>=1 && b>=2}
+input
+float A_bl {iBl,kBl,iLoc,kLoc|Rl==0 && Ql==0 && Pl==0 && iBl>=0 && iLoc>=0 && kLoc>=0 && b>=iLoc+1 && b>=kLoc+1 && b>=2 && Pb>=1 && Qb>=1 && Rb>=1 && Pb>=iBl+1 && kBl>=0 && Qb>=kBl+1};
+float B_bl {kBl,jBl,kLoc,jLoc|Rl==0 && Ql==0 && Pl==0 && kBl>=0 && kLoc>=0 && jLoc>=0 && b>=kLoc+1 && b>=jLoc+1 && b>=2 && Pb>=1 && Qb>=1 && Rb>=1 && Qb>=kBl+1 && jBl>=0 && Rb>=jBl+1};
+output
+float C_bl {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==1 && kBl==Qb && Rl==0 && Ql==0 && Pl==0 && Pb>=1 && Qb>=1 && Rb>=1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1};
+local
+float temp_C_bl {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==0 && kBl==Qb && Rl==0 && Ql==0 && Pl==0 && Qb>=1 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1} || {iBl,jBl,kBl,iLoc,jLoc,kLoc|Rl==0 && Ql==0 && Pl==0 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && kBl>=0 && Qb>=kBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && kLoc>=0 && b>=kLoc+1};
+let
+temp_C_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc] = case
+{|kLoc==0 && Rl==0 && Ql==0 && Pl==0 && Pb>=1 && Qb>=1 && Rb>=1 && b>=2 && b>=jLoc+1 && kBl>=1 && b>=iLoc+1 && jLoc>=0 && iLoc>=0} : (temp_C_bl[iBl,jBl,kBl-1,iLoc,jLoc,b+kLoc-1] + (A_bl[iBl,kBl-1,iLoc,b+kLoc-1] * B_bl[kBl-1,jBl,b+kLoc-1,jLoc]));
+{|Rl==0 && Ql==0 && Pl==0 && Pb>=1 && Qb>=1 && Rb>=1 && b>=2 && b>=jLoc+1 && kBl+kLoc>=1 && b>=kLoc+1 && jLoc>=0 && kLoc>=1 && b>=iLoc+1 && iLoc>=0 && kBl>=0} : (temp_C_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc-1] + (A_bl[iBl,kBl,iLoc,kLoc-1] * B_bl[kBl,jBl,kLoc-1,jLoc]));
+{|kLoc==0 && kBl==0 && Rl==0 && Ql==0 && Pl==0 && Pb>=1 && iLoc>=0 && jLoc>=0 && b>=jLoc+1 && b>=iLoc+1 && b>=2 && Rb>=1 && Qb>=1} : 0;
+esac;
+C_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc] = case
+{|kLoc==0 && Rl==0 && Ql==0 && Pl==0 && iLoc>=0 && jLoc>=0 && b>=2 && b>=iLoc+1 && b>=jLoc+1} : temp_C_bl[iBl,jBl,kBl-1,iLoc,jLoc,b+kLoc-1];
+{|Rl==0 && Ql==0 && Pl==0 && iLoc>=0 && jLoc>=0 && kLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && b>=kLoc+1 && b>=2} : temp_C_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc-1];
+esac;
+.

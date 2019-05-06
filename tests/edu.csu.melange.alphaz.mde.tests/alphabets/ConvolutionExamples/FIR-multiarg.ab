@@ -1,0 +1,28 @@
+affine FIR {N|(N)>0}
+	input
+		float x {n|};
+		float a {k|0<=k<4};
+	output
+		float y {n|};
+	let
+		y[n] = +(a[0] * x[n], a[1] * x[n+1], a[2] * x[n+2], a[3] * x[n+3]);
+.
+
+affine FIR_test2 {N|(N)>0}
+	input
+		float x {n|};
+		float a {k|1<=k<=4};
+	output
+		float y {n|};
+	let
+		y[n] = +(a[1] * x[n], a[2] * x[n+1], a[3] * x[n+2], a[4] * x[n+3]);
+.
+
+affine FIR_test3 {N|(N)>0}
+	input
+		float x {n|};
+	output
+		float y {n|};
+	let
+		y[n] = +(0.1 * x[n], 0.2 * x[n+1], 0.3 * x[n+2], 0.4 * x[n+3]);
+.

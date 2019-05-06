@@ -1,0 +1,43 @@
+double sqrt(double);
+
+affine BlockCholesky {n,b|n>=3 && b>=3}
+input
+double A {ii,jj,i,j|ii>=0 && n>=ii+1 && jj>=0 && n>=jj+1 && i>=0 && b>=i+1 && j>=0 && b>=j+1 && n>=3 && b>=3};
+output
+double L {ii,jj,i,j|n>=ii+1 && jj>=0 && ii>=jj+1 && i>=0 && b>=i+1 && j>=0 && b>=j+1 && n>=3 && b>=3} || {ii,jj,i,j|jj==ii && ii>=0 && n>=ii+1 && b>=i+1 && j>=0 && i>=j && n>=3 && b>=3};
+local
+double Ldiag {ii,i,j|ii>=0 && n>=ii+1 && j>=0 && i>=j && b>=i+1 && n>=3 && b>=3};
+double Lrest {ii,jj,i,j|jj>=0 && ii>=jj+1 && n>=ii+1 && i>=0 && b>=i+1 && j>=0 && b>=j+1 && n>=3 && b>=3};
+double MxMTOuts {ii,jj,kk,i,j|kk>=0 && jj>=kk+1 && ii>=jj && n>=ii+1 && i>=0 && b>=i+1 && j>=0 && b>=j+1 && n>=3 && b>=3};
+double Temp_MxMTouts {ii,jj,kk,i,j|kk>=0 && jj>=kk+1 && ii>=jj && n>=ii+1 && i>=0 && b>=i+1 && j>=0 && b>=j+1 && n>=3 && b>=3};
+double Temp {ii,jj,i,j|jj>=0 && ii>=jj && n>=ii+1 && i>=0 && b>=i+1 && j>=0 && b>=j+1 && n>=3 && b>=3};
+double temp_baseCholeskySquare_0 {ii,i,j|ii>=0 && n>=ii+1 && n>=3 && b>=3 && j>=1 && i>=j && b>=i+1};
+double temp_baseTriInv_0 {ii,jj,i,j|jj>=0 && ii>=jj+1 && n>=ii+1 && n>=3 && b>=3 && i>=0 && b>=i+1 && j>=1 && b>=j+1};
+let
+L = case
+{ii,jj,i,j|jj==ii && n>=3 && b>=3} : (ii,jj,i,j->ii,i,j)@Ldiag;
+Lrest;
+esac;
+Temp_MxMTouts = case
+{ii,jj,kk,i,j|kk==0 && n>=3 && b>=3} : MxMTOuts;
+{ii,jj,kk,i,j|n>=3 && b>=3 && kk>=1} : ((ii,jj,kk,i,j->ii,jj,kk-1,i,j)@Temp_MxMTouts + MxMTOuts);
+esac;
+Temp = case
+{ii,jj,i,j|jj==0 && n>=3 && b>=3} : A;
+{ii,jj,i,j|n>=3 && b>=3 && jj>=1} : (A - (ii,jj,i,j->ii,jj,jj-1,i,j)@Temp_MxMTouts);
+esac;
+Ldiag = case
+{ii,i,j|j==0 && i==0 && ii>=0 && n>=ii+1 && n>=3 && b>=3} : sqrt((ii,i,j->ii,ii,i,j)@Temp);
+{ii,i,j|j==i && ii>=0 && n>=ii+1 && n>=3 && b>=3 && i>=1} : sqrt(((ii,i,j->ii,ii,j,j)@Temp - temp_baseCholeskySquare_0));
+{ii,i,j|j==0 && ii>=0 && n>=ii+1 && n>=3 && b>=3 && i>=1} : ((ii,i,j->ii,ii,i,j)@Temp / (ii,i,j->ii,j,j)@Ldiag);
+{ii,i,j|ii>=0 && n>=ii+1 && n>=3 && b>=3 && i>=j+1 && j>=1} : (((ii,i,j->ii,ii,i,j)@Temp - temp_baseCholeskySquare_0) / (ii,i,j->ii,j,j)@Ldiag);
+esac;
+temp_baseCholeskySquare_0 = reduce(+, (ii,i,j,k->ii,i,j), {ii,i,j,k|ii>=0 && n>=ii+1 && n>=3 && b>=3 && j>=k+1} : ((ii,i,j,k->ii,i,k)@Ldiag * (ii,i,j,k->ii,j,k)@Ldiag));
+MxMTOuts = reduce(+, (ii,jj,kk,i,j,k->ii,jj,kk,i,j), ((ii,jj,kk,i,j,k->ii,kk,i,k)@L * (ii,jj,kk,i,j,k->jj,kk,j,k)@L));
+Lrest = case
+{ii,jj,i,j|j==0 && jj>=0 && ii>=jj+1 && n>=ii+1 && n>=3 && b>=3} : (Temp / (ii,jj,i,j->jj,j,j)@Ldiag);
+{ii,jj,i,j|jj>=0 && ii>=jj+1 && n>=ii+1 && n>=3 && b>=3 && j>=1} : ((Temp - temp_baseTriInv_0) / (ii,jj,i,j->jj,j,j)@Ldiag);
+esac;
+temp_baseTriInv_0 = reduce(+, (ii,jj,i,j,k->ii,jj,i,j), {ii,jj,i,j,k|jj>=0 && ii>=jj+1 && n>=ii+1 && n>=3 && b>=3 && j>=k+1} : ((ii,jj,i,j,k->ii,jj,i,k)@Lrest * (ii,jj,i,j,k->jj,j,k)@Ldiag));
+.
+

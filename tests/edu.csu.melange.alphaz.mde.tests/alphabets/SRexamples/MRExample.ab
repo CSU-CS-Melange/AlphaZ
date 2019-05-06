@@ -1,0 +1,9 @@
+affine MREx {N|N>0}
+input
+	int A {j|0<=j<2N};
+	int B {j|N<=j<3N};
+output
+	int C {i|N<=i<2N};
+let
+	C[i] = reduce(+, [j], A[j]) + reduce(+, [j], B[j]);
+.

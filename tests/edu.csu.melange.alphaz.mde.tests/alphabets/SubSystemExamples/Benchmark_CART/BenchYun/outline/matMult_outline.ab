@@ -1,0 +1,160 @@
+affine matrix_product_withReduce {Pb,Qb,Rb,Pl,Ql,Rl,b|Pb>=1 && Qb>=1 && Rb>=1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1 && b>=2}
+input
+float A_bl {iBl,kBl,iLoc,kLoc|iBl==Pb && Pb>=1 && Rb>=1 && b>=2 && kBl>=0 && Qb>=kBl+1 && iLoc>=0 && b>=iLoc+1 && Pl>=iLoc+1 && kLoc>=0 && b>=kLoc+1}
+	|| {iBl,kBl,iLoc,kLoc|kBl==Qb && Qb>=1 && Rb>=1 && b>=2 && iBl>=0 && Pb>=iBl+1 && iLoc>=0 && b>=iLoc+1 && kLoc>=0 && b>=kLoc+1 && Ql>=kLoc+1}
+	|| {iBl,kBl,iLoc,kLoc|kBl==Qb && iBl==Pb && Pb>=1 && Qb>=1 && Rb>=1 && b>=2 && iLoc>=0 && b>=iLoc+1 && Pl>=iLoc+1 && kLoc>=0 && b>=kLoc+1 && Ql>=kLoc+1}
+	|| {iBl,kBl,iLoc,kLoc|Rb>=1 && b>=2 && iBl>=0 && Pb>=iBl+1 && kBl>=0 && Qb>=kBl+1 && iLoc>=0 && b>=iLoc+1 && kLoc>=0 && b>=kLoc+1};
+float B_bl {kBl,jBl,kLoc,jLoc|kBl==Qb && Pb>=1 && Qb>=1 && b>=2 && jBl>=0 && Rb>=jBl+1 && kLoc>=0 && b>=kLoc+1 && Ql>=kLoc+1 && jLoc>=0 && b>=jLoc+1}
+	|| {kBl,jBl,kLoc,jLoc|jBl==Rb && Pb>=1 && Rb>=1 && b>=2 && kBl>=0 && Qb>=kBl+1 && kLoc>=0 && b>=kLoc+1 && jLoc>=0 && b>=jLoc+1 && Rl>=jLoc+1}
+	|| {kBl,jBl,kLoc,jLoc|jBl==Rb && kBl==Qb && Pb>=1 && Qb>=1 && Rb>=1 && b>=2 && kLoc>=0 && b>=kLoc+1 && Ql>=kLoc+1 && jLoc>=0 && b>=jLoc+1 && Rl>=jLoc+1}
+	|| {kBl,jBl,kLoc,jLoc|Pb>=1 && b>=2 && kBl>=0 && Qb>=kBl+1 && jBl>=0 && Rb>=jBl+1 && kLoc>=0 && b>=kLoc+1 && jLoc>=0 && b>=jLoc+1};
+output
+float C_bl {iBl,jBl,iLoc,jLoc|iBl==Pb && Pb>=1 && Qb>=1 && b>=2 && jBl>=0 && Rb>=jBl+1 && iLoc>=0 && b>=iLoc+1 && Pl>=iLoc+1 && jLoc>=0 && b>=jLoc+1}
+	|| {iBl,jBl,iLoc,jLoc|jBl==Rb && Qb>=1 && Rb>=1 && b>=2 && iBl>=0 && Pb>=iBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Rl>=jLoc+1}
+	|| {iBl,jBl,iLoc,jLoc|jBl==Rb && iBl==Pb && Pb>=1 && Qb>=1 && Rb>=1 && b>=2 && iLoc>=0 && b>=iLoc+1 && Pl>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Rl>=jLoc+1}
+	|| {iBl,jBl,iLoc,jLoc|Qb>=1 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+local
+float _TempRed0 {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc|i0Bl==Pb && Pb>=1 && b>=2 && i1Bl>=0 && Rb>=i1Bl+1 && i2Bl>=0 && Qb>=i2Bl+1 && i0Loc>=0 && b>=i0Loc+1 && Pl>=i0Loc+1 && i1Loc>=0 && b>=i1Loc+1}
+	|| {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc|i2Bl==Qb && Qb>=1 && b>=2 && i0Bl>=0 && Pb>=i0Bl+1 && i1Bl>=0 && Rb>=i1Bl+1 && i0Loc>=0 && b>=i0Loc+1 && i1Loc>=0 && b>=i1Loc+1 && Ql>=1}
+	|| {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc|i1Bl==Rb && Rb>=1 && b>=2 && i0Bl>=0 && Pb>=i0Bl+1 && i2Bl>=0 && Qb>=i2Bl+1 && i0Loc>=0 && b>=i0Loc+1 && i1Loc>=0 && b>=i1Loc+1 && Rl>=i1Loc+1}
+	|| {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc|i2Bl==Qb && i0Bl==Pb && Pb>=1 && Qb>=1 && b>=2 && i1Bl>=0 && Rb>=i1Bl+1 && i0Loc>=0 && b>=i0Loc+1 && Pl>=i0Loc+1 && i1Loc>=0 && b>=i1Loc+1 && Ql>=1}
+	|| {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc|i2Bl==Qb && i1Bl==Rb && Qb>=1 && Rb>=1 && b>=2 && i0Bl>=0 && Pb>=i0Bl+1 && i0Loc>=0 && b>=i0Loc+1 && i1Loc>=0 && b>=i1Loc+1 && Rl>=i1Loc+1 && Ql>=1}
+	|| {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc|i1Bl==Rb && i0Bl==Pb && Pb>=1 && Rb>=1 && b>=2 && i2Bl>=0 && Qb>=i2Bl+1 && i0Loc>=0 && b>=i0Loc+1 && Pl>=i0Loc+1 && i1Loc>=0 && b>=i1Loc+1 && Rl>=i1Loc+1}
+	|| {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc|i2Bl==Qb && i1Bl==Rb && i0Bl==Pb && Pb>=1 && Qb>=1 && Rb>=1 && b>=2 && i0Loc>=0 && b>=i0Loc+1 && Pl>=i0Loc+1 && i1Loc>=0 && b>=i1Loc+1 && Rl>=i1Loc+1 && Ql>=1}
+	|| {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc|b>=2 && i0Bl>=0 && Pb>=i0Bl+1 && i1Bl>=0 && Rb>=i1Bl+1 && i2Bl>=0 && Qb>=i2Bl+1 && i0Loc>=0 && b>=i0Loc+1 && i1Loc>=0 && b>=i1Loc+1};
+//float _TempRed0_0 {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc | i0Bl==Pb && i1Bl==Rb && 0<=i2Bl<=Qb && 0<=i0Loc<Pl && 0<=i1Loc<Rl};
+//float _TempRed0_1 {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc | i0Bl==Pb && 0<=i1Bl<Rb && 0<=i2Bl<=Qb && 0<=i0Loc<Pl && 0<=i1Loc<b};
+//float _TempRed0_2 {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc | 0<=i0Bl<Pb && i1Bl==Rb && 0<=i2Bl<=Qb && 0<=i0Loc<b && 0<=i1Loc<Rl};
+//float _TempRed0_3 {i0Bl,i1Bl,i2Bl,i0Loc,i1Loc | 0<=i0Bl<Pb && 0<=i1Bl<Rb && 0<=i2Bl<=Qb && 0<=i0Loc<b && 0<=i1Loc<b};
+float C_bl_0 {iBl,jBl,iLoc,jLoc|jBl==Rb && iBl==Pb && Pb>=1 && Qb>=1 && Rb>=1 && b>=2 && iLoc>=0 && b>=iLoc+1 && Pl>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Rl>=jLoc+1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1};
+float C_bl_1 {iBl,jBl,iLoc,jLoc|iBl==Pb && Pb>=1 && Qb>=1 && b>=2 && jBl>=0 && Rb>=jBl+1 && iLoc>=0 && b>=iLoc+1 && Pl>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Rb>=1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1};
+float C_bl_2 {iBl,jBl,iLoc,jLoc|jBl==Rb && Qb>=1 && Rb>=1 && b>=2 && iBl>=0 && Pb>=iBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Rl>=jLoc+1 && Pb>=1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1};
+float C_bl_3 {iBl,jBl,iLoc,jLoc|Qb>=1 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Rb>=1 && Pb>=1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1};
+let
+
+_TempRed0[i0Bl,i1Bl,i2Bl,i0Loc,i1Loc] = case
+{|Pb>=1 && Rb>=i1Bl && Qb>=1 && Pb>=i0Bl && i2Bl>=0 && Qb>=i2Bl && i1Bl>=0 && Rb>=1 && i0Bl>=0} : reduce(+, (i0,i1,i2, i3,i4,i5->i0,i1,i2, i3,i4), case
+	{|i3>=0 && Pl>=0 && b>=i3+1 && b>=2 && b>=Rl+1 && i4>=0 && b>=Ql+1 && b>=Pl+1 && b>=i4+1 && Rl>=0 && Ql>=0} : (A_bl[i0,i2,i3,i5] * B_bl[i2,i1,i5,i4]);
+esac);
+esac;
+
+/*_TempRed0[iBl,jBl,kBl,iLoc,jLoc]  = case
+	{iBl,jBl,kBl,iLoc,jLoc|jBl==Rb && iBl==Pb && 0<=kBl<=Qb} : _TempRed0_0;
+	{iBl,jBl,kBl,iLoc,jLoc|iBl==Pb && jBl>=0 && Rb>=jBl+1 && 0<=kBl<=Qb} : _TempRed0_1;
+	{iBl,jBl,kBl,iLoc,jLoc|jBl==Rb && iBl>=0 && Pb>=iBl+1 && 0<=kBl<=Qb} : _TempRed0_2;
+	{iBl,jBl,kBl,iLoc,jLoc|iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && 0<=kBl<=Qb} : _TempRed0_3;
+esac;
+use {iBl,jBl,kBl,iLoc,jLoc|jBl==Rb && iBl==Pb && 0<=kBl<=Qb} tempRed_Tile0[Pl,Ql,Rl,b] (
+		(iBl,jBl,kBl,iLoc,jLoc->iBl,kBl,iLoc,jLoc)@A_bl, (iBl,jBl,kBl,iLoc,jLoc->kBl,jBl,iLoc,jLoc)@B_bl
+	) returns (_TempRed0_0);
+use {iBl,jBl,kBl|iBl==Pb && jBl>=0 && Rb>=jBl+1 && 0<=kBl<=Qb} tempRed_Tile1[Pl,Ql,Rl,b] (
+		(iBl,jBl,kBl,iLoc,jLoc->iBl,kBl,iLoc,jLoc)@A_bl, (iBl,jBl,kBl,iLoc,jLoc->kBl,jBl,iLoc,jLoc)@B_bl
+	) returns (_TempRed0_1);
+use {iBl,jBl,kBl|jBl==Rb && iBl>=0 && Pb>=iBl+1 && 0<=kBl<=Qb} tempRed_Tile2[Pl,Ql,Rl,b] (
+		(iBl,jBl,kBl,iLoc,jLoc->iBl,kBl,iLoc,jLoc)@A_bl, (iBl,jBl,kBl,iLoc,jLoc->kBl,jBl,iLoc,jLoc)@B_bl
+	) returns (_TempRed0_2);
+use {iBl,jBl,kBl|iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && 0<=kBl<=Qb} tempRed_Tile3[Pl,Ql,Rl,b] (
+		(iBl,jBl,kBl,iLoc,jLoc->iBl,kBl,iLoc,jLoc)@A_bl, (iBl,jBl,kBl,iLoc,jLoc->kBl,jBl,iLoc,jLoc)@B_bl
+	) returns (_TempRed0_3);*/
+
+
+C_bl[iBl,jBl,iLoc,jLoc] = case
+	{|jBl==Rb && iBl==Pb} : C_bl_0;
+	{|iBl==Pb && jBl>=0 && Rb>=jBl+1} : C_bl_1;
+	{|jBl==Rb && iBl>=0 && Pb>=iBl+1} : C_bl_2;
+	{|iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1} : C_bl_3;
+esac;
+
+use {iBl,jBl|jBl==Rb && iBl==Pb} matrix_product_withReduce_C_bl_Tile_0[Qb,Pl,Ql,Rl,b] (_TempRed0) returns (C_bl_0);
+use {iBl,jBl|iBl==Pb && jBl>=0 && Rb>=jBl+1} matrix_product_withReduce_C_bl_Tile_1[Qb,Pl,Ql,Rl,b] (_TempRed0) returns (C_bl_1);
+use {iBl,jBl|jBl==Rb && iBl>=0 && Pb>=iBl+1} matrix_product_withReduce_C_bl_Tile_2[Qb,Pl,Ql,Rl,b] (_TempRed0) returns (C_bl_2);
+use {iBl,jBl|iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1} matrix_product_withReduce_C_bl_Tile_3[Qb,Pl,Ql,Rl,b] (_TempRed0) returns (C_bl_3);
+.
+
+
+/*affine tempRed_Tile0 {Pl,Ql,Rl,b|Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1 && b>=2}
+input
+	float inA {iLoc,jLoc | 0<=iLoc<Pl && 0<=jLoc<Ql};
+	float inB {iLoc,jLoc | 0<=iLoc<Ql && 0<=jLoc<Rl};
+output
+	float outTempRed {iLoc,jLoc | 0<=iLoc<Pl && 0<=jLoc<Rl};
+let
+	outTempRed[iLoc,jLoc] = reduce(+, (iLoc,jLoc,kLoc->iLoc,jLoc), inA[iLoc,kLoc] * inB[kLoc,jLoc]);
+.
+
+
+affine tempRed_Tile1 {Pl,Ql,Rl,b|Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1 && b>=2}
+input
+	float inA {iLoc,jLoc | 0<=iLoc<Pl && 0<=jLoc<b};
+	float inB {iLoc,jLoc | 0<=iLoc<Pl && 0<=jLoc<b};
+output
+	float outTempRed {iLoc,jLoc | 0<=iLoc<Pl && 0<=jLoc<b};
+let
+	outTempRed[iLoc,jLoc] = reduce(+, (iLoc,jLoc,kLoc->iLoc,jLoc), inA[iLoc,kLoc] * inB[kLoc,jLoc]);
+.
+
+
+affine tempRed_Tile2 {Pl,Ql,Rl,b|Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1 && b>=2}
+input
+	float inA {iLoc,jLoc | 0<=iLoc<b && 0<=jLoc<Rl};
+	float inB {iLoc,jLoc | 0<=iLoc<b && 0<=jLoc<Rl};
+output
+	float outTempRed {iLoc,jLoc | 0<=iLoc<b && 0<=jLoc<Rl};
+let
+	outTempRed[iLoc,jLoc] = reduce(+, (iLoc,jLoc,kLoc->iLoc,jLoc), inA[iLoc,kLoc] * inB[kLoc,jLoc]);
+.
+
+
+affine tempRed_Tile3 {Pl,Ql,Rl,b|Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1 && b>=2}
+input
+	float inA {iLoc,jLoc | 0<=iLoc,jLoc<b};
+	float inB {iLoc,jLoc | 0<=iLoc,jLoc<b};
+output
+	float outTempRed {iLoc,jLoc | 0<=iLoc,jLoc<b};
+let
+	outTempRed[iLoc,jLoc] = reduce(+, (iLoc,jLoc,kLoc->iLoc,jLoc), inA[iLoc,kLoc] * inB[kLoc,jLoc]);
+.*/
+
+
+affine matrix_product_withReduce_C_bl_Tile_0 {Qb,Pl,Ql,Rl,b|Qb>=1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1 && b>=2}
+input
+	float _TempRed0_0 {kBl,iLoc,jLoc| 0<=kBl<Qb && 0<=iLoc<Pl && 0<=jLoc<Rl} || {kBl,iLoc,jLoc| kBl==Qb && Ql>0 && 0<=iLoc<Pl && 0<=jLoc<Rl};
+output
+	float C_bl_loc {iLoc,jLoc|iLoc>=0 && Pl>=iLoc+1 && jLoc>=0 && Rl>=jLoc+1};
+local
+let
+	C_bl_loc[iLoc,jLoc] = reduce(+, (kBl,iLoc,jLoc->iLoc,jLoc), _TempRed0_0[kBl,iLoc,jLoc]);
+.
+
+
+affine matrix_product_withReduce_C_bl_Tile_1 {Qb,Pl,Ql,Rl,b|Qb>=1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1 && b>=2}
+input
+float _TempRed0_0 {kBl,iLoc,jLoc| 0<=kBl<Qb && 0<=iLoc<Pl && 0<=jLoc<b} || {kBl,iLoc,jLoc| kBl==Qb && Ql>0 && 0<=iLoc<Pl && 0<=jLoc<b};
+output
+float C_bl_loc {iLoc,jLoc|b>=2 && iLoc>=0 && b>=iLoc+1 && Pl>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1};
+local
+let
+	C_bl_loc[iLoc,jLoc] = reduce(+, (kBl,iLoc,jLoc->iLoc,jLoc), _TempRed0_0[kBl,iLoc,jLoc]);
+.
+
+
+affine matrix_product_withReduce_C_bl_Tile_2 {Qb,Pl,Ql,Rl,b|Qb>=1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1 && b>=2}
+input
+float _TempRed0_0 {kBl,iLoc,jLoc| 0<=kBl<Qb && 0<=iLoc<b && 0<=jLoc<Rl} || {kBl,iLoc,jLoc| kBl==Qb && Ql>0 && 0<=iLoc<b && 0<=jLoc<Rl};
+output
+float C_bl_loc {iLoc,jLoc|b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Rl>=jLoc+1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1};
+local
+let
+	C_bl_loc[iLoc,jLoc] = reduce(+, (kBl,iLoc,jLoc->iLoc,jLoc), _TempRed0_0[kBl,iLoc,jLoc]);
+.
+
+
+affine matrix_product_withReduce_C_bl_Tile_3 {Qb,Pl,Ql,Rl,b|Qb>=1 && Pl>=0 && Ql>=0 && Rl>=0 && b>=Pl+1 && b>=Ql+1 && b>=Rl+1 && b>=2}
+input
+float _TempRed0_0 {kBl,iLoc,jLoc| 0<=kBl<Qb && 0<=iLoc<b && 0<=jLoc<b} || {kBl,iLoc,jLoc| kBl==Qb && Ql>0 && 0<=iLoc<b && 0<=jLoc<b};
+output
+float C_bl_loc {iLoc,jLoc|iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+local
+let
+	C_bl_loc[iLoc,jLoc] = reduce(+, (kBl,iLoc,jLoc->iLoc,jLoc), _TempRed0_0[kBl,iLoc,jLoc]);
+.

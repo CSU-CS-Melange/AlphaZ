@@ -1,0 +1,32 @@
+/* PROTECTED REGION ID(module_affine_user) ENABLED START */
+// Protected user region
+/* PROTECTED REGION END */
+
+
+%op E affine(terms : terms) {
+	/*PROTECTED REGION ID(tom_operator_with_param_affine) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.affine.AffineExpression}
+	get_slot(terms,t) {enforce(((org.polymodel.algebra.affine.AffineExpression)$t).getTerms())}
+	make(_terms) {org.polymodel.algebra.internal.AlgebraTomFactory.createAffine($_terms)}
+	/*PROTECTED REGION END*/
+}
+
+%op T term(coef : long, variable : V) {
+	/*PROTECTED REGION ID(tom_operator_with_param_term) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.affine.AffineTerm}
+	get_slot(coef,t) {((org.polymodel.algebra.affine.AffineTerm)$t).getCoef()}
+	get_slot(variable,t) {((org.polymodel.algebra.affine.AffineTerm)$t).getVariable()}
+	make(_coef,_variable) {org.polymodel.algebra.internal.AlgebraTomFactory.createTerm($_coef, $_variable)}
+	/*PROTECTED REGION END*/
+}
+
+%op T constant(coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_constant) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.affine.AffineTerm && ((org.polymodel.algebra.affine.AffineTerm)$t).getVariable() == null}
+	get_slot(coef,t) {((org.polymodel.algebra.affine.AffineTerm)$t).getCoef()}
+	make(_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createConstant($_coef)}
+	/*PROTECTED REGION END*/
+}

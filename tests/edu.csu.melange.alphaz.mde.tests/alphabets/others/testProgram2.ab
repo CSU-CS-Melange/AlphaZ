@@ -1,0 +1,8 @@
+affine test {|}
+output
+	float X {|};
+	float Y {i| 0 <= i < 10}; 
+ let
+	X[] = 1 + 2;
+ 	Y[i] = X[] + 10;
+.

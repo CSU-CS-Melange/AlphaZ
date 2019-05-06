@@ -1,0 +1,63 @@
+affine MCM_reduce {N| N-2>= 0}
+input 
+  unsigned int pA {i| 0<=i<= N};
+output
+  unsigned int min_cost {|};
+local
+  unsigned int pM {i,j| 1<=i<=j<=N };
+
+let
+
+  	pM[i, j] = 
+ 		case
+  			{| i == j}: 0;
+        	{| i < j}: reduce(min, [k], {| i <= k < j}: pM[i, k] + pM[k+1, j] + (pA[i-1] * pA[k] * pA[j]));
+  		esac;
+  	
+  	min_cost[] = pM[1, N];
+.
+
+affine MCM_normalized {N| N-2>= 0}
+input
+	unsigned int pA {i| N-i>= 0 && i>= 0};
+output
+	unsigned int min_cost {|};
+local
+	unsigned int pM {i,j| 1<=i<=j<=N};
+	unsigned int NR_pM {i,j| 1<=i<j<=N};
+let
+
+	pM[i,j] = 
+		case
+			{|-i+j== 0} : 0;
+			{|-i+j-1>= 0} : NR_pM;
+		esac;
+
+	min_cost[] = pM[1,N];
+	NR_pM[i,j] = reduce(min, (i,j,k->i,j), {|j-k-1>= 0 && -i+k>= 0} : ((pM[i,k] + pM[k+1,j]) + ((pA[i-1] * pA[k]) * pA[j])));
+.
+
+affine MCM_serialized {N| N-2>= 0}
+input
+	unsigned int pA {i| N-i>= 0 && i>= 0};
+output
+	unsigned int min_cost {|};
+local
+	unsigned int pM {i,j| 1<=i<=j<=N};
+	unsigned int SR_pM {i,j,k| 1<=i<=k<j<=N};
+let
+
+	pM[i,j] = 
+		case
+			{|-i+j== 0} : 0;
+			{|-i+j-1>= 0} : SR_pM[i,j,j-1];
+		esac;
+
+	min_cost[] = pM[1,N];
+	
+	SR_pM[i,j,k] = 
+		case
+			{| k==i}: pM[i,k] + pM[k+1,j] + pA[i-1] * pA[k] * pA[j];
+			{| k>i}: min(SR_pM[i,j,k-1], pM[i,k] + pM[k+1,j] + pA[i-1] * pA[k] * pA[j]);
+		esac;
+.

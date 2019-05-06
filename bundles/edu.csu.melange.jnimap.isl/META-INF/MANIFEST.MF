@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: edu.csu.melange.jnimap.isl
+Bundle-Vendor: IRISA / University of Rennes 1
+Bundle-Version: 1.8.1.qualifier
+Bundle-SymbolicName: edu.csu.melange.jnimap.isl
+Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: fr.irisa.cairn.jnimap.isl.jni,
+ fr.irisa.cairn.jnimap.isl.jni.codegen,
+ fr.irisa.cairn.jnimap.isl.jni.extra,
+ fr.irisa.cairn.jnimap.isl.jni.memorylayout,
+ fr.irisa.cairn.jnimap.isl.jni.platform
+Bundle-ClassPath: .
+Require-Bundle: fr.irisa.cairn.jnimap.runtime;visibility:=reexport,
+ fr.irisa.cairn.tools

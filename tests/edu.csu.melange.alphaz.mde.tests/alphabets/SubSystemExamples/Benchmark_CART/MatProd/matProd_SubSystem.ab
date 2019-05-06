@@ -1,0 +1,23 @@
+affine matProd {P, Q, R|P>0 && Q>0 && R>0}
+       input  float A {i,k| 0<=i<P && 0<=k<Q};
+              float B {k,j| 0<=k<Q && 0<=j<R};
+     output  float C {i,j| 0<=i<P && 0<=j<R}; 
+let
+ C = reduce(+, (p,q,r->p,q), (p,q,r->p,r)@A*(p,q,r->r,q)@B);
+.
+
+affine matProd_SubSystem {Pb,Qb,Rb,Pl,Ql,Rl,b|Rl==0 && Ql==0 && Pl==0 && Pb>=1 && Qb>=1 && Rb>=1 && b>=1}
+input
+	float A_bl {iBl,kBl,iLoc,kLoc| 0<=iBl<Pb && 0<=kBl<Qb && 0<=(iLoc,kLoc)<b};
+	float B_bl {kBl,jBl,kLoc,jLoc| 0<=kBl<Qb && 0<=jBl<Rb && 0<=(kLoc,jLoc)<b};
+output
+	float C_bl {iBl,jBl,iLoc,jLoc| 0<=iBl<Pb && 0<=jBl<Rb && 0<=(iLoc,jLoc)<b};
+local
+	float tempC {iBl,jBl,kBl,iLoc,jLoc| 0<=iBl<Pb && 0<=jBl<Rb && 0<=kBl<Qb && 0<=(iLoc,jLoc)<b};
+let
+	C_bl[iBl,jBl,iLoc,jLoc] = reduce(+, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), tempC[iBl,jBl,kBl,iLoc,jLoc]);
+	
+	use {iBl,jBl,kBl|0<=iBl<Pb && 0<=jBl<Rb && 0<=kBl<Qb} matProd[b,b,b] (
+		(iBl,jBl,kBl,iLoc,kLoc->iBl,kBl,iLoc,kLoc)@A_bl, (iBl,jBl,kBl,kLoc,jLoc->kBl,jBl,kLoc,jLoc)@B_bl
+	) returns (tempC);
+.

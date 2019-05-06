@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: edu.csu.melange.jnimap.cloog
+Bundle-Vendor: IRISA / University of Rennes 1
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: edu.csu.melange.jnimap.cloog
+Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
+Require-Bundle: fr.irisa.cairn.jnimap.runtime;visibility:=reexport,
+ edu.csu.melange.jnimap.isl
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ClassPath: .
+Export-Package: fr.irisa.cairn.jnimap.cloog.jni,
+ fr.irisa.cairn.jnimap.cloog.util

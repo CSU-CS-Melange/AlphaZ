@@ -1,0 +1,14 @@
+affine IdentityFunc2 {N,M | N > 1 && M > 1}
+input
+	int A {i, j | 0 <= i < N && 0 <= j < M};
+	int B {i, j | 0 <= i < N && 0 <= j < 2M};
+output
+	int C {i, j | 0 <= i < N && 0 <= j < M};
+let
+	C[i, j] = A[i,j] + B[i, j];
+	C[i, j] = ({i, j| 0 <= i < N && 0 <= j < M}:B[i,j]) + A[i,j];
+	C[i, j] = A[i,j] +case 
+						{|i==0} :0;
+						{|i>0} :B;
+						esac;
+.

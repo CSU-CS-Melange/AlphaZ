@@ -1,0 +1,19 @@
+affine MultDimSplitRecur {N | N > 1}
+input
+	int A {i| 0 <= i < N};
+output
+	int X {i, j| 0 <= i < N && 0 <= j < 2N};
+	int Y {i, j| 0 <= i < N && 0 <= j < N};
+let
+	X[i,j] = case
+			{|j==0}: A[0];
+			{|0 < j < N}: X[i, j-1] + Y[i, j-1];
+			{|j == N}: A[j-N];
+			{|N < j < 2N}: X[i, j-1] + A[j-N];
+			esac;
+	
+	Y[i,j] = case
+			{|j==0}:A[0];
+			{|0 < j < N}: Y[i, j-1] + X[i, j-1];
+			esac;
+.

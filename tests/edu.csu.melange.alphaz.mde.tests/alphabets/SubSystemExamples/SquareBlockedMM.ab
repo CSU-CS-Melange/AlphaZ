@@ -1,0 +1,29 @@
+affine BlockMM {n,m,b| (n,m,b)>0}
+given
+	double A {ii,jj,i,j | 0<=ii<n && 0<=jj<m && 0<=(i,j)<b};
+	double B {ii,jj,i,j | 0<=ii<m && 0<=jj<n && 0<=(i,j)<b};
+returns
+	double C {ii,jj,i,j | 0<=ii<n && 0<=jj<n && 0<=(i,j)<b};
+using 
+	double CC {ii,jj,kk,i,j | 0<=ii<n && 0<=jj<n && 0<= kk<m && 0<=(i,j)<b};
+	double temp_CC {ii,jj,kk,i,j | 0<=ii<n && 0<=jj<n && 0<= kk<m && 0<=(i,j)<b};
+through
+use {ii, jj, kk | 0<=(ii,jj)<n && 0 <= kk < m} MM[b] ((ii,jj,kk,i,j->ii,kk,i,j)@A,
+		(ii,jj,kk,i,j->kk,jj,i,j)@B) returns (CC);
+	temp_CC[ii,jj,kk,i,j] = case
+								{|kk == 0}:	CC[ii,jj,kk,i,j];
+								{|kk > 0}: temp_CC[ii,jj,kk-1,i,j] + CC[ii,jj,kk,i,j];
+							esac;
+   C[ii,jj,i,j] = temp_CC[ii,jj,m-1,i,j];
+.
+
+
+affine MM {N| N>0}
+given
+	double A, B {i,j | 0<= (i,j)<N};
+returns
+	double C {i,j | 0<=(i,j) <N};
+using // No local variables
+through
+   C[i,j]      = reduce(+, [k], A[i,k]*B[k,j]);
+.

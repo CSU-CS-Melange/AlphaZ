@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ASCII"?>
+<clast:ClastRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:clast="http://www.irisa.fr/cairn/clast" xsi:schemaLocation="http://www.irisa.fr/cairn/clast untiled.xmi">
+  <next xsi:type="clast:ClastFor" iterator="z1">
+    <body xsi:type="clast:ClastFor" iterator="z2">
+      <body xsi:type="clast:ClastFor" iterator="z3">
+        <next xsi:type="clast:ClastFor" iterator="z3">
+          <next xsi:type="clast:ClastFor" iterator="z3">
+            <body xsi:type="clast:ClastUserStmt">
+              <stmt number="3"/>
+              <substitutions xsi:type="clast:ClastTerm" value="1">
+                <var xsi:type="clast:ClastName" name="z1"/>
+              </substitutions>
+              <substitutions xsi:type="clast:ClastTerm" value="1">
+                <var xsi:type="clast:ClastName" name="z2"/>
+              </substitutions>
+              <substitutions xsi:type="clast:ClastTerm" value="1">
+                <var xsi:type="clast:ClastName" name="z3"/>
+              </substitutions>
+            </body>
+            <lowerBound xsi:type="clast:ClastTerm" value="1">
+              <var xsi:type="clast:ClastName" name="Q"/>
+            </lowerBound>
+            <upperBound xsi:type="clast:ClastTerm" value="1">
+              <var xsi:type="clast:ClastName" name="Q"/>
+            </upperBound>
+            <stride xsi:type="clast:ClastTerm" value="1"/>
+          </next>
+          <body xsi:type="clast:ClastUserStmt">
+            <stmt number="1"/>
+            <substitutions xsi:type="clast:ClastTerm" value="1">
+              <var xsi:type="clast:ClastName" name="z1"/>
+            </substitutions>
+            <substitutions xsi:type="clast:ClastTerm" value="1">
+              <var xsi:type="clast:ClastName" name="z2"/>
+            </substitutions>
+            <substitutions xsi:type="clast:ClastTerm" value="1">
+              <var xsi:type="clast:ClastName" name="z3"/>
+            </substitutions>
+          </body>
+          <lowerBound xsi:type="clast:ClastTerm" value="1"/>
+          <upperBound xsi:type="clast:ClastTerm" value="1">
+            <var xsi:type="clast:ClastName" name="Q"/>
+          </upperBound>
+          <stride xsi:type="clast:ClastTerm" value="1"/>
+        </next>
+        <body xsi:type="clast:ClastUserStmt">
+          <stmt number="2"/>
+          <substitutions xsi:type="clast:ClastTerm" value="1">
+            <var xsi:type="clast:ClastName" name="z1"/>
+          </substitutions>
+          <substitutions xsi:type="clast:ClastTerm" value="1">
+            <var xsi:type="clast:ClastName" name="z2"/>
+          </substitutions>
+          <substitutions xsi:type="clast:ClastTerm" value="1">
+            <var xsi:type="clast:ClastName" name="z3"/>
+          </substitutions>
+        </body>
+        <lowerBound xsi:type="clast:ClastTerm"/>
+        <upperBound xsi:type="clast:ClastTerm"/>
+        <stride xsi:type="clast:ClastTerm" value="1"/>
+      </body>
+      <lowerBound xsi:type="clast:ClastTerm"/>
+      <upperBound xsi:type="clast:ClastReduction" type="sum">
+        <children xsi:type="clast:ClastTerm" value="1">
+          <var xsi:type="clast:ClastName" name="R"/>
+        </children>
+        <children xsi:type="clast:ClastTerm" value="-1"/>
+      </upperBound>
+      <stride xsi:type="clast:ClastTerm" value="1"/>
+    </body>
+    <lowerBound xsi:type="clast:ClastTerm"/>
+    <upperBound xsi:type="clast:ClastReduction" type="sum">
+      <children xsi:type="clast:ClastTerm" value="1">
+        <var xsi:type="clast:ClastName" name="P"/>
+      </children>
+      <children xsi:type="clast:ClastTerm" value="-1"/>
+    </upperBound>
+    <stride xsi:type="clast:ClastTerm" value="1"/>
+  </next>
+</clast:ClastRoot>

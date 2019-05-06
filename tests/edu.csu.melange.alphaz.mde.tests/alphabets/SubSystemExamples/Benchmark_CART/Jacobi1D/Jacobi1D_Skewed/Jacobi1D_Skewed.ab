@@ -1,0 +1,16 @@
+affine Jacobi1D {N,T|N-2>=0 && T>=0}
+input
+	double A {i|i>=0 && -i+N-1>=0};
+output
+	double B {i|i>=0 && -i+N-1>=0};
+local
+	double temp {i,t|t>=0 && i-t>=0 && -i+t+N-1>=0 && -t+T>=0};
+let
+	temp[i,t] = case
+		{|t==0 && 0<=i<=N-1} : A[i-t];
+		{|1<=t<=T && t==i} : temp[i-1,t-1];
+		{|1<=t<=T && t+N-1==i} : temp[i-1,t-1];
+		{|1<=t<=T && t<i<t+N-1} : (((temp[i-2,t-1] + temp[i-1,t-1]) + temp[i,t-1]) * 0.333333);
+	esac;
+	B[i] = temp[i+T,T];
+.

@@ -1,0 +1,290 @@
+// Primitive terminals (enum and data types)
+
+%typeterm org_polymodel_algebra_Value {
+	/*PROTECTED REGION ID(tom_terminal_Value) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{long}
+	is_sort(t) 		{true}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm org_polymodel_algebra_ComparisonOperator {
+	/*PROTECTED REGION ID(tom_terminal_ComparisonOperator) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.ComparisonOperator}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.ComparisonOperator}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm org_polymodel_algebra_FuzzyBoolean {
+	/*PROTECTED REGION ID(tom_terminal_FuzzyBoolean) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.FuzzyBoolean}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.FuzzyBoolean}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm org_polymodel_algebra_CompositeOperator {
+	/*PROTECTED REGION ID(tom_terminal_CompositeOperator) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.CompositeOperator}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.CompositeOperator}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm org_polymodel_algebra_quasiAffine_QuasiAffineOperator {
+	/*PROTECTED REGION ID(tom_terminal_QuasiAffineOperator) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.quasiAffine.QuasiAffineOperator}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.quasiAffine.QuasiAffineOperator}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm org_polymodel_algebra_reductions_ReductionOperator {
+	/*PROTECTED REGION ID(tom_terminal_ReductionOperator) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.reductions.ReductionOperator}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.reductions.ReductionOperator}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+// Terminals
+
+%typeterm ICS {
+	/*PROTECTED REGION ID(tom_terminal_ICS) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.IntConstraintSystem}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.IntConstraintSystem}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm ICSL{
+	/*PROTECTED REGION ID(tom_terminal_ICSL) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<org.polymodel.algebra.IntConstraintSystem> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<org.polymodel.algebra.IntConstraintSystem>)$t).size() == 0 
+    	|| (((EList<org.polymodel.algebra.IntConstraintSystem>)$t).size()>0 && ((EList<org.polymodel.algebra.IntConstraintSystem>)$t).get(0) instanceof org.polymodel.algebra.IntConstraintSystem))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray ICSL ICSL(ICS*) {
+	/*PROTECTED REGION ID(tom_terminal_ICSL_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<org.polymodel.algebra.IntConstraintSystem>)$t).size() == 0 
+ 		|| (((EList<org.polymodel.algebra.IntConstraintSystem>)$t).size()>0 && ((EList<org.polymodel.algebra.IntConstraintSystem>)$t).get(0) instanceof org.polymodel.algebra.IntConstraintSystem))}
+    make_empty(n) { new BasicEList<org.polymodel.algebra.IntConstraintSystem>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm E {
+	/*PROTECTED REGION ID(tom_terminal_E) ENABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{IntExpression}
+	is_sort(t) 		{$t instanceof IntExpression}
+	equals(l1,l2) 	{($l1!=null && $l2 instanceof IntExpression && ((IntExpression)$l1).isEquivalent((IntExpression)$l2) == FuzzyBoolean.YES) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm EL{
+	/*PROTECTED REGION ID(tom_terminal_EL) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<org.polymodel.algebra.IntExpression> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<org.polymodel.algebra.IntExpression>)$t).size() == 0 
+    	|| (((EList<org.polymodel.algebra.IntExpression>)$t).size()>0 && ((EList<org.polymodel.algebra.IntExpression>)$t).get(0) instanceof org.polymodel.algebra.IntExpression))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray EL EL(E*) {
+	/*PROTECTED REGION ID(tom_terminal_EL_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<org.polymodel.algebra.IntExpression>)$t).size() == 0 
+ 		|| (((EList<org.polymodel.algebra.IntExpression>)$t).size()>0 && ((EList<org.polymodel.algebra.IntExpression>)$t).get(0) instanceof org.polymodel.algebra.IntExpression))}
+    make_empty(n) { new BasicEList<org.polymodel.algebra.IntExpression>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm V {
+	/*PROTECTED REGION ID(tom_terminal_V) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.Variable}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.Variable}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm vars{
+	/*PROTECTED REGION ID(tom_terminal_vars) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<org.polymodel.algebra.Variable> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<org.polymodel.algebra.Variable>)$t).size() == 0 
+    	|| (((EList<org.polymodel.algebra.Variable>)$t).size()>0 && ((EList<org.polymodel.algebra.Variable>)$t).get(0) instanceof org.polymodel.algebra.Variable))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray vars vars(V*) {
+	/*PROTECTED REGION ID(tom_terminal_vars_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<org.polymodel.algebra.Variable>)$t).size() == 0 
+ 		|| (((EList<org.polymodel.algebra.Variable>)$t).size()>0 && ((EList<org.polymodel.algebra.Variable>)$t).get(0) instanceof org.polymodel.algebra.Variable))}
+    make_empty(n) { new BasicEList<org.polymodel.algebra.Variable>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm T {
+	/*PROTECTED REGION ID(tom_terminal_T) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.IntTerm}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.IntTerm}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm terms{
+	/*PROTECTED REGION ID(tom_terminal_terms) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<org.polymodel.algebra.IntTerm> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<org.polymodel.algebra.IntTerm>)$t).size() == 0 
+    	|| (((EList<org.polymodel.algebra.IntTerm>)$t).size()>0 && ((EList<org.polymodel.algebra.IntTerm>)$t).get(0) instanceof org.polymodel.algebra.IntTerm))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray terms terms(T*) {
+	/*PROTECTED REGION ID(tom_terminal_terms_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<org.polymodel.algebra.IntTerm>)$t).size() == 0 
+ 		|| (((EList<org.polymodel.algebra.IntTerm>)$t).size()>0 && ((EList<org.polymodel.algebra.IntTerm>)$t).get(0) instanceof org.polymodel.algebra.IntTerm))}
+    make_empty(n) { new BasicEList<org.polymodel.algebra.IntTerm>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm C {
+	/*PROTECTED REGION ID(tom_terminal_C) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.IntConstraint}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.IntConstraint}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm CL{
+	/*PROTECTED REGION ID(tom_terminal_CL) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<org.polymodel.algebra.IntConstraint> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<org.polymodel.algebra.IntConstraint>)$t).size() == 0 
+    	|| (((EList<org.polymodel.algebra.IntConstraint>)$t).size()>0 && ((EList<org.polymodel.algebra.IntConstraint>)$t).get(0) instanceof org.polymodel.algebra.IntConstraint))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray CL CL(C*) {
+	/*PROTECTED REGION ID(tom_terminal_CL_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<org.polymodel.algebra.IntConstraint>)$t).size() == 0 
+ 		|| (((EList<org.polymodel.algebra.IntConstraint>)$t).size()>0 && ((EList<org.polymodel.algebra.IntConstraint>)$t).get(0) instanceof org.polymodel.algebra.IntConstraint))}
+    make_empty(n) { new BasicEList<org.polymodel.algebra.IntConstraint>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm pterm {
+	/*PROTECTED REGION ID(tom_terminal_pterm) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{org.polymodel.algebra.polynomials.PolynomialTerm}
+	is_sort(t) 		{$t instanceof org.polymodel.algebra.polynomials.PolynomialTerm}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm pterms{
+	/*PROTECTED REGION ID(tom_terminal_pterms) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<org.polymodel.algebra.polynomials.PolynomialTerm> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<org.polymodel.algebra.polynomials.PolynomialTerm>)$t).size() == 0 
+    	|| (((EList<org.polymodel.algebra.polynomials.PolynomialTerm>)$t).size()>0 && ((EList<org.polymodel.algebra.polynomials.PolynomialTerm>)$t).get(0) instanceof org.polymodel.algebra.polynomials.PolynomialTerm))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray pterms pterms(pterm*) {
+	/*PROTECTED REGION ID(tom_terminal_pterms_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<org.polymodel.algebra.polynomials.PolynomialTerm>)$t).size() == 0 
+ 		|| (((EList<org.polymodel.algebra.polynomials.PolynomialTerm>)$t).size()>0 && ((EList<org.polymodel.algebra.polynomials.PolynomialTerm>)$t).get(0) instanceof org.polymodel.algebra.polynomials.PolynomialTerm))}
+    make_empty(n) { new BasicEList<org.polymodel.algebra.polynomials.PolynomialTerm>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm pvar {
+	/*PROTECTED REGION ID(tom_terminal_pvar) ENABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{PolynomialVariable}
+	is_sort(t) 		{$t instanceof PolynomialVariable}
+	equals(l1,l2) 	{($l1!=null && $l2 instanceof PolynomialVariable && ((PolynomialVariable)$l1).isEquivalent((PolynomialVariable)$l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm pvars{
+	/*PROTECTED REGION ID(tom_terminal_pvars) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<org.polymodel.algebra.polynomials.PolynomialVariable> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)$t).size() == 0 
+    	|| (((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)$t).size()>0 && ((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)$t).get(0) instanceof org.polymodel.algebra.polynomials.PolynomialVariable))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray pvars pvars(pvar*) {
+	/*PROTECTED REGION ID(tom_terminal_pvars_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)$t).size() == 0 
+ 		|| (((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)$t).size()>0 && ((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)$t).get(0) instanceof org.polymodel.algebra.polynomials.PolynomialVariable))}
+    make_empty(n) { new BasicEList<org.polymodel.algebra.polynomials.PolynomialVariable>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+// List Terminals

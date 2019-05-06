@@ -1,0 +1,12 @@
+affine BackwardSubst {N| N>0}
+input
+	double U {i,j | 0<=i<=j<N};
+	double b {i | 0<=i<N};
+output
+	double x {i | 0<=i<N};
+let
+	x[i] = case
+		{i | i==N-1} : b[i]/U[i,i];
+		{i | 0<=i<N-1} : (b[i] - reduce(+, [k], {i,k | i<k<N}: U[i,k]*x[k]) )/U[i,i];
+	esac;
+.

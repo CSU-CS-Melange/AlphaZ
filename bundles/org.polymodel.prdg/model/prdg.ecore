@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="prdg"
+    nsURI="http://www.polymodel.org/prdg" nsPrefix="prdg">
+  <eClassifiers xsi:type="ecore:EClass" name="PRDGNode">
+    <eOperations name="getDestinations" upperBound="-1" eType="#//PRDGEdge"/>
+    <eOperations name="getSources" upperBound="-1" eType="#//PRDGEdge"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="prdg" eType="#//PRDG" eOpposite="#//PRDG/nodes"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PRDGEdge">
+    <eOperations name="toEdgeRelation" lowerBound="1">
+      <eGenericType eTypeParameter="#//PRDGEdge/toEdgeRelation/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//AbstractRelation"/>
+      </eTypeParameters>
+      <eParameters name="manager" lowerBound="1" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//DimensionsManager"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//PRDGNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destination" eType="#//PRDGNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//EdgeFunction"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PRDG">
+    <eOperations name="getNode" lowerBound="1" eType="#//PRDGNode">
+      <eParameters name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//PRDGNode" containment="true" eOpposite="#//PRDGNode/prdg"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="edges" upperBound="-1"
+        eType="#//PRDGEdge" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hedges" upperBound="-1"
+        eType="#//PRDGSubSystemHyperEdge"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EdgeFunction" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Function"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProjectionFunction" eSuperTypes="#//EdgeFunction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DependenceFunction" eSuperTypes="#//EdgeFunction">
+    <eOperations name="isUniform" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PRDGSubSystemHyperEdge">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sources" upperBound="-1"
+        eType="#//PRDGNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destinations" upperBound="-1"
+        eType="#//PRDGNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extDom" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="params" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Function"/>
+  </eClassifiers>
+</ecore:EPackage>

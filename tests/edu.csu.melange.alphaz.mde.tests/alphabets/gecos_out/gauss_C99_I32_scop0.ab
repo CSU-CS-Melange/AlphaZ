@@ -1,0 +1,17 @@
+affine gauss_C99_I32_scop0 {i0,i1,j0,j1|-j0+j1-2>= 0 && -i0+i1-2>= 0}
+input
+int _intput_X {i,j|i1-i-1>= 0 && -i0+i-1>= 0 && j1-j-2>= 0 && -j0+j>= 0};
+output
+int _output_Y {i,j|i1-i-1>= 0 && -i0+i-1>= 0 && j1-j-1>= 0 && -j0+j-1>= 0};
+local
+int _tmp_Y {i,j|i1-i-1>= 0 && -i0+i-1>= 0 && j1-j-1>= 0 && -j0+j-1>= 0};
+int _tmp_Y_0 {i,j|i1-i-1>= 0 && -i0+i-1>= 0 && j1-j-1>= 0 && -j0+j-1>= 0};
+int _tmp_Y_1 {i,j|i1-i-1>= 0 && -i0+i-1>= 0 && j1-j-1>= 0 && -j0+j-1>= 0};
+int _tmp_Y_2 {i,j|i1-i-1>= 0 && -i0+i-1>= 0 && j1-j-1>= 0 && -j0+j-1>= 0};
+let
+_tmp_Y = (((i,j->i-1,j-1)@_intput_X + ((i,j->)@2 * (i,j->i-1,j)@_intput_X)) + (i,j->i-1,1+j)@_intput_X);
+_tmp_Y_0 = ((i,j->i,j)@_tmp_Y + ((((i,j->)@2 * (i,j->i,j-1)@_intput_X) + ((i,j->)@4 * (i,j->i,j)@_intput_X)) + ((i,j->)@2 * (i,j->i,1+j)@_intput_X)));
+_tmp_Y_1 = ((i,j->i,j)@_tmp_Y_0 + (((i,j->1+i,j-1)@_intput_X + ((i,j->)@2 * (i,j->1+i,j)@_intput_X)) + (i,j->1+i,1+j)@_intput_X));
+_tmp_Y_2 = ((i,j->i,j)@_tmp_Y_1 / (i,j->)@16);
+_output_Y = (a,b->a,b)@_tmp_Y_2;
+.

@@ -1,0 +1,9 @@
+affine SimpleExample {|}
+input
+    
+output
+	float A {i| 0<=i<=10};
+local
+let
+ 	A = 0;
+.

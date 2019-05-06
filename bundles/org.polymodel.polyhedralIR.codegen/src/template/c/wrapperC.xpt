@@ -1,0 +1,293 @@
+«IMPORT polyIRCG»
+«IMPORT polyIRCG::C»
+«IMPORT polyIRCG::C::wrapper»
+«IMPORT polyhedralIR»
+«IMPORT polymodel»
+«IMPORT integerLinearAlgebra»
+«EXTENSION template::c::genericC»
+
+
+«REM»Add timer header«ENDREM»
+«AROUND template::c::genericC::commonIncludes FOR CompilationUnit»
+«targetDef.proceed()»
+#include <sys/time.h>
+«ENDAROUND»
+
+«REM»Suppress external functions in wrapper«ENDREM»
+«AROUND template::c::genericC::externalFunctionHeader FOR Program»«ENDAROUND»
+«AROUND template::c::genericC::externalFunctionInclude FOR Program»«ENDAROUND»
+
+«REM»Place to cut for extensions of WrapperC«ENDREM»
+«DEFINE additionalInputHandling FOR Function»«ENDDEFINE»
+
+«REM»
+Override Function Body
+Wrapper code is very specialized, so many things are hard coded in this template
+«ENDREM»
+«AROUND template::c::genericC::function FOR Function»
+//function prototypes
+«EXPAND calledFunctionPrototype FOR this»
+
+//main
+int main(int argc, char** argv) {
+	//Check number of args
+	if (argc <= «getParamDomain().getDim()») {
+		printf("Number of argument is smaller than expected.\n");
+		printf("Expecting «FOREACH getParamDomain().getParams() AS var SEPARATOR ', '»«var»«ENDFOREACH»\n");
+		exit(0);
+	}
+
+	//Read Parameters
+	«FOREACH getParamDomain().getParams() AS var ITERATOR it
+	»long «var» = atol(argv[«it.counter1»]);
+	«ENDFOREACH»
+	
+	«EXPAND template::c::genericC::parameterCheck FOR getParamDomain()»
+	
+«REM»	«IF codeunit.system.targetMapping.tiling.tilesizes.size > 0»
+	«LET codeunit.system.targetMapping.tiling.tilesizes AS tilesizes»
+	//Check number of args again for tile sizes
+	if (argc <= «getParamDomain().getDim() + tilesizes.size ») {
+		printf("Number of argument is smaller than expected.\n");
+		printf("Expecting «FOREACH getParamDomain().getParams() AS var SEPARATOR ', '»«var»«ENDFOREACH
+							», «FOREACH tilesizes AS ts ITERATOR it SEPARATOR ', '»«"WRAPPER_TILESIZE_PREFIX".getCGConstant()»«it.counter1»«ENDFOREACH»\n");
+		exit(0);
+	}
+	
+	//Tile sizes
+	«FOREACH tilesizes AS ts ITERATOR it»
+	long «"WRAPPER_TILESIZE_PREFIX".getCGConstant()»«it.counter1» = atol(argv[«getParamDomain().getParams().size+it.counter1»]);
+	«ENDFOREACH»
+	«ENDLET»
+	«ENDIF»«ENDREM»
+
+	//Timing
+	struct timeval time;
+	double elapsed_time;
+
+	«LET inputs.union(outputs).getVariableWithMaxDim() AS maxDim»
+	«IF maxDim.domain.getNIndices() > 0»
+	//Loop indices for malloc
+	int «FOREACH maxDim.domain.getIndices() AS i ITERATOR it SEPARATOR ', '
+		»«"MALLOC_LOOP_INDEX".getCGConstant()+it.counter1»«ENDFOREACH»;«ENDIF»
+	«ENDLET»
+		
+	//Memory allocation
+	«EXPAND template::c::genericC::malloc FOREACH inputs.union(outputs)»
+	#ifdef «"VERIFY_FLAG".getCGConstant()»
+	«FOREACH outputs AS var»
+	«((CVariable)var).generateMallocStatement("", "VERIFY_POSTFIX".getCGConstant())»«ENDFOREACH»
+	#endif
+	
+	//Input Initialization
+	«EXPAND inputInitialization FOREACH bodies»
+	
+	//Call the main computation
+	gettimeofday(&time, NULL);
+	elapsed_time = (((double) time.tv_sec) + ((double) time.tv_usec)/1000000);
+	gettimeofday(&time, NULL);
+    
+	«EXPAND mainFunctionCall FOR this»
+
+	gettimeofday(&time, NULL);
+	elapsed_time = (((double) time.tv_sec) + ((double) time.tv_usec)/1000000) - elapsed_time;
+
+	// timing information
+	printf("Execution time : %lf sec.\n", elapsed_time);
+	
+	//MFLOPS computation
+	{
+		double totalFLOP = 0.0;
+	«PROTECT CSTART "/***" CEND "***/" ID this.codeunit.system.name+"_MLOPS"»
+		//add code to compute the total number of FLOP here
+	«ENDPROTECT»
+		//only computes and prints MFLOPS when code is added above
+		if (totalFLOP > 0.0) {
+			double mflop = totalFLOP * 0.001;
+			double mflops = mflop / elapsed_time;
+			printf("MFLOPS : %lf\n", mflops);
+		}
+	}
+
+	//Verification Run
+	#ifdef «"VERIFY_FLAG".getCGConstant()»
+    	«EXPAND verifyFunctionCall FOR this»
+	#endif
+    	
+	#ifdef «"CHECKING_FLAG".getCGConstant()»
+    	//Print Outputs
+		«EXPAND printOutput FOREACH bodies»
+	#elif «"VERIFY_FLAG".getCGConstant()»
+		//Compare outputs for verification
+		«EXPAND verifyOutput FOREACH bodies»
+    #endif
+    
+	//Memory Free
+	«EXPAND template::c::genericC::mfree FOREACH inputs.union(outputs)»
+	#ifdef «"VERIFY_FLAG".getCGConstant()»
+	«FOREACH outputs AS var»
+	«var.generateMfreeStatement("", "VERIFY_POSTFIX".getCGConstant())»«ENDFOREACH»
+	#endif
+}
+«ENDAROUND»
+
+«DEFINE mainFunctionCall FOR Function
+»«LET codeunit.functions.selectFirst(e|entryPoint).signature AS fs
+»«codeunit.system.name»(«FOREACH fs.parameters AS fp SEPARATOR ','»«fp.asParameter()»«ENDFOREACH
+»);«ENDLET»«ENDDEFINE»
+
+
+«DEFINE verifyFunctionCall FOR Function
+»«codeunit.system.name»«"VERIFY_POSTFIX".getCGConstant()»(«FOREACH getParamDomain().getParams() AS var SEPARATOR ', '»«var»«ENDFOREACH
+    »«IF getParamDomain().getDim() > 0 && inputs.union(outputs).size > 0»,«ENDIF
+    »«FOREACH inputs.union(outputs) AS var SEPARATOR ', '»«var.name
+    	»«IF outputs.contains(var)»«"VERIFY_POSTFIX".getCGConstant()»«ENDIF
+    »«ENDFOREACH»);«ENDDEFINE»
+
+
+«DEFINE calledFunctionPrototype FOR Function
+»«LET codeunit.functions.selectFirst(e|entryPoint).signature AS fs
+»void «codeunit.system.name»(«FOREACH fs.parameters AS fp SEPARATOR ','»«fp.asParameterType()»«ENDFOREACH
+»);«ENDLET»«ENDDEFINE»
+
+    
+«REM»
+Code for specifying values of the input.
+When compiled with RANDOM flag, generates random number for each element.
+When compiled with CHECKING or VERIFY but without RANDOM, 
+	each element of the input are specified through stdin
+When none of the flags are specified, defaults to 1 
+«ENDREM»
+«DEFINE inputInitialization FOR Body»«ENDDEFINE»
+«DEFINE inputInitialization FOR InputInitialization»
+«LET var.domain.getIndices().getMacroIndices() AS macroIndex»
+«LET statements.get(0).name AS macroName»
+{
+	#ifdef «"RANDOM_FLAG".getCGConstant()»
+		#define «macroName»(«macroIndex»)  = rand()
+	#else
+		#ifdef «"CHECKING_FLAG".getCGConstant()»
+			«EXPAND userInput(macroName, macroIndex) FOR this»
+		#elif «"VERIFY_FLAG".getCGConstant()»
+			«EXPAND userInput(macroName, macroIndex) FOR this»
+		#else
+			#define «macroName»(«macroIndex») «var.getName()»«IF var.domain.getNIndices() > 0»(«macroIndex»)«ENDIF» = 1   
+		#endif
+	#endif
+«generateLoopNest()»
+	#undef «macroName»
+}
+«ENDLET»
+«ENDLET»
+«ENDDEFINE»
+«REM»This rule creates a macro definition that reads a value of a variable using scanf.«ENDREM»
+«DEFINE userInput(String macroName, String macroIndex) FOR InputInitialization
+»#ifdef «"NO_PROMT_FLAG".getCGConstant()»
+	#define «macroName»(«macroIndex») scanf("«var.type.getCPrintfSpecifier()»", «IF var.domain.getNIndices() == 0» &«var.getName()»«ELSE»&«var.getName()»(«macroIndex»)«ENDIF»)
+#else
+	#define «macroName»(«macroIndex») «EXPAND printIndex(macroIndex, var) FOR this»scanf("«var.type.getCPrintfSpecifier()»",«IF var.domain.getNIndices() == 0» &«var.getName()» «ELSE» &«var.getName()»(«macroIndex»)«ENDIF»)
+#endif«
+ENDDEFINE»
+
+«REM»Helper of above rule for printf generation«ENDREM»
+«DEFINE printIndex(String macroIndex, VariableDeclaration var) FOR CLoop»«
+IF var.domain.getNIndices() > 0
+	»printf("«var.getName()»(«FOREACH var.domain.getIndices() AS i SEPARATOR ','»%d«ENDFOREACH»)=",«macroIndex»);«
+ELSE
+	»printf("«var.getName()»=");«
+ENDIF»«ENDDEFINE»
+
+«REM»Helper of above rule for printf generation«ENDREM»
+«DEFINE printIndex(String macroIndex) FOR Variable»«
+IF domain.getNIndices() > 0
+	»printf("«name»(«FOREACH domain.getIndices() AS i SEPARATOR ','»%d«ENDFOREACH»)=",«macroIndex»);«
+ELSE
+	»printf("«name»=");«
+ENDIF»«ENDDEFINE»
+
+«REM»Loops to print out ouput variables«ENDREM»
+«DEFINE printOutput FOR Body»«ENDDEFINE»
+«DEFINE printOutput FOR OutputPrinting»
+«LET statements.get(0).name AS macroName»
+«LET function.codeunit.system.targetMapping.getMemorySpace(var) AS memorySpace»
+«LET var.domain.getIndices().getMacroIndices() AS macroIndex»
+{
+	#ifdef «"NO_PROMT_FLAG".getCGConstant()»
+		#define «macroName»(«macroIndex») printf("«var.type.getCPrintfSpecifier()»\n",var_«var.getName()»(«macroIndex»))
+	#else
+		#define «macroName»(«macroIndex») «EXPAND printIndex(macroIndex, var) FOR this»printf("«var.type.getCPrintfSpecifier()»\n",var_«var.getName()»(«macroIndex»))
+	#endif
+	
+«generateLoopNest()»
+	#undef «macroName»
+}
+«ENDLET»
+«ENDLET»
+«ENDLET»
+«ENDDEFINE»
+
+
+«REM»Compares outputs from the main function and the verification run, and reports the number of mismatches.«ENDREM»
+«DEFINE verifyOutput FOR Body»«ENDDEFINE»
+«DEFINE verifyOutput FOR OutputVerification»
+«LET function.codeunit.system.targetMapping.getMemorySpace(var) AS memorySpace»
+«REM»Scalar case«ENDREM»
+«IF var.domain.getNIndices() == 0»
+if (var_«var.getName()» != var_«var.getName()»«"VERIFY_POSTFIX".getCGConstant()») {
+	printf("Error (%s) : 1\n", "«var.getName()»");
+}
+«REM»Array«ENDREM»
+«ELSE»
+«LET "S0" AS macroName»
+«LET var.domain.getIndices().getMacroIndices() AS macroIndex»
+{
+	//Error counter
+	int _errors_ = 0;
+
+	#define «macroName»(«macroIndex») if (var_«var.getName()»(«macroIndex») != var_«var.getName()»«"VERIFY_POSTFIX".getCGConstant()»(«macroIndex»)) _errors_++;
+	
+«generateLoopNest()»
+	#undef S0
+	
+	//Print out number of errors found
+	if (_errors_ > 0) {
+		printf("Errors (%s) : %d\n", "«var.getName()»", _errors_);
+	}
+	
+}
+«ENDLET»
+«ENDLET»
+«ENDIF»
+«ENDLET»
+«ENDDEFINE»
+
+
+«AROUND template::c::genericC::memoryMacroDefs FOR CodeUnit»
+«targetDef.proceed()»
+«FOREACH functions.outputs AS var»
+«LET var.name+"VERIFY_POSTFIX".getCGConstant() AS verifyName»
+«IF var.flattened»
+	#define «verifyName»(«var.getMacroIndices()») «verifyName»«EXPAND template::c::genericC::arrayIndexing1D FOR var»
+«ELSE»
+	#define «verifyName»(«var.getMacroIndices()») «verifyName»«EXPAND template::c::genericC::arrayIndexingMD FOR var»
+«ENDIF»
+«ENDLET»
+«ENDFOREACH»
+«FOREACH system.outputs AS vardecl»
+«LET system.targetMapping.getMemorySpace(vardecl) AS memSpace»
+	#define var_«vardecl.getName()»(«vardecl.domain.getIndices().getMacroIndices()») «memSpace.name»«EXPAND iterToMemSpace FOR memSpace.getMemoryMap(vardecl).mapping»
+	#define var_«vardecl.getName()»«"VERIFY_POSTFIX".getCGConstant()»(«vardecl.domain.getIndices().getMacroIndices()») «memSpace.name»«"VERIFY_POSTFIX".getCGConstant()»«EXPAND iterToMemSpace FOR memSpace.getMemoryMap(vardecl).mapping»
+«ENDLET»
+«ENDFOREACH»
+«ENDAROUND»
+«AROUND template::c::genericC::memoryMacroUndefs FOR CodeUnit»
+«targetDef.proceed()»
+«FOREACH functions.outputs AS var»
+#undef «var.name»«"VERIFY_POSTFIX".getCGConstant()»
+«ENDFOREACH»
+«ENDAROUND»
+
+«DEFINE iterToMemSpace FOR AffineFunction»«
+	IF getDimRHS() > 0»(«FOREACH getExpressions() AS expr ITERATOR it SEPARATOR ','»«expr»«ENDFOREACH»)«
+	ELSE»«REM»scalar case«ENDREM»«
+	ENDIF»«ENDDEFINE»

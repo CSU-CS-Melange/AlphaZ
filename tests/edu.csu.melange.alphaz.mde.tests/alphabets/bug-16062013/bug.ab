@@ -1,0 +1,8 @@
+affine nested {|}
+input
+output
+    float out {i,j,k|};
+local
+let
+    out[i,j,k] = (i,j,k->i+j+k)@(i->)@0;
+.

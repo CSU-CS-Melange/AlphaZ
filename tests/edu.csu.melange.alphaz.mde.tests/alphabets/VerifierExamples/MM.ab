@@ -1,0 +1,24 @@
+affine MM_reduce {P, Q, R|P>0 && Q>0 && R>0}
+       input  float A {i,k| 0<=i<P && 0<=k<Q};
+              float B {k,j| 0<=k<Q && 0<=j<R};
+     output  float C {i,j| 0<=i<P && 0<=j<R}; 
+let
+   C[i,j] = reduce(+,[k], A[i,k-1]*B[k-1,j]);
+.
+
+affine MM_serialized {P, Q, R|P>0 && Q>0 && R>0}
+input
+	float A {i,k| 0<=i<P && 0<=k<Q}; 
+	float B {k,j| 0<=k<Q && 0<=j<R}; 
+output 
+	float C {i,j| 0<=i<P && 0<=j<R};
+local 
+   float Acc_C {i,j,k| 0<=i<P && 0<=j<R && 0<=k<=Q};
+let
+	Acc_C[i,j,k] = 
+   		case
+            {|k==0} : 0;
+        	{|k>0}  : Acc_C[i,j,k-1] + A[i,k-1]*B[k-1,j];
+        esac;
+   C[i,j] = Acc_C[i,j,Q];
+.

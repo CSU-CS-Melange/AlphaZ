@@ -1,0 +1,25 @@
+// Matrix multiplication (general)
+affine matrix_product {P, Q, R|P>=1 && Q>=1 && R>=1}
+    input  float A {i,k| 0<=i<P && 0<=k<Q};
+              float B {k,j| 0<=k<Q && 0<=j<R}; 
+    output  float C {i,j| 0<=i<P && 0<=j<R};
+	local
+		float temp_C {i,j,k|0<=i<P && 0<=j<R && 0<=k<=Q};
+	let
+   temp_C[i,j,k] = case
+               {|k>0}  : temp_C[i,j,k-1] + A[i,k-1]*B[k-1,j];
+               {|k==0} : 0; // Initialization of the accumulator
+            esac;
+   C[i,j]      = temp_C[i,j,Q];
+.
+
+
+// Square product of a matrix, local a subsystem
+affine squareMat {N| N>=0}
+	input float A {i,j| 0<=i<=N && 0<=j<=N};
+	output
+		float S {i,j| 0<=i<=N && 0<=j<=N};
+	let
+	use matrix_product[N+1,N+1,N+1] (A,A) returns (S);
+	// We apply the subsystem only once: no extension domain needed
+.

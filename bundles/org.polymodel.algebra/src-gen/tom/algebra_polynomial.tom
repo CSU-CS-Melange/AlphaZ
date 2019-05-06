@@ -1,0 +1,34 @@
+/* PROTECTED REGION ID(module_polynomial_user) ENABLED START */
+// Protected user region
+/* PROTECTED REGION END */
+
+
+%op E polynomial(terms : pterms) {
+	/*PROTECTED REGION ID(tom_operator_with_param_polynomial) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.polynomials.PolynomialExpression}
+	get_slot(terms,t) {enforce(((org.polymodel.algebra.polynomials.PolynomialExpression)$t).getTerms())}
+	make(_terms) {org.polymodel.algebra.internal.AlgebraTomFactory.createPolynomial($_terms)}
+	/*PROTECTED REGION END*/
+}
+
+%op pterm pterm(numerator : long, denominator : long, variables : pvars) {
+	/*PROTECTED REGION ID(tom_operator_with_param_pterm) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.polynomials.PolynomialTerm}
+	get_slot(numerator,t) {((org.polymodel.algebra.polynomials.PolynomialTerm)$t).getNumerator()}
+	get_slot(denominator,t) {((org.polymodel.algebra.polynomials.PolynomialTerm)$t).getDenominator()}
+	get_slot(variables,t) {enforce(((org.polymodel.algebra.polynomials.PolynomialTerm)$t).getVariables())}
+	make(_numerator,_denominator,_variables) {org.polymodel.algebra.internal.AlgebraTomFactory.createPterm($_numerator, $_denominator, $_variables)}
+	/*PROTECTED REGION END*/
+}
+
+%op pvar pvar(variable : V, exponent : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_pvar) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.polynomials.PolynomialVariable}
+	get_slot(variable,t) {((org.polymodel.algebra.polynomials.PolynomialVariable)$t).getVariable()}
+	get_slot(exponent,t) {((org.polymodel.algebra.polynomials.PolynomialVariable)$t).getExponent()}
+	make(_variable,_exponent) {org.polymodel.algebra.internal.AlgebraTomFactory.createPvar($_variable, $_exponent)}
+	/*PROTECTED REGION END*/
+}

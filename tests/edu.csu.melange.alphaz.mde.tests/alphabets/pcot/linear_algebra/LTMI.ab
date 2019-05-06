@@ -1,0 +1,11 @@
+affine LTMI {N | N > 0}
+input
+	float L {i,j | 0<=j<=i<N};
+output
+	float LI {i,j | 0<=j<=i<N};
+let
+	LI[i,j] = case
+	    {|i==j} : 1.0/L[i,j];
+	    {|i>j} : (-1)*reduce(+, (i,j,k -> i,j),L[i,k]*LI[k,j]);
+	esac;
+.

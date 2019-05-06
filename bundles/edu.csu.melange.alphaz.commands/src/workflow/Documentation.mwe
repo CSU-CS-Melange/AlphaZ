@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<workflow>
+	<property name="model" value="edu.csu.melange.alphaz.commands/src/model/alphazMDECommands.commandif" />
+	<property name="PDFsrc-gen" value="../edu.csu.melange.alphaz.mde/doc-gen/" />
+ 
+	<!-- set up EMF for standalone execution -->
+	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" >
+		<platformUri value=".."/>
+	</bean>
+ 
+	<!-- load model and store it in slot 'MDEmodel' -->
+	<component class="org.eclipse.emf.mwe.utils.Reader">
+		<uri value="platform:/resource/${model}" />
+		<modelSlot value="model" />
+	</component>
+ 
+	<!-- clean -->
+	<component class="org.eclipse.emf.mwe.utils.DirectoryCleaner" directory="${PDFsrc-gen}"/>
+ 
+	<!--  generate code for alphaz.mde -->
+	<component class="org.eclipse.xpand2.Generator">
+		<metaModel class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<!-- specify metamodel -->
+			<metaModelPackage value="commandIF.CommandIFPackage"/>
+		</metaModel>
+		<expand
+			value="template::Documentation::PDFroot FOR model" />
+		<outlet path="${PDFsrc-gen}" />
+		   <!-- protected regions configuration -->
+   <prSrcPaths value="${PDFsrc-gen}"/>
+   <prDefaultExcludes value="true"/>
+	</component>
+	
+
+	
+	
+</workflow>
+

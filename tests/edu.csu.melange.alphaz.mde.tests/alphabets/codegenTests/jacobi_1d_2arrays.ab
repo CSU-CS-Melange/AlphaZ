@@ -1,0 +1,19 @@
+affine jacobi_1d_2arrays {T,N | T>0 && N>4}
+input
+	double Initial {i | 0<=i<=N-1};
+output
+	double Final {t,i | t==T && 0<=i<=N-1};
+local	
+	double A   {t,i | 0<=t<T && 0<=i<=N-1};
+	double new {t,i | 0<t<=T && 0<=i<=N-1};
+let
+	new[t,i] = case
+		{| i==0} || {| i==N-1} : A[t-1,i];
+		{| 0<i<N-1} : (2*A[t-1,i] + A[t-1,i-1] + A[t-1,i+1]) / 4.0;
+	esac;
+	A[t,i] = case
+		{| t==0} : Initial[i];
+		{| 0<t<T} : new[t,i];
+	esac;
+	Final[t,i] = new[t,i];
+.

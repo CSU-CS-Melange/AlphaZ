@@ -1,0 +1,15 @@
+affine matrix_product {P,Q,R| P>=2 && Q>=2 && R>=2 }
+	input
+		float A {i,j| Q>=i+1 && i>=0 && P+i>=j+1 && j>=i } ;
+		float B {k,j| Q>=k+1 && k>=0 && R>=j+1 && j>=0 } ;
+	output
+		float C {i,j,k| k==Q+1 && P>=i+1 && i>=0 && R>=j+1 && j>=0 } ;
+	local
+		float temp_C {i,j,k| i>=0 && P>=i+1 && j>=0 && Q>=k && k>=0 && R>=j+1 } ;
+	let
+		temp_C[i,j,k] = case
+			{ | k>=1 } : temp_C[i,j,k-1] + (i,j,k->i,k-1) @ (i,j->j,i+j) @ A * B[k-1,j] ;
+			{ | k==0 } : 0 ;
+		esac ;
+		C[i,j,k] = temp_C[i,j,k-1];
+.

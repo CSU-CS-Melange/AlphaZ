@@ -1,0 +1,21 @@
+affine OSP {N|N>=1}
+input
+	float A {i|i>=0 && N>=i};
+output
+	float C {i,j|i>=j && N>=i+1 && j>=0};
+local
+	float NR_C {i,j|i>=j+1 && N>=i+1 && j>=0};
+	float _serNR_C {i,j,k|i>=k+1 && N>=i+1 && j>=0 && k>=j};
+let
+	C[i,j] = case
+		{|j==i} : 0;
+		{|i>=j+1} : NR_C;
+	esac;
+	
+	NR_C[i,j] = _serNR_C[i,j,i-1];
+	
+	_serNR_C[i,j,k] = case
+		{|k==j} : ((C[i,k] + C[k+1,j]) + ((A[i] * A[k]) * A[j]));
+		{|k>=j+1} : (_serNR_C[i,j,k-1] min ((C[i,k] + C[k+1,j]) + ((A[i] * A[k]) * A[j])));
+	esac;
+.

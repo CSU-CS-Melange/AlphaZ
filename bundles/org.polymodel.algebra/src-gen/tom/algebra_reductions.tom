@@ -1,0 +1,50 @@
+/* PROTECTED REGION ID(module_reductions_user) ENABLED START */
+// Protected user region
+/* PROTECTED REGION END */
+
+
+%op E reduction(expressions : EL, operator : org_polymodel_algebra_reductions_ReductionOperator) {
+	/*PROTECTED REGION ID(tom_operator_with_param_reduction) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.reductions.ReductionExpression}
+	get_slot(expressions,t) {enforce(((org.polymodel.algebra.reductions.ReductionExpression)$t).getExpressions())}
+	get_slot(operator,t) {((org.polymodel.algebra.reductions.ReductionExpression)$t).getOperator()}
+	make(_expressions,_operator) {org.polymodel.algebra.internal.AlgebraTomFactory.createReduction($_expressions, $_operator)}
+	/*PROTECTED REGION END*/
+}
+
+%op E prod(expressions : EL) {
+	/*PROTECTED REGION ID(tom_operator_with_param_prod) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.reductions.ReductionExpression && ((org.polymodel.algebra.reductions.ReductionExpression)$t).getOperator().equals(org.polymodel.algebra.reductions.ReductionOperator.PROD)}
+	get_slot(expressions,t) {enforce(((org.polymodel.algebra.reductions.ReductionExpression)$t).getExpressions())}
+	make(_expressions) {org.polymodel.algebra.internal.AlgebraTomFactory.createProd($_expressions)}
+	/*PROTECTED REGION END*/
+}
+
+%op E sum(expressions : EL) {
+	/*PROTECTED REGION ID(tom_operator_with_param_sum) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.reductions.ReductionExpression && ((org.polymodel.algebra.reductions.ReductionExpression)$t).getOperator().equals(org.polymodel.algebra.reductions.ReductionOperator.SUM)}
+	get_slot(expressions,t) {enforce(((org.polymodel.algebra.reductions.ReductionExpression)$t).getExpressions())}
+	make(_expressions) {org.polymodel.algebra.internal.AlgebraTomFactory.createSum($_expressions)}
+	/*PROTECTED REGION END*/
+}
+
+%op E max(expressions : EL) {
+	/*PROTECTED REGION ID(tom_operator_with_param_max) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.reductions.ReductionExpression && ((org.polymodel.algebra.reductions.ReductionExpression)$t).getOperator().equals(org.polymodel.algebra.reductions.ReductionOperator.MAX)}
+	get_slot(expressions,t) {enforce(((org.polymodel.algebra.reductions.ReductionExpression)$t).getExpressions())}
+	make(_expressions) {org.polymodel.algebra.internal.AlgebraTomFactory.createMax($_expressions)}
+	/*PROTECTED REGION END*/
+}
+
+%op E min(expressions : EL) {
+	/*PROTECTED REGION ID(tom_operator_with_param_min) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.reductions.ReductionExpression && ((org.polymodel.algebra.reductions.ReductionExpression)$t).getOperator().equals(org.polymodel.algebra.reductions.ReductionOperator.MIN)}
+	get_slot(expressions,t) {enforce(((org.polymodel.algebra.reductions.ReductionExpression)$t).getExpressions())}
+	make(_expressions) {org.polymodel.algebra.internal.AlgebraTomFactory.createMin($_expressions)}
+	/*PROTECTED REGION END*/
+}

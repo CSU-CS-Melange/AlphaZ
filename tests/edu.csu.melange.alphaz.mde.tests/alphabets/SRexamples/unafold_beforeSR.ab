@@ -1,0 +1,75 @@
+int Es(int,int);
+int Eh(int,int);
+int End(int,int);
+int Ed3(int,int);
+int Ed5(int,int);
+int Etstackm(int,int);
+int a(int);
+int b(int);
+int c(int);
+int INFINITY_VAL(int);
+int Eval_isFinite(int);
+int nodangle(int);
+int noisolate(int);
+int Eval_ssOK(int,int);
+int Ebi_sizePenalty(int);
+int Ebi_stacking(int,int);
+int Ebi_asymmetry(int,int);
+int Ebi_Bulge1(int,int,int,int);
+int Ebi_Bulge(int,int,int,int,int);
+int Ebi_iloop1x1(int,int,int,int);
+int Ebi_iloop1x2(int,int,int,int);
+int Ebi_iloop2x1(int,int,int,int);
+int Ebi_iloop2x2(int,int,int,int);
+affine fillMatrices1_unafold {N,MAXLOOP|N-5>= 0 && MAXLOOP-1>= 0}
+input
+int Qprime_ip {i,j|N-j>= 0 && i-1>= 0 && j-2>= 0 && N-i>= 0};
+output
+int Q {i,j|N-j>= 0 && i-1>= 0 && j-2>= 0 && N-i>= 0};
+int Qprime {i,j|N-j>= 0 && i-1>= 0 && j-2>= 0 && N-i>= 0};
+int QM {i,j|N-j>= 0 && i-1>= 0 && j-2>= 0 && N-i>= 0};
+local
+int QBI {i,j|N-j>= 0 && i-1>= 0 && j-2>= 0 && N-i>= 0};
+int Ebi_special {i,j,ip,jp|-j+jp+2== 0 && -i+ip-2== 0 && i-1>= 0 && -i+j-5>= 0 && N-j>= 0 && MAXLOOP-2>= 0} || {i,j,ip,jp|-i+j+ip-jp-5>= 0 && -ip+jp-1>= 0 && i-ip+3>= 0 && MAXLOOP+i-j-ip+jp+2>= 0 && i-1>= 0 && N-j>= 0 && -j+jp+3>= 0} || {i,j,ip,jp|-i+ip-1== 0 && i-1>= 0 && j-jp-2>= 0 && MAXLOOP-j+jp+1>= 0 && N-j>= 0 && -i+jp-2>= 0} || {i,j,ip,jp|-j+jp+1== 0 && N-j>= 0 && -i+ip-2>= 0 && MAXLOOP+i-ip+1>= 0 && j-ip-2>= 0 && i-1>= 0};
+int QBI_W {i,j|N-j>= 0 && -i+j-7>= 0 && i-1>= 0};
+int QBI_X {i,j,d|i-1>= 0 && -i+j-d-3>= 0 && d-4>= 0 && MAXLOOP+i-j+d+2>= 0 && N-j>= 0};
+int QBI_X1 {i,j,d|-i+j-d-3>= 0 && N-j>= 0 && d-4>= 0 && i-j+d+5>= 0 && MAXLOOP+i-j+d+2>= 0 && i-1>= 0};
+int QBI_X2 {i,j,d|i-1>= 0 && -i+j-d-6>= 0 && d-4>= 0 && MAXLOOP+i-j+d+2>= 0 && N-j>= 0};
+int X {i,j,d|i-1>= 0 && -i+j-d-6>= 0 && d-4>= 0 && MAXLOOP+i-j+d+2>= 0 && N-j>= 0};
+int Y {i,j,d|i-1>= 0 && -i+j-d-6>= 0 && d-4>= 0 && MAXLOOP+i-j+d+2>= 0 && N-j>= 0};
+let
+Q[i,j] = case
+{|i-j+3>= 0} : INFINITY_VAL(0);
+{|-i+j-4>= 0} : min((b(0) + Q[i+1,j]),(b(0) + Q[i,j-1]),((c(0) + End([i],[j])) + Qprime),QM);
+esac;
+Qprime[i,j] = case
+{|i-j+3>= 0} : INFINITY_VAL(0);
+{|-i+j-4>= 0} : if ((Eval_isFinite(Qprime_ip) > 0)) then (min(Eh([i],[j]),(Es([i],[j]) + Qprime[i+1,j-1]),QBI,(((a(0) + c(0)) + End([j],[i])) + QM[i+1,j-1]))) else (INFINITY_VAL(0));
+esac;
+QM[i,j] = case
+{|i-j+8>= 0} : INFINITY_VAL(0);
+{|-i+j-9>= 0} : reduce(min, [k], {|-i+k-4>= 0 && j-k-5>= 0} : (Q[i,k-1] + Q[k,j]));
+esac;
+Ebi_special[i,j,ip,jp] = case
+{|-j+jp+2== 0 && -i+ip-1== 0} || {|-j+jp+1== 0 && -i+ip-2== 0} : Ebi_Bulge1([i],[j],[ip],[jp]);
+{|-i+ip-1== 0 && j-jp-3>= 0} : Ebi_Bulge([i],[j],[ip],[jp],[j-jp-1]);
+{|-j+jp+1== 0 && -i+ip-3>= 0} : Ebi_Bulge([i],[j],[ip],[jp],[ip-i-1]);
+{|-j+jp+2== 0 && -i+ip-2== 0} : Ebi_iloop1x1([i],[j],[ip],[jp]);
+{|-j+jp+3== 0 && -i+ip-2== 0} : Ebi_iloop1x2([i],[j],[ip],[jp]);
+{|-j+jp+2== 0 && -i+ip-3== 0} : Ebi_iloop2x1([i],[j],[ip],[jp]);
+{|-j+jp+3== 0 && -i+ip-3== 0} : Ebi_iloop2x2([i],[j],[ip],[jp]);
+esac;
+QBI[i,j] = case
+{|i-j+6>= 0} : INFINITY_VAL(0);
+{|-i+j-7>= 0} : QBI_W;
+esac;
+QBI_W[i,j] = reduce(min, (i,j,x->i,j), QBI_X);
+QBI_X[i,j,d] = case
+{|i-j+d+5>= 0} : QBI_X1;
+{|-i+j-d-6>= 0} : (QBI_X2 min X);
+esac;
+QBI_X1[i,j,d] = reduce(min, [ip], {|-i+ip-1>= 0 && j-d-ip-1>= 0} : (Ebi_special[i,j,ip,ip+d] + Qprime[ip,ip+d]));
+QBI_X2[i,j,d] = reduce(min, [ip], {|j-d-ip-1>= 0 && -i+ip-1>= 0} : (Ebi_special[i,j,ip,ip+d] + Qprime[ip,ip+d]));
+X[i,j,d] = ((Y + (invB,invC,invD->invB,invC,invD,3)@Ebi_stacking(val(i,j,d,ip->i),val(i,j,d,ip->j))) + (invB,invC,invD->invB,invC,invD,3)@Ebi_sizePenalty(val(i,j,d,ip->-i+j-d-2)));
+Y[i,j,d] = reduce(min, [ip], {|j-d-ip-4>= 0 && -i+ip-2>= 0} || {|j-d-ip-2>= 0 && -i+ip-4>= 0 && -j+d+ip+3>= 0} : ((Ebi_stacking([d+ip],[ip]) + Ebi_asymmetry([-i+ip-1],[j-d-ip-1])) + Qprime[ip,ip+d]));
+.

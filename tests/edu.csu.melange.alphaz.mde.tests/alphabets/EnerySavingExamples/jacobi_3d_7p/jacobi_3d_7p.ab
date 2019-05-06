@@ -1,0 +1,54 @@
+/*
+    Pochoir_Kernel_3D(fd_3D_fn, t, i, j, k)
+        pa(t, i, j, k) = alpha * (pa(t-1, i, j, k))
+                         + beta * (
+                           pa(t-1, i-1, j, k) + pa(t-1, i, j-1, k) + pa(t-1, i, j, k-1) +
+                           pa(t-1, i+1, j, k) + pa(t-1, i, j+1, k) + pa(t-1, i, j, k+1));
+    Pochoir_Kernel_End
+ 
+ */
+
+/**/
+float rand();
+
+affine jacobi_3d_7p {TSTEPS,N,M,K | TSTEPS > 2 && N > 2 && M > 2 && K > 2}
+input 
+output
+	double B {t,i,j,k|0<=i<N && 0<=j<M && 0<=k<K && t==TSTEPS};
+local 
+	double temp_B {t,i,j,k|0<=i<N && 0<=j<M && 0<=k<K && 0<=t<TSTEPS};
+let
+
+	temp_B[t,i,j,k] = case
+						{|t == 0 && 1<=i<N-1 && 1<=j<M-1 && 1<=k<K} : 1.0*(rand()/1024);
+						{|t > 0 && 1<=i<N-1 && 1<=j<M-1 && 1<=k<K} : 0.0876*temp_B[t-1, i, j, k] + 0.0765* (
+													temp_B[t-1, i-1, j, k] + temp_B[t-1, i, j-1, k] + temp_B[t-1, i, j, k-1] +
+													tmep_B[t-1, i+1, j, k] + temp_B[t-1, i, j+1, k] + temp_B[t-1, i, j, k+1]); 
+						{|0==i } || {|0==j } || {|i==N-1 } || {|j==M-1 } || {|0==k} || {|k==K-1} : 0;  
+					esac; 
+
+	B[t,i,j,k] = temp_B[t-1,i,j,k]; 
+.
+/**/
+/*
+float rand();
+
+affine jacobi_3d_7p {TSTEPS,N,M,K | TSTEPS > 2 && N > 2 && M > 2 && K > 2}
+input 
+output
+	double B {i,j,k|0<=i<N && 0<=j<M && 0<=k<K};
+local 
+	double temp_B {t,i,j,k|0<=i<N && 0<=j<M && 0<=k<K && 0<=t<TSTEPS};
+let
+
+	temp_B[t,i,j,k] = case
+						{|t == 0 && 1<=i<N-1 && 1<=j<M-1 && 1<=k<K} : 1.0*(rand()/1024);
+						{|t > 0 && 1<=i<N-1 && 1<=j<M-1 && 1<=k<K} : 0.0876*temp_B[t-1, i, j, k] + 0.0765* (
+													temp_B[t-1, i-1, j, k] + temp_B[t-1, i, j-1, k] + temp_B[t-1, i, j, k-1] +
+													tmep_B[t-1, i+1, j, k] + temp_B[t-1, i, j+1, k] + temp_B[t-1, i, j, k+1]); 
+						{|0==i } || {|0==j } || {|i==N-1 } || {|j==M-1 } || {|0==k} || {|k==K-1} : 0;  
+					esac; 
+
+	B[i,j,k] = temp_B[TSTEPS-1,i,j,k]; 
+.
+*/

@@ -1,0 +1,11 @@
+affine IIR {N|(N)>0}
+	input
+		float x {n|};
+		float a {k|0<=k<N};
+		float b {k|1<=k<N};
+	output
+		float y {n|};
+	let
+		y[n] = reduce(+, [k], a[k] * x[n+k]);
+		z[n] = reduce(+, [k], b[k] * z[n+k]) + y[n];
+.

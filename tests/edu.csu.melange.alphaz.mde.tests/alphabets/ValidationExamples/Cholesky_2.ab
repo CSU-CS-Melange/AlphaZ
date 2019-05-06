@@ -1,0 +1,24 @@
+double sqrt(double);
+affine Cholesky_2 {N|N>0}
+input
+	float A {i,j| 1 <= i <= N && 1 <= j <= N};
+output
+	float L {i,j| 1 <= i <= N && 1 <= j <= N};
+	float D {i,j| 1 <= i <= N && 1 <= j <= N};
+local
+	float LD {i,j| 1 < i <= N && 1 <= j <= N};
+let
+LD[i,j] = reduce(+, [k], L[i,k]*D[k,j]);
+D[i,j] = case
+	{|i == 1 && j == 1} : A[1,1];
+	{|i < j}            : 0;
+	{|i > j}            : 0;
+	{|i  == j && i > 1} : A[i,j] - reduce(+, (i,j,k->i,j), {i,j,k|1<=k<j} : L[i,k]*L[i,k]*D[k,k]);
+esac;
+L[i,j] = case
+	{|i == j}           : 1;
+	{|j > i}            : 0;
+	{|j < i  && j == 1} : A[i,j] / D[1,1];
+	{|j < i  &&  j > 1} : (i,j->j,j)@(A[i,j] - reduce(+, (i,j,k->i,j), {i,j,k|k > j && k < j} : (i,j,k->i,k)@LD * (i,j,k->i,k)@L)) / LD[j,j];
+esac;
+.

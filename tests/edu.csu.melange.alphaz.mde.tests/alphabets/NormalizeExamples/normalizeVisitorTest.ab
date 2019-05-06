@@ -1,0 +1,25 @@
+// System where all the commutations between dependence/case/restriction happens when normalizing with NormalizeVisitor
+double sqrt(double);
+
+affine normalizeVisitorTest {N | N>0}
+input
+	double I1 {i | 0 <= i < 2N};
+	double I2 {i,j | 0<=i<=N && 0<=j<N};
+output
+	double O {i| 0<=i<N};
+let
+	O = (i->i+1)@( - (
+		(i->2i)@(
+			{i|2<=i<2N} : if (true)
+				then (sqrt({i|i>=0}:I1))
+				else (3.1415)
+		)
+		+
+		reduce(+,(i,j->j),
+			(i,j->j,i)@
+				(case {i,j|i>=j}: I2; {i,j|i<j}: [i+j]; esac)
+				*
+				(case {i,j|i<j}: I2; {i,j|i>=j}: [i+j]; esac)
+		)
+	) );
+.

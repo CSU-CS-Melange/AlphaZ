@@ -1,0 +1,28 @@
+int similarity_function(short, short);
+
+affine SW {M,N | (M,N)>2}
+input 
+	short seq_A {i|0<=i<M};
+	short seq_B {i|0<=i<N};
+output
+	double Aout {i|0<=i<M};
+	double Bout {i|0<=i<N};
+local
+	double gap_penalty;
+	double Table {i,j|0<=i<M && 0<=j<N};
+let	
+	gap_penalty=-1;
+
+	Table[i,j] = case
+		{|i==0 && j==0}:	max(0,similarity_function(seq_A[i],seq_B[j]));
+		{|i==0 && j>0}:	max(0,similarity_function(seq_A[i],seq_B[j]),
+								Table[i,j-1]+gap_penalty);
+		{|i>0 && j==0}:	max(0,similarity_function(seq_A[i],seq_B[j]),
+								Table[i-1,j]+gap_penalty);
+		{|i>0 && j>0}:	max(0,Table[i-1,j-1]+similarity_function(seq_A[i],seq_B[j]),
+								Table[i,j-1]+gap_penalty, Table[i-1,j]+gap_penalty);
+	esac;
+	
+	Aout[i] = Table[i,N-1];
+	Bout[i] = Table[M-1,i];
+.

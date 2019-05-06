@@ -1,0 +1,7 @@
+affine matProd {P, Q, R|P>0 && Q>0 && R>0}
+       input  float A {i,k| 0<=i<P && 0<=k<Q};
+              float B {k,j| 0<=k<Q && 0<=j<R};
+     output  float C {i,j| 0<=i<P && 0<=j<R}; 
+let
+ C = reduce(+, (p,q,r->p,q), (p,q,r->p,r)@A*(p,q,r->r,q)@B);
+.

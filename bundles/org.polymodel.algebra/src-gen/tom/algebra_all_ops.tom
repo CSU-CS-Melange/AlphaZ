@@ -1,0 +1,8 @@
+%include{algebra_common.tom}
+%include{algebra_affine.tom}
+%include{algebra_base.tom}
+%include{algebra_defaultOperators.tom}
+%include{algebra_domains.tom}
+%include{algebra_polynomial.tom}
+%include{algebra_quasiaffine.tom}
+%include{algebra_reductions.tom}

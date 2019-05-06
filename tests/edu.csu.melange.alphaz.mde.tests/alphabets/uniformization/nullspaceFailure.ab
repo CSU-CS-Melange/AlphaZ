@@ -1,0 +1,20 @@
+//example 4.11 from Roychowdhury thesis
+affine nullspaceFailure {N|N>0}
+	output int x {i,j,k|0<=(i,j,k)<N};
+	local int y {i,j,k|0<=(i,j,k)<N};
+	let
+		y = 0;
+		x[i,j,k] = case 
+						y[i-k,k-j,i-j];
+						{|i-k < 0} || {|k-j<0} || {|i-j<0} : 0;
+				   esac;
+.
+
+//example 4.12 from Roychowdhury thesis
+affine nullspaceFailure2 {N|N>0}
+	output int x {i,j|0<=(i,j)<=N};
+	local int y {i,j|0<=i<=2N && -N<=j<=0};
+	let
+		y = 0;
+		x[i,j] = y[i+j,-i-j];
+.

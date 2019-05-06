@@ -1,0 +1,54 @@
+«IMPORT polyIRCG»
+«IMPORT polyIRCG::C»
+«IMPORT polyhedralIR»
+«EXTENSION template::c::genericC»
+«EXTENSION template::c::writeC»
+
+«REM»Override malloc/mfree to add statements for flag alloc/free«ENDREM»
+«AROUND template::c::genericC::body FOR VariableInitialization»
+«targetDef.proceed()»
+«this.function.generateFlagAllocationStatements()»
+«ENDAROUND»
+«AROUND template::c::genericC::body FOR VariableFinalization»
+«targetDef.proceed()»
+«this.function.generateFlagFreeStatements()»
+«ENDAROUND»
+
+«REM»Override expression pretty printing«ENDREM»
+«AROUND template::c::genericC::print(CodeUnit cu) FOR Expression»«this.printExpressionForWriteC()»«ENDAROUND»
+
+«REM»Override Global Var declaration to include flags«ENDREM»
+«AROUND template::c::genericC::globalVariableDeclaration FOR CodeUnit»
+«targetDef.proceed()»
+«REM»only locals and outputs that are global«ENDREM»
+«FOREACH functions.select(e|e.entryPoint).locals.union(functions.select(e|e.entryPoint).outputs).select(e|e.global) AS var»
+	«REM»scalar case«ENDREM»
+	«IF var.domain.getNIndices() == 0»
+		static char «"FLAG_PREFIX".getCGConstant()»«var.name» = 'N';«REM»init to not evaluated state«ENDREM»
+	«ELSE»
+		static «((CVariable)var).getPointerType().replaceFirst(var.getTypeString()+"","char")» «"FLAG_PREFIX".getCGConstant()»«var.name»;
+	«ENDIF»
+	«ENDFOREACH»
+«ENDAROUND»
+
+«REM»Override Memory Macros«ENDREM»
+«AROUND template::c::genericC::memoryMacroDefs FOR CodeUnit»
+«targetDef.proceed()»
+«FOREACH functions.select(e|e.entryPoint).locals.union(functions.select(e|e.entryPoint).outputs).select(e|e.global) AS var»
+«IF var.domain.getNIndices() > 0»
+«LET "FLAG_PREFIX".getCGConstant()+var.name AS varName»
+	«IF var.flattened»
+		#define «varName»(«var.getMacroIndices()») «varName»«EXPAND genericC::arrayIndexing1D FOR var»
+	«ELSE»
+		#define «varName»(«var.getMacroIndices()») «varName»«EXPAND genericC::arrayIndexingMD FOR var»
+	«ENDIF»
+«ENDLET»
+«ENDIF»
+«ENDFOREACH»
+«ENDAROUND»
+«AROUND template::c::genericC::memoryMacroUndefs FOR CodeUnit»
+«FOREACH variables AS var»
+	«IF var.domain.getNIndices() > 0»#undef «"FLAG_PREFIX".getCGConstant()»«var.name»
+	«ENDIF»
+«ENDFOREACH»
+«ENDAROUND»

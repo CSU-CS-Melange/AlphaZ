@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="commandIF"
+    nsURI="http://alphaz/commandIF" nsPrefix="commandIF">
+  <eClassifiers xsi:type="ecore:EClass" name="Category">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="TODO : add description (to the model)"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="commandPrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subcategories" upperBound="-1"
+        eType="#//Category" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="commands" upperBound="-1"
+        eType="#//BasicCommand" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BasicCommand" eSuperTypes="#//Command">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//Input" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" lowerBound="1"
+        eType="#//Type" defaultValueLiteral="void"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Command" abstract="true">
+    <eOperations name="getName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="getOutput" lowerBound="1" eType="#//Type"/>
+    <eOperations name="getCategory" lowerBound="1" eType="#//Category"/>
+    <eOperations name="isExposedToUser" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="TODO : add description (to the model)"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="overloads" upperBound="-1"
+        eType="#//Overloading" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userCommand" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Overloading" eSuperTypes="#//Command">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="overLoadedInputs" upperBound="-1"
+        eType="#//Input"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SpecializedOverloading" eSuperTypes="#//Overloading">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInputs" upperBound="-1"
+        eType="#//Input" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Input">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Type">
+    <eLiterals name="Program" value="1"/>
+    <eLiterals name="AffineSystem" value="2"/>
+    <eLiterals name="StandardEquation" value="3"/>
+    <eLiterals name="Expression" value="4"/>
+    <eLiterals name="String" value="10"/>
+    <eLiterals name="StringList" value="11" literal="List&lt;String>"/>
+    <eLiterals name="StringArray" value="12" literal="String[]"/>
+    <eLiterals name="Boolean" value="20"/>
+    <eLiterals name="int" value="30"/>
+    <eLiterals name="intList" value="31" literal="List&lt;Integer>"/>
+    <eLiterals name="intArray" value="32" literal="int[]"/>
+    <eLiterals name="TargetMapping" value="200"/>
+    <eLiterals name="SpaceTimeMap" value="201"/>
+    <eLiterals name="MemorySpace" value="202"/>
+    <eLiterals name="MemoryMap" value="203"/>
+    <eLiterals name="DIM_TYPE" value="210" literal="DIM_TYPE"/>
+    <eLiterals name="CodeGenOptions" value="250"/>
+    <eLiterals name="TiledCodeGenOptions" value="251"/>
+    <eLiterals name="void" value="400" literal="void"/>
+    <eLiterals name="AffineFunction" value="500"/>
+    <eLiterals name="Domain" value="501" literal="Domain"/>
+    <eLiterals name="ParameterDomain" value="502"/>
+    <eLiterals name="PRDG" value="503"/>
+    <eLiterals name="Object" value="1000" literal="Object"/>
+    <eLiterals name="ScheduledStatement" value="510"/>
+    <eLiterals name="ScheduledStatementList" value="511" literal="List&lt;ScheduledStatement>"/>
+  </eClassifiers>
+</ecore:EPackage>

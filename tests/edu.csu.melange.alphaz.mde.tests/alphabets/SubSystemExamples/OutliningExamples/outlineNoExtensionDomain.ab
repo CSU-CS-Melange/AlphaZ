@@ -1,0 +1,27 @@
+affine outlineNoExtensionDomain {N| N>0 }
+input
+	int inA {i | 0<=i<=N};
+output
+	int outA {i | 0<=i<=N};
+	int outB {i,j | 0<=j<=i<=N};
+	int outC {i| 0<=i<=N};
+local
+	int locA {i,j | 0<=j<=i<=N};
+	int locB {i | 0 <= i <= N};
+let
+	locA[i,j] = inA[j];
+	outA[i] = inA[i] + locB[i];
+	outC[i] = outA[i] + outB[i,i];
+	use {i | 0<=i<=N} dummy[i] (locA) returns (outB);
+	use dummy[N] (inA) returns (locB);
+.
+
+
+affine dummy {N| N>0}
+input
+	int A {i | 0<= i <= N};
+output
+	int B {i | 0<= i <= N};
+let
+	B = (i->N-i)@A;
+.

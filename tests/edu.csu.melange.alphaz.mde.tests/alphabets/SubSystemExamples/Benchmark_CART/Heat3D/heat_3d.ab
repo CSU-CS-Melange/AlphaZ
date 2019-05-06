@@ -1,0 +1,50 @@
+/**/
+//double rand();
+
+affine heat_3d {TSTEPS,N,M,K | TSTEPS > 2 && N > 3 && M > 3 && K > 3}
+input 
+	double A {i,j,k | 0<=i<N && 0<=j<M && 0<=k<K};
+output
+	double B {t,i,j,k|t == TSTEPS && 0<=i<N && 0<=j<M && 0<=k<K};
+local 
+	double temp_B {t,i,j,k|0<=i<N && 0<=j<M && 0<=k<K && 0<=t<TSTEPS};
+let
+	temp_B[t,i,j,k] = case
+						{|t == 0 && 1<=i<N-1 && 1<=j<M-1 && 1<=k<K-1} : A[i,j,k];
+						{|t > 0 && 1<=i<N-1 && 1<=j<M-1 && 1<=k<K-1}  : 
+											0.125*(temp_B[t-1,i+1,j,k] -2.0*temp_B[t-1,i,j,k] + temp_B[t-1,i-1,j,k])+
+											0.125*(temp_B[t-1,i,j+1,k] -2.0*temp_B[t-1,i,j,k] + temp_B[t-1,i,j-1,k])+ 
+											0.125*(temp_B[t-1,i,j,k+1] -2.0*temp_B[t-1,i,j,k] + temp_B[t-1,i,j,k-1])+
+											temp_B[t-1,i,j,k];
+						{|0==i } || {|0==j && 0<i} || {|0<i && 0<j && 0==k}
+						|| {|0<j && 0<k && i==N-1 } || {|0<i<N-1 && 0<k && j==M-1}
+						|| {|0<i<N-1 && 0<j<M-1 && k==K-1} : 0;  
+					esac; 
+
+	B[t,i,j,k] = temp_B[t-1,i,j,k]; 
+.
+/**/
+/*
+//for writeC verify code
+double rand();
+
+affine heat_3d {TSTEPS,N,M,K | TSTEPS > 2 && N > 3 && M > 3 && K > 3}
+input 
+output
+	double B {i,j,k|0<=i<N && 0<=j<M && 0<=k<K};
+local 
+	double temp_B {t,i,j,k|0<=i<N && 0<=j<M && 0<=k<K && 0<=t<TSTEPS};
+let
+	temp_B[t,i,j,k] = case
+						{|t == 0 && 1<=i<N-1 && 1<=j<M-1 && 1<=k<K-1} : 1.0*rand()/1024;
+						{|t > 0 && 1<=i<N-1 && 1<=j<M-1 && 1<=k<K-1}  : 
+											0.125*(temp_B[t-1,i+1,j,k] -2.0*temp_B[t-1,i,j,k] + temp_B[t-1,i-1,j,k])+
+											0.125*(temp_B[t-1,i,j+1,k] -2.0*temp_B[t-1,i,j,k] + temp_B[t-1,i,j-1,k])+ 
+											0.125*(temp_B[t-1,i,j,k+1] -2.0*temp_B[t-1,i,j,k] + temp_B[t-1,i,j,k-1])+
+											temp_B[t-1,i,j,k];
+						{|0==i } || {|0==j } || {|0==k} || {|i==N-1 } || {|j==M-1} || {|k==K-1} : 0;  
+					esac; 
+
+	B[i,j,k] = temp_B[TSTEPS-1,i,j,k]; 
+.
+*/

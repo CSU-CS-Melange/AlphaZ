@@ -1,0 +1,11 @@
+affine 2mm {N|N>0}
+	input
+		double A,B,D {i,j|0<=(i,j)<N};
+	output
+		double E {i,j|0<=(i,j)<N};
+	local
+		double C {i,j|0<=(i,j)<N};
+	let
+		C[i,j] = reduce(+, [k], A[i,k] * B[k,j]);
+		E[i,j] = reduce(+, [k], C[i,k] * D[k,j]);
+.

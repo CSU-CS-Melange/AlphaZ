@@ -1,0 +1,20 @@
+double sqrt (double) ;
+affine cholesky {N| N>=3 }
+	input
+		double A {i,j| j>=0 && N>=j+1 && i>=0 && N>=i+1 } ;
+	output
+		double L {i,j| j>=0 && i>=j && N>=i+1 } ;
+	local
+		double Lacc {i,j,k| k>=0 && j>=k+1 && N>=i+1 && i>=j } ;
+	let
+		L[i,j] = case
+			{ | j==0 && i==0 } : sqrt (A) ;
+			{ | j==0 && i>=1 } : A / L[j,j] ;
+			{ | j==i && i>=1 } : sqrt (A[j,j] - Lacc[i,j,j-1]) ;
+			{ | i>=j+1 && j>=1 } : (A - Lacc[i,j,j-1]) / L[j,j] ;
+		esac;
+		Lacc[i,j,k] = case
+			{| k>=1 } : Lacc[i,j,k-1] + L[i,k] * L[j,k] ;
+			{ | k==0 } : L[i,k] * L[j,k] ;
+		esac;
+.

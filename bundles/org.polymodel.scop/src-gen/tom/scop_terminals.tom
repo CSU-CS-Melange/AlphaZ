@@ -1,0 +1,80 @@
+// Primitive terminals (enum and data types)
+
+%typeterm JNIISLUnionMap {
+	/*PROTECTED REGION ID(tom_terminal_JNIISLUnionMap) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{fr.irisa.cairn.jnimap.isl.jni.JNIISLUnionMap}
+	is_sort(t) 		{$t instanceof fr.irisa.cairn.jnimap.isl.jni.JNIISLUnionMap}
+	equals(l1,l2) 	{$l1.equals($l2)}
+	/*PROTECTED REGION END*/
+}
+
+// Terminals
+
+%typeterm nodes{
+	/*PROTECTED REGION ID(tom_terminal_nodes) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<AbstractScopNode> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<AbstractScopNode>)$t).size() == 0 
+    	|| (((EList<AbstractScopNode>)$t).size()>0 && ((EList<AbstractScopNode>)$t).get(0) instanceof AbstractScopNode))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray nodes nodes(node*) {
+	/*PROTECTED REGION ID(tom_terminal_nodes_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<AbstractScopNode>)$t).size() == 0 
+ 		|| (((EList<AbstractScopNode>)$t).size()>0 && ((EList<AbstractScopNode>)$t).get(0) instanceof AbstractScopNode))}
+    make_empty(n) { new BasicEList<AbstractScopNode>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm node {
+	/*PROTECTED REGION ID(tom_terminal_node) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{AbstractScopNode}
+	is_sort(t) 		{$t instanceof AbstractScopNode}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm ScopRoot {
+	/*PROTECTED REGION ID(tom_terminal_ScopRoot) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{ScopRoot}
+	is_sort(t) 		{$t instanceof ScopRoot}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+// List Terminals
+
+%typeterm ICSList{
+	/*PROTECTED REGION ID(tom_terminal_ICSList) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<IntConstraintSystem> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<IntConstraintSystem>)$t).size() == 0 
+    	|| (((EList<IntConstraintSystem>)$t).size()>0 && ((EList<IntConstraintSystem>)$t).get(0) instanceof IntConstraintSystem))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray ICSList ICSList(ICS*) {
+	/*PROTECTED REGION ID(tom_terminal_ICSList_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<IntConstraintSystem>)$t).size() == 0 
+ 		|| (((EList<IntConstraintSystem>)$t).size()>0 && ((EList<IntConstraintSystem>)$t).get(0) instanceof IntConstraintSystem))}
+    make_empty(n) { new BasicEList<IntConstraintSystem>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}

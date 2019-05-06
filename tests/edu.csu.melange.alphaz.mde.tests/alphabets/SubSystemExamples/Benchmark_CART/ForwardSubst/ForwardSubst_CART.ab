@@ -1,0 +1,17 @@
+affine ForwardSubst {Nb,Nl,b|Nl==0 && Nb>=1 && b>=1}
+input
+	double L_bl {iBl,jBl,iLoc,jLoc|jBl==iBl && Nl==0 && iBl>=0 && Nb>=iBl+1 && jLoc>=0 && b>=iLoc+1 && iLoc>=jLoc}
+			|| {iBl,jBl,iLoc,jLoc|Nl==0 && jBl>=0 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && Nb>=iBl+1 && iBl>=jBl+1};
+	double b_bl {iBl,iLoc|Nl==0 && iBl>=0 && iLoc>=0 && b>=iLoc+1 && b>=1 && Nb>=iBl+1 && Nb>=1};
+output
+	double x_bl {iBl,iLoc|Nl==0 && iBl>=0 && iLoc>=0 && b>=iLoc+1 && b>=1 && Nb>=iBl+1 && Nb>=1};
+local
+let
+x_bl[iBl,iLoc] = case
+	{|iLoc==0 && iBl==0 && Nl==0 && b>=1 && Nb>=1} : (b_bl / L_bl[iBl,iBl,iLoc,iLoc]);
+	{|Nl==0 && iLoc>=0 && b>=iLoc+1 && Nb>=iBl+1 && iBl>=0 && iBl+iLoc>=1 && b>=1} : ((b_bl - reduce(+, (iBl,kBl,iLoc,kLoc->iBl,iLoc),
+			{|kBl==iBl && Nl==0 && iLoc>=0 && b>=iLoc+1 && b>=1 && kLoc>=0 && b>=kLoc+1 && iBl>=0 && Nb>=1 && iLoc>=kLoc+1}
+			|| {|Nl==0 && iLoc>=0 && b>=iLoc+1 && b>=1 && kLoc>=0 && b>=kLoc+1 && kBl>=0 && iBl>=kBl+1 && Nb>=1} : (L_bl * x_bl[kBl,kLoc])
+		)) / L_bl[iBl,iBl,iLoc,iLoc]);
+esac;
+.

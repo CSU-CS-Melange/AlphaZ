@@ -1,0 +1,18 @@
+affine ForwardSubst_noRed {N| N>0}
+input
+	double L {i,j | 0<=j<=i<N};
+	double b {i | 0<=i<N};
+output
+	double x {i | 0<=i<N};
+local
+	double temp {i,k | 0<=k<i<N};
+let
+	x[i] = case
+		{i | i==0} : b[i]/L[i,i];
+		{i | 0<i<N} : (b[i] - temp[i,i-1] )/L[i,i];
+	esac;
+	temp[i,k] = case
+		{|k>0} : L[i,k]*x[k] + temp[i,k-1];
+		{|k==0} : L[i,k]*x[k];
+	esac;
+.

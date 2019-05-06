@@ -1,0 +1,17 @@
+affine MSS {N | N > 1}
+input
+	int A {i | 0 <= i <= N};
+output
+	int T {i | 0 <= i <= N};
+	int X {i | 0 <= i <= N};
+let
+	X[i] = case
+			{| i == 0}: A[0];
+			{| i > 0}: max(A[i], X[i-1] + A[i]);
+			esac;
+			
+	T[i] = case
+			{| i == 0}: X[0];
+			{| i > 0}: max(T[i-1], X[i]);
+			esac;
+.

@@ -1,0 +1,12 @@
+import commandIF;
+extension template::Common reexport;
+
+//Returns the package name of a given Category
+String getLatexName(Command command):
+	if (command.getCategory().commandPrefix != null) then
+		latexString(command.getCategory().commandPrefix)+latexString(command.getName())
+	else
+		latexString(command.getName());
+
+String latexString(String str):
+	JAVA commandIF.util.EscapeString.latex(java.lang.String);

@@ -1,0 +1,13 @@
+affine UnusedVariableExample {|}
+input
+	int x;
+output
+	int y;
+local
+	int temp1;
+	int temp2;
+let
+	temp1 = temp2;
+	temp2 = temp1;
+	y = temp2;
+.

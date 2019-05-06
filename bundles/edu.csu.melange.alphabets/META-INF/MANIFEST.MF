@@ -1,0 +1,39 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: edu.csu.melange.alphabets
+Bundle-Vendor: Colorado State University
+Bundle-Version: 0.9.6.qualifier
+Bundle-SymbolicName: edu.csu.melange.alphabets; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext;bundle-version="2.0.0";visibility:=reexport,
+ org.apache.log4j;bundle-version="1.2.15";visibility:=reexport,
+ org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional;visibility:=reexport,
+ org.eclipse.xtext.generator;resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types,
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ org.eclipse.xtext.xbase.lib
+Import-Package: org.apache.log4j,
+ org.apache.commons.logging,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend2.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: edu.csu.melange.alphabets.xtext,
+ edu.csu.melange.alphabets.xtext.alphabets,
+ edu.csu.melange.alphabets.xtext.alphabets.impl,
+ edu.csu.melange.alphabets.xtext.alphabets.util,
+ edu.csu.melange.alphabets.xtext.parser.antlr,
+ edu.csu.melange.alphabets.xtext.parser.antlr.internal,
+ edu.csu.melange.alphabets.xtext.serializer,
+ edu.csu.melange.alphabets.xtext.services,
+ edu.csu.melange.alphabets.xtext.validation,
+ edu.csu.melange.alphabets.xtext.scoping,
+ edu.csu.melange.alphabets.xtext.generator,
+ edu.csu.melange.alphabets.xtext.formatting
+

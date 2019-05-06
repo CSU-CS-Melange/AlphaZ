@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polymodel/src" modelPluginID="org.polymodel"
+    modelName="Polymodel" importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0"
+    copyrightFields="false" usedGenPackages="../../org.polymodel.algebra/model/algebra.genmodel#//algebra"
+    operationReflection="true">
+  <foreignModel>polymodel.ecore</foreignModel>
+  <genPackages prefix="Polymodel" basePackage="org" disposableProviderFactory="true"
+      ecorePackage="polymodel.ecore#/">
+    <genClasses ecoreClass="polymodel.ecore#//Domain">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//Domain/polyhedra"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//Domain/dimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//Domain/label"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/union">
+        <genParameters ecoreParameter="polymodel.ecore#//Domain/union/domain"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/union/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/image">
+        <genParameters ecoreParameter="polymodel.ecore#//Domain/image/relation"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/image/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/difference">
+        <genParameters ecoreParameter="polymodel.ecore#//Domain/difference/domain"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/difference/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/intersection">
+        <genParameters ecoreParameter="polymodel.ecore#//Domain/intersection/domain"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/intersection/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/isEmpty"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/simplify">
+        <genParameters ecoreParameter="polymodel.ecore#//Domain/simplify/context"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/simplify/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/simplify.1">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/simplify.1/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/boundingBox">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/boundingBox/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/equivalence">
+        <genParameters ecoreParameter="polymodel.ecore#//Domain/equivalence/domain"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//Domain/accept/visitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/isUniverse"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/lexMin">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/lexMin/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/lexMax">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/lexMax/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/detectEqualities">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/detectEqualities/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/affineHull">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/affineHull/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/polyhedralHull">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/polyhedralHull/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/toMatrices"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Domain/complement">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Domain/complement/T"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//DimensionsManager">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//DimensionsManager/dimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//DimensionsManager/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//DimensionsManager/inputsDimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//DimensionsManager/outputsDimensions"/>
+      <genOperations ecoreOperation="polymodel.ecore#//DimensionsManager/getDimension">
+        <genParameters ecoreParameter="polymodel.ecore#//DimensionsManager/getDimension/position"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//DimensionsManager/getDimension.1">
+        <genParameters ecoreParameter="polymodel.ecore#//DimensionsManager/getDimension.1/position"/>
+        <genParameters ecoreParameter="polymodel.ecore#//DimensionsManager/getDimension.1/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//DimensionsManager/getInputDimension">
+        <genParameters ecoreParameter="polymodel.ecore#//DimensionsManager/getInputDimension/var"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//DimensionsManager/getOutputDimension">
+        <genParameters ecoreParameter="polymodel.ecore#//DimensionsManager/getOutputDimension/var"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//DimensionsManager/getParameter">
+        <genParameters ecoreParameter="polymodel.ecore#//DimensionsManager/getParameter/position"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//DimensionsManager/getParameter.1">
+        <genParameters ecoreParameter="polymodel.ecore#//DimensionsManager/getParameter.1/position"/>
+        <genParameters ecoreParameter="polymodel.ecore#//DimensionsManager/getParameter.1/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//DimensionsManager/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//DimensionsManager/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="polymodel.ecore#//AbstractRelation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//AbstractRelation/dimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//AbstractRelation/basicRelations"/>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/accept/visitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/reverse">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/reverse/manager"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/reverse/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/isBijective"/>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/isSingleValued"/>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/isEmpty"/>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/equivalence">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/equivalence/map"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/intersectDomain">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/intersectDomain/context"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/intersectDomain/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/intersectRange">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/intersectRange/context"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/intersectRange/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/intersection">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/intersection/map"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/intersection/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/union">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/union/map"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/union/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/difference">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/difference/map"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/difference/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/buildFunction">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/buildFunction/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/getDomain">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/getDomain/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/getRange">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/getRange/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/applyDomain">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/applyDomain/map"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/applyDomain/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/applyRange">
+        <genParameters ecoreParameter="polymodel.ecore#//AbstractRelation/applyRange/map"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/applyRange/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/transitiveClosure">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/transitiveClosure/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/exactTransitiveClosure">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/exactTransitiveClosure/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/simplify">
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//AbstractRelation/simplify/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//AbstractRelation/toMatrices"/>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//ExistentialVariable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//ExistentialVariable/definition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//ExistentialVariable/domain"/>
+      <genOperations ecoreOperation="polymodel.ecore#//ExistentialVariable/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//ExistentialVariable/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//DomainDimensions">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polymodel.ecore#//DomainDimensions/indices"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polymodel.ecore#//DomainDimensions/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//DomainDimensions/existential"/>
+      <genOperations ecoreOperation="polymodel.ecore#//DomainDimensions/copy"/>
+      <genOperations ecoreOperation="polymodel.ecore#//DomainDimensions/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//DomainDimensions/accept/visitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//DomainDimensions/getParameterDimensionOf">
+        <genParameters ecoreParameter="polymodel.ecore#//DomainDimensions/getParameterDimensionOf/variable"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//DomainDimensions/getDimensionOf">
+        <genParameters ecoreParameter="polymodel.ecore#//DomainDimensions/getDimensionOf/variable"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//IndexDimension">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polymodel.ecore#//IndexDimension/dimension"/>
+      <genOperations ecoreOperation="polymodel.ecore#//IndexDimension/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//IndexDimension/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//RelationDimensions">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polymodel.ecore#//RelationDimensions/inputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polymodel.ecore#//RelationDimensions/outputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polymodel.ecore#//RelationDimensions/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//RelationDimensions/existential"/>
+      <genOperations ecoreOperation="polymodel.ecore#//RelationDimensions/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//RelationDimensions/accept/visitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//RelationDimensions/getParameterDimensionOf">
+        <genParameters ecoreParameter="polymodel.ecore#//RelationDimensions/getParameterDimensionOf/variable"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//RelationDimensions/getInputDimensionOf">
+        <genParameters ecoreParameter="polymodel.ecore#//RelationDimensions/getInputDimensionOf/variable"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//RelationDimensions/getOutputDimensionOf">
+        <genParameters ecoreParameter="polymodel.ecore#//RelationDimensions/getOutputDimensionOf/variable"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//BasicRelation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//BasicRelation/input"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//BasicRelation/output"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//BasicRelation/relation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//BasicRelation/in"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//BasicRelation/out"/>
+      <genOperations ecoreOperation="polymodel.ecore#//BasicRelation/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//BasicRelation/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//Relation">
+      <genOperations ecoreOperation="polymodel.ecore#//Relation/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//Relation/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//Function">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//Function/expressionsMap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//Function/dimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//Function/in"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//Function/out"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//Function/accept/visitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/getExpression">
+        <genParameters ecoreParameter="polymodel.ecore#//Function/getExpression/position"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/getExpressions"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/buildRelation">
+        <genParameters ecoreParameter="polymodel.ecore#//Function/buildRelation/manager"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Function/buildRelation/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/equivalence">
+        <genParameters ecoreParameter="polymodel.ecore#//Function/equivalence/func"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/compose">
+        <genParameters ecoreParameter="polymodel.ecore#//Function/compose/func"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Function/compose/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/inverse">
+        <genParameters ecoreParameter="polymodel.ecore#//Function/inverse/manager"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Function/inverse/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/inverseInContext">
+        <genParameters ecoreParameter="polymodel.ecore#//Function/inverseInContext/manager"/>
+        <genParameters ecoreParameter="polymodel.ecore#//Function/inverseInContext/context"/>
+        <genTypeParameters ecoreTypeParameter="polymodel.ecore#//Function/inverseInContext/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/toMatrix"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/uniformizeInContext">
+        <genParameters ecoreParameter="polymodel.ecore#//Function/uniformizeInContext/context"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/nullspace"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/linearPart"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/linearPartWithParameters"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/linearPartAsFunction"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/constantPart"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/isUniform"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Function/isIdentity"/>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//ValueContainedMap">
+      <genTypeParameters ecoreTypeParameter="polymodel.ecore#//ValueContainedMap/K"/>
+      <genTypeParameters ecoreTypeParameter="polymodel.ecore#//ValueContainedMap/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polymodel.ecore#//ValueContainedMap/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//ValueContainedMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//Label">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polymodel.ecore#//Label/name"/>
+      <genOperations ecoreOperation="polymodel.ecore#//Label/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//Label/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="polymodel.ecore#//RelationDimension">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polymodel.ecore#//RelationDimension/dimension"/>
+      <genOperations ecoreOperation="polymodel.ecore#//RelationDimension/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//RelationDimension/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//InputDimension">
+      <genOperations ecoreOperation="polymodel.ecore#//InputDimension/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//InputDimension/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polymodel.ecore#//OutputDimension">
+      <genOperations ecoreOperation="polymodel.ecore#//OutputDimension/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//OutputDimension/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="polymodel.ecore#//PolymodelVisitor">
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitDomain">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitDomain/d"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitDimensionsManager">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitDimensionsManager/d"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitExistentialVariable">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitExistentialVariable/e"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitDomainDimensions">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitDomainDimensions/d"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitIndexDimension">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitIndexDimension/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitRelationDimensions">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitRelationDimensions/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitBasicRelation">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitBasicRelation/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitFunction">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitFunction/f"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitRelation">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitRelation/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitLabel">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitLabel/l"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitInputDimension">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitInputDimension/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitor/visitOutputDimension">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitor/visitOutputDimension/o"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="polymodel.ecore#//PolymodelVisitable">
+      <genOperations ecoreOperation="polymodel.ecore#//PolymodelVisitable/accept">
+        <genParameters ecoreParameter="polymodel.ecore#//PolymodelVisitable/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <nestedGenPackages prefix="Matrix" basePackage="org.polymodel" disposableProviderFactory="true"
+        ecorePackage="polymodel.ecore#//matrix">
+      <genClasses ecoreClass="polymodel.ecore#//matrix/Matrix">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polymodel.ecore#//matrix/Matrix/rows"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/inverse"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/inverseInContext">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/inverseInContext/context"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/mul">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/mul/b"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/add">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/add/b"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/sub">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/sub/b"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/transpose"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/identity">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/identity/size"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/findHermiteBasis"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/isUnimodular"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/isInHNF"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/isIntegral"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/left_hermite"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/isIdentity"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/isSquare"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/toConstraints">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/toConstraints/variables"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/getNbCols"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/getNbRows"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/set">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/set/row"/>
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/set/col"/>
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/set/value"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/get">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/get/row"/>
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/get/col"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/equivalence">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/equivalence/m"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/nullspace"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/toDomain">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/toDomain/params"/>
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/toDomain/indices"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/toFunction">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/toFunction/params"/>
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/toFunction/indices"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/rowRank"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/columnRank"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/isFullRowRank"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/isFullColumnRank"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/columnSpace"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/hermiteNormalForm"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/appendRow">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/appendRow/mat"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/Matrix/appendColumn">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/Matrix/appendColumn/mat"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="polymodel.ecore#//matrix/MatrixRow">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polymodel.ecore#//matrix/MatrixRow/values"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/MatrixRow/getSize"/>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/MatrixRow/toConstraint">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/MatrixRow/toConstraint/variables"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/MatrixRow/get">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/MatrixRow/get/col"/>
+        </genOperations>
+        <genOperations ecoreOperation="polymodel.ecore#//matrix/MatrixRow/set">
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/MatrixRow/set/col"/>
+          <genParameters ecoreParameter="polymodel.ecore#//matrix/MatrixRow/set/value"/>
+        </genOperations>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

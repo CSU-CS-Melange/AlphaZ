@@ -1,0 +1,2995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="polyhedralIR" nsURI="polyhedralIR" nsPrefix="polyhedralIR">
+  <eClassifiers xsi:type="ecore:EClass" name="Program" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="getType" eType="#//Type">
+      <eParameters name="signed" lowerBound="1" eType="#//SIGNED"/>
+      <eParameters name="type" lowerBound="1" eType="#//DATATYPE"/>
+      <eParameters name="width" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getBinaryOperator" eType="#//OP">
+      <eParameters name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getUnaryOperator" eType="#//OP">
+      <eParameters name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getMultiArgOperator" eType="#//OP">
+      <eParameters name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getExternalFunctionOperator" eType="#//OP"/>
+    <eOperations name="getExternalFunctionDeclaration" eType="#//ExternalFunctionDeclaration">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eParameters name="output" eType="#//Type"/>
+      <eParameters name="inputs" upperBound="-1" eType="#//Type"/>
+    </eOperations>
+    <eOperations name="getSystem" lowerBound="1" eType="#//AffineSystem">
+      <eParameters name="systemName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getParameterDomain" lowerBound="1" eType="#//ParameterDomain">
+      <eParameters name="systemName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="copy" lowerBound="1" eType="#//Program"/>
+    <eOperations name="isContainingSystem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitProgram(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="externalFunctionDeclarations"
+        upperBound="-1" eType="#//ExternalFunctionDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="systems" upperBound="-1"
+        eType="#//AffineSystem" containment="true" eOpposite="#//AffineSystem/containerProgram"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
+        eType="#//Type" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalFunctionDeclaration" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitExternalFunctionDeclaration(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//Type" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="output" eType="#//Type"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AffineSystem" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="getVariableDeclaration" eType="#//VariableDeclaration">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getEquation" lowerBound="1" eType="#//StandardEquation">
+      <eParameters name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getUseEquation" lowerBound="1" eType="#//UseEquation">
+      <eParameters name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="containsVariable" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="varName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="copy" lowerBound="1" eType="#//AffineSystem"/>
+    <eOperations name="findLabel" eType="#//UseEquation">
+      <eParameters name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAffineSystem(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containerProgram" eType="#//Program"
+        changeable="false" unsettable="true" eOpposite="#//Program/systems"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" lowerBound="1"
+        eType="#//ParameterDomain" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//VariableDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="#//VariableDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locals" upperBound="-1"
+        eType="#//VariableDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="equations" upperBound="-1"
+        eType="#//StandardEquation" containment="true" eOpposite="#//StandardEquation/containerSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="useEquations" upperBound="-1"
+        eType="#//UseEquation" containment="true" eOpposite="#//UseEquation/containerSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetMapping" lowerBound="1"
+        eType="#//targetMapping/TargetMapping" containment="true" eOpposite="#//targetMapping/TargetMapping/containerSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="whileInfo" eType="#//WhileInfo"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tilingInfo" eType="#//TilingInformations"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Type">
+    <eOperations name="getCName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="signed" lowerBound="1"
+        eType="#//SIGNED"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeID" lowerBound="1"
+        eType="#//DATATYPE"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SIGNED">
+    <eLiterals name="SIGNED" literal="SIGNED"/>
+    <eLiterals name="UNSIGNED" value="1" literal="UNSIGNED"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DATATYPE">
+    <eLiterals name="INTEGER" literal="INTEGER"/>
+    <eLiterals name="FLOATING_POINT" value="1" literal="FLOATING_POINT"/>
+    <eLiterals name="CHAR" value="2" literal="CHAR"/>
+    <eLiterals name="BOOL" value="3" literal="BOOL"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="OP">
+    <eLiterals name="ADD" literal="ADD"/>
+    <eLiterals name="SUB" value="1" literal="SUB"/>
+    <eLiterals name="MUL" value="2" literal="MUL"/>
+    <eLiterals name="DIV" value="3" literal="DIV"/>
+    <eLiterals name="MOD" value="4" literal="MOD"/>
+    <eLiterals name="MAX" value="5" literal="MAX"/>
+    <eLiterals name="MIN" value="6" literal="MIN"/>
+    <eLiterals name="AND" value="7" literal="AND"/>
+    <eLiterals name="OR" value="8" literal="OR"/>
+    <eLiterals name="NAND" value="9" literal="NAND"/>
+    <eLiterals name="NOR" value="10" literal="NOR"/>
+    <eLiterals name="XOR" value="11" literal="XOR"/>
+    <eLiterals name="EQ" value="12" literal="EQ"/>
+    <eLiterals name="NE" value="13" literal="NE"/>
+    <eLiterals name="LT" value="14" literal="LT"/>
+    <eLiterals name="LE" value="15" literal="LE"/>
+    <eLiterals name="GT" value="16" literal="GT"/>
+    <eLiterals name="GE" value="17" literal="GE"/>
+    <eLiterals name="NOT" value="18" literal="NOT"/>
+    <eLiterals name="NEG" value="19" literal="NEG"/>
+    <eLiterals name="EXTERNAL_FUNCTION" value="20" literal="EXTERNAL_FUNCTION"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="getName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="isInput" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isOutput" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isLocal" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitVariableDeclaration(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varID" eType="#//VariableIdentifier"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//Domain"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableIdentifier" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="equilvalence" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="other" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitVariableIdentifier(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Equation" abstract="true" interface="true"
+      eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitEquation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UseEquation" eSuperTypes="#//Equation #//PolyhedralIRVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitUseEquation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extensionDomain" eType="#//Domain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" lowerBound="1"
+        eType="#//AffineFunction" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//Expression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="#//VariableDeclaration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subSystem" lowerBound="1"
+        eType="#//AffineSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containerSystem" eType="#//AffineSystem"
+        changeable="false" unsettable="true" eOpposite="#//AffineSystem/useEquations"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral=""/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StandardEquation" eSuperTypes="#//Equation #//PolyhedralIRVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitStandardEquation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableDeclaration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containerSystem" eType="#//AffineSystem"
+        changeable="false" unsettable="true" eOpposite="#//AffineSystem/equations"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Domain" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="union" lowerBound="1" eType="#//Domain">
+      <eParameters name="domain" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="intersection" lowerBound="1" eType="#//Domain">
+      <eParameters name="domain" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="difference" lowerBound="1" eType="#//Domain">
+      <eParameters name="domain" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="equivalence" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="domain" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="isUniverse" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isEmpty" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="image" lowerBound="1" eType="#//Domain">
+      <eParameters name="T" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="preimage" lowerBound="1" eType="#//Domain">
+      <eParameters name="T" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="getParams" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getIndices" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getDim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="getNParams" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="getNIndices" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="addDimension">
+      <eParameters name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="addParameterDimension">
+      <eParameters name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="simplify"/>
+    <eOperations name="simplifyInContext">
+      <eParameters name="context" lowerBound="1" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="boundingBox" lowerBound="1" eType="#//Domain"/>
+    <eOperations name="affineHull" lowerBound="1" eType="#//Domain"/>
+    <eOperations name="getBounds" lowerBound="2" upperBound="2" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+      <eParameters name="dim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="copy" lowerBound="1" eType="#//Domain"/>
+    <eOperations name="transitiveClosure" lowerBound="1" eType="#//Domain">
+      <eParameters name="f" lowerBound="1" eType="#//AffineFunction"/>
+      <eParameters name="range" lowerBound="1" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="exactTransitiveClosure" lowerBound="1" eType="#//Domain">
+      <eParameters name="f" lowerBound="1" eType="#//AffineFunction"/>
+      <eParameters name="range" lowerBound="1" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitDomain(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PMdomain" lowerBound="1"
+        eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ParameterDomain" eSuperTypes="#//Domain #//PolyhedralIRVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitParameterDomain(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AffineFunction" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="equivalence" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="func" lowerBound="1" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="compose" eType="#//AffineFunction">
+      <eParameters name="f2" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="getParams" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getIndices" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getDimLHS" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="getDimRHS" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="getExpressions" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//affine/AffineExpression"/>
+    <eOperations name="copy" lowerBound="1" eType="#//AffineFunction"/>
+    <eOperations name="inverse" eType="#//AffineFunction">
+      <eParameters name="names" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="inverseInContext" eType="#//AffineFunction">
+      <eParameters name="context" eType="#//Domain"/>
+      <eParameters name="names" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="isUniform" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isBijective" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isIdentity" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="getNParams" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="getNIndices" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAffineFunction(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="PMmapping" lowerBound="1"
+        eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Function"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression" abstract="true" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="copy" lowerBound="1" eType="#//Expression"/>
+    <eOperations name="getContainerEquation" lowerBound="1" eType="#//Equation"/>
+    <eOperations name="equivalence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="expr" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contextDomain" lowerBound="1"
+        eType="#//Domain" transient="true" derived="true" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expressionDomain" lowerBound="1"
+        eType="#//Domain" transient="true" derived="true" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expressionType" eType="#//Type"
+        changeable="false" volatile="true" unsettable="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FastISLDomain" eSuperTypes="#//Domain #//PolyhedralIRVisitable">
+    <eOperations name="toMatrix" upperBound="-1" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//matrix/Matrix"/>
+    <eOperations name="toLongMatrix" upperBound="-1" eType="#//longMatrix"/>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitFastISLDomain(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="islSet" eType="#//JNIISLSet"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domDims" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//DomainDimensions"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="JNIISLSet" instanceTypeName="JNIISLSet"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FastISLMap" eSuperTypes="#//AffineFunction #//PolyhedralIRVisitable">
+    <eOperations name="toMatrix" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//matrix/Matrix"/>
+    <eOperations name="toLongMatrix" eType="#//longMatrix"/>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitFastISLMap(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="islMap" eType="#//JNIISLBasicMap"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domDims" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//DomainDimensions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="labelIn" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Label"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="labelOut" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Label"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="JNIISLBasicMap" instanceTypeName="JNIISLBasicMap"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="longMatrix" instanceClassName="long[][]"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WhileInfo" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitWhileInfo(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="timeDomain" lowerBound="1"
+        eType="#//Domain"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
+        eType="#//Expression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containerSystem" lowerBound="1"
+        eType="#//AffineSystem"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TilingInformations" eSuperTypes="#//PolyhedralIRVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitTilingInformations(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ratios" transient="true">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+        </eTypeArguments>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minParamValues" transient="true">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EIntegerObject"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tileGroups" transient="true">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eTypeArguments eClassifier="#//ListString"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cobPreprocess" transient="true">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eTypeArguments eClassifier="#//AffineFunction"/>
+      </eGenericType>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ListString" instanceTypeName="List&lt;String>"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PolyhedralIRVisitor" abstract="true"
+      interface="true">
+    <eOperations name="defaultIn">
+      <eParameters name="node" eType="#//PolyhedralIRVisitable"/>
+    </eOperations>
+    <eOperations name="defaultOut">
+      <eParameters name="node" eType="#//PolyhedralIRVisitable"/>
+    </eOperations>
+    <eOperations name="visitProgram">
+      <eParameters name="p" eType="#//Program"/>
+    </eOperations>
+    <eOperations name="inProgram">
+      <eParameters name="p" eType="#//Program"/>
+    </eOperations>
+    <eOperations name="outProgram">
+      <eParameters name="p" eType="#//Program"/>
+    </eOperations>
+    <eOperations name="visitExternalFunctionDeclaration">
+      <eParameters name="e" eType="#//ExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="inExternalFunctionDeclaration">
+      <eParameters name="e" eType="#//ExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="outExternalFunctionDeclaration">
+      <eParameters name="e" eType="#//ExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAffineSystem">
+      <eParameters name="a" eType="#//AffineSystem"/>
+    </eOperations>
+    <eOperations name="inAffineSystem">
+      <eParameters name="a" eType="#//AffineSystem"/>
+    </eOperations>
+    <eOperations name="outAffineSystem">
+      <eParameters name="a" eType="#//AffineSystem"/>
+    </eOperations>
+    <eOperations name="visitVariableDeclaration">
+      <eParameters name="v" eType="#//VariableDeclaration"/>
+    </eOperations>
+    <eOperations name="inVariableDeclaration">
+      <eParameters name="v" eType="#//VariableDeclaration"/>
+    </eOperations>
+    <eOperations name="outVariableDeclaration">
+      <eParameters name="v" eType="#//VariableDeclaration"/>
+    </eOperations>
+    <eOperations name="visitVariableIdentifier">
+      <eParameters name="v" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="inVariableIdentifier">
+      <eParameters name="v" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="outVariableIdentifier">
+      <eParameters name="v" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="visitEquation">
+      <eParameters name="e" eType="#//Equation"/>
+    </eOperations>
+    <eOperations name="inEquation">
+      <eParameters name="e" eType="#//Equation"/>
+    </eOperations>
+    <eOperations name="outEquation">
+      <eParameters name="e" eType="#//Equation"/>
+    </eOperations>
+    <eOperations name="visitUseEquation">
+      <eParameters name="u" eType="#//UseEquation"/>
+    </eOperations>
+    <eOperations name="inUseEquation">
+      <eParameters name="u" eType="#//UseEquation"/>
+    </eOperations>
+    <eOperations name="outUseEquation">
+      <eParameters name="u" eType="#//UseEquation"/>
+    </eOperations>
+    <eOperations name="visitStandardEquation">
+      <eParameters name="s" eType="#//StandardEquation"/>
+    </eOperations>
+    <eOperations name="inStandardEquation">
+      <eParameters name="s" eType="#//StandardEquation"/>
+    </eOperations>
+    <eOperations name="outStandardEquation">
+      <eParameters name="s" eType="#//StandardEquation"/>
+    </eOperations>
+    <eOperations name="visitDomain">
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="inDomain">
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="outDomain">
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="visitParameterDomain">
+      <eParameters name="p" eType="#//ParameterDomain"/>
+    </eOperations>
+    <eOperations name="inParameterDomain">
+      <eParameters name="p" eType="#//ParameterDomain"/>
+    </eOperations>
+    <eOperations name="outParameterDomain">
+      <eParameters name="p" eType="#//ParameterDomain"/>
+    </eOperations>
+    <eOperations name="visitAffineFunction">
+      <eParameters name="a" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="inAffineFunction">
+      <eParameters name="a" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="outAffineFunction">
+      <eParameters name="a" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="visitExpression">
+      <eParameters name="e" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="inExpression">
+      <eParameters name="e" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="outExpression">
+      <eParameters name="e" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="visitFastISLDomain">
+      <eParameters name="f" eType="#//FastISLDomain"/>
+    </eOperations>
+    <eOperations name="inFastISLDomain">
+      <eParameters name="f" eType="#//FastISLDomain"/>
+    </eOperations>
+    <eOperations name="outFastISLDomain">
+      <eParameters name="f" eType="#//FastISLDomain"/>
+    </eOperations>
+    <eOperations name="visitFastISLMap">
+      <eParameters name="f" eType="#//FastISLMap"/>
+    </eOperations>
+    <eOperations name="inFastISLMap">
+      <eParameters name="f" eType="#//FastISLMap"/>
+    </eOperations>
+    <eOperations name="outFastISLMap">
+      <eParameters name="f" eType="#//FastISLMap"/>
+    </eOperations>
+    <eOperations name="visitWhileInfo">
+      <eParameters name="w" eType="#//WhileInfo"/>
+    </eOperations>
+    <eOperations name="inWhileInfo">
+      <eParameters name="w" eType="#//WhileInfo"/>
+    </eOperations>
+    <eOperations name="outWhileInfo">
+      <eParameters name="w" eType="#//WhileInfo"/>
+    </eOperations>
+    <eOperations name="visitTilingInformations">
+      <eParameters name="t" eType="#//TilingInformations"/>
+    </eOperations>
+    <eOperations name="inTilingInformations">
+      <eParameters name="t" eType="#//TilingInformations"/>
+    </eOperations>
+    <eOperations name="outTilingInformations">
+      <eParameters name="t" eType="#//TilingInformations"/>
+    </eOperations>
+    <eOperations name="visitCaseExpression">
+      <eParameters name="c" eType="#//expression/CaseExpression"/>
+    </eOperations>
+    <eOperations name="inCaseExpression">
+      <eParameters name="c" eType="#//expression/CaseExpression"/>
+    </eOperations>
+    <eOperations name="outCaseExpression">
+      <eParameters name="c" eType="#//expression/CaseExpression"/>
+    </eOperations>
+    <eOperations name="visitDependenceExpression">
+      <eParameters name="d" eType="#//expression/DependenceExpression"/>
+    </eOperations>
+    <eOperations name="inDependenceExpression">
+      <eParameters name="d" eType="#//expression/DependenceExpression"/>
+    </eOperations>
+    <eOperations name="outDependenceExpression">
+      <eParameters name="d" eType="#//expression/DependenceExpression"/>
+    </eOperations>
+    <eOperations name="visitIfExpression">
+      <eParameters name="i" eType="#//expression/IfExpression"/>
+    </eOperations>
+    <eOperations name="inIfExpression">
+      <eParameters name="i" eType="#//expression/IfExpression"/>
+    </eOperations>
+    <eOperations name="outIfExpression">
+      <eParameters name="i" eType="#//expression/IfExpression"/>
+    </eOperations>
+    <eOperations name="visitIndexExpression">
+      <eParameters name="i" eType="#//expression/IndexExpression"/>
+    </eOperations>
+    <eOperations name="inIndexExpression">
+      <eParameters name="i" eType="#//expression/IndexExpression"/>
+    </eOperations>
+    <eOperations name="outIndexExpression">
+      <eParameters name="i" eType="#//expression/IndexExpression"/>
+    </eOperations>
+    <eOperations name="visitReduceExpression">
+      <eParameters name="r" eType="#//expression/ReduceExpression"/>
+    </eOperations>
+    <eOperations name="inReduceExpression">
+      <eParameters name="r" eType="#//expression/ReduceExpression"/>
+    </eOperations>
+    <eOperations name="outReduceExpression">
+      <eParameters name="r" eType="#//expression/ReduceExpression"/>
+    </eOperations>
+    <eOperations name="visitRestrictExpression">
+      <eParameters name="r" eType="#//expression/RestrictExpression"/>
+    </eOperations>
+    <eOperations name="inRestrictExpression">
+      <eParameters name="r" eType="#//expression/RestrictExpression"/>
+    </eOperations>
+    <eOperations name="outRestrictExpression">
+      <eParameters name="r" eType="#//expression/RestrictExpression"/>
+    </eOperations>
+    <eOperations name="visitVariableExpression">
+      <eParameters name="v" eType="#//expression/VariableExpression"/>
+    </eOperations>
+    <eOperations name="inVariableExpression">
+      <eParameters name="v" eType="#//expression/VariableExpression"/>
+    </eOperations>
+    <eOperations name="outVariableExpression">
+      <eParameters name="v" eType="#//expression/VariableExpression"/>
+    </eOperations>
+    <eOperations name="visitBinaryExpression">
+      <eParameters name="b" eType="#//expression/BinaryExpression"/>
+    </eOperations>
+    <eOperations name="inBinaryExpression">
+      <eParameters name="b" eType="#//expression/BinaryExpression"/>
+    </eOperations>
+    <eOperations name="outBinaryExpression">
+      <eParameters name="b" eType="#//expression/BinaryExpression"/>
+    </eOperations>
+    <eOperations name="visitConstantExpression">
+      <eParameters name="c" eType="#//expression/ConstantExpression"/>
+    </eOperations>
+    <eOperations name="inConstantExpression">
+      <eParameters name="c" eType="#//expression/ConstantExpression"/>
+    </eOperations>
+    <eOperations name="outConstantExpression">
+      <eParameters name="c" eType="#//expression/ConstantExpression"/>
+    </eOperations>
+    <eOperations name="visitBooleanExpression">
+      <eParameters name="b" eType="#//expression/BooleanExpression"/>
+    </eOperations>
+    <eOperations name="inBooleanExpression">
+      <eParameters name="b" eType="#//expression/BooleanExpression"/>
+    </eOperations>
+    <eOperations name="outBooleanExpression">
+      <eParameters name="b" eType="#//expression/BooleanExpression"/>
+    </eOperations>
+    <eOperations name="visitIntegerExpression">
+      <eParameters name="i" eType="#//expression/IntegerExpression"/>
+    </eOperations>
+    <eOperations name="inIntegerExpression">
+      <eParameters name="i" eType="#//expression/IntegerExpression"/>
+    </eOperations>
+    <eOperations name="outIntegerExpression">
+      <eParameters name="i" eType="#//expression/IntegerExpression"/>
+    </eOperations>
+    <eOperations name="visitRealExpression">
+      <eParameters name="r" eType="#//expression/RealExpression"/>
+    </eOperations>
+    <eOperations name="inRealExpression">
+      <eParameters name="r" eType="#//expression/RealExpression"/>
+    </eOperations>
+    <eOperations name="outRealExpression">
+      <eParameters name="r" eType="#//expression/RealExpression"/>
+    </eOperations>
+    <eOperations name="visitMultiArgExpression">
+      <eParameters name="m" eType="#//expression/MultiArgExpression"/>
+    </eOperations>
+    <eOperations name="inMultiArgExpression">
+      <eParameters name="m" eType="#//expression/MultiArgExpression"/>
+    </eOperations>
+    <eOperations name="outMultiArgExpression">
+      <eParameters name="m" eType="#//expression/MultiArgExpression"/>
+    </eOperations>
+    <eOperations name="visitExternalFunctionCall">
+      <eParameters name="e" eType="#//expression/ExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="inExternalFunctionCall">
+      <eParameters name="e" eType="#//expression/ExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="outExternalFunctionCall">
+      <eParameters name="e" eType="#//expression/ExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="visitUnaryExpression">
+      <eParameters name="u" eType="#//expression/UnaryExpression"/>
+    </eOperations>
+    <eOperations name="inUnaryExpression">
+      <eParameters name="u" eType="#//expression/UnaryExpression"/>
+    </eOperations>
+    <eOperations name="outUnaryExpression">
+      <eParameters name="u" eType="#//expression/UnaryExpression"/>
+    </eOperations>
+    <eOperations name="visitTargetMapping">
+      <eParameters name="t" eType="#//targetMapping/TargetMapping"/>
+    </eOperations>
+    <eOperations name="inTargetMapping">
+      <eParameters name="t" eType="#//targetMapping/TargetMapping"/>
+    </eOperations>
+    <eOperations name="outTargetMapping">
+      <eParameters name="t" eType="#//targetMapping/TargetMapping"/>
+    </eOperations>
+    <eOperations name="visitSpaceTimeLevel">
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeLevel"/>
+    </eOperations>
+    <eOperations name="inSpaceTimeLevel">
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeLevel"/>
+    </eOperations>
+    <eOperations name="outSpaceTimeLevel">
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeLevel"/>
+    </eOperations>
+    <eOperations name="visitSpaceTimeMap">
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeMap"/>
+    </eOperations>
+    <eOperations name="inSpaceTimeMap">
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeMap"/>
+    </eOperations>
+    <eOperations name="outSpaceTimeMap">
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeMap"/>
+    </eOperations>
+    <eOperations name="visitFeatureSpecification">
+      <eParameters name="f" eType="#//targetMapping/FeatureSpecification"/>
+    </eOperations>
+    <eOperations name="inFeatureSpecification">
+      <eParameters name="f" eType="#//targetMapping/FeatureSpecification"/>
+    </eOperations>
+    <eOperations name="outFeatureSpecification">
+      <eParameters name="f" eType="#//targetMapping/FeatureSpecification"/>
+    </eOperations>
+    <eOperations name="visitTilingSpecification">
+      <eParameters name="t" eType="#//targetMapping/TilingSpecification"/>
+    </eOperations>
+    <eOperations name="inTilingSpecification">
+      <eParameters name="t" eType="#//targetMapping/TilingSpecification"/>
+    </eOperations>
+    <eOperations name="outTilingSpecification">
+      <eParameters name="t" eType="#//targetMapping/TilingSpecification"/>
+    </eOperations>
+    <eOperations name="visitLoopUnrollingSpecification">
+      <eParameters name="l" eType="#//targetMapping/LoopUnrollingSpecification"/>
+    </eOperations>
+    <eOperations name="inLoopUnrollingSpecification">
+      <eParameters name="l" eType="#//targetMapping/LoopUnrollingSpecification"/>
+    </eOperations>
+    <eOperations name="outLoopUnrollingSpecification">
+      <eParameters name="l" eType="#//targetMapping/LoopUnrollingSpecification"/>
+    </eOperations>
+    <eOperations name="visitVectorizationSpecification">
+      <eParameters name="v" eType="#//targetMapping/VectorizationSpecification"/>
+    </eOperations>
+    <eOperations name="inVectorizationSpecification">
+      <eParameters name="v" eType="#//targetMapping/VectorizationSpecification"/>
+    </eOperations>
+    <eOperations name="outVectorizationSpecification">
+      <eParameters name="v" eType="#//targetMapping/VectorizationSpecification"/>
+    </eOperations>
+    <eOperations name="visitParallelizationSpecification">
+      <eParameters name="p" eType="#//targetMapping/ParallelizationSpecification"/>
+    </eOperations>
+    <eOperations name="inParallelizationSpecification">
+      <eParameters name="p" eType="#//targetMapping/ParallelizationSpecification"/>
+    </eOperations>
+    <eOperations name="outParallelizationSpecification">
+      <eParameters name="p" eType="#//targetMapping/ParallelizationSpecification"/>
+    </eOperations>
+    <eOperations name="visitMemoryMap">
+      <eParameters name="m" eType="#//targetMapping/MemoryMap"/>
+    </eOperations>
+    <eOperations name="inMemoryMap">
+      <eParameters name="m" eType="#//targetMapping/MemoryMap"/>
+    </eOperations>
+    <eOperations name="outMemoryMap">
+      <eParameters name="m" eType="#//targetMapping/MemoryMap"/>
+    </eOperations>
+    <eOperations name="visitMemorySpace">
+      <eParameters name="m" eType="#//targetMapping/MemorySpace"/>
+    </eOperations>
+    <eOperations name="inMemorySpace">
+      <eParameters name="m" eType="#//targetMapping/MemorySpace"/>
+    </eOperations>
+    <eOperations name="outMemorySpace">
+      <eParameters name="m" eType="#//targetMapping/MemorySpace"/>
+    </eOperations>
+    <eOperations name="visitStatementPartialOrder">
+      <eParameters name="s" eType="#//targetMapping/StatementPartialOrder"/>
+    </eOperations>
+    <eOperations name="inStatementPartialOrder">
+      <eParameters name="s" eType="#//targetMapping/StatementPartialOrder"/>
+    </eOperations>
+    <eOperations name="outStatementPartialOrder">
+      <eParameters name="s" eType="#//targetMapping/StatementPartialOrder"/>
+    </eOperations>
+    <eOperations name="visitUseEquationOptimization">
+      <eParameters name="u" eType="#//targetMapping/UseEquationOptimization"/>
+    </eOperations>
+    <eOperations name="inUseEquationOptimization">
+      <eParameters name="u" eType="#//targetMapping/UseEquationOptimization"/>
+    </eOperations>
+    <eOperations name="outUseEquationOptimization">
+      <eParameters name="u" eType="#//targetMapping/UseEquationOptimization"/>
+    </eOperations>
+    <eOperations name="visitCommunicationMappingForTiledSpace">
+      <eParameters name="c" eType="#//targetMapping/CommunicationMappingForTiledSpace"/>
+    </eOperations>
+    <eOperations name="inCommunicationMappingForTiledSpace">
+      <eParameters name="c" eType="#//targetMapping/CommunicationMappingForTiledSpace"/>
+    </eOperations>
+    <eOperations name="outCommunicationMappingForTiledSpace">
+      <eParameters name="c" eType="#//targetMapping/CommunicationMappingForTiledSpace"/>
+    </eOperations>
+    <eOperations name="visitCommunicatedVariableForTiledSpace">
+      <eParameters name="c" eType="#//targetMapping/CommunicatedVariableForTiledSpace"/>
+    </eOperations>
+    <eOperations name="inCommunicatedVariableForTiledSpace">
+      <eParameters name="c" eType="#//targetMapping/CommunicatedVariableForTiledSpace"/>
+    </eOperations>
+    <eOperations name="outCommunicatedVariableForTiledSpace">
+      <eParameters name="c" eType="#//targetMapping/CommunicatedVariableForTiledSpace"/>
+    </eOperations>
+    <eOperations name="visitSubTilingSpecification">
+      <eParameters name="s" eType="#//targetMapping/SubTilingSpecification"/>
+    </eOperations>
+    <eOperations name="inSubTilingSpecification">
+      <eParameters name="s" eType="#//targetMapping/SubTilingSpecification"/>
+    </eOperations>
+    <eOperations name="outSubTilingSpecification">
+      <eParameters name="s" eType="#//targetMapping/SubTilingSpecification"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PolyhedralIRVisitable" abstract="true"
+      interface="true">
+    <eOperations name="accept">
+      <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PolyhedralIRDepthFirstVisitor" eSuperTypes="#//PolyhedralIRVisitor">
+    <eOperations name="defaultIn">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value=""/>
+      </eAnnotations>
+      <eParameters name="node" eType="#//PolyhedralIRVisitable"/>
+    </eOperations>
+    <eOperations name="defaultOut">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value=""/>
+      </eAnnotations>
+      <eParameters name="node" eType="#//PolyhedralIRVisitable"/>
+    </eOperations>
+    <eOperations name="visitProgram">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inProgram(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outProgram(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//Program"/>
+    </eOperations>
+    <eOperations name="inProgram">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//Program"/>
+    </eOperations>
+    <eOperations name="outProgram">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//Program"/>
+    </eOperations>
+    <eOperations name="visitExternalFunctionDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExternalFunctionDeclaration(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExternalFunctionDeclaration(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//ExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="inExternalFunctionDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//ExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="outExternalFunctionDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//ExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAffineSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAffineSystem(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outAffineSystem(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineSystem"/>
+    </eOperations>
+    <eOperations name="inAffineSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineSystem"/>
+    </eOperations>
+    <eOperations name="outAffineSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineSystem"/>
+    </eOperations>
+    <eOperations name="visitVariableDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inVariableDeclaration(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableDeclaration(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableDeclaration"/>
+    </eOperations>
+    <eOperations name="inVariableDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableDeclaration"/>
+    </eOperations>
+    <eOperations name="outVariableDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableDeclaration"/>
+    </eOperations>
+    <eOperations name="visitVariableIdentifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inVariableIdentifier(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableIdentifier(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="inVariableIdentifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="outVariableIdentifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="visitEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inEquation(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outEquation(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Equation"/>
+    </eOperations>
+    <eOperations name="inEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Equation"/>
+    </eOperations>
+    <eOperations name="outEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Equation"/>
+    </eOperations>
+    <eOperations name="visitUseEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inUseEquation(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUseEquation(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//UseEquation"/>
+    </eOperations>
+    <eOperations name="inUseEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(u);"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//UseEquation"/>
+    </eOperations>
+    <eOperations name="outUseEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(u);"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//UseEquation"/>
+    </eOperations>
+    <eOperations name="visitStandardEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inStandardEquation(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outStandardEquation(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//StandardEquation"/>
+    </eOperations>
+    <eOperations name="inStandardEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//StandardEquation"/>
+    </eOperations>
+    <eOperations name="outStandardEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//StandardEquation"/>
+    </eOperations>
+    <eOperations name="visitDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inDomain(d);&#xA;for (EObject obj : d.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outDomain(d);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="inDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(d);"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="outDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(d);"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="visitParameterDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inParameterDomain(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outParameterDomain(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//ParameterDomain"/>
+    </eOperations>
+    <eOperations name="inParameterDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//ParameterDomain"/>
+    </eOperations>
+    <eOperations name="outParameterDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//ParameterDomain"/>
+    </eOperations>
+    <eOperations name="visitAffineFunction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAffineFunction(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outAffineFunction(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="inAffineFunction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="outAffineFunction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="visitExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExpression(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="inExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="outExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="visitFastISLDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFastISLDomain(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFastISLDomain(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLDomain"/>
+    </eOperations>
+    <eOperations name="inFastISLDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(f);"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLDomain"/>
+    </eOperations>
+    <eOperations name="outFastISLDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(f);"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLDomain"/>
+    </eOperations>
+    <eOperations name="visitFastISLMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFastISLMap(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFastISLMap(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLMap"/>
+    </eOperations>
+    <eOperations name="inFastISLMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(f);"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLMap"/>
+    </eOperations>
+    <eOperations name="outFastISLMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(f);"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLMap"/>
+    </eOperations>
+    <eOperations name="visitWhileInfo">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inWhileInfo(w);&#xA;for (EObject obj : w.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outWhileInfo(w);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="w" eType="#//WhileInfo"/>
+    </eOperations>
+    <eOperations name="inWhileInfo">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(w);"/>
+      </eAnnotations>
+      <eParameters name="w" eType="#//WhileInfo"/>
+    </eOperations>
+    <eOperations name="outWhileInfo">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(w);"/>
+      </eAnnotations>
+      <eParameters name="w" eType="#//WhileInfo"/>
+    </eOperations>
+    <eOperations name="visitTilingInformations">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inTilingInformations(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTilingInformations(t);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//TilingInformations"/>
+    </eOperations>
+    <eOperations name="inTilingInformations">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//TilingInformations"/>
+    </eOperations>
+    <eOperations name="outTilingInformations">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//TilingInformations"/>
+    </eOperations>
+    <eOperations name="visitCaseExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inCaseExpression(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCaseExpression(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/CaseExpression"/>
+    </eOperations>
+    <eOperations name="inCaseExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/CaseExpression"/>
+    </eOperations>
+    <eOperations name="outCaseExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/CaseExpression"/>
+    </eOperations>
+    <eOperations name="visitDependenceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inDependenceExpression(d);&#xA;for (EObject obj : d.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outDependenceExpression(d);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//expression/DependenceExpression"/>
+    </eOperations>
+    <eOperations name="inDependenceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(d);"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//expression/DependenceExpression"/>
+    </eOperations>
+    <eOperations name="outDependenceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(d);"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//expression/DependenceExpression"/>
+    </eOperations>
+    <eOperations name="visitIfExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inIfExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIfExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IfExpression"/>
+    </eOperations>
+    <eOperations name="inIfExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(i);"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IfExpression"/>
+    </eOperations>
+    <eOperations name="outIfExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(i);"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IfExpression"/>
+    </eOperations>
+    <eOperations name="visitIndexExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inIndexExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIndexExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IndexExpression"/>
+    </eOperations>
+    <eOperations name="inIndexExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(i);"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IndexExpression"/>
+    </eOperations>
+    <eOperations name="outIndexExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(i);"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IndexExpression"/>
+    </eOperations>
+    <eOperations name="visitReduceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inReduceExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outReduceExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/ReduceExpression"/>
+    </eOperations>
+    <eOperations name="inReduceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(r);"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/ReduceExpression"/>
+    </eOperations>
+    <eOperations name="outReduceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(r);"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/ReduceExpression"/>
+    </eOperations>
+    <eOperations name="visitRestrictExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inRestrictExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outRestrictExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RestrictExpression"/>
+    </eOperations>
+    <eOperations name="inRestrictExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(r);"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RestrictExpression"/>
+    </eOperations>
+    <eOperations name="outRestrictExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(r);"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RestrictExpression"/>
+    </eOperations>
+    <eOperations name="visitVariableExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inVariableExpression(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableExpression(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//expression/VariableExpression"/>
+    </eOperations>
+    <eOperations name="inVariableExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//expression/VariableExpression"/>
+    </eOperations>
+    <eOperations name="outVariableExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//expression/VariableExpression"/>
+    </eOperations>
+    <eOperations name="visitBinaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inBinaryExpression(b);&#xA;for (EObject obj : b.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outBinaryExpression(b);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BinaryExpression"/>
+    </eOperations>
+    <eOperations name="inBinaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(b);"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BinaryExpression"/>
+    </eOperations>
+    <eOperations name="outBinaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(b);"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BinaryExpression"/>
+    </eOperations>
+    <eOperations name="visitConstantExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inConstantExpression(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outConstantExpression(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/ConstantExpression"/>
+    </eOperations>
+    <eOperations name="inConstantExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/ConstantExpression"/>
+    </eOperations>
+    <eOperations name="outConstantExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/ConstantExpression"/>
+    </eOperations>
+    <eOperations name="visitBooleanExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inBooleanExpression(b);&#xA;for (EObject obj : b.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outBooleanExpression(b);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BooleanExpression"/>
+    </eOperations>
+    <eOperations name="inBooleanExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(b);"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BooleanExpression"/>
+    </eOperations>
+    <eOperations name="outBooleanExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(b);"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BooleanExpression"/>
+    </eOperations>
+    <eOperations name="visitIntegerExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inIntegerExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIntegerExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IntegerExpression"/>
+    </eOperations>
+    <eOperations name="inIntegerExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(i);"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IntegerExpression"/>
+    </eOperations>
+    <eOperations name="outIntegerExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(i);"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IntegerExpression"/>
+    </eOperations>
+    <eOperations name="visitRealExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inRealExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outRealExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RealExpression"/>
+    </eOperations>
+    <eOperations name="inRealExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(r);"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RealExpression"/>
+    </eOperations>
+    <eOperations name="outRealExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(r);"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RealExpression"/>
+    </eOperations>
+    <eOperations name="visitMultiArgExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inMultiArgExpression(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMultiArgExpression(m);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//expression/MultiArgExpression"/>
+    </eOperations>
+    <eOperations name="inMultiArgExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//expression/MultiArgExpression"/>
+    </eOperations>
+    <eOperations name="outMultiArgExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//expression/MultiArgExpression"/>
+    </eOperations>
+    <eOperations name="visitExternalFunctionCall">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExternalFunctionCall(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExternalFunctionCall(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//expression/ExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="inExternalFunctionCall">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//expression/ExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="outExternalFunctionCall">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//expression/ExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="visitUnaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inUnaryExpression(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUnaryExpression(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//expression/UnaryExpression"/>
+    </eOperations>
+    <eOperations name="inUnaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(u);"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//expression/UnaryExpression"/>
+    </eOperations>
+    <eOperations name="outUnaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(u);"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//expression/UnaryExpression"/>
+    </eOperations>
+    <eOperations name="visitTargetMapping">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inTargetMapping(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTargetMapping(t);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TargetMapping"/>
+    </eOperations>
+    <eOperations name="inTargetMapping">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TargetMapping"/>
+    </eOperations>
+    <eOperations name="outTargetMapping">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TargetMapping"/>
+    </eOperations>
+    <eOperations name="visitSpaceTimeLevel">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inSpaceTimeLevel(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSpaceTimeLevel(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeLevel"/>
+    </eOperations>
+    <eOperations name="inSpaceTimeLevel">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeLevel"/>
+    </eOperations>
+    <eOperations name="outSpaceTimeLevel">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeLevel"/>
+    </eOperations>
+    <eOperations name="visitSpaceTimeMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inSpaceTimeMap(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSpaceTimeMap(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeMap"/>
+    </eOperations>
+    <eOperations name="inSpaceTimeMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeMap"/>
+    </eOperations>
+    <eOperations name="outSpaceTimeMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeMap"/>
+    </eOperations>
+    <eOperations name="visitFeatureSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFeatureSpecification(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFeatureSpecification(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//targetMapping/FeatureSpecification"/>
+    </eOperations>
+    <eOperations name="inFeatureSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(f);"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//targetMapping/FeatureSpecification"/>
+    </eOperations>
+    <eOperations name="outFeatureSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(f);"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//targetMapping/FeatureSpecification"/>
+    </eOperations>
+    <eOperations name="visitTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inTilingSpecification(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTilingSpecification(t);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TilingSpecification"/>
+    </eOperations>
+    <eOperations name="inTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TilingSpecification"/>
+    </eOperations>
+    <eOperations name="outTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TilingSpecification"/>
+    </eOperations>
+    <eOperations name="visitLoopUnrollingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inLoopUnrollingSpecification(l);&#xA;for (EObject obj : l.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outLoopUnrollingSpecification(l);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="l" eType="#//targetMapping/LoopUnrollingSpecification"/>
+    </eOperations>
+    <eOperations name="inLoopUnrollingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(l);"/>
+      </eAnnotations>
+      <eParameters name="l" eType="#//targetMapping/LoopUnrollingSpecification"/>
+    </eOperations>
+    <eOperations name="outLoopUnrollingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(l);"/>
+      </eAnnotations>
+      <eParameters name="l" eType="#//targetMapping/LoopUnrollingSpecification"/>
+    </eOperations>
+    <eOperations name="visitVectorizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inVectorizationSpecification(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVectorizationSpecification(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//targetMapping/VectorizationSpecification"/>
+    </eOperations>
+    <eOperations name="inVectorizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//targetMapping/VectorizationSpecification"/>
+    </eOperations>
+    <eOperations name="outVectorizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//targetMapping/VectorizationSpecification"/>
+    </eOperations>
+    <eOperations name="visitParallelizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inParallelizationSpecification(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outParallelizationSpecification(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//targetMapping/ParallelizationSpecification"/>
+    </eOperations>
+    <eOperations name="inParallelizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//targetMapping/ParallelizationSpecification"/>
+    </eOperations>
+    <eOperations name="outParallelizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//targetMapping/ParallelizationSpecification"/>
+    </eOperations>
+    <eOperations name="visitMemoryMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inMemoryMap(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMemoryMap(m);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemoryMap"/>
+    </eOperations>
+    <eOperations name="inMemoryMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemoryMap"/>
+    </eOperations>
+    <eOperations name="outMemoryMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemoryMap"/>
+    </eOperations>
+    <eOperations name="visitMemorySpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inMemorySpace(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMemorySpace(m);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemorySpace"/>
+    </eOperations>
+    <eOperations name="inMemorySpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemorySpace"/>
+    </eOperations>
+    <eOperations name="outMemorySpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemorySpace"/>
+    </eOperations>
+    <eOperations name="visitStatementPartialOrder">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inStatementPartialOrder(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outStatementPartialOrder(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/StatementPartialOrder"/>
+    </eOperations>
+    <eOperations name="inStatementPartialOrder">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/StatementPartialOrder"/>
+    </eOperations>
+    <eOperations name="outStatementPartialOrder">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/StatementPartialOrder"/>
+    </eOperations>
+    <eOperations name="visitUseEquationOptimization">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inUseEquationOptimization(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUseEquationOptimization(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//targetMapping/UseEquationOptimization"/>
+    </eOperations>
+    <eOperations name="inUseEquationOptimization">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(u);"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//targetMapping/UseEquationOptimization"/>
+    </eOperations>
+    <eOperations name="outUseEquationOptimization">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(u);"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//targetMapping/UseEquationOptimization"/>
+    </eOperations>
+    <eOperations name="visitCommunicationMappingForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inCommunicationMappingForTiledSpace(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCommunicationMappingForTiledSpace(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicationMappingForTiledSpace"/>
+    </eOperations>
+    <eOperations name="inCommunicationMappingForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicationMappingForTiledSpace"/>
+    </eOperations>
+    <eOperations name="outCommunicationMappingForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicationMappingForTiledSpace"/>
+    </eOperations>
+    <eOperations name="visitCommunicatedVariableForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inCommunicatedVariableForTiledSpace(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCommunicatedVariableForTiledSpace(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicatedVariableForTiledSpace"/>
+    </eOperations>
+    <eOperations name="inCommunicatedVariableForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicatedVariableForTiledSpace"/>
+    </eOperations>
+    <eOperations name="outCommunicatedVariableForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicatedVariableForTiledSpace"/>
+    </eOperations>
+    <eOperations name="visitSubTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inSubTilingSpecification(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSubTilingSpecification(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SubTilingSpecification"/>
+    </eOperations>
+    <eOperations name="inSubTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SubTilingSpecification"/>
+    </eOperations>
+    <eOperations name="outSubTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SubTilingSpecification"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PolyhedralIRInheritedDepthFirstVisitor"
+      eSuperTypes="#//PolyhedralIRVisitor">
+    <eOperations name="defaultIn">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value=""/>
+      </eAnnotations>
+      <eParameters name="node" eType="#//PolyhedralIRVisitable"/>
+    </eOperations>
+    <eOperations name="defaultOut">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value=""/>
+      </eAnnotations>
+      <eParameters name="node" eType="#//PolyhedralIRVisitable"/>
+    </eOperations>
+    <eOperations name="visitProgram">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inProgram(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outProgram(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//Program"/>
+    </eOperations>
+    <eOperations name="inProgram">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//Program"/>
+    </eOperations>
+    <eOperations name="outProgram">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//Program"/>
+    </eOperations>
+    <eOperations name="visitExternalFunctionDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExternalFunctionDeclaration(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExternalFunctionDeclaration(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//ExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="inExternalFunctionDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//ExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="outExternalFunctionDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//ExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAffineSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAffineSystem(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outAffineSystem(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineSystem"/>
+    </eOperations>
+    <eOperations name="inAffineSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineSystem"/>
+    </eOperations>
+    <eOperations name="outAffineSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineSystem"/>
+    </eOperations>
+    <eOperations name="visitVariableDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inVariableDeclaration(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableDeclaration(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableDeclaration"/>
+    </eOperations>
+    <eOperations name="inVariableDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableDeclaration"/>
+    </eOperations>
+    <eOperations name="outVariableDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableDeclaration"/>
+    </eOperations>
+    <eOperations name="visitVariableIdentifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inVariableIdentifier(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableIdentifier(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="inVariableIdentifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="outVariableIdentifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(v);"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//VariableIdentifier"/>
+    </eOperations>
+    <eOperations name="visitEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inEquation(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outEquation(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Equation"/>
+    </eOperations>
+    <eOperations name="inEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Equation"/>
+    </eOperations>
+    <eOperations name="outEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Equation"/>
+    </eOperations>
+    <eOperations name="visitUseEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inUseEquation(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUseEquation(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//UseEquation"/>
+    </eOperations>
+    <eOperations name="inUseEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inEquation(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//UseEquation"/>
+    </eOperations>
+    <eOperations name="outUseEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outEquation(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//UseEquation"/>
+    </eOperations>
+    <eOperations name="visitStandardEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inStandardEquation(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outStandardEquation(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//StandardEquation"/>
+    </eOperations>
+    <eOperations name="inStandardEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inEquation(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//StandardEquation"/>
+    </eOperations>
+    <eOperations name="outStandardEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outEquation(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//StandardEquation"/>
+    </eOperations>
+    <eOperations name="visitDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inDomain(d);&#xA;for (EObject obj : d.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outDomain(d);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="inDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(d);"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="outDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(d);"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="visitParameterDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inParameterDomain(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outParameterDomain(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//ParameterDomain"/>
+    </eOperations>
+    <eOperations name="inParameterDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inDomain(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//ParameterDomain"/>
+    </eOperations>
+    <eOperations name="outParameterDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outDomain(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//ParameterDomain"/>
+    </eOperations>
+    <eOperations name="visitAffineFunction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAffineFunction(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outAffineFunction(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="inAffineFunction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="outAffineFunction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AffineFunction"/>
+    </eOperations>
+    <eOperations name="visitExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExpression(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="inExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="outExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(e);"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//Expression"/>
+    </eOperations>
+    <eOperations name="visitFastISLDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFastISLDomain(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFastISLDomain(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLDomain"/>
+    </eOperations>
+    <eOperations name="inFastISLDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inDomain(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLDomain"/>
+    </eOperations>
+    <eOperations name="outFastISLDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outDomain(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLDomain"/>
+    </eOperations>
+    <eOperations name="visitFastISLMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFastISLMap(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFastISLMap(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLMap"/>
+    </eOperations>
+    <eOperations name="inFastISLMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAffineFunction(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLMap"/>
+    </eOperations>
+    <eOperations name="outFastISLMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outAffineFunction(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//FastISLMap"/>
+    </eOperations>
+    <eOperations name="visitWhileInfo">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inWhileInfo(w);&#xA;for (EObject obj : w.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outWhileInfo(w);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="w" eType="#//WhileInfo"/>
+    </eOperations>
+    <eOperations name="inWhileInfo">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(w);"/>
+      </eAnnotations>
+      <eParameters name="w" eType="#//WhileInfo"/>
+    </eOperations>
+    <eOperations name="outWhileInfo">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(w);"/>
+      </eAnnotations>
+      <eParameters name="w" eType="#//WhileInfo"/>
+    </eOperations>
+    <eOperations name="visitTilingInformations">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inTilingInformations(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTilingInformations(t);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//TilingInformations"/>
+    </eOperations>
+    <eOperations name="inTilingInformations">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//TilingInformations"/>
+    </eOperations>
+    <eOperations name="outTilingInformations">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//TilingInformations"/>
+    </eOperations>
+    <eOperations name="visitCaseExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inCaseExpression(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCaseExpression(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/CaseExpression"/>
+    </eOperations>
+    <eOperations name="inCaseExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/CaseExpression"/>
+    </eOperations>
+    <eOperations name="outCaseExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/CaseExpression"/>
+    </eOperations>
+    <eOperations name="visitDependenceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inDependenceExpression(d);&#xA;for (EObject obj : d.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outDependenceExpression(d);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//expression/DependenceExpression"/>
+    </eOperations>
+    <eOperations name="inDependenceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(d);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//expression/DependenceExpression"/>
+    </eOperations>
+    <eOperations name="outDependenceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(d);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//expression/DependenceExpression"/>
+    </eOperations>
+    <eOperations name="visitIfExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inIfExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIfExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IfExpression"/>
+    </eOperations>
+    <eOperations name="inIfExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IfExpression"/>
+    </eOperations>
+    <eOperations name="outIfExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IfExpression"/>
+    </eOperations>
+    <eOperations name="visitIndexExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inIndexExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIndexExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IndexExpression"/>
+    </eOperations>
+    <eOperations name="inIndexExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IndexExpression"/>
+    </eOperations>
+    <eOperations name="outIndexExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IndexExpression"/>
+    </eOperations>
+    <eOperations name="visitReduceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inReduceExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outReduceExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/ReduceExpression"/>
+    </eOperations>
+    <eOperations name="inReduceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/ReduceExpression"/>
+    </eOperations>
+    <eOperations name="outReduceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/ReduceExpression"/>
+    </eOperations>
+    <eOperations name="visitRestrictExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inRestrictExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outRestrictExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RestrictExpression"/>
+    </eOperations>
+    <eOperations name="inRestrictExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RestrictExpression"/>
+    </eOperations>
+    <eOperations name="outRestrictExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RestrictExpression"/>
+    </eOperations>
+    <eOperations name="visitVariableExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inVariableExpression(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableExpression(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//expression/VariableExpression"/>
+    </eOperations>
+    <eOperations name="inVariableExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//expression/VariableExpression"/>
+    </eOperations>
+    <eOperations name="outVariableExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//expression/VariableExpression"/>
+    </eOperations>
+    <eOperations name="visitBinaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inBinaryExpression(b);&#xA;for (EObject obj : b.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outBinaryExpression(b);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BinaryExpression"/>
+    </eOperations>
+    <eOperations name="inBinaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(b);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BinaryExpression"/>
+    </eOperations>
+    <eOperations name="outBinaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(b);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BinaryExpression"/>
+    </eOperations>
+    <eOperations name="visitConstantExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inConstantExpression(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outConstantExpression(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/ConstantExpression"/>
+    </eOperations>
+    <eOperations name="inConstantExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/ConstantExpression"/>
+    </eOperations>
+    <eOperations name="outConstantExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//expression/ConstantExpression"/>
+    </eOperations>
+    <eOperations name="visitBooleanExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inBooleanExpression(b);&#xA;for (EObject obj : b.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outBooleanExpression(b);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BooleanExpression"/>
+    </eOperations>
+    <eOperations name="inBooleanExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inConstantExpression(b);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BooleanExpression"/>
+    </eOperations>
+    <eOperations name="outBooleanExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outConstantExpression(b);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//expression/BooleanExpression"/>
+    </eOperations>
+    <eOperations name="visitIntegerExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inIntegerExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIntegerExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IntegerExpression"/>
+    </eOperations>
+    <eOperations name="inIntegerExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inConstantExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IntegerExpression"/>
+    </eOperations>
+    <eOperations name="outIntegerExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outConstantExpression(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//expression/IntegerExpression"/>
+    </eOperations>
+    <eOperations name="visitRealExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inRealExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outRealExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RealExpression"/>
+    </eOperations>
+    <eOperations name="inRealExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inConstantExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RealExpression"/>
+    </eOperations>
+    <eOperations name="outRealExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outConstantExpression(r);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//expression/RealExpression"/>
+    </eOperations>
+    <eOperations name="visitMultiArgExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inMultiArgExpression(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMultiArgExpression(m);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//expression/MultiArgExpression"/>
+    </eOperations>
+    <eOperations name="inMultiArgExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(m);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//expression/MultiArgExpression"/>
+    </eOperations>
+    <eOperations name="outMultiArgExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(m);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//expression/MultiArgExpression"/>
+    </eOperations>
+    <eOperations name="visitExternalFunctionCall">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExternalFunctionCall(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExternalFunctionCall(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//expression/ExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="inExternalFunctionCall">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inMultiArgExpression(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//expression/ExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="outExternalFunctionCall">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outMultiArgExpression(e);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//expression/ExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="visitUnaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inUnaryExpression(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUnaryExpression(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//expression/UnaryExpression"/>
+    </eOperations>
+    <eOperations name="inUnaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inExpression(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//expression/UnaryExpression"/>
+    </eOperations>
+    <eOperations name="outUnaryExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outExpression(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//expression/UnaryExpression"/>
+    </eOperations>
+    <eOperations name="visitTargetMapping">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inTargetMapping(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTargetMapping(t);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TargetMapping"/>
+    </eOperations>
+    <eOperations name="inTargetMapping">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TargetMapping"/>
+    </eOperations>
+    <eOperations name="outTargetMapping">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TargetMapping"/>
+    </eOperations>
+    <eOperations name="visitSpaceTimeLevel">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inSpaceTimeLevel(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSpaceTimeLevel(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeLevel"/>
+    </eOperations>
+    <eOperations name="inSpaceTimeLevel">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeLevel"/>
+    </eOperations>
+    <eOperations name="outSpaceTimeLevel">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeLevel"/>
+    </eOperations>
+    <eOperations name="visitSpaceTimeMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inSpaceTimeMap(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSpaceTimeMap(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeMap"/>
+    </eOperations>
+    <eOperations name="inSpaceTimeMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeMap"/>
+    </eOperations>
+    <eOperations name="outSpaceTimeMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SpaceTimeMap"/>
+    </eOperations>
+    <eOperations name="visitFeatureSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFeatureSpecification(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFeatureSpecification(f);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//targetMapping/FeatureSpecification"/>
+    </eOperations>
+    <eOperations name="inFeatureSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(f);"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//targetMapping/FeatureSpecification"/>
+    </eOperations>
+    <eOperations name="outFeatureSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(f);"/>
+      </eAnnotations>
+      <eParameters name="f" eType="#//targetMapping/FeatureSpecification"/>
+    </eOperations>
+    <eOperations name="visitTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inTilingSpecification(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTilingSpecification(t);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TilingSpecification"/>
+    </eOperations>
+    <eOperations name="inTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFeatureSpecification(t);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TilingSpecification"/>
+    </eOperations>
+    <eOperations name="outTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outFeatureSpecification(t);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//targetMapping/TilingSpecification"/>
+    </eOperations>
+    <eOperations name="visitLoopUnrollingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inLoopUnrollingSpecification(l);&#xA;for (EObject obj : l.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outLoopUnrollingSpecification(l);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="l" eType="#//targetMapping/LoopUnrollingSpecification"/>
+    </eOperations>
+    <eOperations name="inLoopUnrollingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFeatureSpecification(l);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="l" eType="#//targetMapping/LoopUnrollingSpecification"/>
+    </eOperations>
+    <eOperations name="outLoopUnrollingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outFeatureSpecification(l);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="l" eType="#//targetMapping/LoopUnrollingSpecification"/>
+    </eOperations>
+    <eOperations name="visitVectorizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inVectorizationSpecification(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVectorizationSpecification(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//targetMapping/VectorizationSpecification"/>
+    </eOperations>
+    <eOperations name="inVectorizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFeatureSpecification(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//targetMapping/VectorizationSpecification"/>
+    </eOperations>
+    <eOperations name="outVectorizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outFeatureSpecification(v);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="v" eType="#//targetMapping/VectorizationSpecification"/>
+    </eOperations>
+    <eOperations name="visitParallelizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inParallelizationSpecification(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outParallelizationSpecification(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//targetMapping/ParallelizationSpecification"/>
+    </eOperations>
+    <eOperations name="inParallelizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inFeatureSpecification(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//targetMapping/ParallelizationSpecification"/>
+    </eOperations>
+    <eOperations name="outParallelizationSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="outFeatureSpecification(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//targetMapping/ParallelizationSpecification"/>
+    </eOperations>
+    <eOperations name="visitMemoryMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inMemoryMap(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMemoryMap(m);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemoryMap"/>
+    </eOperations>
+    <eOperations name="inMemoryMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemoryMap"/>
+    </eOperations>
+    <eOperations name="outMemoryMap">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemoryMap"/>
+    </eOperations>
+    <eOperations name="visitMemorySpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inMemorySpace(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMemorySpace(m);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemorySpace"/>
+    </eOperations>
+    <eOperations name="inMemorySpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemorySpace"/>
+    </eOperations>
+    <eOperations name="outMemorySpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(m);"/>
+      </eAnnotations>
+      <eParameters name="m" eType="#//targetMapping/MemorySpace"/>
+    </eOperations>
+    <eOperations name="visitStatementPartialOrder">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inStatementPartialOrder(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outStatementPartialOrder(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/StatementPartialOrder"/>
+    </eOperations>
+    <eOperations name="inStatementPartialOrder">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/StatementPartialOrder"/>
+    </eOperations>
+    <eOperations name="outStatementPartialOrder">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/StatementPartialOrder"/>
+    </eOperations>
+    <eOperations name="visitUseEquationOptimization">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inUseEquationOptimization(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUseEquationOptimization(u);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//targetMapping/UseEquationOptimization"/>
+    </eOperations>
+    <eOperations name="inUseEquationOptimization">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(u);"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//targetMapping/UseEquationOptimization"/>
+    </eOperations>
+    <eOperations name="outUseEquationOptimization">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(u);"/>
+      </eAnnotations>
+      <eParameters name="u" eType="#//targetMapping/UseEquationOptimization"/>
+    </eOperations>
+    <eOperations name="visitCommunicationMappingForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inCommunicationMappingForTiledSpace(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCommunicationMappingForTiledSpace(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicationMappingForTiledSpace"/>
+    </eOperations>
+    <eOperations name="inCommunicationMappingForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicationMappingForTiledSpace"/>
+    </eOperations>
+    <eOperations name="outCommunicationMappingForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicationMappingForTiledSpace"/>
+    </eOperations>
+    <eOperations name="visitCommunicatedVariableForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inCommunicatedVariableForTiledSpace(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCommunicatedVariableForTiledSpace(c);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicatedVariableForTiledSpace"/>
+    </eOperations>
+    <eOperations name="inCommunicatedVariableForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicatedVariableForTiledSpace"/>
+    </eOperations>
+    <eOperations name="outCommunicatedVariableForTiledSpace">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(c);"/>
+      </eAnnotations>
+      <eParameters name="c" eType="#//targetMapping/CommunicatedVariableForTiledSpace"/>
+    </eOperations>
+    <eOperations name="visitSubTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inSubTilingSpecification(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSubTilingSpecification(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SubTilingSpecification"/>
+    </eOperations>
+    <eOperations name="inSubTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SubTilingSpecification"/>
+    </eOperations>
+    <eOperations name="outSubTilingSpecification">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//targetMapping/SubTilingSpecification"/>
+    </eOperations>
+  </eClassifiers>
+  <eSubpackages name="expression" nsURI="polyhedralIR.expression" nsPrefix="polyhedralIR.expression">
+    <eClassifiers xsi:type="ecore:EClass" name="CaseExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitCaseExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="exprs" upperBound="-1"
+          eType="#//Expression" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DependenceExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitDependenceExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dep" eType="#//AffineFunction"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expression"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IfExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitIfExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="cond" eType="#//Expression"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//Expression"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="else" eType="#//Expression"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IndexExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitIndexExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//AffineFunction"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ReduceExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="getIdentityValue" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitReduceExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="OP" eType="#//OP"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="projection" lowerBound="1"
+          eType="#//AffineFunction" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expr" lowerBound="1"
+          eType="#//Expression" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RestrictExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitRestrictExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="restrictDomain" lowerBound="1"
+          eType="#//Domain" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expression"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VariableExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitVariableExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="varDecl" lowerBound="1"
+          eType="#//VariableDeclaration"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="BinaryExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitBinaryExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//OP"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="lexp" eType="#//Expression"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rexp" eType="#//Expression"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ConstantExpression" abstract="true"
+        eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitConstantExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="BooleanExpression" eSuperTypes="#//expression/ConstantExpression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitBooleanExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IntegerExpression" eSuperTypes="#//expression/ConstantExpression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitIntegerExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="RealExpression" eSuperTypes="#//expression/ConstantExpression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitRealExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MultiArgExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitMultiArgExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//OP"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="exprs" upperBound="-1"
+          eType="#//Expression" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ExternalFunctionCall" eSuperTypes="#//expression/MultiArgExpression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitExternalFunctionCall(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="exFunc" eType="#//ExternalFunctionDeclaration"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="UnaryExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitUnaryExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//OP"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expression"
+          containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="targetMapping" nsURI="polyhedralIR.targetMapping" nsPrefix="polyhedralIR.targetMapping">
+    <eClassifiers xsi:type="ecore:EClass" name="TargetMapping" eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="getSpaceTimeLevel" eType="#//targetMapping/SpaceTimeLevel">
+        <eParameters name="level" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="getStatementTotalOrder" upperBound="-1" eType="#//Equation"/>
+      <eOperations name="isTiled" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="getMemorySpace" lowerBound="1" eType="#//targetMapping/MemorySpace">
+        <eParameters name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="getUseEquationOptimizations" upperBound="-1" eType="#//targetMapping/UseEquationOptimization">
+        <eParameters name="label" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="getUseEquationOptimization" eType="#//targetMapping/UseEquationOptimization">
+        <eParameters name="label" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="num" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="isInput" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eOperations>
+      <eOperations name="isParallelized" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitTargetMapping(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="containerSystem" lowerBound="1"
+          eType="#//AffineSystem" changeable="false" unsettable="true" eOpposite="#//AffineSystem/targetMapping"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="spaceTimeLevels" upperBound="-1"
+          eType="#//targetMapping/SpaceTimeLevel" containment="true" eOpposite="#//targetMapping/SpaceTimeLevel/containerTM"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="memoryMaps" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//ValueContainedMap">
+          <eTypeArguments eClassifier="#//VariableDeclaration"/>
+          <eTypeArguments eClassifier="#//targetMapping/MemoryMap"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="memorySpaces" upperBound="-1"
+          eType="#//targetMapping/MemorySpace" containment="true" eOpposite="#//targetMapping/MemorySpace/containerTM"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="statementOrderings" upperBound="-1"
+          eType="#//targetMapping/StatementPartialOrder" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="useEquationOptimizations"
+          upperBound="-1" eType="#//targetMapping/UseEquationOptimization" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SpaceTimeLevel" eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="getNumberOfOrderingDimensions" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNumberOfTiledDimensions" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNumberOfParallelDimensions" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNumberOfSequentialDimensions" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNumberOfDimensions" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getAccessFunction" lowerBound="1" eType="#//AffineFunction">
+        <eParameters name="variable" lowerBound="1" eType="#//VariableDeclaration"/>
+      </eOperations>
+      <eOperations name="getTilingSpecification" lowerBound="1" eType="#//targetMapping/TilingSpecification">
+        <eParameters name="bandName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitSpaceTimeLevel(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="spaceTimeMaps" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//ValueContainedMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eTypeArguments eClassifier="#//targetMapping/SpaceTimeMap"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="orderingDimensions" unique="false"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tilingSpecifications"
+          upperBound="-1" eType="#//targetMapping/TilingSpecification" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="loopUnrollingSpecifications"
+          upperBound="-1" eType="#//targetMapping/LoopUnrollingSpecification" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="vectorizationSpecifications"
+          upperBound="-1" eType="#//targetMapping/VectorizationSpecification" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parallelizationSpecifications"
+          upperBound="-1" eType="#//targetMapping/ParallelizationSpecification" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="containerTM" lowerBound="1"
+          eType="#//targetMapping/TargetMapping" eOpposite="#//targetMapping/TargetMapping/spaceTimeLevels"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SpaceTimeMap" eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitSpaceTimeMap(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" lowerBound="1"
+          eType="#//AffineFunction" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inverseOfMapping" lowerBound="1"
+          eType="#//AffineFunction" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="FeatureSpecification" abstract="true"
+        eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitFeatureSpecification(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="orderingPrefix" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TilingSpecification" eSuperTypes="#//targetMapping/FeatureSpecification #//PolyhedralIRVisitable">
+      <eOperations name="getSubTile" lowerBound="1" eType="#//targetMapping/SubTilingSpecification">
+        <eParameters name="level" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitTilingSpecification(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDim" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="endDim" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="levels" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subTiles" upperBound="-1"
+          eType="#//targetMapping/SubTilingSpecification" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="identificationName" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LoopUnrollingSpecification" eSuperTypes="#//targetMapping/FeatureSpecification #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitLoopUnrollingSpecification(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="unrollingFactors" unique="false"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VectorizationSpecification" eSuperTypes="#//targetMapping/FeatureSpecification #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitVectorizationSpecification(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ParallelizationSpecification" eSuperTypes="#//targetMapping/FeatureSpecification #//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitParallelizationSpecification(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="parallelDims" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MemoryMap" eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitMemoryMap(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
+          eType="#//VariableDeclaration"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" lowerBound="1"
+          eType="#//AffineFunction" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="modFactors" upperBound="-1"
+          eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="space" lowerBound="1"
+          eType="#//targetMapping/MemorySpace"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MemorySpace" eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="getModFactors" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+      <eOperations name="getMemoryMaps" upperBound="-1" eType="#//targetMapping/MemoryMap"/>
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitMemorySpace(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+          iD="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1"
+          eType="#//Type" changeable="false" volatile="true" transient="true" derived="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="domain" lowerBound="1"
+          eType="#//Domain" changeable="false" volatile="true" transient="true" derived="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="zeroAligned" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="containerTM" lowerBound="1"
+          eType="#//targetMapping/TargetMapping" eOpposite="#//targetMapping/TargetMapping/memorySpaces"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="StatementPartialOrder" eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitStatementPartialOrder(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="predecessor" lowerBound="1"
+          eType="#//Equation"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="successor" lowerBound="1"
+          eType="#//Equation"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="UseEquationOptimization" eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitUseEquationOptimization(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="num" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="MemoryMappingForTemporaryVariable"
+          lowerBound="1" eType="#//AffineFunction" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="MemorySpaceNameforTemporaryVariable"
+          lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="memoryAllocationSpaceTimeMap"
+          eType="#//AffineFunction" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="valueCopySpaceTimeMap"
+          eType="#//AffineFunction" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="memoryFreeSpaceTimeMap"
+          eType="#//AffineFunction" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CommunicationMappingForTiledSpace"
+        eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="getCommunicatedVariable" lowerBound="1" eType="#//targetMapping/CommunicatedVariableForTiledSpace">
+        <eParameters name="variable" lowerBound="1" eType="#//VariableDeclaration"/>
+      </eOperations>
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitCommunicationMappingForTiledSpace(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+          eType="#//targetMapping/CommunicatedVariableForTiledSpace" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CommunicatedVariableForTiledSpace"
+        eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitCommunicatedVariableForTiledSpace(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
+          eType="#//VariableDeclaration"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="communicationDepths"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="TILING_TYPE">
+      <eLiterals name="SEQUENTIAL" literal="SEQUENTIAL"/>
+      <eLiterals name="OMPWAVEFRONT" value="1" literal="OMPWAVEFRONT"/>
+      <eLiterals name="PGAS" value="2" literal="PGAS"/>
+      <eLiterals name="MPIC" value="3" literal="MPIC"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="TILE_SIZE_TYPE">
+      <eLiterals name="PARAMETERIZED" literal="PARAMETERIZED"/>
+      <eLiterals name="FIXED" value="1" literal="FIXED"/>
+      <eLiterals name="PARAMETER_FIX" value="2" literal="PARAMETER_FIX"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="MEMORY_TYPE">
+      <eLiterals name="HOST" literal="HOST"/>
+      <eLiterals name="DEVICE_GLOBAL" value="1" literal="DEVICE_GLOBAL"/>
+      <eLiterals name="SHARED" value="2" literal="SHARED"/>
+      <eLiterals name="REGISTER" value="3" literal="REGISTER"/>
+      <eLiterals name="CACHED" value="4" literal="CACHED"/>
+      <eLiterals name="CONSTANT" value="5" literal="CONSTANT"/>
+      <eLiterals name="TEXTURE" value="6" literal="TEXTURE"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SubTilingSpecification" eSuperTypes="#//PolyhedralIRVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitSubTilingSpecification(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//PolyhedralIRVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tileSizes" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tileSizeType" lowerBound="1"
+          eType="#//targetMapping/TILE_SIZE_TYPE"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tilingType" lowerBound="1"
+          eType="#//targetMapping/TILING_TYPE"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDim" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="level" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="communicationMapping"
+          lowerBound="1" eType="#//targetMapping/CommunicationMappingForTiledSpace"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="endDim" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>

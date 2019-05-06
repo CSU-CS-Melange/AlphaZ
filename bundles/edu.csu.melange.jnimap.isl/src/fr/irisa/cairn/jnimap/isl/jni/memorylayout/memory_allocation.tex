@@ -1,0 +1,663 @@
+%compile with :
+%pdflatex memory_allocation.tex && bibtex memory_allocation && pdflatex memory_allocation.tex && pdflatex memory_allocation.tex && (rm *.aux *.bbl *.bib *.blg *.log *.toc *.out)
+
+% clean with :
+%(rm *.aux *.bbl *.bib *.blg *.log *.toc *.out)
+
+\documentclass{article}
+
+%package loading
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,epsfig,color,colortbl,xcolor}
+\usepackage{array}
+\usepackage{pstricks,graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{ifthen}
+\usepackage{fullpage}
+\usepackage{filecontents}
+\usepackage[hidelinks]{hyperref}
+
+%package and document configuration
+\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
+\newcommand{\TODO}[0]{\textbf{\color{red}{TODO}}}
+%% choix des profondeurs de section pour la table des matières
+%% 2= subsection, 3=subsubsection
+% \setcounter{secnumdepth}{2}  %% Avec un numero.
+% \setcounter{tocdepth}{2}     %% Visibles dans la table des matieres
+
+\definecolor{colKeys}{rgb}{0,0,1}
+\definecolor{colIdentifier}{rgb}{0,0,0}
+\definecolor{colComments}{rgb}{0,0.5,1}
+\definecolor{colString}{rgb}{0.6,0.1,0.1}
+\definecolor{c1}{RGB}{219,144,71}
+\definecolor{c2}{RGB}{100,212,78}
+\definecolor{c3}{RGB}{255,111,111}
+\definecolor{c4}{RGB}{111,139,255}
+\definecolor{gris}{gray}{0.45}
+
+\lstset{%configuration de listings
+	float=hbp,%
+	language=C,
+	basicstyle=\ttfamily\small, %
+	identifierstyle=\color{colIdentifier}, %
+	keywordstyle=\color{colKeys}, %
+	stringstyle=\color{colString}, %
+	commentstyle=\color{colComments}, %
+	columns=flexible, %
+	tabsize=3, %
+	frame=TRBL, %
+	extendedchars=true, %
+	%showspaces=false, %
+	showstringspaces=false, %
+	numbers=none, %
+	breaklines=true, %
+	breakautoindent=true, %
+	captionpos=b,%
+	xrightmargin=0cm, %
+	xleftmargin=0cm,
+	mathescape=true
+}
+
+%Metadata
+\title{Memory Allocation and Array Contraction using the Polyhedral Model in
+GeCoS}
+% \title{Array Contraction using the Polyhedral Model in GeCoS}
+\author{Antoine Morvan, CAIRN Team,
+IRISA, \email{antoine.morvan@irisa.fr}}
+
+%embedded bibtex file
+\begin{filecontents}{memory_allocation.bib}
+@ARTICLE{feautrier1991dataflow,
+  author = {Feautrier, P.},
+  title = {{Dataflow Analysis of Array and Scalar References}},
+  journal = {International Journal of Parallel Programming},
+  year = {1991},
+  volume = {20},
+  pages = {23--53},
+  number = {1},
+  publisher = {Springer},
+  timestamp = {2010.09.30}
+}
+@INPROCEEDINGS{benabderrahmane2010polyhedral,
+  author = {Benabderrahmane, M. W. and Pouchet, L.-N. and Cohen, A. and Bastoul,
+	C.},
+  title = {{The Polyhedral Model is More Widely Applicable Than You Think}},
+  booktitle = {Proceedings of Int. Conf. on Compiler Construction},
+  year = {2010},
+  pages = {283--303},
+  organization = {Springer}
+}
+@INPROCEEDINGS{bondhugula2008pluto,
+  author = {Bondhugula, U. and Hartono, A. and Ramanujam, J. and Sadayappan,
+	P.},
+  title = {{PLuTo: A Practical and Fully Automatic Polyhedral Program Optimization
+	System}},
+  booktitle = {Proceedings of the ACM SIGPLAN Conference on Programming Language
+	Design and Implementation},
+  year = {2008},
+  address = {Tucson, AZ},
+  month = jun,
+  organization = {ACM}
+}
+@incollection{LefebvreFeautrier,
+year={1997},
+isbn={978-3-540-63440-9},
+booktitle={Euro-Par'97 Parallel Processing},
+volume={1300},
+series={Lecture Notes in Computer Science},
+editor={Lengauer, Christian and Griebl, Martin and Gorlatch, Sergei},
+doi={10.1007/BFb0002757},
+title = {{Optimizing Storage Size for Static Control Programs in Automatic
+Parallelizers}}, 
+url={http://dx.doi.org/10.1007/BFb0002757},
+publisher={Springer Berlin Heidelberg},
+author = {Lefebvre, V. and Feautrier, P.},
+pages={356-363}
+}
+@INPROCEEDINGS{BeeAlias07,
+  author = {Alias, C. and Baray, F. and Darte, A.},
+  title = {{Bee+Cl@k: an Implementation of Lattice-Based Array Contraction in
+	the Source-to-Source Translator ROSE}},
+  booktitle = {LCTES},
+  year = {2007},
+  pages = {73--82}
+}
+@INPROCEEDINGS{SvenISL10,
+  author = {Verdoolaege, S.},
+  title = {{ISL: An Integer Set Library for the Polyhedral Model}},
+  booktitle = {ICMS},
+  year = {2010},
+  pages = {299--302},
+  ee = {http://dx.doi.org/10.1007/978-3-642-15582-6_49}
+}
+\end{filecontents}
+
+%Document start
+\begin{document}
+\maketitle
+
+\emph{Note: This document assumes the reader is familiar with optimizing
+compilation using the polyhedral model. For newcomers, I recommend the OpenScop
+User Guide~\footnote{\url{http://icps.u-strasbg.fr/~bastoul/development/openscop/docs/openscop.pdf}}.}
+
+
+{\center\noindent\makebox[\linewidth]{\rule{0.7\paperwidth}{0.4pt}}}\tableofcontents
+{\center\noindent\makebox[\linewidth]{\rule{0.7\paperwidth}{0.4pt}}}
+
+\section{Introduction}
+
+The polyhedral model allows complex loop transformations for optimizing
+different performance criteria, such as parallelism or memory access
+locality~\cite{feautrier1991dataflow, benabderrahmane2010polyhedral,
+bondhugula2008pluto}, on a subset of programs known as ACL (Aff Control
+Loops). Once a loop nest has been scheduled, it is also possible to minimize the
+memory footprint required to store the intermediate results computed during the
+scheduled loop nest execution. 
+
+Minimizing the memory footprint can be decomposed in three steps :
+\begin{enumerate}
+  \item identifying which write accesses can be re-allocated;
+  \item constructing the problem inputs (i.e., the \emph{conflict sets},
+  see~\ref{sec:conflict_set});
+  \item solving the problems, resulting in the new access functions and array
+  sizes.
+\end{enumerate}
+
+The goal of this document is to synthesize the existing
+works~\cite{LefebvreFeautrier, BeeAlias07}, and to provide an implementation
+oriented explanation of the different problematics. The representation of all
+objects in the polyhedral model is presented in the ISL~\cite{SvenISL10}
+formalism.
+
+\vspace{0.5cm}
+{\bf Note : for the sake of simplicity, the copies of ISL objects are omitted.}
+
+\subsection*{Identifying Intermediate Results}
+
+Of course, because it would alter the program semantic, one cannot change the
+allocation of the input values, nor the allocation of the output values (i.e.,
+the liveout values). It is simple to determine what are the input values (array
+dataflow analysis answers $\bot$). However, the ACL representation does not
+support ``what happened before and what happens after'' the ACL under analysis.
+It is therefore not possible to know what value will be \emph{liveout} at the
+end of the ACL execution, and what value is only an intermediate result.
+
+From a higher position, this information can be computed before extracting the
+ACLs from an AST-like representation of programs, even though it is not
+possible to compute it accurately in the general case. Therefore, in the
+remaining of the document, we assume that the values that can be
+reallocated are specified by annotations, either on the array that stores the
+values, or the statement that produces the values.
+
+\subsection*{Intuition -- Successive Modulo Summary}
+
+The basic idea behind memory reallocation is to first build the set of all the
+pairs of operations for which a conflict holds, namely the pairs of operations
+whose value is alive at the same time. This set can be built exactly and is
+called the \emph{conflict set}. 
+
+Then, from this conflict set, one can build the set containing all the
+differences between each side for each pair. This is the \emph{difference set}
+representing the lexicographic distance between each operation which conflicts.
+For instance, if iterations $(0,0)$ and $(1,0)$ produce a value that is alive at
+the same time, $((0,0),(1,0))$ and $((1,0),(0,0))$ are in the conflict set (it
+is symetric), and $(1,0)$ and $(-1,0)$ are in the difference set.
+
+By computing the lexicographic maximum of the difference set (per dimension,
+see~\ref{sec:successive_modulo}), we obtain the size of the array (each maximum
+on a dimension defining an \emph{expansion degree}). The access function for
+the new array is the scheduled one, modulo the expansion degree.
+
+{\center\noindent\makebox[\linewidth]{\rule{0.7\paperwidth}{0.4pt}}}
+\section{Problem Construction -- Conflict and Difference Set}
+
+% \subsection{Array Contraction vs. Memory Allocation}
+
+The problem of minimizing the memory footprint after scheduling can be seen from
+two point of view, namely \emph{array contraction} and \emph{memory
+(re)allocation}. They result in different problem constructions, but the same
+solving technique can be used in both cases. We consider that there is only one
+write per statement (section~\ref{sec:multiwrite} gives hint for cases where
+several writes occur per statement).
+
+\subsubsection*{Array Contraction}
+
+One way of seing the problem is to consider that the transformation has to keep
+array names. In such a case, the schedule usually respects the memory
+dependencies, and the original memory allocation remains legal. Minimizing the
+memory footprint then consists in contracting existing arrays, and is called
+\emph{array contraction}.
+
+However, the given schedule may not respect the memory dependencies (write after
+read and/or write after write), but only the dataflow dependencies (read after
+write). Therefore, the original memory allocation may not be legal for the
+schedule, and the minimum required memory size can be larger than the original
+memory allocation. Finding this minimum size in such a case is called
+\emph{partial array expansion}. It is simply a variant of array contraction
+where the result may be larger than the original memory allocation.
+
+\subsubsection*{Memory Allocation}
+
+The other point of view is to consider that the memory will be completely
+reallocated. The starting point is a \emph{fully expanded program} in single
+assignment, namely the result of array dataflow
+analysis~\cite{feautrier1991dataflow}. From there, original array names are
+completely ignored, and the problem simply consists in minimizing the memory
+footprint.
+
+\subsection{Input Definition}
+\label{sec:conflict_set}
+
+The following subsections explain how to build the conflict set for both array
+contraction and memory allocation, starting from the PRDG given by the array
+dataflow analysis, and various information comming from the AST:
+\begin{itemize}
+  \item The PRDG: a graph where nodes represent statements, with their
+  associated iteration domains, and edges represent dependencies between
+  statements, with their associated relation and validity domain. This PRDG can
+  be represented as a {\tt isl\_union\_map} and a {\tt isl\_union\_set} in ISL
+  (cf. example).
+  \item The writes: a relation that associates, for each statement, what are the
+  written arrays, and for what index function. It can be represented using a
+  single {\tt isl\_union\_map}.
+  \item The reads: idem, but for reads.
+  \item The schedule: new logical dates for the ACL operations. Represented as a
+  single {\tt isl\_union\_map}, where the image is a single {\tt isl\_set}
+  (all the ranges belong to the same name space).
+\end{itemize}
+
+\subsubsection*{Example 1 : Gaussian filter}
+
+\begin{figure}[ht!]
+\begin{lstlisting}
+void gauss(int M, int N, int in[N][M], int out[N][M]) {
+  int i, j;
+  int tmp[N][M];
+  for (i = 1; i < N - 1; i++)
+    for (j = 0; j < M; j++)
+S0:   tmp[i][j] = 3 * in[i][j] - in[i - 1][j] - in[i + 1][j];
+  for (i = 1; i < N - 1; i++)
+    for (j = 1; j < M - 1; j++)
+S1:   out[i][j] = 3 * tmp[i][j] - tmp[i][j - 1] - tmp[i][j + 1];
+}
+\end{lstlisting}
+\caption{
+Example ACL, representing a $3 \times 3$ Gaussian filter
+\label{fig:example_acl1}}
+\end{figure}
+The ACL from Figure~\ref{fig:example_acl1} leads to the following objects in the
+polyhedral model (ISL notation, details of construction skipped):
+\begin{itemize}
+  \item Domains: $[N, M] \rightarrow \{ $\\ 
+	  $S0[0,i,j] : 0 \le j \le M-1 ~\&~ 1 \le i \le N-2;$\\
+	  $S1[1,i,j] : 1 \le j \le M-2 ~\&~ 1 \le i \le N-2 \}$
+  \item PRDG: $[N, M] \rightarrow \{$\\
+	  $S1[1,i,j] \leftrightarrow S0[0,i,j'] : j-1 \le j' \le j+1 \}$\\
+	  \emph{Note : it is a relation.}
+  \item writes: $[N, M] \rightarrow \{$\\
+	  $S0[0,i,j] \rightarrow tmp[i, j];$\\
+	  $S1[1,i,j] \rightarrow out[i, j] \}$
+  \item reads: $[N, M] \rightarrow \{$\\
+	  $S0[0,i,j] \rightarrow in[i-1, j]; S0[0,i, j] \rightarrow in[i, j]; S0[0,i,
+	  j] \rightarrow in[i+1, j];$\\
+	  $S1[1,i,j] \rightarrow tmp[i, j-1]; S1[1,i, j] \rightarrow tmp[i, j]; S1[1,i,
+	  j] \rightarrow tmp[i, j+1] \}$
+\end{itemize}
+On top, we use the following schedule (partial loop fusion) :
+\begin{itemize}
+  \item schedule: $[N, M] \rightarrow \{$\\
+	  $S0[0,i,j] \rightarrow [i, j];$\\
+	  $S1[1,i,j] \rightarrow [i, j+2] \}$
+\end{itemize}
+
+\subsubsection*{Example 2 : Forward Substitution} 
+
+\begin{figure}[ht!]
+\begin{lstlisting}
+void forward_subst(int N, int b[N], int L[N][N], int y[N]) {
+  int i, j;
+  for(i = 0; i < N; i++) {
+S0: y[i] = b[i];
+    for(j = 0; j < i; j++)
+S1:   y[i] = y[i] - L[i][j] * y[j];
+S2: y[i] = y[i] / L[i][i];
+  }
+}
+\end{lstlisting}
+\caption{
+Example ACL, representing a forward substitution on square system matrix
+\label{fig:example_acl2}}
+\end{figure}
+The ACL from Figure~\ref{fig:example_acl2} leads to the following objects in the
+polyhedral model (ISL notation, details of construction skipped):
+\begin{itemize}
+\item Domains: $[N] \rightarrow \{$\\ 
+ $S0[i,0,0] : i >= 0 ~\&~ i <= -1 + N;$\\
+ $S1[i,1,j] : j >= 0 ~\&~ j <= -1 + i ~\&~ i >=0 ~\&~ i <= -1 + N; $\\
+ $S2[i,2,0] : i >= 0 ~\&~ i <= -1 + N \}$
+\item PRDG: $[N] \rightarrow \{$\\
+ $S1[i,1,0] \rightarrow S0[i,0,0];$\\
+ $S1[i,1,j] \rightarrow S1[i,1,j-1] : j >= 1;$\\
+ $S1[i,1,j] \rightarrow S2[j,2,0];$\\
+ $S2[0,2,0] \rightarrow S0[0,0,0];$\\
+ $S2[i,2,0] \rightarrow S1[i,1,i-1] : i >= 1 \}$
+\item writes: $[N] \rightarrow \{ $\\
+ $S0[i,0,0] \rightarrow y[i];$\\
+ $S1[i,1,j] \rightarrow y[i];$\\
+ $S2[i,2,0] \rightarrow y[i] \}$
+\item reads: $[N] \rightarrow \{$\\
+ $S0[i,0,0] \rightarrow b[i];$\\
+ $S1[i,1,j] \rightarrow L[i, j]; S1[i,1,j] \rightarrow y[i]; S1[i,1,j] \rightarrow y[j];$\\
+ $S2[i,2,0] \rightarrow L[i, i]; S2[i,2,0] \rightarrow y[i] \}$
+\end{itemize}
+On top, we use the following schedule (identity) :
+\begin{itemize}
+  \item schedule: $[N] \rightarrow \{ $\\
+ $S0[i,0,0] \rightarrow S0[i,0,0];$\\
+ $S1[i,1,j] \rightarrow S1[i,1,j];$\\
+ $S2[i,2,0] \rightarrow S2[i,2,0] \}$
+\end{itemize}
+
+\subsection{Dependencies and Domain Selection}
+
+The first step consists in selecting dependencies and domains related to the
+statement/array that needs to be reallocated. Basically it sums up to selecting
+nodes and edges in the PRDG.
+
+\emph{Note : special attention is required in the case where several writes can
+occur in a single statement, see~\ref{sec:multiwrite}}.
+
+\subsubsection{Selection for Memory Reallocation}
+
+For the memory allocation, the analysis is computed per statement.
+
+\TODO
+
+The resulting objects are:
+\begin{itemize}
+  \item $PRDG_S$ is a subset of the PRDG, containing only the dependencies where
+  the statement $S$ is the producer;
+  \item $D_S$ is the iteration domain of $S$.
+\end{itemize}
+
+\TODO : example
+
+\subsubsection{Selection for Array Contraction}
+
+For the array contraction, the analysis is computed per array. For contracting
+an array {\tt t}, the analysis has to focus on the dependencies involving {\tt
+t} only. Selecting the dependencies involving {\tt t} only can be done by
+filtering the PRDG :
+\begin{enumerate}
+\item build the list of the statements reading {\tt t} : $lreads$ (test the
+tuple name)
+\item build the list of the statements writing {\tt t} : $lwrites$ (test the
+tuple name)
+\item $PRDG_t = PRDG \cap lreads \times lwrites$
+\item $D_t = lwrites$
+\end{enumerate}
+
+The resulting objects are:
+\begin{itemize}
+  \item $PRDG_t$ is a subset of the PRDG, containing only the dependencies
+  involving the array {\tt t};
+  \item $D_t$ is the iteration domains of all statements writing in {\tt t}.
+\end{itemize}
+
+\TODO : example
+
+\subsection{Conflict Set Construction}
+
+Once the dependencies have been filtered for the particular statement/array, it
+is possible to compute the \emph{conflict set},
+namely the set of all pairs of operations in the scheduled ACL for which there
+is a \emph{conflict}. A conflict holds iff, given two existing operations
+$\vec{w_1}$ and $\vec{w_2}$:
+$$CS = \vec{w_1} \bowtie \vec{w_2} : \{ [\vec{w_1}] \rightarrow [\vec{w_2}] :
+\vec{w_1} \preceq lastuse(\vec{w_2})~\&~\vec{w_2} \preceq lastuse(\vec{w_1})
+\}$$ that is if the last use of the value produced by $\vec{w_2}$ is after
+$\vec{w_1}$, and the last use of the value produced by $\vec{w_1}$ is after
+$\vec{w_2}$.
+
+\subsubsection{Working in the Scheduled Space}
+Starting from the previously filtered PRDG (either $PRDG_S$ or $PRDG_t$, noted
+$PRDG_f$) and domain (either $D_S$ or $D_t$, noted $D_f$) the first step
+consists in representing $PRDG_f$ and $D_f$ %, writes and reads
+in the scheduled space. This will make the analysis valid given the schedule:
+\begin{enumerate}
+\item $scheduledPRDG_f = schedule \circ PRDG_f$\\
+{\tt isl\_union\_map\_apply\_range(isl\_union\_map\_apply\_domain($PRDG_f$,schedule),schedule)}
+\item $scheduledD_f = schedule[D_f]$\\
+{\tt isl\_union\_set\_apply($D_f$,schedule)}
+% \item $scheduledWrites = schedule \circ writes$\\
+% {\tt isl\_union\_map\_apply\_domain(writes,schedule)}
+% \item $scheduledReads = schedule \circ reads$\\
+% {\tt isl\_union\_map\_apply\_domain(reads,schedule)}
+\end{enumerate}
+
+The scheduled space unifies all the statements. Therefore, the scheduled object
+above represent {\tt map / set} instead of {\tt union\_map /
+union\_set}\footnote{Use functions isl\_union\_set\_get\_set\_at($scheduledD_f$,0) /
+isl\_union\_map\_get\_map\_at($scheduledPRDG_f$,0)}. Also, let $n$ be the number of
+dimensions in the scheduled space.
+
+\subsubsection{Deriving the Conflict Set}
+\label{sec:derive_cs}
+In the scheduled space, the conflict set $CS$ (built as a relation here) is
+derived as follows:
+\begin{enumerate}
+  \item $lastUse = lexMax(scheduledPRDG_f^{-1})$\\
+  {\tt isl\_map\_lexmax(isl\_map\_reverse($scheduledPRDG_f$))}\\
+  The function $lastUse$ associates, to a write, its last use (read) in the
+  scheduled PRDG.
+  \item $lexGE = \{ \vec{x} \leftrightarrow \vec{y}~|~ \vec{x} \succeq \vec{y}
+  \}$ with $lexGE \subseteq \mathbb{Z}^n \times \mathbb{Z}^n$\\
+  {\tt isl\_map\_lex\_ge(isl\_set\_get\_space($D_f$))}\\
+  This relation represents the lexicographic predecessors.
+  \item $predWrites = lexGE \cap \mathbb{Z}^n \times ran(scheduledPRDG_f)$\\
+  {\tt isl\_map\_intersect\_range($lexGE$,isl\_map\_range($scheduledPRDG_f$))}\\
+  This relation associates, to a read, all the writes preceding it.
+  \item $CS_{part1} = predWrites \circ lastUse$\\
+  {\tt isl\_map\_apply\_range($lastUse$,$predWrites$)}\\
+  This relation associates, to a write, all the writes executed before its last
+  use.
+  \item $CS_{part2} = CS_{part1} \cap CS_{part1}^{-1}$\\
+  {\tt isl\_map\_intersect($CS_{part1}$,isl\_map\_reverse($CS_{part1}$))}
+  \item Since $CS$ is symetric, any write conflicts with itself:\\
+  $CS = CS_{part2} \cup (\{ \vec{x} \leftrightarrow \vec{y}~|~\vec{x} =
+  \vec{y}\} \cap D_f \times D_f)$\\
+  {\tt tmp1 = isl\_map\_lex\_eq(isl\_set\_get\_space($D_f$))}\\
+  {\tt tmp2 = isl\_map\_intersect\_domain(isl\_map\_intersect\_range(tmp,$D_f$),$D_f$)}\\
+  {\tt isl\_map\_union($CS_{part2}$,tmp2)}
+\end{enumerate}
+
+In order to build a set ($\subseteq \mathbb{Z}^{2n}$) out of this relation: \\
+{\tt
+isl\_map\_get\_range(isl\_map\_move\_dims($CS$,isl\_dim\_out,0,isl\_dim\_in,0,$n$))}
+
+
+%cs.moveDims(JNIISLDimType.isl_dim_out, 0, JNIISLDimType.isl_dim_in, 0, nbDims);
+
+% 
+% 
+% {\center\noindent\makebox[\linewidth]{\rule{0.7\paperwidth}{0.4pt}}}
+% 
+% \begin{enumerate}
+% \item $PRDG = \{\vec{x} \leftrightarrow \vec{y}~|~\vec{x} \in \mathcal{D} \wedge
+% \vec{y} \in \mathcal{D} \wedge \vec{y} \in d[\{\vec{x}\}] \}$\\
+% $PRDG = \{\vec{x} \leftrightarrow \vec{y}~|~\vec{x} \in \mathcal{D} \wedge
+% \vec{y} \in \mathcal{D} \wedge \vec{x} \in d^{-1}[\{\vec{y}\}] \}$
+% \item $PRDG_{min} = \{\vec{x} \rightarrow \vec{y}~|~\vec{x} \in \mathcal{D}
+% \wedge \vec{y} \in \mathcal{D} \wedge \vec{y} = min(d[\{\vec{x}\}]) \}$\\
+% $PRDG_{min} = \{\vec{x} \rightarrow \vec{y}~|~\vec{x} \in \mathcal{D}
+% \wedge \vec{y} \in \mathcal{D} \wedge \vec{x} = max(d^{-1}[\{\vec{y}\}]) \}$
+% \item $CS_1 = ( \{ \vec{y} \leftrightarrow \vec{z}~|~ \vec{y} \succeq \vec{z}
+% \}~\circ~ PRDG_{min} ) \cap \{ \vec{x} \leftrightarrow \vec{z}~|~\vec{z}
+% \in \mathcal{D}\}$\\ 
+% $CS_1 = \{\vec{x} \leftrightarrow \vec{z}~|~\vec{x} \in
+% \mathcal{D} \wedge \vec{z} \in \mathcal{D} \wedge
+% min(d[\{\vec{x}\}]) \succeq \vec{z} \}$\\ 
+% $CS_1 = \{\vec{x} \leftrightarrow \vec{z}~|~\vec{x} \in
+% \mathcal{D} \wedge \vec{z} \in \mathcal{D} \wedge
+% max(d^{-1}[\{\vec{z}\}]) \succeq \vec{x} \}$
+% \item $PRDG^{-1} = \{\vec{x} \leftrightarrow \vec{y}~|~\vec{x} \in \mathcal{D}
+% \wedge \vec{y} \in \mathcal{D} \wedge \vec{y} \in d^{-1}[\{\vec{x}\}] \}$
+% \item $PRDG_{max}^{-1} = \{\vec{x} \rightarrow \vec{y}~|~\vec{x} \in
+% \mathcal{D} \wedge \vec{y} \in \mathcal{D} \wedge \vec{y} =
+% max(d^{-1}[\{\vec{x}\}]) \}$
+% \item $CS_2 = ( \{ \vec{y} \leftrightarrow \vec{z}~|~ \vec{y} \succeq \vec{z}
+% \}~\circ~ PRDG_{max}^{-1} ) \cap \{ \vec{x} \leftrightarrow \vec{z}~|~\vec{z} \in
+% \mathcal{D}\}$\\
+% $CS_2 = \{\vec{x} \leftrightarrow \vec{z}~|~\vec{x} \in
+% \mathcal{D} \wedge \vec{z} \in \mathcal{D} \wedge
+% max(d^{-1}[\{\vec{x}\}]) \succeq \vec{z} \}$
+% \item $CS = CS_1 \cap CS_2$\\
+% $CS = \{\vec{x} \leftrightarrow \vec{z}~|~\vec{x} \in
+% \mathcal{D} \wedge \vec{z} \in \mathcal{D} \wedge max(d^{-1}[\{\vec{x}\}])
+% \succeq \vec{z} \wedge max(d^{-1}[\{\vec{z}\}]) \succeq \vec{x} \}$
+% \end{enumerate}
+
+\subsection{Difference Set Construction}
+
+The difference set represents the set of differences of elements in the conflict
+set:
+$$DS = \{ \vec{u} ~|~ \vec{u} = \vec{x} - \vec{y} \wedge (\vec{x},\vec{y}) \in
+CS \}$$
+
+It is built as follows:
+\begin{enumerate}
+  \item $DS_{r1} = \{ CS \leftrightarrow \mathbb{Z}^n \}$\\
+{\tt tmp = isl\_map\_move\_dims($CS$, isl\_dim\_in, 0, isl\_dim\_out, 0, $n$)\\
+isl\_map\_insert\_dims(tmp, isl\_dim\_out, 0, $n$)}
+  \item $sub = \{ (\vec{x},\vec{y}) \rightarrow \vec{x} - \vec{y} \} \subseteq
+  (\mathbb{Z}^n \times \mathbb{Z}^n) \times \mathbb{Z}^n$\\
+{\tt 
+sub = isl\_basic\_map\_universe(isl\_map\_get\_space($DS\_{r1}$))\\
+lspace = isl\_local\_space\_from\_space(isl\_map\_get\_space($DS\_{r1}$))\\
+for ($i : 0 \rightarrow n$)\\
+.\hspace{0.7cm}cst = isl\_equality\_alloc(lspace)\\
+.\hspace{0.7cm}cst = isl\_constraint\_set\_constant\_si(cst,0);\\
+.\hspace{0.7cm}cst = isl\_constraint\_set\_coefficient\_si(cst,isl\_dim\_in, i, 1);\\
+.\hspace{0.7cm}cst = isl\_constraint\_set\_coefficient\_si(cst,isl\_dim\_in, i+$n$, -1);\\
+.\hspace{0.7cm}cst = isl\_constraint\_set\_coefficient\_si(cst,isl\_dim\_out, i, -1);\\
+.\hspace{0.7cm}sub = isl\_basic\_map\_add\_constraint(sub, cst);\\
+}
+  \item $DS_{r2} = DS_{r1} \cap sub$\\
+{\tt isl\_map\_intersect($DS_{r1}$, sub)}
+  \item $DS = ran(DS_{r2})$\\
+{\tt isl\_map\_range($DS_{r2}$)}
+\end{enumerate}
+
+
+% \begin{enumerate}
+% % \item $CS^{+} = \{ \vec{x} \leftrightarrow \vec{z}~|~ \vec{x} \succ \vec{z}
+% % \}~\circ~ CS$\\
+% % $CS^{+} = \{\vec{x} \leftrightarrow \vec{z}~|~\vec{x} \in
+% % \mathcal{D} \wedge \vec{z} \in \mathcal{D} \wedge max(d^{-1}[\{\vec{x}\}])
+% % \succeq \vec{z} \wedge max(d^{-1}[\{\vec{z}\}]) \succeq \vec{x} \wedge \vec{x}
+% % \succ \vec{z} \}$
+% \item $DS_R = \{ (\vec{x} \leftrightarrow \vec{z}) \rightarrow \vec{u}
+% ~|~\vec{x} \in \mathcal{D} \wedge \vec{z} \in \mathcal{D} \wedge max(d^{-1}[\{\vec{x}\}])
+% \succeq \vec{z} \wedge max(d^{-1}[\{\vec{z}\}]) \succeq \vec{x} \wedge \vec{x}
+% \succ \vec{z} \wedge \vec{u} = \vec{x} - \vec{y} \}$
+% \item $DS = \{ \vec{u}~|~ \exists (\vec{x},\vec{y}) \wedge \vec{x} \in
+% \mathcal{D} \wedge \vec{z} \in \mathcal{D} \wedge max(d^{-1}[\{\vec{x}\}])
+% \succeq \vec{z} \wedge max(d^{-1}[\{\vec{z}\}]) \succeq \vec{x} \wedge \vec{x}
+% \succ \vec{z} \wedge \vec{u} = \vec{x} - \vec{y} \}$
+% \end{enumerate}
+
+\subsection{Special Cases}
+
+\subsubsection{Parallel Schedules}
+
+In the step 6 of the conflict set derivation (cf sub
+section~\ref{sec:derive_cs}), instead of building the lexicographic equiality
+function, apply equality only for non parallel dimensions. Apply no constraint
+on parallel dimensions.
+
+This means that, on a parallel dimension, all writes conflict with each other.
+
+\subsubsection{Multiple Writes per Statement}
+\label{sec:multiwrite}
+
+The polyhedral model allows the representation of multiple writes per statement.
+This case occurs, for instance, when using pure functions\footnote{Pure
+functions do not have any side effect.} in statements. It is a particular case
+where the above techniques does not apply, because the isolated dependencies
+may be wrong. Let us examine the example loop nest of
+Figure~\ref{fig:example_multiwrites}.
+\begin{figure}[ht!]
+\begin{lstlisting}
+//Pure function : without side effect
+void pureFunction(int* out1, int* out2, int in1, int in2) {
+	*out1 = foo(in1, in2); //other pure
+	*out2 = bar(in1, in2); //functions
+}
+void main() {
+  ...
+  for (i = 1 .. N)
+    for (j = 0 .. N)
+   /* the semantic we use assume the  
+    * derefenced locations are written */
+S:    pureFunction(&x[i][j],&y[i][j],x[i-1][j],y[i-2][j]);
+   /* another notation would be */
+S:    (x[i][j],y[i][j]) = pureFunction(x[i-1][j],y[i-2][j]);
+  ...
+}
+\end{lstlisting}
+\caption{
+Example of an ACL involving pure functions where multiple writes occurs in one
+statement.
+\label{fig:example_multiwrites}}
+\end{figure}
+For such a loop nest, the dependencies per array are: 
+\begin{itemize}
+  \item on array {\tt x} : $d_1 : [N] \rightarrow \{ S[i,j] \rightarrow S[i-1,j]
+  \}$
+  \item on array {\tt y} : $d_2 : [N] \rightarrow \{ S[i,j] \rightarrow S[i-2,j]
+  \}$
+\end{itemize}
+The PRDG for this example would have only one edge with an associated relation
+instead of a function:
+$$d : [N] \rightarrow \{ S[i,j] \leftrightarrow S[i',j] : i-2 \le i' \le i-1
+\}$$
+Indeed, using this relation for the {\tt y} array would lead to the correct
+conflict set, because the lexicographic maximum of $d$ is $d_2$. However, it is
+obvious that this same maximum, when considering array {\tt x}, results in an
+overestimated distance, although conservative.
+
+Computing accurate distances when statements may issue several writes requires a
+more precise representation of the dependencies, where edges are associated per
+read/write access instead of per statement (GeCoS provides such information
+through the {\tt org.polymodel.dataflow} meta-model).
+
+
+{\center\noindent\makebox[\linewidth]{\rule{0.7\paperwidth}{0.4pt}}}
+\section{Successive Modulo Technique}
+\subsection{Basic Principle}
+\label{sec:successive_modulo}
+\subsection{Extensions}
+
+Let us consider the memory allocation for the fully expanded program, and
+assigning one array per write. If a single read access in the original program
+uses a value that can be produced by differents writes, the new memory
+allocation implies guarded accesses. Example \ldots TODO
+
+{\center\noindent\makebox[\linewidth]{\rule{0.7\paperwidth}{0.4pt}}}
+\section{Other Approches}
+See \emph{Lattice Based Memory Allocation}~\cite{BeeAlias07}.
+
+\appendix
+
+{\center\noindent\makebox[\linewidth]{\rule{0.7\paperwidth}{0.4pt}}}
+\section{Partial Unrolling and Distributed Memory}
+
+{\center\noindent\makebox[\linewidth]{\rule{0.7\paperwidth}{0.4pt}}}
+\bibliographystyle{unsrt}
+\bibliography{memory_allocation}
+
+\end{document}
+%Document end

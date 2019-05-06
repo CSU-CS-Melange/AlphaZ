@@ -1,0 +1,133 @@
+«IMPORT commandIF»
+«EXTENSION template::CompilerScript»
+
+«REM»Root node for initial alphaz stuff«ENDREM»
+«DEFINE root FOR Category»
+«EXPAND category FOR this»
+«EXPAND root FOREACH subcategories»
+«ENDDEFINE»
+
+«REM»Root node for alphaz stuff«ENDREM»
+«DEFINE XMLroot FOR Category»
+«FILE "plugin.xml"
+»<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="fr.irisa.r2d2.gecos.framework.modules">
+«FOREACH subcategories AS cat SEPARATOR ' '»«EXPAND XMLcategory FOR cat-»«ENDFOREACH-»
+   </extension>
+</plugin>
+«ENDFILE-»
+«ENDDEFINE»
+
+ 
+«REM»Expand rule for Category«ENDREM»
+«DEFINE category FOR Category»
+«FOREACH commands AS command SEPARATOR '\n'»
+«IF command.isExposedToUser()»
+«FILE command.getFilename()
+»package «this.getPackage()»;
+import fr.irisa.r2d2.gecos.framework.IModuleArgumentName;
+«FOREACH command.getImports() AS import SEPARATOR '\n'»import «import»;«ENDFOREACH»
+
+public class «command.name.toFirstUpper()»  {
+	«IF command.hasReturnValue()»private «command.getOutput()» result;«ENDIF»
+    «EXPAND command FOR command»
+	public «command.output» compute(){
+		«IF command.hasReturnValue()»return result;«ENDIF»
+	}
+}//endclass
+«ENDFILE-»
+«ENDIF»
+«ENDFOREACH»
+«ENDDEFINE»
+
+«REM»Constructor for commands. Arguments for the constuctor and invoked command is different for each«ENDREM»
+«DEFINE command FOR Command»«IF isExposedToUser()»
+	/**
+	«this.description.javaString()»
+	**/
+	public «getName().toFirstUpper()»(«EXPAND args FOR this») {
+	    try {
+		«IF hasReturnValue() » result = «ENDIF
+		»    «getCommandFullName()»(«EXPAND IFargs FOR this»);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		    //System.out.println("Unexpected Exception");
+		    //e.printStackTrace();
+		    throw new RuntimeException("Exception to terminate script");
+		}
+	}//function
+	
+    «EXPAND command FOREACH this.overloads»
+«ENDIF»«ENDDEFINE»
+
+«REM»Dummy to make editor happy«ENDREM»
+«DEFINE args FOR Command»«ENDDEFINE»
+«DEFINE IFargs FOR Command»«ENDDEFINE»
+
+«REM»Constructor arguments for BasicCommand«ENDREM»
+«DEFINE args FOR BasicCommand»«
+	FOREACH inputs AS OO SEPARATOR ',\n'»«EXPAND args FOR OO»«
+ENDFOREACH-»«ENDDEFINE»
+
+«REM»Java Interface arguments for BasicCommand«ENDREM»
+«DEFINE IFargs FOR BasicCommand»«
+	FOREACH inputs AS OO SEPARATOR ','»«OO.name»«
+ENDFOREACH-»«ENDDEFINE»
+
+«REM»Constructor arguments for Overloading«ENDREM»
+«DEFINE args FOR Overloading»«
+	FOREACH overLoadedInputs AS OO SEPARATOR ',\n'»«EXPAND args FOR OO»«
+ENDFOREACH-»«ENDDEFINE»
+
+«REM»Java Interface arguments for Overloading«ENDREM»
+«DEFINE IFargs FOR Overloading»«
+	FOREACH overLoadedInputs AS OO SEPARATOR ','» «
+		IF overLoadedInputs.contains(OO)
+			»«OO.name»«			
+		ELSE
+			»«OO.defaultValue»«
+		ENDIF-»«
+ENDFOREACH-»«ENDDEFINE»
+
+
+«REM»Constructor arguments for SpecializedOverloading«ENDREM»
+«DEFINE args FOR SpecializedOverloading»«
+	FOREACH overLoadedInputs AS OO SEPARATOR ',\n'»«EXPAND args FOR OO»«
+ENDFOREACH-»«IF overLoadedInputs.size > 0 && additionalInputs.size > 0», «ENDIF»«
+	FOREACH additionalInputs AS OO SEPARATOR ',\n'»«EXPAND args FOR OO»«
+ENDFOREACH-»«ENDDEFINE»
+
+«DEFINE args FOR Input»@IModuleArgumentName(name="«name»") «type» «name»«ENDDEFINE»
+
+«REM»Java Interface arguments for SpecializedOverloading«ENDREM»
+«DEFINE IFargs FOR SpecializedOverloading»«
+	FOREACH overLoadedInputs AS OO SEPARATOR ','» «
+		IF overLoadedInputs.contains(OO)
+			»«OO.name»«			
+		ELSE
+			»«OO.defaultValue»«
+		ENDIF-»«
+ENDFOREACH-»«IF overLoadedInputs.size > 0 && additionalInputs.size > 0», «ENDIF»«
+	FOREACH additionalInputs AS OO SEPARATOR ','» «OO.name»«
+ENDFOREACH-»«ENDDEFINE»
+
+
+«REM»Expand rule for Category to generate plugin.xml«ENDREM»
+«DEFINE XMLcategory FOR Category»
+«EXPAND XMLcommand FOREACH commands»
+«EXPAND XMLcategory FOREACH subcategories»
+«ENDDEFINE»
+
+«DEFINE XMLcommand FOR BasicCommand»«IF isExposedToUser()»
+      <module
+            class="«getCategory().getPackage()».«getName().toFirstUpper()»"
+            iterative="false"
+            name="«this.getCommandName()»">
+         <description>
+            «this.description»
+         </description>
+      </module>
+«ENDIF»«ENDDEFINE»

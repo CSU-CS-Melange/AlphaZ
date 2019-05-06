@@ -1,0 +1,8 @@
+affine dot_product_withReduce {N| N>0}
+ input
+     float x,y {i | 0<=i<N};
+ output
+     float z{|};
+ let
+     z[]    = reduce(+, [i], x[i]*y[i]);
+ .

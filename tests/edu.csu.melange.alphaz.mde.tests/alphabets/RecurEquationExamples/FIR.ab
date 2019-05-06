@@ -1,0 +1,15 @@
+affine FIR {N,T|(N,T)>0}
+	input 
+		float x {n|0<=n<T};
+		float a {k|0<=k<N};
+	output
+		float y {n|N<=n<T};
+	local
+		float temp_y {n,k|N<=n<T && 0<=k<N};
+	let
+		temp_y[n,k] = case
+			{|k==0} : a[k] * x[n];
+			{|k>0 } : a[k] * x[n-k] + temp_y[n,k-1];
+		esac;
+		y[n] = temp_y[n,N-1];
+.

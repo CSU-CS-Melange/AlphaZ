@@ -1,0 +1,256 @@
+// User operators
+
+%op Program program(systems : SystemList, externalFunctionDeclarations : extFuncDeclList) {
+	/*PROTECTED REGION ID(tom_operator_with_param_program) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof Program}
+	get_slot(systems,t) {enforce(((Program)$t).getSystems())}
+	get_slot(externalFunctionDeclarations,t) {enforce(((Program)$t).getExternalFunctionDeclarations())}
+	make(_systems,_externalFunctionDeclarations) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createProgram($_systems, $_externalFunctionDeclarations)}
+	/*PROTECTED REGION END*/
+}
+
+%op System system(name : String, parameters : ParameterDomain, inputs : VariableDeclarationList, outputs : VariableDeclarationList, locals : VariableDeclarationList, equations : StandardEquationList, useEquations : UseEquationList) {
+	/*PROTECTED REGION ID(tom_operator_with_param_system) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof AffineSystem}
+	get_slot(name,t) {((AffineSystem)$t).getName()}
+	get_slot(parameters,t) {((AffineSystem)$t).getParameters()}
+	get_slot(inputs,t) {enforce(((AffineSystem)$t).getInputs())}
+	get_slot(outputs,t) {enforce(((AffineSystem)$t).getOutputs())}
+	get_slot(locals,t) {enforce(((AffineSystem)$t).getLocals())}
+	get_slot(equations,t) {enforce(((AffineSystem)$t).getEquations())}
+	get_slot(useEquations,t) {enforce(((AffineSystem)$t).getUseEquations())}
+	make(_name,_parameters,_inputs,_outputs,_locals,_equations,_useEquations) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createSystem($_name, $_parameters, $_inputs, $_outputs, $_locals, $_equations, $_useEquations)}
+	/*PROTECTED REGION END*/
+}
+
+%op VariableDeclaration varDecl(varID : VariableIdentifier, domain : Domain) {
+	/*PROTECTED REGION ID(tom_operator_with_param_varDecl) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof VariableDeclaration}
+	get_slot(varID,t) {((VariableDeclaration)$t).getVarID()}
+	get_slot(domain,t) {((VariableDeclaration)$t).getDomain()}
+	make(_varID,_domain) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createVarDecl($_varID, $_domain)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression var(varDecl : VariableDeclaration) {
+	/*PROTECTED REGION ID(tom_operator_with_param_var) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof VariableExpression}
+	get_slot(varDecl,t) {((VariableExpression)$t).getVarDecl()}
+	make(_varDecl) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createVar($_varDecl)}
+	/*PROTECTED REGION END*/
+}
+
+%op StandardEquation eq(variable : VariableDeclaration, expression : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_eq) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof StandardEquation}
+	get_slot(variable,t) {((StandardEquation)$t).getVariable()}
+	get_slot(expression,t) {((StandardEquation)$t).getExpression()}
+	make(_variable,_expression) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createEq($_variable, $_expression)}
+	/*PROTECTED REGION END*/
+}
+
+%op UseEquation ueq(extensionDomain : Domain, parameters : AffineFunction, subSystem : System, inputs : exprList, outputs : VariableDeclarationList, label : String) {
+	/*PROTECTED REGION ID(tom_operator_with_param_ueq) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof UseEquation}
+	get_slot(extensionDomain,t) {((UseEquation)$t).getExtensionDomain()}
+	get_slot(parameters,t) {((UseEquation)$t).getParameters()}
+	get_slot(subSystem,t) {((UseEquation)$t).getSubSystem()}
+	get_slot(inputs,t) {enforce(((UseEquation)$t).getInputs())}
+	get_slot(outputs,t) {enforce(((UseEquation)$t).getOutputs())}
+	get_slot(label,t) {((UseEquation)$t).getLabel()}
+	make(_extensionDomain,_parameters,_subSystem,_inputs,_outputs,_label) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createUeq($_extensionDomain, $_parameters, $_subSystem, $_inputs, $_outputs, $_label)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression boolConst(value : boolean) {
+	/*PROTECTED REGION ID(tom_operator_with_param_boolConst) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof BooleanExpression}
+	get_slot(value,t) {((BooleanExpression)$t).isValue()}
+	make(_value) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createBoolConst($_value)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression intConst(value : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_intConst) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof IntegerExpression}
+	get_slot(value,t) {((IntegerExpression)$t).getValue()}
+	make(_value) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createIntConst($_value)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression realConst(value : double) {
+	/*PROTECTED REGION ID(tom_operator_with_param_realConst) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof RealExpression}
+	get_slot(value,t) {((RealExpression)$t).getValue()}
+	make(_value) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createRealConst($_value)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression reduce(OP : OP, projection : AffineFunction, expr : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_reduce) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ReduceExpression}
+	get_slot(OP,t) {((ReduceExpression)$t).getOP()}
+	get_slot(projection,t) {((ReduceExpression)$t).getProjection()}
+	get_slot(expr,t) {((ReduceExpression)$t).getExpr()}
+	make(_OP,_projection,_expr) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createReduce($_OP, $_projection, $_expr)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression caseExpr(exprs : exprList) {
+	/*PROTECTED REGION ID(tom_operator_with_param_caseExpr) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof CaseExpression}
+	get_slot(exprs,t) {enforce(((CaseExpression)$t).getExprs())}
+	make(_exprs) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createCaseExpr($_exprs)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression ifExpr(cond : Expression, then : Expression, else : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_ifExpr) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof IfExpression}
+	get_slot(cond,t) {((IfExpression)$t).getCond()}
+	get_slot(then,t) {((IfExpression)$t).getThen()}
+	get_slot(else,t) {((IfExpression)$t).getElse()}
+	make(_cond,_then,_else) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createIfExpr($_cond, $_then, $_else)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression restrictExpr(restrictDomain : Domain, expr : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_restrictExpr) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof RestrictExpression}
+	get_slot(restrictDomain,t) {((RestrictExpression)$t).getRestrictDomain()}
+	get_slot(expr,t) {((RestrictExpression)$t).getExpr()}
+	make(_restrictDomain,_expr) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createRestrictExpr($_restrictDomain, $_expr)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression depExpr(dep : AffineFunction, expr : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_depExpr) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof DependenceExpression}
+	get_slot(dep,t) {((DependenceExpression)$t).getDep()}
+	get_slot(expr,t) {((DependenceExpression)$t).getExpr()}
+	make(_dep,_expr) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createDepExpr($_dep, $_expr)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression indexExpr(function : AffineFunction) {
+	/*PROTECTED REGION ID(tom_operator_with_param_indexExpr) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof IndexExpression}
+	get_slot(function,t) {((IndexExpression)$t).getFunction()}
+	make(_function) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createIndexExpr($_function)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression binOp(operator : OP, lexp : Expression, rexp : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_binOp) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof BinaryExpression}
+	get_slot(operator,t) {((BinaryExpression)$t).getOperator()}
+	get_slot(lexp,t) {((BinaryExpression)$t).getLexp()}
+	get_slot(rexp,t) {((BinaryExpression)$t).getRexp()}
+	make(_operator,_lexp,_rexp) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createBinOp($_operator, $_lexp, $_rexp)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression binAdd(lexp : Expression, rexp : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_binAdd) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof BinaryExpression && ((BinaryExpression)$t).getOperator().equals(OP.ADD)}
+	get_slot(lexp,t) {((BinaryExpression)$t).getLexp()}
+	get_slot(rexp,t) {((BinaryExpression)$t).getRexp()}
+	make(_lexp,_rexp) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createBinAdd($_lexp, $_rexp)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression binSub(lexp : Expression, rexp : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_binSub) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof BinaryExpression && ((BinaryExpression)$t).getOperator().equals(OP.SUB)}
+	get_slot(lexp,t) {((BinaryExpression)$t).getLexp()}
+	get_slot(rexp,t) {((BinaryExpression)$t).getRexp()}
+	make(_lexp,_rexp) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createBinSub($_lexp, $_rexp)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression binMul(lexp : Expression, rexp : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_binMul) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof BinaryExpression && ((BinaryExpression)$t).getOperator().equals(OP.MUL)}
+	get_slot(lexp,t) {((BinaryExpression)$t).getLexp()}
+	get_slot(rexp,t) {((BinaryExpression)$t).getRexp()}
+	make(_lexp,_rexp) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createBinMul($_lexp, $_rexp)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression binEq(lexp : Expression, rexp : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_binEq) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof BinaryExpression && ((BinaryExpression)$t).getOperator().equals(OP.EQ)}
+	get_slot(lexp,t) {((BinaryExpression)$t).getLexp()}
+	get_slot(rexp,t) {((BinaryExpression)$t).getRexp()}
+	make(_lexp,_rexp) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createBinEq($_lexp, $_rexp)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression unaryOp(operator : OP, expr : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_unaryOp) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof UnaryExpression}
+	get_slot(operator,t) {((UnaryExpression)$t).getOperator()}
+	get_slot(expr,t) {((UnaryExpression)$t).getExpr()}
+	make(_operator,_expr) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createUnaryOp($_operator, $_expr)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression unaryMinus(expr : Expression) {
+	/*PROTECTED REGION ID(tom_operator_with_param_unaryMinus) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof UnaryExpression && ((UnaryExpression)$t).getOperator().equals(OP.SUB)}
+	get_slot(expr,t) {((UnaryExpression)$t).getExpr()}
+	make(_expr) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createUnaryMinus($_expr)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression multOp(operator : OP, exprs : exprList) {
+	/*PROTECTED REGION ID(tom_operator_with_param_multOp) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof MultiArgExpression}
+	get_slot(operator,t) {((MultiArgExpression)$t).getOperator()}
+	get_slot(exprs,t) {enforce(((MultiArgExpression)$t).getExprs())}
+	make(_operator,_exprs) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createMultOp($_operator, $_exprs)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression externalCall(operator : OP, exprs : exprList, exFunc : ExternalFunctionDeclaration) {
+	/*PROTECTED REGION ID(tom_operator_with_param_externalCall) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ExternalFunctionCall}
+	get_slot(operator,t) {((ExternalFunctionCall)$t).getOperator()}
+	get_slot(exprs,t) {enforce(((ExternalFunctionCall)$t).getExprs())}
+	get_slot(exFunc,t) {((ExternalFunctionCall)$t).getExFunc()}
+	make(_operator,_exprs,_exFunc) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createExternalCall($_operator, $_exprs, $_exFunc)}
+	/*PROTECTED REGION END*/
+}
+
+%op Expression val(function : AffineFunction) {
+	/*PROTECTED REGION ID(tom_operator_with_param_val) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof IndexExpression}
+	get_slot(function,t) {((IndexExpression)$t).getFunction()}
+	make(_function) {org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.createVal($_function)}
+	/*PROTECTED REGION END*/
+}

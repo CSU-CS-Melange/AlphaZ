@@ -1,0 +1,54 @@
+affine Skewed_Forward_substitution_blocked { M,B | M>0 && B>6}
+input
+	float Ab {alpha,beta, ii,jj | alpha==beta==0 && jj<=ii<=2jj }
+		||   {alpha,beta, ii,jj | 1<=alpha==beta<M && jj<=ii }
+		||   {alpha,beta, ii,jj | alpha==2beta+1 && 0<=beta<M && B<=2jj-ii }
+		||   {alpha,beta, ii,jj | alpha==2beta && 0<beta<M && 0<=2jj-ii }
+		||   {alpha,beta, ii,jj | 0<=beta<alpha<2beta && beta<M && 0<=(ii,jj)<B };
+	float b {alpha,ii | 0<=alpha<M && 0<=ii<B };
+output
+	float x {alpha,ii | 0<=alpha<M && 0<=ii<B };
+let
+	x[alpha,ii] = 1/ (case
+		{alpha,ii | 0<=alpha<M && 0<=6ii<2B}:  Ab[3alpha,2alpha, 3ii,2ii];
+		{alpha,ii | 0<=alpha<M && 2B<=6ii<3B}: Ab[3alpha+1,2alpha, 3ii-B,2ii];
+		{alpha,ii | 0<=alpha<M && 3B<=6ii<4B}: Ab[3alpha+1,2alpha+1, 3ii-B,2ii-B];
+		{alpha,ii | 0<=alpha<M && 4B<=6ii<6B}: Ab[3alpha+2,2alpha+1, 3ii-2B,2ii-B];
+	esac) * ( b[alpha,ii] - reduce(+, (alpha,gamma, ii,kk -> alpha,ii), 
+		{alpha,gamma, ii,kk | gamma < alpha} || {alpha,gamma, ii,kk | gamma==alpha && kk<ii}:
+			case
+				{alpha,gamma, ii,kk | 2ii+kk<B} : Ab[2alpha+gamma,alpha+gamma, 2ii+kk, ii+kk];
+				{alpha,gamma, ii,kk | B<=2ii+kk && ii+kk<B} : Ab[2alpha+gamma+1,alpha+gamma, 2ii+kk-B, ii+kk];
+				{alpha,gamma, ii,kk | B<=ii+kk && 2ii+kk<2B} : Ab[2alpha+gamma+1,alpha+gamma+1, 2ii+kk-B, ii+kk-B];
+				{alpha,gamma, ii,kk | 2B<=2ii+kk} : Ab[2alpha+gamma+2,alpha+gamma+1, 2ii+kk-2B, ii+kk-B];
+			esac * x[gamma, kk]
+		)
+	);
+.
+
+// TODO: check the definition domains... :/
+
+
+/* OLD (BUGGY) DECLARATION
+float Ab {alpha,beta, ii,jj | 0<=beta<alpha< 2beta<M && 0<=ii<B && 0<=2jj<B }
+		||   {alpha,beta, ii,jj | 0<=beta<alpha==2beta<M && 0<=ii<=2jj<B }
+		||   {alpha,beta, ii,jj | 0<=beta<alpha<2beta+1 && alpha<M && B<=2jj<2B }
+		||   {alpha,beta, ii,jj | 0<=beta<alpha==2beta+1<M && B<=jj<2B && 2jj-B >= ii }
+		||   {alpha,beta, ii,jj | 0<=alpha==beta<M && 0<=2jj<B && jj<=ii }
+		||   {alpha,beta, ii,jj | alpha==beta==0 && 0<=jj<=ii<=2jj<B }
+		||   {alpha,beta, ii,jj | 0<=alpha==beta<M && ii>=jj && B<=2jj<2B }; */
+
+
+/* ORIGINAL COMPUTATION
+affine Skewed_Forward_substitution { N | N>0 }
+input
+	float A {i,j | j<=i<=N-j && i<=2j<N};
+	float b {i | 0<=i<N};
+output
+	float x {i | 0<=i<N};
+let
+	x[i] = 1/A[3i,2i] * (b[i] - reduce(+, (i,k->i), {i,k | k<i}: A[2i+k,i+k]*x[k]) );
+.
+
+CoB: (i,j -> 2i+j, i+j)  // inverse CoB: (i,j -> i-j, 2j-i)
+*/

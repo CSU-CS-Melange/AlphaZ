@@ -1,0 +1,48 @@
+affine vector_product {N| N>0}	// Product between 2 vector of size N
+input
+	long A {i | 0<=i<N };
+	long B {i | 0<=i<N };
+output
+	long Res;
+local
+	long temp {i | 0<=i<N};
+let
+	temp[i] = case
+		{i|i==0}   : A[0] * B[0];
+		{i |0<i<N} : temp[i-1] + A[i]*B[i]; 
+	esac;
+	Res[] = temp[N-1];
+.
+
+affine mat_vect_product {N,M| N>0 && M>0}	// Product between a matrix of size N*M and a vector of size M
+input
+	long mat {i,k | 0<=i<N && 0<=k<M};
+	long vect {k | 0<=k<M};
+output
+	long res {i | 0<=i<N};
+let
+	// -- Classical solution:
+	// Add into local: long temp {i,k | 0<=i<N && 0<=k<M};
+	// temp[i,k] = case
+	//	 {i,k| k==0 } : mat[i,0]*vect[0];
+	//	 {i,k| 0<k<M} : temp[i,k-1] + mat[i,k]*vect[k];
+	// esac;
+	// res[i] = temp[i,M-1];
+	
+	// -- Use-based solution:
+	use {iP|0<=iP<N} vector_product[M] (mat,(p,j->j)@vect) returns (res);
+.
+
+affine mat_product {N,M,K | N>0 && M>0 && K>0}	// Product between a N*K matrix and a K*M matrix
+input
+	long A {i,k | 0<=i<N && 0<=k<K};
+	long B {k,j | 0<=k<K && 0<=j<M};
+output
+	long C {j,i | 0<=j<M && 0<=i<N};
+//	long C {i,j | 0<=i<N && 0<=j<M};
+local
+//	long Cloc {j,i | 0<=j<M && 0<=i<N};
+let
+	use {jP|0<=jP<M} mat_vect_product[N,K] ((p,i,j->i,j)@A,(p,j->j,p)@B) returns (C);
+//	C[i,j] = Cloc[j,i];
+.

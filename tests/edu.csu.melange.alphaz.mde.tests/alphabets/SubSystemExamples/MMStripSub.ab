@@ -1,0 +1,22 @@
+affine StripBlockMM {S,N,M|(S,N,M)>0}//N:= The number of blocks in A and B  S:=Square matrix dim (SxS) M:block height of A and Block widthof B
+given
+	float A {i,j,k| 0<=i<M && 0<=j<S && 0<=k<N};
+	float B {i,j,k| 0<=j<M && 0<=i<S && 0<=k<N};
+returns
+	float C {ii,jj,i,j| 0<=(ii,jj)<N && 0<=(i,j)<M};
+using //No Temp
+through
+use{ii,jj|0<=(ii,jj)<N}MM[M,S]((ii,jj,i,j-> i,j,ii)@A,(ii,jj,i,j->i,j,jj)@B)returns(C);
+
+.
+
+affine MM {P,Q| (P,Q)>0}
+given
+	float A {i,j | 0<=i<P && 0<=j<Q};
+	float B {i,j | 0<=i<Q && 0<=j<P};
+returns
+	float C {i,j | 0<=i<P && 0<=j<P};
+using // No local variables
+through
+   C[i,j]  = reduce(+, [k], A[i,k]*B[k,j]);
+.

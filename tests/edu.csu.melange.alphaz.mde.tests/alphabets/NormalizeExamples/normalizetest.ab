@@ -1,0 +1,10 @@
+affine NormalizeTest {N,M | N > 1 && M > 1}
+input
+	int A {i, j | 2 <= i <= N + 1 && 2 <= j <= M + 1};
+	int B {i, j | 2 <= i <= N + 1 && 2 <= j <= M + 1};
+output
+	int C {i, j | 0 <= i < N && 0 <= j < M};
+let
+	C[i, j] = (i,j->i+2,j+2)@(A[i,j]+B[i,j]);
+	C[i, j] = (i,j->i+1,j+1)@A[i+1,j+1] + (i,j->i+1,j+1)@B[i+1,j+1];
+.

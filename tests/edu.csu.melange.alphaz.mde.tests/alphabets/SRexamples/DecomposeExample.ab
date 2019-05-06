@@ -1,0 +1,10 @@
+affine DEx {N|N>0}
+input
+	int A {i,j| 0<=(i,j) < N};
+output
+	int X {|};
+let
+
+X[] = reduce(+, [i,j], A[i,j]);
+
+.

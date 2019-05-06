@@ -1,0 +1,7 @@
+affine MultArthmaticArg {N | N > 1}
+input
+output
+	int X {i, j | 0 <= i < N && 0 <= j < N};
+let
+	X[i,j] = (i,j->i, i+j)@max([i], [j], [i] + [j]);
+.

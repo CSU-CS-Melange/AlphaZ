@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="algebra" nsURI="http://polymodel/algebra" nsPrefix="algebra">
+  <eClassifiers xsi:type="ecore:EClass" name="IntExpression" abstract="true" eSuperTypes="#//AlgebraVisitable">
+    <eOperations name="isEquivalent" lowerBound="1" eType="#//FuzzyBoolean">
+      <eParameters name="other" lowerBound="1" eType="#//IntExpression"/>
+    </eOperations>
+    <eOperations name="simplify" lowerBound="1" eType="#//IntExpression"/>
+    <eOperations name="substitute" lowerBound="1" eType="#//IntExpression">
+      <eParameters name="substituted" lowerBound="1" eType="#//Variable"/>
+      <eParameters name="newVar" lowerBound="1" eType="#//Variable"/>
+    </eOperations>
+    <eOperations name="substitute" lowerBound="1" eType="#//IntExpression">
+      <eParameters name="substituted" lowerBound="1" eType="#//Variable"/>
+      <eParameters name="newExpr" lowerBound="1" eType="#//IntExpression"/>
+    </eOperations>
+    <eOperations name="toAffine" eType="#//affine/AffineExpression"/>
+    <eOperations name="toQuasiAffine" eType="#//quasiAffine/QuasiAffineExpression"/>
+    <eOperations name="toPolynomial" eType="#//polynomials/PolynomialExpression"/>
+    <eOperations name="toReduction" eType="#//reductions/ReductionExpression"/>
+    <eOperations name="accept">
+      <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+    </eOperations>
+    <eOperations name="copy" lowerBound="1">
+      <eGenericType eTypeParameter="#//IntExpression/copy/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//IntExpression"/>
+      </eTypeParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntTerm" eSuperTypes="#//AlgebraVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitIntTerm(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+    </eOperations>
+    <eOperations name="isEquivalent" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="other" lowerBound="1" eType="#//IntTerm"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="coef" eType="#//Value"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//AlgebraVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitVariable(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Value" instanceClassName="long"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IntConstraint" eSuperTypes="#//AlgebraVisitable">
+    <eOperations name="isAffine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isQuasiAffine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isPolynomial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitIntConstraint(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+    </eOperations>
+    <eOperations name="substitute" lowerBound="1" eType="#//IntConstraint">
+      <eParameters name="substituted" lowerBound="1" eType="#//Variable"/>
+      <eParameters name="newVar" lowerBound="1" eType="#//Variable"/>
+    </eOperations>
+    <eOperations name="substitute" lowerBound="1" eType="#//IntConstraint">
+      <eParameters name="substituted" lowerBound="1" eType="#//Variable"/>
+      <eParameters name="newExpr" lowerBound="1" eType="#//IntExpression"/>
+    </eOperations>
+    <eOperations name="simplify" lowerBound="1" eType="#//IntConstraint"/>
+    <eOperations name="isEquivalent" lowerBound="1" eType="#//FuzzyBoolean">
+      <eParameters name="other" lowerBound="1" eType="#//IntConstraint"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lhs" lowerBound="1" eType="#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rhs" lowerBound="1" eType="#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="comparisonOperator" lowerBound="1"
+        eType="#//ComparisonOperator"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ComparisonOperator">
+    <eLiterals name="EQ" literal="EQ"/>
+    <eLiterals name="NE" value="1" literal="NE"/>
+    <eLiterals name="GT" value="2" literal="GT"/>
+    <eLiterals name="GE" value="3" literal="GE"/>
+    <eLiterals name="LT" value="4" literal="LT"/>
+    <eLiterals name="LE" value="5" literal="LE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IntConstraintSystem" eSuperTypes="#//AlgebraVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitIntConstraintSystem(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+    </eOperations>
+    <eOperations name="substitute" lowerBound="1" eType="#//IntConstraintSystem">
+      <eParameters name="substituted" lowerBound="1" eType="#//Variable"/>
+      <eParameters name="newVar" lowerBound="1" eType="#//Variable"/>
+    </eOperations>
+    <eOperations name="substitute" lowerBound="1" eType="#//IntConstraintSystem">
+      <eParameters name="substituted" lowerBound="1" eType="#//Variable"/>
+      <eParameters name="newExpr" lowerBound="1" eType="#//IntExpression"/>
+    </eOperations>
+    <eOperations name="simplify" lowerBound="1" eType="#//IntConstraintSystem"/>
+    <eOperations name="copy" lowerBound="1" eType="#//IntConstraintSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraints" upperBound="-1"
+        eType="#//IntConstraint" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AlgebraVisitor" abstract="true">
+    <eOperations name="visitIntTerm">
+      <eParameters name="i" eType="#//IntTerm"/>
+    </eOperations>
+    <eOperations name="visitVariable">
+      <eParameters name="v" eType="#//Variable"/>
+    </eOperations>
+    <eOperations name="visitIntConstraint">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="i.getLhs().accept(this);&#xA;i.getRhs().accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//IntConstraint"/>
+    </eOperations>
+    <eOperations name="visitIntConstraintSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="for(IntConstraint o: i.getConstraints())&#xA;&#x9; o.accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//IntConstraintSystem"/>
+    </eOperations>
+    <eOperations name="visitAffineExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="for(AffineTerm o: a.getTerms())&#xA;&#x9; o.accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//affine/AffineExpression"/>
+    </eOperations>
+    <eOperations name="visitAffineTerm">
+      <eParameters name="a" eType="#//affine/AffineTerm"/>
+    </eOperations>
+    <eOperations name="visitQuasiAffineExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="for(QuasiAffineTerm o: q.getTerms())&#xA;&#x9; o.accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="q" eType="#//quasiAffine/QuasiAffineExpression"/>
+    </eOperations>
+    <eOperations name="visitQuasiAffineTerm">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="throw new UnsupportedOperationException();"/>
+      </eAnnotations>
+      <eParameters name="q" eType="#//quasiAffine/QuasiAffineTerm"/>
+    </eOperations>
+    <eOperations name="visitSimpleQuasiAffineTerm">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="q.getExpression().accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="q" eType="#//quasiAffine/SimpleQuasiAffineTerm"/>
+    </eOperations>
+    <eOperations name="visitNestedQuasiAffineTerm">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="q.getExpression().accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="q" eType="#//quasiAffine/NestedQuasiAffineTerm"/>
+    </eOperations>
+    <eOperations name="visitPolynomialExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="for(PolynomialTerm o: p.getTerms())&#xA;&#x9; o.accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//polynomials/PolynomialExpression"/>
+    </eOperations>
+    <eOperations name="visitPolynomialTerm">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="for(PolynomialVariable o: p.getVariables())&#xA;&#x9; o.accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//polynomials/PolynomialTerm"/>
+    </eOperations>
+    <eOperations name="visitPolynomialVariable">
+      <eParameters name="p" eType="#//polynomials/PolynomialVariable"/>
+    </eOperations>
+    <eOperations name="visitReductionExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="for(IntExpression o: r.getExpressions())&#xA;&#x9; o.accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//reductions/ReductionExpression"/>
+    </eOperations>
+    <eOperations name="visitIntExpression" lowerBound="1">
+      <eParameters name="ie" eType="#//IntExpression"/>
+    </eOperations>
+    <eOperations name="visitCompositeIntExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="r.getLeft().accept(this);&#xA;r.getRight().accept(this);&#xA;&#x9;&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//CompositeIntExpression"/>
+    </eOperations>
+    <eOperations name="visitSelectExpression" lowerBound="1">
+      <eParameters name="ie" eType="#//SelectExpression"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AlgebraVisitable" abstract="true" interface="true">
+    <eOperations name="accept">
+      <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FuzzyBoolean">
+    <eLiterals name="yes" literal="yes"/>
+    <eLiterals name="no" value="1" literal="no"/>
+    <eLiterals name="maybe" value="2" literal="maybe"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompositeIntExpression" eSuperTypes="#//IntExpression">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitCompositeIntExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" lowerBound="1" eType="#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" lowerBound="1" eType="#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" lowerBound="1"
+        eType="#//CompositeOperator"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="CompositeOperator">
+    <eLiterals name="DIV" literal="DIV"/>
+    <eLiterals name="MOD" value="1" literal="MOD"/>
+    <eLiterals name="CEIL" value="2" literal="CEIL"/>
+    <eLiterals name="FLOOR" value="3" literal="FLOOR"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SelectExpression" eSuperTypes="#//IntExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" upperBound="-1"
+        eType="#//IntConstraintSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="then" lowerBound="1" eType="#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="else" lowerBound="1" eType="#//IntExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eSubpackages name="affine" nsURI="http://polymodel/algebra/affine" nsPrefix="affine">
+    <eClassifiers xsi:type="ecore:EClass" name="AffineExpression" eSuperTypes="#//IntExpression #//AlgebraVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitAffineExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="terms" upperBound="-1"
+          eType="#//affine/AffineTerm" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="AffineTerm" eSuperTypes="#//IntTerm #//AlgebraVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitAffineTerm(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//Variable"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="quasiAffine" nsURI="http://polymodel/algebra/quasiAffine" nsPrefix="quasiAffine">
+    <eClassifiers xsi:type="ecore:EClass" name="QuasiAffineExpression" eSuperTypes="#//IntExpression #//AlgebraVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitQuasiAffineExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="terms" upperBound="-1"
+          eType="#//quasiAffine/QuasiAffineTerm" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="QuasiAffineTerm" abstract="true" eSuperTypes="#//IntTerm #//AlgebraVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitQuasiAffineTerm(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" lowerBound="1"
+          eType="#//quasiAffine/QuasiAffineOperator"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="QuasiAffineOperator">
+      <eLiterals name="MOD" literal="MOD"/>
+      <eLiterals name="FLOOR" value="1" literal="FLOOR"/>
+      <eLiterals name="CEIL" value="2" literal="CEIL"/>
+      <eLiterals name="MUL" value="3" literal="MUL"/>
+      <eLiterals name="DIV" value="4" literal="DIV"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SimpleQuasiAffineTerm" eSuperTypes="#//quasiAffine/QuasiAffineTerm">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+          eType="#//affine/AffineExpression" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="NestedQuasiAffineTerm" eSuperTypes="#//quasiAffine/QuasiAffineTerm">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+          eType="#//quasiAffine/QuasiAffineExpression" containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="polynomials" nsURI="http://polymodel/algebra/polynomials" nsPrefix="polynomials">
+    <eClassifiers xsi:type="ecore:EClass" name="PolynomialExpression" eSuperTypes="#//IntExpression #//AlgebraVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitPolynomialExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+      </eOperations>
+      <eOperations name="isAffine" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="isQuasiAffine" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="terms" upperBound="-1"
+          eType="#//polynomials/PolynomialTerm" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="PolynomialVariable" eSuperTypes="#//AlgebraVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitPolynomialVariable(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+      </eOperations>
+      <eOperations name="isEquivalent" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="other" lowerBound="1" eType="#//polynomials/PolynomialVariable"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//Variable"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="exponent" eType="#//Value"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="PolynomialTerm" eSuperTypes="#//AlgebraVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitPolynomialTerm(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+      </eOperations>
+      <eOperations name="isAffine" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="isQuasiAffine" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="numerator" eType="#//Value"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="denominator" eType="#//Value"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+          eType="#//polynomials/PolynomialVariable" containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="reductions" nsURI="http://polymodel/algebra/reductions" nsPrefix="reductions">
+    <eClassifiers xsi:type="ecore:EClass" name="ReductionExpression" eSuperTypes="#//IntExpression #//AlgebraVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitReductionExpression(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//AlgebraVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
+          eType="#//IntExpression" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" lowerBound="1"
+          eType="#//reductions/ReductionOperator"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="ReductionOperator">
+      <eLiterals name="MIN" literal="MIN"/>
+      <eLiterals name="MAX" value="1" literal="MAX"/>
+      <eLiterals name="SUM" value="2" literal="SUM"/>
+      <eLiterals name="PROD" value="3" literal="PROD"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>

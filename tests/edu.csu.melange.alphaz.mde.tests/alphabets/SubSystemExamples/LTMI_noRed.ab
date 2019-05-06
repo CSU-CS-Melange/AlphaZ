@@ -1,0 +1,31 @@
+affine LTMInoRed {N | N>=1}
+input
+	double L {i,j | 0<=j<=i<N};
+output
+	double C {i,j | 0<=j<=i<N};
+local
+	double temp {i,j,k | 0<=j<=k<i<N};
+let
+	C[i,j] = case
+		{|i==j}: 1.0/L[i,i];
+		{|i>j}:	temp[i,j,i-1] /L[i,i];
+	esac;
+	
+	temp[i,j,k] = case
+		{|k==j} : -L[i,k] * C[k,j];
+		{|j<k<i} : temp[i,j,k-1] - L[i,k] * C[k,j];
+	esac;
+.
+
+/*affine Linv {N | N>=1}
+input
+	double L {i,j | 0<=j<=i<N};
+output
+	double C {i,j | 0<=j<=i<N};
+let
+	C[i,j] = case
+		{|i==j}: 1.0/L[i,i];
+		{|i>j}:	( reduce(+, [k], {|j<=k<i}: (-1.0) * L[i,k] * C[k,j]) ) * (1.0/L[i,i]);
+	esac;
+. */
+

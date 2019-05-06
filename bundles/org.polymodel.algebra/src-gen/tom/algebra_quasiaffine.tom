@@ -1,0 +1,131 @@
+/* PROTECTED REGION ID(module_quasiaffine_user) ENABLED START */
+// Protected user region
+/* PROTECTED REGION END */
+
+
+%op E qaffine(terms : terms) {
+	/*PROTECTED REGION ID(tom_operator_with_param_qaffine) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.QuasiAffineExpression}
+	get_slot(terms,t) {enforce(((org.polymodel.algebra.quasiAffine.QuasiAffineExpression)$t).getTerms())}
+	make(_terms) {org.polymodel.algebra.internal.AlgebraTomFactory.createQaffine($_terms)}
+	/*PROTECTED REGION END*/
+}
+
+%op T qterm(expression : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_qterm) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getExpression()}
+	make(_expression) {org.polymodel.algebra.internal.AlgebraTomFactory.createQterm($_expression)}
+	/*PROTECTED REGION END*/
+}
+
+%op T mul(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_mul) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.MUL)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createMul($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op T mod(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_mod) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.MOD)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createMod($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op T ceil(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_ceil) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.CEIL)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createCeil($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op T floor(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_floor) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.FLOOR)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createFloor($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op T div(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_div) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.DIV)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createDiv($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op T nqterm(expression : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_nqterm) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getExpression()}
+	make(_expression) {org.polymodel.algebra.internal.AlgebraTomFactory.createNqterm($_expression)}
+	/*PROTECTED REGION END*/
+}
+
+%op T nmul(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_nmul) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.MUL)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createNmul($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op T nmod(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_nmod) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.MOD)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createNmod($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op T nceil(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_nceil) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.CEIL)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createNceil($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op T nfloor(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_nfloor) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.FLOOR)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createNfloor($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op T ndiv(expression : E, coef : long) {
+	/*PROTECTED REGION ID(tom_operator_with_param_ndiv) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm && ((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getOperator().equals(org.polymodel.algebra.quasiAffine.QuasiAffineOperator.DIV)}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getExpression()}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getCoef()}
+	make(_expression,_coef) {org.polymodel.algebra.internal.AlgebraTomFactory.createNdiv($_expression, $_coef)}
+	/*PROTECTED REGION END*/
+}

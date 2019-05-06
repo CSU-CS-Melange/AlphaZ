@@ -1,0 +1,21 @@
+affine lud {Nb,Nl,b|Nl==0 && b-1>=0 && Nb-1>=0 && Nb+b-3>=0}
+input
+double A_bl {iBl,jBl,iLoc,jLoc|Nl==0 && iBl>=0 && -jBl+Nb-1>=0 && iLoc>=0 && -iLoc+b-1>=0 && jLoc>=0 && Nb+b-3>=0 && jBl>=0 && -jLoc+b-1>=0 && -iBl+Nb-1>=0};
+output
+double LU_bl {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==0 && kBl-1==0 && jBl==0 && iBl==0 && Nl==0 && Nb-1==0 && -jLoc+b-1>=0 && iLoc>=0 && jLoc>=0 && b-2>=0 && -iLoc+b-1>=0} || {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==0 && kBl-Nb==0 && Nl==0 && -jLoc+b-1>=0 && iLoc>=0 && jLoc>=0 && Nb-2>=0 && -iLoc+b-1>=0 && iBl>=0 && -iBl+Nb-1>=0 && jBl>=0 && -jBl+Nb-1>=0};
+local
+double F_bl {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==0 && jLoc-b+1==0 && -jBl+kBl-1==0 && Nl==0 && iBl-jBl-1>=0 && iLoc>=0 && -iBl+Nb-1>=0 && jBl>=0 && -iLoc+b-1>=0} || {iBl,jBl,kBl,iLoc,jLoc,kLoc|-iBl+kBl==0 && -iBl+jBl==0 && Nl==0 && jLoc>=0 && kLoc>=0 && jLoc-kLoc+1>=0 && -iLoc+b-1>=0 && Nb+b-3>=0 && iLoc-kLoc>=0 && -jLoc+b-1>=0 && -iBl+Nb-1>=0 && iBl>=0} || {iBl,jBl,kBl,iLoc,jLoc,kLoc|Nl==0 && kBl>=0 && iLoc>=0 && jLoc>=0 && kLoc>=0 && -iLoc+b-1>=0 && -jLoc+b-1>=0 && -kLoc+b-1>=0 && iBl-kBl-1>=0 && -iBl+Nb-1>=0 && jBl-kBl-1>=0 && -jBl+Nb-1>=0} || {iBl,jBl,kBl,iLoc,jLoc,kLoc|-iBl+kBl==0 && Nl==0 && iBl>=0 && iLoc-kLoc>=0 && jLoc>=0 && kLoc>=0 && -iLoc+b-1>=0 && -jLoc+b-1>=0 && -iBl+jBl-1>=0 && -jBl+Nb-1>=0} || {iBl,jBl,kBl,iLoc,jLoc,kLoc|-jBl+kBl==0 && Nl==0 && iBl-jBl-1>=0 && iLoc>=0 && jLoc>=0 && kLoc>=0 && -iLoc+b-1>=0 && -jLoc+b-1>=0 && -kLoc+b-1>=0 && jLoc-kLoc+1>=0 && -iBl+Nb-1>=0 && jBl>=0};
+let
+F_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc] = case
+{|kLoc==0 && kBl==0 && Nl==0 && iLoc>=0 && jLoc>=0 && -iLoc+b-1>=0 && Nb-1>=0 && Nb+b-3>=0 && -jLoc+b-1>=0 && b-1>=0} : A_bl[iBl,jBl,iLoc,jLoc];
+{|kLoc==0 && jLoc-b+1==0 && -jBl+kBl-1==0 && Nl==0 && -iLoc+b-1>=0 && jBl>=0 && Nb-1>=0 && iLoc>=0 && Nb+b-3>=0 && b-1>=0} : (F_bl[iBl,jBl,kBl-1,iLoc,jLoc,b+kLoc-1] / F_bl[jBl,jBl,jBl,jLoc,jLoc,jLoc]);
+{|-jLoc+kLoc-1==0 && -jBl+kBl==0 && Nl==0 && Nb-1>=0 && iLoc>=0 && jLoc>=0 && -jLoc+b-2>=0 && -iLoc+b-1>=0 && jBl>=0 && b-1>=0} : (F_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc-1] / F_bl[jBl,jBl,jBl,jLoc,jLoc,jLoc]);
+{|Nl==0 && -iLoc+b-1>=0 && jBl-kBl-1>=0 && Nb-1>=0 && Nb+b-3>=0 && kBl+Nb-2>=0 && -jLoc+b-1>=0 && kLoc-1>=0 && -kLoc+b-1>=0 && kBl>=0 && kBl+kLoc-1>=0 && iLoc>=0 && jLoc>=0 && b-1>=0} || {|kBl==0 && jBl==0 && Nl==0 && kLoc-1>=0 && iLoc>=0 && Nb-1>=0 && jLoc-kLoc>=0 && -iLoc+b-1>=0 && -jLoc+b-1>=0 && b-1>=0 && jLoc>=0 && -kLoc+b-1>=0} || {|kBl==0 && Nl==0 && Nb-1==0 && kLoc-1>=0 && iLoc>=0 && jLoc>=0 && jBl-1>=0 && -iLoc+b-1>=0 && -jLoc+b-1>=0 && -kLoc+b-1>=0 && b-1>=0} || {|-jBl+kBl==0 && Nl==0 && jBl-1>=0 && jLoc-kLoc>=0 && kLoc-1>=0 && -iLoc+b-1>=0 && -jLoc+b-1>=0 && iLoc>=0 && Nb-1>=0 && Nb+b-3>=0 && b-1>=0 && jLoc>=0 && -kLoc+b-1>=0} : (F_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc-1] - (F_bl[iBl,kBl,kBl,iLoc,kLoc-1,kLoc] * F_bl[kBl,jBl,kBl,kLoc-1,jLoc,kLoc-1]));
+{|kLoc==0 && Nl==0 && -iLoc+b-1>=0 && jBl-kBl-1>=0 && Nb-1>=0 && Nb+b-3>=0 && kBl+Nb-2>=0 && -jLoc+b-1>=0 && iLoc>=0 && b-1>=0 && kBl-1>=0 && jLoc>=0} || {|kLoc==0 && -jBl+kBl==0 && Nl==0 && jBl-1>=0 && jLoc>=0 && b-1>=0 && -iLoc+b-1>=0 && -jLoc+b-1>=0 && iLoc>=0 && Nb-1>=0 && Nb+b-3>=0} : (F_bl[iBl,jBl,kBl-1,iLoc,jLoc,b+kLoc-1] - (F_bl[iBl,kBl-1,kBl,iLoc,b+kLoc-1,kLoc] * F_bl[kBl-1,jBl,kBl-1,b+kLoc-1,jLoc,b+kLoc-1]));
+esac;
+LU_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc] = case
+{|Nl==0 && -iBl+jBl-1>=0 && Nb+b-3>=0 && jLoc>=0 && kLoc>=0 && -iLoc+b-1>=0 && iLoc>=0 && -kLoc+b-1>=0 && Nb-1>=0 && -jLoc+b-1>=0 && b-1>=0} || {|-iBl+jBl==0 && Nl==0 && -iLoc+jLoc>=0 && iLoc>=0 && -kLoc+b-1>=0 && -jLoc+b-1>=0 && Nb-1>=0 && Nb+b-3>=0 && kLoc>=0 && -iLoc+b-1>=0 && jLoc>=0 && b-1>=0} : F_bl[iBl,jBl,iBl,iLoc,jLoc,iLoc];
+{|Nl==0 && iBl-jBl-1>=0 && Nb+b-3>=0 && jLoc>=0 && kLoc>=0 && -iLoc+b-1>=0 && iLoc>=0 && -kLoc+b-1>=0 && Nb-1>=0 && -jLoc+b-2>=0 && b-1>=0} || {|-iBl+jBl==0 && Nl==0 && iLoc-jLoc-1>=0 && -kLoc+b-1>=0 && jLoc>=0 && kLoc>=0 && -iLoc+b-1>=0 && Nb-1>=0 && iLoc>=0 && -jLoc+b-2>=0 && b-1>=0} : F_bl[iBl,jBl,jBl,iLoc,jLoc,jLoc+1];
+{|jLoc-b+1==0 && Nl==0 && iBl-jBl-1>=0 && Nb+b-3>=0 && b-1>=0 && kLoc>=0 && -iLoc+b-1>=0 && iLoc>=0 && -kLoc+b-1>=0 && Nb-1>=0} : F_bl[iBl,jBl,jBl+1,iLoc,jLoc,-b+jLoc+1];
+esac;
+.

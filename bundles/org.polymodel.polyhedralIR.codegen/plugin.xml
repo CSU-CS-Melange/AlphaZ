@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="polyIRCG"
+            class="org.polymodel.polyhedralIR.polyIRCG.PolyIRCGPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated polyIRCG -->
+      <package
+            uri="C"
+            class="org.polymodel.polyhedralIR.polyIRCG.C.CPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated polyIRCG -->
+      <package
+            uri="wrapper"
+            class="org.polymodel.polyhedralIR.polyIRCG.C.wrapper.CWrapperPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated polyIRCG -->
+      <package
+            uri="distributed"
+            class="org.polymodel.polyhedralIR.polyIRCG.C.distributed.CDistributedPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated polyIRCG -->
+      <package
+            uri="scan"
+            class="org.polymodel.polyhedralIR.polyIRCG.C.scan.ScanPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated polyIRCG -->
+      <package
+            uri="pcot"
+            class="org.polymodel.polyhedralIR.polyIRCG.C.pcot.PcotPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated polyIRCG -->
+      <package
+            uri="org.polymodel.algebra.polyIRCG"
+            class="org.polymodel.polyhedralIR.polyIRCG.algebraEx.AlgebraExPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated polyIRCG -->
+      <package
+            uri="SIMD"
+            class="org.polymodel.polyhedralIR.polyIRCG.SIMD.SIMDPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated polyIRCG -->
+      <package
+            uri="simdExp"
+            class="org.polymodel.polyhedralIR.polyIRCG.SIMD.simdExp.SimdExpPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated polyIRCG -->
+      <package
+            uri="PCOT"
+            class="org.polymodel.polyhedralIR.polyIRCG.PCOT.PCOTPackage"
+            genModel="model/polyIRCG.genmodel"/>
+   </extension>
+
+</plugin>

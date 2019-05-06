@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="ASCII"?>
+<polyhedralIR:Program xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:integerLinearAlgebra="http://integerLinearAlgebra/1.0/" xmlns:isl="polymodel.isl" xmlns:polyhedralIR="polyhedralIR" xmlns:polyhedralIR.expression="polyhedralIR.expression" xmlns:polymodel="polymodel">
+  <systems name="MMM">
+    <parameters>
+      <PMdomain xsi:type="isl:ISLSetWithScope" params="//@systems.0/@parameters/@PMdomain/@scope/@symbols.0 //@systems.0/@parameters/@PMdomain/@scope/@symbols.1 //@systems.0/@parameters/@PMdomain/@scope/@symbols.2">
+        <polyhedra linearConstraints="//@systems.0/@parameters/@PMdomain/@polyhedra.0/@constraints.0 //@systems.0/@parameters/@PMdomain/@polyhedra.0/@constraints.1 //@systems.0/@parameters/@PMdomain/@polyhedra.0/@constraints.2">
+          <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+            <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+              <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@parameters/@PMdomain/@scope/@symbols.0"/>
+              <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+            </expr>
+          </constraints>
+          <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+            <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+              <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@parameters/@PMdomain/@scope/@symbols.1"/>
+              <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+            </expr>
+          </constraints>
+          <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+            <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+              <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@parameters/@PMdomain/@scope/@symbols.2"/>
+              <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+            </expr>
+          </constraints>
+        </polyhedra>
+        <scope>
+          <symbols xsi:type="polymodel:IndexDimension" name="P"/>
+          <symbols xsi:type="polymodel:IndexDimension" dimension="1" name="Q"/>
+          <symbols xsi:type="polymodel:IndexDimension" dimension="2" name="R"/>
+        </scope>
+      </PMdomain>
+    </parameters>
+    <inputs type="//@types.0">
+      <var name="A"/>
+      <domain>
+        <PMdomain xsi:type="isl:ISLSetWithScope" params="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.1 //@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.0 //@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.2" indices="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.4 //@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.3">
+          <polyhedra linearConstraints="//@systems.0/@inputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.0 //@systems.0/@inputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.1 //@systems.0/@inputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.2 //@systems.0/@inputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.3 //@systems.0/@inputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.4 //@systems.0/@inputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.5 //@systems.0/@inputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.6">
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.0"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.2"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.4"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1" var="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.4"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.3"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.0"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1" var="//@systems.0/@inputs.0/@domain/@PMdomain/@scope/@symbols.3"/>
+              </expr>
+            </constraints>
+          </polyhedra>
+          <scope>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="1" name="Q"/>
+            <symbols xsi:type="polymodel:IndexDimension" name="P"/>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="2" name="R"/>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="4" name="k"/>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="3" name="i"/>
+          </scope>
+        </PMdomain>
+      </domain>
+    </inputs>
+    <inputs type="//@types.0">
+      <var name="B"/>
+      <domain>
+        <PMdomain xsi:type="isl:ISLSetWithScope" params="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.1 //@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.0 //@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.2" indices="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.4 //@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.3">
+          <polyhedra linearConstraints="//@systems.0/@inputs.1/@domain/@PMdomain/@polyhedra.0/@constraints.0 //@systems.0/@inputs.1/@domain/@PMdomain/@polyhedra.0/@constraints.1 //@systems.0/@inputs.1/@domain/@PMdomain/@polyhedra.0/@constraints.2 //@systems.0/@inputs.1/@domain/@PMdomain/@polyhedra.0/@constraints.3 //@systems.0/@inputs.1/@domain/@PMdomain/@polyhedra.0/@constraints.4 //@systems.0/@inputs.1/@domain/@PMdomain/@polyhedra.0/@constraints.5 //@systems.0/@inputs.1/@domain/@PMdomain/@polyhedra.0/@constraints.6">
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.0"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.2"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.4"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.0"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1" var="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.4"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.3"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.2"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1" var="//@systems.0/@inputs.1/@domain/@PMdomain/@scope/@symbols.3"/>
+              </expr>
+            </constraints>
+          </polyhedra>
+          <scope>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="1" name="Q"/>
+            <symbols xsi:type="polymodel:IndexDimension" name="P"/>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="2" name="R"/>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="4" name="j"/>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="3" name="k"/>
+          </scope>
+        </PMdomain>
+      </domain>
+    </inputs>
+    <outputs type="//@types.0">
+      <var name="C"/>
+      <domain>
+        <PMdomain xsi:type="isl:ISLSetWithScope" params="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.1 //@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.0 //@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.2" indices="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.4 //@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.3">
+          <polyhedra linearConstraints="//@systems.0/@outputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.0 //@systems.0/@outputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.1 //@systems.0/@outputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.2 //@systems.0/@outputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.3 //@systems.0/@outputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.4 //@systems.0/@outputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.5 //@systems.0/@outputs.0/@domain/@PMdomain/@polyhedra.0/@constraints.6">
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.0"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.2"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.4"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1" var="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.4"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.3"/>
+              </expr>
+            </constraints>
+            <constraints xsi:type="integerLinearAlgebra:IntLinearConstraint" comparisonOperator="ge">
+              <expr xsi:type="integerLinearAlgebra:IntLinearExpression">
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.2"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1"/>
+                <terms xsi:type="integerLinearAlgebra:IntTermExpression" value="-1" var="//@systems.0/@outputs.0/@domain/@PMdomain/@scope/@symbols.3"/>
+              </expr>
+            </constraints>
+          </polyhedra>
+          <scope>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="1" name="Q"/>
+            <symbols xsi:type="polymodel:IndexDimension" name="P"/>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="2" name="R"/>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="4" name="j"/>
+            <symbols xsi:type="polymodel:IndexDimension" dimension="3" name="i"/>
+          </scope>
+        </PMdomain>
+      </domain>
+    </outputs>
+    <equations var="//@systems.0/@outputs.0">
+      <expression xsi:type="polyhedralIR.expression:ReduceExpression">
+        <projection>
+          <PMmapping xsi:type="isl:ISLMapWithScope" params="//@systems.0/@equations.0/@expression/@projection/@PMmapping/@scope/@symbols.0 //@systems.0/@equations.0/@expression/@projection/@PMmapping/@scope/@symbols.1 //@systems.0/@equations.0/@expression/@projection/@PMmapping/@scope/@symbols.2" indices="//@systems.0/@equations.0/@expression/@projection/@PMmapping/@scope/@symbols.3 //@systems.0/@equations.0/@expression/@projection/@PMmapping/@scope/@symbols.4 //@systems.0/@equations.0/@expression/@projection/@PMmapping/@scope/@symbols.5">
+            <functions>
+              <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@equations.0/@expression/@projection/@PMmapping/@scope/@symbols.3"/>
+            </functions>
+            <functions>
+              <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@equations.0/@expression/@projection/@PMmapping/@scope/@symbols.4"/>
+            </functions>
+            <scope>
+              <symbols xsi:type="polymodel:IndexDimension" name="P"/>
+              <symbols xsi:type="polymodel:IndexDimension" dimension="1" name="Q"/>
+              <symbols xsi:type="polymodel:IndexDimension" dimension="2" name="R"/>
+              <symbols xsi:type="polymodel:IndexDimension" dimension="3" name="i"/>
+              <symbols xsi:type="polymodel:IndexDimension" dimension="4" name="j"/>
+              <symbols xsi:type="polymodel:IndexDimension" dimension="5" name="k"/>
+            </scope>
+          </PMmapping>
+        </projection>
+        <expr xsi:type="polyhedralIR.expression:BinaryArithmeticExpression" operator="MUL">
+          <lexp xsi:type="polyhedralIR.expression:DependenceExpression">
+            <dep>
+              <PMmapping xsi:type="isl:ISLMapWithScope" params="//@systems.0/@equations.0/@expression/@expr/@lexp/@dep/@PMmapping/@scope/@symbols.1 //@systems.0/@equations.0/@expression/@expr/@lexp/@dep/@PMmapping/@scope/@symbols.0 //@systems.0/@equations.0/@expression/@expr/@lexp/@dep/@PMmapping/@scope/@symbols.2" indices="//@systems.0/@equations.0/@expression/@expr/@lexp/@dep/@PMmapping/@scope/@symbols.5 //@systems.0/@equations.0/@expression/@expr/@lexp/@dep/@PMmapping/@scope/@symbols.3 //@systems.0/@equations.0/@expression/@expr/@lexp/@dep/@PMmapping/@scope/@symbols.4">
+                <functions>
+                  <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@equations.0/@expression/@expr/@lexp/@dep/@PMmapping/@scope/@symbols.5"/>
+                </functions>
+                <functions>
+                  <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@equations.0/@expression/@expr/@lexp/@dep/@PMmapping/@scope/@symbols.4"/>
+                </functions>
+                <scope>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="1" name="Q"/>
+                  <symbols xsi:type="polymodel:IndexDimension" name="P"/>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="2" name="R"/>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="4" name="j"/>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="5" name="k"/>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="3" name="i"/>
+                </scope>
+              </PMmapping>
+            </dep>
+            <expr xsi:type="polyhedralIR.expression:VariableExpression" varDecl="//@systems.0/@inputs.0"/>
+          </lexp>
+          <rexp xsi:type="polyhedralIR.expression:DependenceExpression">
+            <dep>
+              <PMmapping xsi:type="isl:ISLMapWithScope" params="//@systems.0/@equations.0/@expression/@expr/@rexp/@dep/@PMmapping/@scope/@symbols.1 //@systems.0/@equations.0/@expression/@expr/@rexp/@dep/@PMmapping/@scope/@symbols.0 //@systems.0/@equations.0/@expression/@expr/@rexp/@dep/@PMmapping/@scope/@symbols.2" indices="//@systems.0/@equations.0/@expression/@expr/@rexp/@dep/@PMmapping/@scope/@symbols.5 //@systems.0/@equations.0/@expression/@expr/@rexp/@dep/@PMmapping/@scope/@symbols.3 //@systems.0/@equations.0/@expression/@expr/@rexp/@dep/@PMmapping/@scope/@symbols.4">
+                <functions>
+                  <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@equations.0/@expression/@expr/@rexp/@dep/@PMmapping/@scope/@symbols.4"/>
+                </functions>
+                <functions>
+                  <terms xsi:type="integerLinearAlgebra:IntTermExpression" var="//@systems.0/@equations.0/@expression/@expr/@rexp/@dep/@PMmapping/@scope/@symbols.3"/>
+                </functions>
+                <scope>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="1" name="Q"/>
+                  <symbols xsi:type="polymodel:IndexDimension" name="P"/>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="2" name="R"/>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="4" name="j"/>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="5" name="k"/>
+                  <symbols xsi:type="polymodel:IndexDimension" dimension="3" name="i"/>
+                </scope>
+              </PMmapping>
+            </dep>
+            <expr xsi:type="polyhedralIR.expression:VariableExpression" varDecl="//@systems.0/@inputs.1"/>
+          </rexp>
+        </expr>
+      </expression>
+    </equations>
+  </systems>
+  <types typeID="FLOATING_POINT" width="32"/>
+</polyhedralIR:Program>

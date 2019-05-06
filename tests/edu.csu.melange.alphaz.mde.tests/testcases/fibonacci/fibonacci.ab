@@ -1,0 +1,13 @@
+affine fibonacci {N|N>0}
+input
+output
+	float F;
+local
+	float V {i| 0 <= i <= N};
+let
+	V[i] = case
+		{| i <= 1}: 1;
+		{| i  > 1}: V[i-2] + V[i-1];
+	esac;
+	F[] = V[N];
+.

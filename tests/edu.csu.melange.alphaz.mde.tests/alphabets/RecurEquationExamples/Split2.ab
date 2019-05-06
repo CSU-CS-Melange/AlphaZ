@@ -1,0 +1,20 @@
+affine SplitRecur2 {N | N > 1}
+input
+	int A {i| 0 <= i < 2N};
+	int B {i| 0 <= i < 2N};
+output
+	int X {i| 0 <= i < 2N};
+	int Y {i| 0 <= i < 2N};
+let
+	X[i] = case
+			{|i==0}: A[0];
+			{|0 < i < N}: X[i-1] + A[i];
+			{|i==N}: B[N];
+			{|N < i < 2N}: X[i-1] + B[i];
+			esac;
+	
+	Y[i] = case
+			{|i==0}:X[0];
+			{|0 < i < 2N}: Y[i-1] + X[i];
+			esac;
+.

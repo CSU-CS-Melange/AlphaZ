@@ -1,0 +1,30 @@
+affine FSBlock {N|N>1}
+given
+   float L {i,j|0<=j<=i<N};
+   float b {i| 0<=i<N};
+returns
+   float x {i|0<=i<N};
+using
+   float preX{i|0<i<N};
+through
+
+use{i|0<i<N}DotProd[i](L,(i,j->j)@x)returns(preX);
+   x = case
+   		{i|i==0}:b/(i->i,i)@L;
+   		{i|i>0}:(b-preX)/(i->i,i)@L;
+   		
+   esac;
+.
+
+affine DotProd{M|M>0}
+given
+	float Lvec {i| 0<=i<M};
+	float x    {i| 0<=i<M};
+returns
+	float preX;//{i|i==0};
+using
+	//float temp{i|i==0};
+through
+	preX = reduce(+,(i->), Lvec*x);	
+	//preX[] = temp[0];
+.

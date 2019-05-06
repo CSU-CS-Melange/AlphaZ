@@ -1,0 +1,19 @@
+float sqrt(float);
+
+affine Cholesky {N | N > 0}
+input
+	float A {i,j| 0<=i<N && 0<=j<N && i==j};
+output
+	float L {i,j| 0<=j<=i<N};
+local
+	float LT {i,j| 0<=i<=j<N}; //L transpose
+let
+	L[i,j] = 
+	case
+		{i,j| i==0 && j==0}	:	A[i,j];
+		{i,j| i>0 && i<j}	:	A[i,j] - reduce(+, (i,j,k->i,j), L[i,k] * L[k,k]);
+		{i,j| i==j}			:	sqrt(A[i,i]-LT[i,i]*L[i,i]);
+	esac;
+	LT[i,j] = L[j,i];
+.
+

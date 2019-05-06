@@ -1,0 +1,21 @@
+affine Matrix_vector_blocked {M,B | M>0 && B>0}
+input
+	float mat {alpha, beta, ii,jj | 0 <= (alpha,beta) < M && 0 <= (ii,jj) < B};
+	float vect {alpha, ii | 0 <= alpha < M && 0 <= ii < B };
+output
+	float res {alpha, ii | 0 <= alpha < M && 0 <= ii < B};
+let
+	res[alpha, ii] = reduce(+, (alpha,gamma,ii,kk->alpha,ii), mat[alpha,gamma,ii,kk] * vect[gamma,kk]);
+.
+
+/* ORIGINAL COMPUTATION
+affine Matrix_vector {N | N>0}
+input
+	float mat {i,j | 0 <= (i,j) < N};
+	float vect {i | 0 <= i < N };
+output
+	float res {i | 0 <= i < N};
+let
+	res[i] = reduce(+, (i,k->i), mat[i,k] * vect[k]);
+.
+*/

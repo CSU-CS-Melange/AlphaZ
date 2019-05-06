@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polymodel.algebra/src-gen" editDirectory="/org.polymodel.algebra.edit/src-gen"
+    editorDirectory="/org.polymodel.algebra.editor/src-gen" modelPluginID="org.polymodel.algebra"
+    modelName="Algebra" testsDirectory="/org.polymodel.algebra.tests/src-gen" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="7.0" copyrightFields="false" operationReflection="true">
+  <foreignModel>algebra.ecore</foreignModel>
+  <genPackages prefix="Algebra" basePackage="org.polymodel" disposableProviderFactory="true"
+      ecorePackage="algebra.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="algebra.ecore#//ComparisonOperator">
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//ComparisonOperator/EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//ComparisonOperator/NE"/>
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//ComparisonOperator/GT"/>
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//ComparisonOperator/GE"/>
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//ComparisonOperator/LT"/>
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//ComparisonOperator/LE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="algebra.ecore#//FuzzyBoolean">
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//FuzzyBoolean/yes"/>
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//FuzzyBoolean/no"/>
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//FuzzyBoolean/maybe"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="algebra.ecore#//CompositeOperator">
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//CompositeOperator/DIV"/>
+      <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//CompositeOperator/MOD"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="algebra.ecore#//Value"/>
+    <genClasses ecoreClass="algebra.ecore#//IntExpression">
+      <genOperations ecoreOperation="algebra.ecore#//IntExpression/isEquivalent">
+        <genParameters ecoreParameter="algebra.ecore#//IntExpression/isEquivalent/other"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntExpression/simplify"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntExpression/substitute">
+        <genParameters ecoreParameter="algebra.ecore#//IntExpression/substitute/substituted"/>
+        <genParameters ecoreParameter="algebra.ecore#//IntExpression/substitute/newVar"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntExpression/substitute.1">
+        <genParameters ecoreParameter="algebra.ecore#//IntExpression/substitute.1/substituted"/>
+        <genParameters ecoreParameter="algebra.ecore#//IntExpression/substitute.1/newExpr"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntExpression/toAffine"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntExpression/toQuasiAffine"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntExpression/toPolynomial"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntExpression/toReduction"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntExpression/accept">
+        <genParameters ecoreParameter="algebra.ecore#//IntExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="algebra.ecore#//IntTerm">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute algebra.ecore#//IntTerm/coef"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntTerm/accept">
+        <genParameters ecoreParameter="algebra.ecore#//IntTerm/accept/visitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntTerm/isEquivalent">
+        <genParameters ecoreParameter="algebra.ecore#//IntTerm/isEquivalent/other"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="algebra.ecore#//Variable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute algebra.ecore#//Variable/name"/>
+      <genOperations ecoreOperation="algebra.ecore#//Variable/accept">
+        <genParameters ecoreParameter="algebra.ecore#//Variable/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="algebra.ecore#//IntConstraint">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//IntConstraint/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//IntConstraint/rhs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute algebra.ecore#//IntConstraint/comparisonOperator"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraint/isAffine"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraint/isQuasiAffine"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraint/isPolynomial"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraint/isBound"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraint/accept">
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraint/accept/visitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraint/substitute">
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraint/substitute/substituted"/>
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraint/substitute/newVar"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraint/substitute.1">
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraint/substitute.1/substituted"/>
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraint/substitute.1/newExpr"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraint/simplify"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraint/isEquivalent">
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraint/isEquivalent/other"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="algebra.ecore#//IntConstraintSystem">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//IntConstraintSystem/constraints"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraintSystem/findLowerBound">
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraintSystem/findLowerBound/variable"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraintSystem/findUpperBound">
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraintSystem/findUpperBound/variable"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraintSystem/accept">
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraintSystem/accept/visitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraintSystem/substitute">
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraintSystem/substitute/substituted"/>
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraintSystem/substitute/newVar"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraintSystem/substitute.1">
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraintSystem/substitute.1/substituted"/>
+        <genParameters ecoreParameter="algebra.ecore#//IntConstraintSystem/substitute.1/newExpr"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraintSystem/simplify"/>
+      <genOperations ecoreOperation="algebra.ecore#//IntConstraintSystem/copy"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="algebra.ecore#//AlgebraVisitor">
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitIntTerm">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitIntTerm/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitVariable">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitVariable/v"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitIntConstraint">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitIntConstraint/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitIntConstraintSystem">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitIntConstraintSystem/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitAffineExpression">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitAffineExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitAffineTerm">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitAffineTerm/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitQuasiAffineExpression">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitQuasiAffineExpression/q"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitQuasiAffineTerm">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitQuasiAffineTerm/q"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitSimpleQuasiAffineTerm">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitSimpleQuasiAffineTerm/q"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitNestedQuasiAffineTerm">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitNestedQuasiAffineTerm/q"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitPolynomialExpression">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitPolynomialExpression/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitPolynomialTerm">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitPolynomialTerm/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitPolynomialVariable">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitPolynomialVariable/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitReductionExpression">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitReductionExpression/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitIntExpression">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitIntExpression/ie"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitCompositeIntExpression">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitCompositeIntExpression/r"/>
+      </genOperations>
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitor/visitSelectExpression">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitor/visitSelectExpression/ie"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="algebra.ecore#//AlgebraVisitable">
+      <genOperations ecoreOperation="algebra.ecore#//AlgebraVisitable/accept">
+        <genParameters ecoreParameter="algebra.ecore#//AlgebraVisitable/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="algebra.ecore#//CompositeIntExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//CompositeIntExpression/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//CompositeIntExpression/right"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute algebra.ecore#//CompositeIntExpression/operator"/>
+      <genOperations ecoreOperation="algebra.ecore#//CompositeIntExpression/accept">
+        <genParameters ecoreParameter="algebra.ecore#//CompositeIntExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="algebra.ecore#//SelectExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference algebra.ecore#//SelectExpression/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//SelectExpression/then"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//SelectExpression/else"/>
+    </genClasses>
+    <nestedGenPackages prefix="Affine" basePackage="org.polymodel.algebra" disposableProviderFactory="true"
+        ecorePackage="algebra.ecore#//affine">
+      <genClasses ecoreClass="algebra.ecore#//affine/AffineExpression">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//affine/AffineExpression/terms"/>
+        <genOperations ecoreOperation="algebra.ecore#//affine/AffineExpression/accept">
+          <genParameters ecoreParameter="algebra.ecore#//affine/AffineExpression/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="algebra.ecore#//affine/AffineTerm">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference algebra.ecore#//affine/AffineTerm/variable"/>
+        <genOperations ecoreOperation="algebra.ecore#//affine/AffineTerm/accept">
+          <genParameters ecoreParameter="algebra.ecore#//affine/AffineTerm/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="QuasiAffine" basePackage="org.polymodel.algebra" disposableProviderFactory="true"
+        ecorePackage="algebra.ecore#//quasiAffine">
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="algebra.ecore#//quasiAffine/QuasiAffineOperator">
+        <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//quasiAffine/QuasiAffineOperator/MOD"/>
+        <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//quasiAffine/QuasiAffineOperator/FLOOR"/>
+        <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//quasiAffine/QuasiAffineOperator/CEIL"/>
+        <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//quasiAffine/QuasiAffineOperator/MUL"/>
+        <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//quasiAffine/QuasiAffineOperator/DIV"/>
+      </genEnums>
+      <genClasses ecoreClass="algebra.ecore#//quasiAffine/QuasiAffineExpression">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//quasiAffine/QuasiAffineExpression/terms"/>
+        <genOperations ecoreOperation="algebra.ecore#//quasiAffine/QuasiAffineExpression/accept">
+          <genParameters ecoreParameter="algebra.ecore#//quasiAffine/QuasiAffineExpression/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="algebra.ecore#//quasiAffine/QuasiAffineTerm">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute algebra.ecore#//quasiAffine/QuasiAffineTerm/operator"/>
+        <genOperations ecoreOperation="algebra.ecore#//quasiAffine/QuasiAffineTerm/accept">
+          <genParameters ecoreParameter="algebra.ecore#//quasiAffine/QuasiAffineTerm/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="algebra.ecore#//quasiAffine/SimpleQuasiAffineTerm">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//quasiAffine/SimpleQuasiAffineTerm/expression"/>
+      </genClasses>
+      <genClasses ecoreClass="algebra.ecore#//quasiAffine/NestedQuasiAffineTerm">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//quasiAffine/NestedQuasiAffineTerm/expression"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Polynomials" basePackage="org.polymodel.algebra" disposableProviderFactory="true"
+        ecorePackage="algebra.ecore#//polynomials">
+      <genClasses ecoreClass="algebra.ecore#//polynomials/PolynomialExpression">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//polynomials/PolynomialExpression/terms"/>
+        <genOperations ecoreOperation="algebra.ecore#//polynomials/PolynomialExpression/accept">
+          <genParameters ecoreParameter="algebra.ecore#//polynomials/PolynomialExpression/accept/visitor"/>
+        </genOperations>
+        <genOperations ecoreOperation="algebra.ecore#//polynomials/PolynomialExpression/isAffine"/>
+        <genOperations ecoreOperation="algebra.ecore#//polynomials/PolynomialExpression/isQuasiAffine"/>
+      </genClasses>
+      <genClasses ecoreClass="algebra.ecore#//polynomials/PolynomialVariable">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference algebra.ecore#//polynomials/PolynomialVariable/variable"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute algebra.ecore#//polynomials/PolynomialVariable/exponent"/>
+        <genOperations ecoreOperation="algebra.ecore#//polynomials/PolynomialVariable/accept">
+          <genParameters ecoreParameter="algebra.ecore#//polynomials/PolynomialVariable/accept/visitor"/>
+        </genOperations>
+        <genOperations ecoreOperation="algebra.ecore#//polynomials/PolynomialVariable/isEquivalent">
+          <genParameters ecoreParameter="algebra.ecore#//polynomials/PolynomialVariable/isEquivalent/other"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="algebra.ecore#//polynomials/PolynomialTerm">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute algebra.ecore#//polynomials/PolynomialTerm/numerator"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute algebra.ecore#//polynomials/PolynomialTerm/denominator"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//polynomials/PolynomialTerm/variables"/>
+        <genOperations ecoreOperation="algebra.ecore#//polynomials/PolynomialTerm/accept">
+          <genParameters ecoreParameter="algebra.ecore#//polynomials/PolynomialTerm/accept/visitor"/>
+        </genOperations>
+        <genOperations ecoreOperation="algebra.ecore#//polynomials/PolynomialTerm/isAffine"/>
+        <genOperations ecoreOperation="algebra.ecore#//polynomials/PolynomialTerm/isQuasiAffine"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Reductions" basePackage="org.polymodel.algebra" disposableProviderFactory="true"
+        ecorePackage="algebra.ecore#//reductions">
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="algebra.ecore#//reductions/ReductionOperator">
+        <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//reductions/ReductionOperator/MIN"/>
+        <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//reductions/ReductionOperator/MAX"/>
+        <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//reductions/ReductionOperator/SUM"/>
+        <genEnumLiterals ecoreEnumLiteral="algebra.ecore#//reductions/ReductionOperator/PROD"/>
+      </genEnums>
+      <genClasses image="false" ecoreClass="algebra.ecore#//reductions/ReductionExpression">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference algebra.ecore#//reductions/ReductionExpression/expressions"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute algebra.ecore#//reductions/ReductionExpression/operator"/>
+        <genOperations ecoreOperation="algebra.ecore#//reductions/ReductionExpression/accept">
+          <genParameters ecoreParameter="algebra.ecore#//reductions/ReductionExpression/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

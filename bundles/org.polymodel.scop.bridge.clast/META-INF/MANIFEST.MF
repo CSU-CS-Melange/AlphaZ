@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Clast
+Bundle-SymbolicName: org.polymodel.scop.bridge.clast
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: edu.csu.melange.jnimap.cloog;bundle-version="1.0.0",
+ org.polymodel.algebra;bundle-version="1.0.0",
+ org.polymodel.scop;bundle-version="1.0.0",
+ org.junit
+Export-Package: org.polymodel.scop.bridge.clast

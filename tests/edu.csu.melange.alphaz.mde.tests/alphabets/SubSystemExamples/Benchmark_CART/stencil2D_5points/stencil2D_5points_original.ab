@@ -1,0 +1,18 @@
+affine stencil2D_5points {N,M,T|N-2>=0 && M-2>=0 && T>=0}
+input
+	double A {i,j|0<=i<N && 0<=j<M};
+output
+	double B {i,j|0<=i<N && 0<=j<M};
+local
+	double temp {i,j,t|0<=i<N && 0<=j<M && 0<=t<=T};
+let
+	temp[i,j,t] = case
+		{| t==0 } : A[i,j];
+		{| 0<t<=T && i==0} : temp[i,j,t-1];
+		{| 0<t<=T && i==N-1} : temp[i,j,t-1];
+		{| 0<t<=T && 0<i<N-1 && j==0} : temp[i,j,t-1];
+		{| 0<t<=T && 0<i<N-1 && j==M-1} : temp[i,j,t-1];
+		{| 0<t<=T && 0<i<N-1 && 0<j<M-1 } : (temp[i,j-1,t-1] + temp[i-1,j,t-1] + temp[i,j,t-1] + temp[i+1,j,t-1] + temp[i,j+1,t-1]) / 5;
+	esac;
+	B[i,j] = temp[i,j,T];
+.

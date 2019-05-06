@@ -1,0 +1,15 @@
+affine mat_product {N,M,K|N>=1 && M>=1 && K>=1}
+input
+double A {i,k|i>=0 && N>=i+1 && k>=0 && K>=k+1 && N>=1 && M>=1 && K>=1};
+double B {k,j|k>=0 && K>=k+1 && j>=0 && M>=j+1 && N>=1 && M>=1 && K>=1};
+output
+double C {i,j|i>=0 && N>=i+1 && j>=0 && M>=j+1 && N>=1 && M>=1 && K>=1};
+local
+double temp_dot_product_0 {iP,jP,i|iP>=0 && N>=iP+1 && jP>=0 && M>=jP+1 && N>=1 && M>=1 && K>=1 && i>=0 && K>=i+1};
+let
+temp_dot_product_0 = case
+{iP,jP,i|i==0 && iP>=0 && N>=iP+1 && jP>=0 && M>=jP+1 && N>=1 && M>=1 && K>=1} : ((iP,jP,i->iP,0)@A * (iP,jP,i->0,jP)@B);
+{iP,jP,i|iP>=0 && N>=iP+1 && jP>=0 && M>=jP+1 && N>=1 && M>=1 && K>=1 && i>=1 && K>=i+1} : ((iP,jP,i->iP,jP,i-1)@temp_dot_product_0 + ((iP,jP,i->iP,i)@A * (iP,jP,i->i,jP)@B));
+esac;
+C = (iP,jP->iP,jP,K-1)@temp_dot_product_0;
+.

@@ -1,0 +1,342 @@
+grammar edu.csu.melange.alphabets.xtext.Alphabets with org.eclipse.xtext.common.Terminals
+
+generate alphabets "http://www.Alphabets.xtext"
+
+//Root node is called Start in alphabets
+AProgram:
+	(externalFunctions+=AExternalFunctionDeclaration)*
+	(systems+=AAffineSystem)+;
+	
+AExternalFunctionDeclaration:
+	output=AType name=AExternalFunctionIdentifier '(' inputs+=AType? (',' inputs+=AType)* ')' ';';
+
+AExternalFunctionIdentifier:
+	name=ID;	
+	 
+AAffineSystem : 'affine' name=ID parameters=ADomain
+				('given' (inputDeclarations+=AInputDeclaration)*)?
+				('returns' (outputDeclarations+=AOutputDeclaration)*)?
+				('using' (localvarDeclarations+=ALocalDeclaration)*)?
+				('through' (equations+=AStandardEquation)*)?
+				'.';
+				
+AOutputDeclaration : type=AType identifierList=AIdentifierList (domain=ADomain)? ';';
+AInputDeclaration  : type=AType identifierList=AIdentifierList (domain=ADomain)? ';';
+ALocalDeclaration  : type=AType identifierList=AIdentifierList (domain=ADomain)? ';';
+
+AIdentifierList:
+	identifiers+=VariableIdentifier (',' identifiers+=VariableIdentifier)*;
+
+VariableIdentifier:
+	ID;
+
+
+////// Domains ////////
+
+//Domains are unions of single polyhedron
+ADomain: 
+	polyhedra+=APolyhedron
+	(
+		(UNION polyhedra+=APolyhedron)
+	)* 
+	; 
+
+
+//TerminalDomain : 
+//	ConstraintsDomain;
+	//  |
+	//ParenthesisDomain 
+	//| NegatedDomain;
+	
+//No negated domains in alphabets	
+//NegatedDomain:
+//	'~' exp=TerminalDomain;
+
+//No parenthesised domains in alphabets	
+//ParenthesisDomain : 
+//	'(' Domain ')' ; 
+
+	
+APolyhedron: 
+	'{' 
+		indexes=AIndexList
+		//(indexList=IndexDefinitionList)? 
+		'|'  
+		(constraints+=InEquality ( INTERSECTION constraints+=InEquality)*)? 
+	'}';
+
+//Constraint that is just a string == InEquality
+InEquality:
+	//INT RelationalOp INT;
+	//InEqID RelationalOp InEqID;
+	(IDList|IDExpression) (RelationalOp (IDList|IDExpression))+;
+	//IDList|IDExpression RelationalOp IDList|IDExpression;
+	
+IDList:
+	InEqID (',' InEqID)* | '(' InEqID (',' InEqID)* ')';
+
+IDExpression:
+	InEqID ((OP_PLUS|OP_MINUS) InEqID)+;
+
+//IDs in inequalities may have integer prefix for multiplication	
+InEqID:
+	OP_MINUS? (INT+ | INT* ID);
+
+//Constraint that is complicated	
+//Constraint:
+//	lhsIndices+=IndexAdditiveExpression ( ',' lhsIndices+=IndexAdditiveExpression)* 
+//	op1=RelationalOp
+//	midIndices+=IndexAdditiveExpression ( ',' midIndices+=IndexAdditiveExpression)*
+//	(
+//		op2=RelationalOp
+//		rhsIndices+=IndexAdditiveExpression ( ',' rhsIndices+=IndexAdditiveExpression)*
+//	)?
+//	;
+
+
+/////// Equations //////
+AStandardEquation :
+		
+		//(indexList=IndexDefinitionList)? 
+	//var=LHSVariableReference ('[' (rhsIds+=IndexReference (',' rhsIds+=IndexReference)* )?']')? '=' exp=AlphabetsExpression ';';
+	var=ID ('[' indexes=AIndexList ']')? '=' expr=AAlphabetsExpression ';';
+
+////// Expressions //////
+AAlphabetsExpression:
+	AIfExpression |
+	ARestrictExpression |
+	AOrExpression;
+	
+AAlphabetsTerminalExpression returns AAlphabetsExpression:
+	AParanthesizedAlphabetsExpression |
+	ACaseExpression |
+	AReduceExpression |
+	AMultiArgExpression |
+	AConstantExpression |
+	AVariableExpression | 
+	AIndexExpression |
+	ADependenceExpression |
+	ADependenceInArrayNotation;
+
+AParanthesizedAlphabetsExpression returns AAlphabetsExpression:
+	"(" AAlphabetsExpression ")";
+
+AOrExpression returns AAlphabetsExpression:
+	AAndExpression ({AOrExpression.left=current} operator=(OP_OR|XOP_OR) right=AAndExpression)*;
+	
+AAndExpression returns AAlphabetsExpression:
+	ARelationalExpression ({AAndExpression.left=current} operator=(OP_AND|OP_NAND) right=ARelationalExpression)*;	
+
+ARelationalExpression returns AAlphabetsExpression:
+	AAdditiveExpression ({ARelationalExpression.left=current} operator=RelationalOp right=AAdditiveExpression)*;
+
+AAdditiveExpression returns AAlphabetsExpression:
+	AMultiplicativeExpression ({AAdditiveExpression.left=current} op=(OP_PLUS | OP_MINUS) right=AMultiplicativeExpression)*;
+
+AMultiplicativeExpression returns AAlphabetsExpression:
+	AMinMaxExpression ({AMultiplicativeExpression.left=current} op=(OP_MUL | OP_DIV) right=AMinMaxExpression)*;
+	
+AMinMaxExpression returns AAlphabetsExpression:
+	AUnaryOrTerminalExpression ({AMinMaxExpression.left=current} op=(OP_MIN | OP_MAX) right=AUnaryOrTerminalExpression)*;
+
+AUnaryOrTerminalExpression returns AAlphabetsExpression:
+	AUnaryExpression | AAlphabetsTerminalExpression; 
+
+AUnaryExpression returns AAlphabetsExpression:
+	ANotExpression | ANegateExpression;
+
+ANotExpression :
+	op='not' expr=AAlphabetsTerminalExpression;
+
+ANegateExpression :
+	op=OP_MINUS expr=AAlphabetsTerminalExpression;
+
+//////// Expressions //////	
+ACaseExpression : 'case' 
+	(exprs+=AAlphabetsExpression ';' )+
+'esac';
+
+ADependenceExpression:
+	func=AFunction '@' expr=AAlphabetsTerminalExpression;
+
+////Array notation for AShow type syntax
+ADependenceInArrayNotation:
+	var=VariableIdentifier '[' dep=AIndexAffineExpressionList ']';
+		
+AIfExpression : 
+	'if' (cond=AAlphabetsExpression )
+	'then'  (then=AAlphabetsExpression )
+	'else'	(else=AAlphabetsExpression );
+	
+AIndexExpression :
+	'[' func=IndexAffineExpression ']' | ('val(' indexes=AIndexList '->' func=IndexAffineExpression ')');
+		
+AReduceExpression : 
+	'reduce' '(' op=ReductionOp ',' projection=(AFunction|AFunctionInArrayNotation) ',' expr=AAlphabetsExpression ')';
+
+ARestrictExpression :
+	domain=ADomain ':' expr=AAlphabetsExpression;
+
+AVariableExpression :
+	var=VariableIdentifier;
+	
+AConstantExpression :
+	ABooleanExpression | ARealExpression | AIntegerExpression;
+	
+ABooleanExpression :
+	value=BOOLEAN;
+	
+AIntegerExpression:
+	value=INT;
+
+ARealExpression:
+	value=REAL;	
+
+AMultiArgExpression :
+	AMultiArgArithmeticExpression | AMultiArgLogicalExpression | AExternalFunctionCall;
+	
+AMultiArgArithmeticExpression :
+	op=ArithmeticOp '(' exprs+=AAlphabetsExpression (',' exprs+=AAlphabetsExpression)+ ')';
+	
+AMultiArgLogicalExpression :
+	op=LogicalOp '(' exprs+=AAlphabetsExpression (',' exprs+=AAlphabetsExpression)+ ')';
+
+AExternalFunctionCall :
+	func=ID '(' (exprs+=AAlphabetsExpression (',' exprs+=AAlphabetsExpression)*)? ')';
+
+
+
+//////////////////////////////////////////////////////////
+//////// Dependance functions and IndexExpressions ///////
+//////////////////////////////////////////////////////////
+
+IndexIdentifier:
+	ID;
+
+AIndexList: {AIndexList}
+	(ids+=IndexIdentifier (','ids+=IndexIdentifier)*)?;
+	
+//IndexAffineExpression:	
+//	OP_MINUS? (INT | INT? IndexIdentifier) ((OP_PLUS|OP_MINUS) IndexAffineExpressionTerminal)*;
+	
+IndexAffineExpression:	
+	 OP_MINUS? IndexAffineExpressionTerminal ((OP_PLUS|OP_MINUS) IndexAffineExpression)*;
+	
+IndexAffineExpressionTerminal:
+	(INT | INT? IndexIdentifier);
+	
+AIndexAffineExpressionList: {AIndexAffineExpressionList}
+	(exprs+=IndexAffineExpression (',' exprs+=IndexAffineExpression)*)?;	
+	
+AFunction:
+	('(' indexes=AIndexList '->' ')') | ('(' indexes=AIndexList '->' func=AIndexAffineExpressionList ')');
+	
+////Array notation for AShow type syntax
+AFunctionInArrayNotation:
+	'[' newIds=AIndexAffineExpressionList ']';
+	
+
+//////ORIGINAL ONES//////
+////IndexDefinitionContainer : Function | ConstraintsDomain;
+//
+////IndexDefinitionList:
+////		( indices+=IndexDefinition  (',' indices+=IndexDefinition)* ); 
+////
+////Function:
+////	(name=ID)? '('
+////		indexList=IndexDefinitionList 
+////		'->' 
+////		(indexExpList=IndexExpressionList)? ')';
+////
+////IndexExpressionList : 
+////	exprIndexes+=IndexAdditiveExpression  (',' exprIndexes+=IndexAdditiveExpression)*;
+//	//SimpleIndexExpressionList | ParenthesisIndexExpressionList;		
+//		
+////SimpleIndexExpressionList:
+////	exprIndexes+=IndexAdditiveExpression  (',' exprIndexes+=IndexAdditiveExpression)*; 
+//		
+////ParenthesisIndexExpressionList:
+////	'(' indexExpList=SimpleIndexExpressionList ')';
+//
+////IndexAdditiveExpression returns IndexExpression:
+////	terms+=IndexExpressionTerminal (ops+=("+" | "-") terms+=IndexExpressionTerminal)*;
+////
+////IndexExpressionTerminal: IndexReference | IndexValueTerminal | IndexParenthesisExpression;
+////
+////IndexReference:
+////	{NegCoefIndexTerminal} ('-'	coef=INT index=[IndexDefinition] ) |
+////	{NegIndexTerminal} ('-' index=[IndexDefinition] ) |
+////	{CoefIndexTerminal} (coef=INT index=[IndexDefinition] ) |
+////	{IndexTerminal} (index=[IndexDefinition] ) ;
+////
+////IndexValueTerminal:
+////	{NegConstantTerminal} (('-' num=INT)  )|
+////	{ConstantTerminal} ((num=INT ) );
+////
+////IndexDefinition:
+////	name=ID;	
+////
+////IndexParenthesisExpression:
+////	'(' exp=IndexAdditiveExpression ')' ('/' denum=INT)?;
+////	
+////IndexExpressionDefinition:
+////	name=ID;	
+
+///// Tokens /////
+	
+AType: unsigned=('unsigned')? type=(ATypeInteger|ATypeFloat|ATypeBoolean|ATypeChar);
+
+ATypeInteger:
+	'int' | 'longlong' | 'long' | 'short';
+ATypeBoolean:
+	'bool';
+ATypeFloat:
+	'float' | 'double';
+ATypeChar:
+	'char';	
+	
+ReductionOp :
+	OP_AND | OP_MAX | OP_MIN | OP_MUL | OP_OR | OP_PLUS | XOP_OR;
+	
+ArithmeticOp :
+	OP_MAX | OP_MIN | OP_MUL | OP_PLUS;
+	
+LogicalOp :
+	OP_AND | OP_OR | XOP_OR;
+	
+RelationalOp :
+	OP_EQ | OP_GE | OP_GT | OP_LE | OP_LT | OP_NE;
+
+//Operators
+terminal OP_AND : 'and';
+terminal OP_MAX : 'max';
+terminal OP_MIN : 'min';
+terminal OP_MUL : '*';
+terminal OP_OR : 'or';
+terminal OP_PLUS : '+';
+terminal XOP_OR : 'xor';
+//Operators that cannot be in reductions
+terminal OP_MINUS : '-';
+terminal OP_DIV : '/';
+terminal OP_MOD : '%';
+terminal OP_NAND : 'nand';
+//Relational Operators
+terminal OP_EQ : '==';
+terminal OP_GE : '>=';
+terminal OP_GT : '>';
+terminal OP_LE : '<=';
+terminal OP_LT : '<';
+terminal OP_NE : '!=';
+
+//Constants
+terminal BOOLEAN : 'true' | 'false';
+//terminal INT : ('0'..'9')+;
+terminal REAL : ('0'..'9')+ '.' ('0'..'9')+;
+
+terminal INTERSECTION : '&&' ;
+
+terminal UNION : '||' ;
+
+
+terminal SL_COMMENT  : '//' !('\n'|'\r')* ('\r'? '\n')? ;
+

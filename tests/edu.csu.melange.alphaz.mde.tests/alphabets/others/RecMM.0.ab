@@ -1,0 +1,15 @@
+affine RecMM {N|1<N}
+input
+   double Inp {i,j|0<=i<=j<N } ;
+output
+   double A {i,j|0<=i<=j < N};
+local
+let
+  A = 
+    case
+      {i,j | 0<=i==j<N} : Inp;
+      {i,j | 0<i<=j}:   Inp +
+           reduce(+, (i,j,k->i,j),
+               {i,j,k | i<=k<j}: (i,j,k->i,k) @ A * (i,j,k->k+1,j)@A);
+    esac;
+.

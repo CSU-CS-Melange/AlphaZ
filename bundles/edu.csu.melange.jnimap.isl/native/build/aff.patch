@@ -1,0 +1,525 @@
+diff --git a/Makefile.am b/Makefile.am
+index 71e98d8..b724eb1 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -70,6 +70,7 @@ libisl_la_SOURCES = \
+ 	isl_ilp.c \
+ 	isl_input.c \
+ 	isl_list.c \
++	isl_list_private.h \
+ 	isl_local_space_private.h \
+ 	isl_local_space.c \
+ 	isl_lp.c \
+@@ -216,6 +217,8 @@ pkginclude_HEADERS = \
+ 
+ EXTRA_DIST = \
+ 	basis_reduction_templ.c \
++	isl_list_templ.c \
++	isl_list_templ.h \
+ 	isl_pw_templ.c \
+ 	isl_union_templ.c \
+ 	isl.py \
+diff --git a/include/isl/list.h b/include/isl/list.h
+index caef4c9..da26d8b 100644
+--- a/include/isl/list.h
++++ b/include/isl/list.h
+@@ -11,28 +11,36 @@
+ #define ISL_LIST_H
+ 
+ #include <isl/ctx.h>
++#include <isl/printer.h>
+ 
+ #if defined(__cplusplus)
+ extern "C" {
+ #endif
+ 
+-struct isl_basic_set;
+-
+-struct isl_basic_set_list {
+-	int ref;
+-	struct isl_ctx *ctx;
+-
+-	int n;
+-
+-	size_t size;
+-	struct isl_basic_set *p[1];
+-};
+-
+-struct isl_basic_set_list *isl_basic_set_list_alloc(struct isl_ctx *ctx, int n);
+-void isl_basic_set_list_free(struct isl_basic_set_list *list);
+-struct isl_basic_set_list *isl_basic_set_list_add(
+-	struct isl_basic_set_list *list,
+-	struct isl_basic_set *bset);
++#define ISL_DECLARE_LIST(EL)						\
++struct isl_##EL;							\
++struct isl_##EL##_list;							\
++typedef struct isl_##EL##_list isl_##EL##_list;				\
++isl_ctx *isl_##EL##_list_get_ctx(__isl_keep isl_##EL##_list *list);	\
++__isl_give isl_##EL##_list *isl_##EL##_list_alloc(isl_ctx *ctx, int n);	\
++__isl_give isl_##EL##_list *isl_##EL##_list_copy(			\
++	__isl_keep isl_##EL##_list *list);				\
++void isl_##EL##_list_free(__isl_take isl_##EL##_list *list);		\
++__isl_give isl_##EL##_list *isl_##EL##_list_add(			\
++	__isl_take isl_##EL##_list *list,				\
++	__isl_take struct isl_##EL *el);				\
++int isl_##EL##_list_n_##EL(__isl_keep isl_##EL##_list *list);		\
++__isl_give struct isl_##EL *isl_##EL##_list_get_##EL(			\
++	__isl_keep isl_##EL##_list *list, int index);			\
++int isl_##EL##_list_foreach(__isl_keep isl_##EL##_list *list,		\
++	int (*fn)(__isl_take struct isl_##EL *el, void *user),		\
++	void *user);							\
++__isl_give isl_printer *isl_printer_print_##EL##_list(			\
++	__isl_take isl_printer *p, __isl_keep isl_##EL##_list *list);	\
++void isl_##EL##_list_dump(__isl_keep isl_##EL##_list *list);
++
++ISL_DECLARE_LIST(basic_set)
++ISL_DECLARE_LIST(aff)
+ 
+ #if defined(__cplusplus)
+ }
+diff --git a/include/isl/map.h b/include/isl/map.h
+index 530152a..51c2d2b 100644
+--- a/include/isl/map.h
++++ b/include/isl/map.h
+@@ -21,6 +21,7 @@
+ #include <isl/mat.h>
+ #include <isl/printer.h>
+ #include <isl/local_space.h>
++#include <isl/list.h>
+ 
+ #if defined(__cplusplus)
+ extern "C" {
+@@ -216,7 +217,7 @@ __isl_give isl_map *isl_basic_map_lexmax(__isl_take isl_basic_map *bmap);
+ __isl_give isl_map *isl_map_lexmin(__isl_take isl_map *map);
+ __isl_give isl_map *isl_map_lexmax(__isl_take isl_map *map);
+ int isl_basic_map_foreach_lexmin(__isl_keep isl_basic_map *bmap,
+-	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_mat *map,
++	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_aff_list *list,
+ 		  void *user),
+ 	void *user);
+ 
+diff --git a/isl_list.c b/isl_list.c
+index db2a608..cf4561b 100644
+--- a/isl_list.c
++++ b/isl_list.c
+@@ -7,56 +7,16 @@
+  * Computerwetenschappen, Celestijnenlaan 200A, B-3001 Leuven, Belgium
+  */
+ 
+-#include <isl/list.h>
++#include <isl_list_private.h>
+ #include <isl/set.h>
++#include <isl/aff.h>
+ 
+-struct isl_basic_set_list *isl_basic_set_list_alloc(struct isl_ctx *ctx, int n)
+-{
+-	struct isl_basic_set_list *list;
++#undef BASE
++#define BASE basic_set
+ 
+-	isl_assert(ctx, n >= 0, return NULL);
+-	list = isl_alloc(ctx, struct isl_basic_set_list,
+-			 sizeof(struct isl_basic_set_list) +
+-			 (n - 1) * sizeof(struct isl_basic_set *));
+-	if (!list)
+-		return NULL;
++#include <isl_list_templ.c>
+ 
+-	list->ctx = ctx;
+-	isl_ctx_ref(ctx);
+-	list->ref = 1;
+-	list->size = n;
+-	list->n = 0;
+-	return list;
+-}
++#undef BASE
++#define BASE aff
+ 
+-struct isl_basic_set_list *isl_basic_set_list_add(
+-	struct isl_basic_set_list *list,
+-	struct isl_basic_set *bset)
+-{
+-	if (!list || !bset)
+-		goto error;
+-	isl_assert(list->ctx, list->n < list->size, goto error);
+-	list->p[list->n] = bset;
+-	list->n++;
+-	return list;
+-error:
+-	isl_basic_set_free(bset);
+-	isl_basic_set_list_free(list);
+-	return NULL;
+-}
+-
+-void isl_basic_set_list_free(struct isl_basic_set_list *list)
+-{
+-	int i;
+-
+-	if (!list)
+-		return;
+-
+-	if (--list->ref > 0)
+-		return;
+-
+-	isl_ctx_deref(list->ctx);
+-	for (i = 0; i < list->n; ++i)
+-		isl_basic_set_free(list->p[i]);
+-	free(list);
+-}
++#include <isl_list_templ.c>
+diff --git a/isl_list_private.h b/isl_list_private.h
+new file mode 100644
+index 0000000..ebb0cb9
+--- /dev/null
++++ b/isl_list_private.h
+@@ -0,0 +1,16 @@
++#ifndef ISL_LIST_PRIVATE_H
++#define ISL_LIST_PRIVATE_H
++
++#include <isl/list.h>
++
++#undef EL
++#define EL isl_basic_set
++
++#include <isl_list_templ.h>
++
++#undef EL
++#define EL isl_aff
++
++#include <isl_list_templ.h>
++
++#endif
+diff --git a/isl_list_templ.c b/isl_list_templ.c
+new file mode 100644
+index 0000000..9504e6e
+--- /dev/null
++++ b/isl_list_templ.c
+@@ -0,0 +1,154 @@
++/*
++ * Copyright 2008-2009 Katholieke Universiteit Leuven
++ * Copyright 2011      INRIA Saclay
++ *
++ * Use of this software is governed by the GNU LGPLv2.1 license
++ *
++ * Written by Sven Verdoolaege, K.U.Leuven, Departement
++ * Computerwetenschappen, Celestijnenlaan 200A, B-3001 Leuven, Belgium
++ * and INRIA Saclay - Ile-de-France, Parc Club Orsay Universite,
++ * ZAC des vignes, 4 rue Jacques Monod, 91893 Orsay, France
++ */
++
++#define xCAT(A,B) A ## B
++#define CAT(A,B) xCAT(A,B)
++#undef EL
++#define EL CAT(isl_,BASE)
++#define xFN(TYPE,NAME) TYPE ## _ ## NAME
++#define FN(TYPE,NAME) xFN(TYPE,NAME)
++#define xLIST(EL) EL ## _list
++#define LIST(EL) xLIST(EL)
++
++isl_ctx *FN(LIST(EL),get_ctx)(__isl_keep LIST(EL) *list)
++{
++	return list ? list->ctx : NULL;
++}
++
++__isl_give LIST(EL) *FN(LIST(EL),alloc)(isl_ctx *ctx, int n)
++{
++	LIST(EL) *list;
++
++	if (n < 0)
++		isl_die(ctx, isl_error_invalid,
++			"cannot create list of negative length",
++			return NULL);
++	list = isl_alloc(ctx, LIST(EL),
++			 sizeof(LIST(EL)) + (n - 1) * sizeof(struct EL *));
++	if (!list)
++		return NULL;
++
++	list->ctx = ctx;
++	isl_ctx_ref(ctx);
++	list->ref = 1;
++	list->size = n;
++	list->n = 0;
++	return list;
++}
++
++__isl_give LIST(EL) *FN(LIST(EL),copy)(__isl_keep LIST(EL) *list)
++{
++	if (!list)
++		return NULL;
++
++	list->ref++;
++	return list;
++}
++
++__isl_give LIST(EL) *FN(LIST(EL),add)(__isl_take LIST(EL) *list,
++	__isl_take struct EL *el)
++{
++	if (!list || !el)
++		goto error;
++	isl_assert(list->ctx, list->n < list->size, goto error);
++	list->p[list->n] = el;
++	list->n++;
++	return list;
++error:
++	FN(EL,free)(el);
++	FN(LIST(EL),free)(list);
++	return NULL;
++}
++
++void FN(LIST(EL),free)(__isl_take LIST(EL) *list)
++{
++	int i;
++
++	if (!list)
++		return;
++
++	if (--list->ref > 0)
++		return;
++
++	isl_ctx_deref(list->ctx);
++	for (i = 0; i < list->n; ++i)
++		FN(EL,free)(list->p[i]);
++	free(list);
++}
++
++int FN(FN(LIST(EL),n),BASE)(__isl_keep LIST(EL) *list)
++{
++	return list ? list->n : 0;
++}
++
++__isl_give EL *FN(FN(LIST(EL),get),BASE)(__isl_keep LIST(EL) *list, int index)
++{
++	if (!list)
++		return NULL;
++	if (index < 0 || index >= list->n)
++		isl_die(list->ctx, isl_error_invalid,
++			"index out of bounds", return NULL);
++	return FN(EL,copy)(list->p[index]);
++}
++
++int FN(LIST(EL),foreach)(__isl_keep LIST(EL) *list,
++	int (*fn)(__isl_take EL *el, void *user), void *user)
++{
++	int i;
++
++	if (!list)
++		return -1;
++
++	for (i = 0; i < list->n; ++i) {
++		EL *el = FN(EL,copy(list->p[i]));
++		if (!el)
++			return -1;
++		if (fn(el, user) < 0)
++			return -1;
++	}
++
++	return 0;
++}
++
++__isl_give isl_printer *CAT(isl_printer_print_,LIST(BASE))(
++	__isl_take isl_printer *p, __isl_keep LIST(EL) *list)
++{
++	int i;
++
++	if (!p || !list)
++		goto error;
++	p = isl_printer_print_str(p, "(");
++	for (i = 0; i < list->n; ++i) {
++		if (i)
++			p = isl_printer_print_str(p, ",");
++		p = CAT(isl_printer_print_,BASE)(p, list->p[i]);
++	}
++	p = isl_printer_print_str(p, ")");
++	return p;
++error:
++	isl_printer_free(p);
++	return NULL;
++}
++
++void FN(LIST(EL),dump)(__isl_keep LIST(EL) *list)
++{
++	isl_printer *printer;
++
++	if (!list)
++		return;
++
++	printer = isl_printer_to_file(FN(LIST(EL),get_ctx)(list), stderr);
++	printer = CAT(isl_printer_print_,LIST(BASE))(printer, list);
++	printer = isl_printer_end_line(printer);
++
++	isl_printer_free(printer);
++}
+diff --git a/isl_list_templ.h b/isl_list_templ.h
+new file mode 100644
+index 0000000..6ceb966
+--- /dev/null
++++ b/isl_list_templ.h
+@@ -0,0 +1,14 @@
++#define xFN(TYPE,NAME) TYPE ## _ ## NAME
++#define FN(TYPE,NAME) xFN(TYPE,NAME)
++#define xLIST(EL) EL ## _list
++#define LIST(EL) xLIST(EL)
++
++struct LIST(EL) {
++	int ref;
++	isl_ctx *ctx;
++
++	int n;
++
++	size_t size;
++	struct EL *p[1];
++};
+diff --git a/isl_map.c b/isl_map.c
+index 0668037..a98c5d8 100644
+--- a/isl_map.c
++++ b/isl_map.c
+@@ -17,7 +17,7 @@
+ #include <isl/blk.h>
+ #include "isl_dim_private.h"
+ #include "isl_equalities.h"
+-#include <isl/list.h>
++#include <isl_list_private.h>
+ #include <isl/lp.h>
+ #include <isl/seq.h>
+ #include <isl/set.h>
+diff --git a/isl_map_private.h b/isl_map_private.h
+index 415965f..848ef85 100644
+--- a/isl_map_private.h
++++ b/isl_map_private.h
+@@ -12,6 +12,7 @@
+ 
+ #define isl_basic_set	isl_basic_map
+ #define isl_set		isl_map
++#define isl_basic_set_list	isl_basic_map_list
+ #include <isl/set.h>
+ #include <isl/map.h>
+ #include <isl_reordering.h>
+diff --git a/isl_tab_pip.c b/isl_tab_pip.c
+index 62b4cd1..00d5e7a 100644
+--- a/isl_tab_pip.c
++++ b/isl_tab_pip.c
+@@ -16,6 +16,7 @@
+ #include "isl_tab.h"
+ #include "isl_sample.h"
+ #include <isl_mat_private.h>
++#include <isl_aff_private.h>
+ 
+ /*
+  * The implementation of parametric integer linear programming in this file
+@@ -4523,7 +4524,7 @@ error:
+ struct isl_sol_for {
+ 	struct isl_sol	sol;
+ 	int		(*fn)(__isl_take isl_basic_set *dom,
+-				__isl_take isl_mat *map, void *user);
++				__isl_take isl_aff_list *list, void *user);
+ 	void		*user;
+ };
+ 
+@@ -4556,12 +4557,31 @@ static void sol_for_free_wrap(struct isl_sol *sol)
+ static void sol_for_add(struct isl_sol_for *sol,
+ 	struct isl_basic_set *dom, struct isl_mat *M)
+ {
++	int i;
++	isl_ctx *ctx;
++	isl_local_space *ls;
++	isl_aff *aff;
++	isl_aff_list *list;
++
+ 	if (sol->sol.error || !dom || !M)
+ 		goto error;
+ 
++	ctx = isl_basic_set_get_ctx(dom);
++	ls = isl_basic_set_get_local_space(dom);
++	list = isl_aff_list_alloc(ctx, M->n_row - 1);
++	for (i = 1; i < M->n_row; ++i) {
++		aff = isl_aff_alloc(isl_local_space_copy(ls));
++		if (aff) {
++			isl_int_set_si(aff->v->el[0], 1);
++			isl_seq_cpy(aff->v->el + 1, M->row[i], M->n_col);
++		}
++		list = isl_aff_list_add(list, aff);
++	}
++	isl_local_space_free(ls);
++
+ 	dom = isl_basic_set_finalize(dom);
+ 
+-	if (sol->fn(isl_basic_set_copy(dom), isl_mat_copy(M), sol->user) < 0)
++	if (sol->fn(isl_basic_set_copy(dom), list, sol->user) < 0)
+ 		goto error;
+ 
+ 	isl_basic_set_free(dom);
+@@ -4580,7 +4600,7 @@ static void sol_for_add_wrap(struct isl_sol *sol,
+ }
+ 
+ static struct isl_sol_for *sol_for_init(struct isl_basic_map *bmap, int max,
+-	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_mat *map,
++	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_aff_list *list,
+ 		  void *user),
+ 	void *user)
+ {
+@@ -4625,7 +4645,7 @@ static void sol_for_find_solutions(struct isl_sol_for *sol_for,
+ }
+ 
+ int isl_basic_map_foreach_lexopt(__isl_keep isl_basic_map *bmap, int max,
+-	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_mat *map,
++	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_aff_list *list,
+ 		  void *user),
+ 	void *user)
+ {
+@@ -4661,7 +4681,7 @@ error:
+ }
+ 
+ int isl_basic_map_foreach_lexmin(__isl_keep isl_basic_map *bmap,
+-	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_mat *map,
++	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_aff_list *list,
+ 		  void *user),
+ 	void *user)
+ {
+@@ -4669,7 +4689,7 @@ int isl_basic_map_foreach_lexmin(__isl_keep isl_basic_map *bmap,
+ }
+ 
+ int isl_basic_map_foreach_lexmax(__isl_keep isl_basic_map *bmap,
+-	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_mat *map,
++	int (*fn)(__isl_take isl_basic_set *dom, __isl_take isl_aff_list *list,
+ 		  void *user),
+ 	void *user)
+ {
+diff --git a/isl_test.c b/isl_test.c
+index 55a50d5..44461e1 100644
+--- a/isl_test.c
++++ b/isl_test.c
+@@ -1216,9 +1216,20 @@ void test_lex(struct isl_ctx *ctx)
+ 	isl_map_free(map);
+ }
+ 
++static int consume_lexmin(__isl_take isl_basic_set *dom,
++	__isl_take isl_aff_list *list, void *user)
++{
++	isl_basic_set_dump(dom);
++	isl_aff_list_dump(list);
++	isl_basic_set_free(dom);
++	isl_aff_list_free(list);
++	return 0;
++}
++
+ void test_lexmin(struct isl_ctx *ctx)
+ {
+ 	const char *str;
++	isl_basic_map *bmap;
+ 	isl_map *map, *map2;
+ 	isl_set *set;
+ 	isl_set *set2;
+@@ -1278,6 +1289,13 @@ void test_lexmin(struct isl_ctx *ctx)
+ 	assert(isl_map_is_equal(map, map2));
+ 	isl_map_free(map);
+ 	isl_map_free(map2);
++
++	str = "{ [i] -> [i', j] : j = i - 8i' and i' >= 0 and i' <= 7 and "
++				" 8i' <= i and 8i' >= -7 + i }";
++	bmap = isl_basic_map_read_from_str(ctx, str, -1);
++	isl_basic_map_dump(bmap);
++	isl_basic_map_foreach_lexmin(bmap, &consume_lexmin, NULL);
++	isl_basic_map_free(bmap);
+ }
+ 
+ struct must_may {

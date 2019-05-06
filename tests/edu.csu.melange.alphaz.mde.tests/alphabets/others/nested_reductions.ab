@@ -1,0 +1,8 @@
+affine nested_reductions {N | (N)>0} // Parameters
+input // Input Matrices
+float A, B, C {i, k | 0<=i<N && 0<=k<N};
+output // Output Matrix
+float D {i, j| 0<=i<N && 0<=j<N};
+let // List of equations
+	D[i,j] = reduce(+, [k], reduce(+, [], B[i,k] * C[k,j]) * A[k,j]);
+.

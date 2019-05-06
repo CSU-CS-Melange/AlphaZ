@@ -1,0 +1,82 @@
+affine LUD_reduce {N| N-3>= 0}
+input
+  double A {i,j| 0<=(i,j)<N};
+output
+  double L {i,j| 0<=j<i<N};
+  double U {i,j| 0<=i<=j<N};
+
+let
+  U[i, j] = 
+  	case
+		{| i==0}: A[i, j];
+		{| i>0}: A[i, j] - reduce(+, [k], {| 0<=k<j}: L[i, k]*U[k, j]); 
+    esac;
+
+  L[i, j] = 
+  	case
+		{| j==0}: A[i, j]/U[j, j];
+		{| j>0}: (A[i, j] - reduce(+, [k], {| 0 <=k<j}: L[i, k]*U[k, j]))/U[j, j];
+    esac;
+.
+
+
+
+affine LUD_normalized {N|N-3>= 0}
+input
+  double A {i,j| 0<=(i,j)<N};
+output
+  double L {i,j| 0<=j<i<N};
+  double U {i,j| 0<=i<=j<N};
+local
+	double NR_L {i,j|i-j-1>= 0 && j-1>= 0 && N-i-1>= 0};
+	double NR_U {i,j|i-1>= 0 && N-j-1>= 0 && -i+j>= 0};
+let
+	U[i,j] = 
+		case
+			{| i==0} : A[i,j];
+			{| i>0} : (A[i,j] - NR_U);
+		esac;
+	L[i,j] = 
+	case
+		{| j==0} : (A[i,j] / U[j,j]);
+		{| j>0} : ((A[i,j] - NR_L) / U[j,j]);
+	esac;
+	NR_U[i,j] = reduce(+, (i,j,k->i,j), {|j-k-1>= 0} : (L[i,k] * U[k,j]));
+	NR_L[i,j] = reduce(+, (i,j,k->i,j), {|j-k-1>= 0} : (L[i,k] * U[k,j]));
+.
+
+
+
+affine LUD_serialized {N|N-3>= 0}
+input
+  double A {i,j| 0<=(i,j)<N};
+output
+  double L {i,j| 0<=j<i<N};
+  double U {i,j| 0<=i<=j<N};
+local
+	double SR_L {i,j,k| 0<=k<j<i<N};
+	double SR_U {i,j,k| 0<=k<i<=j<N};
+let
+	U[i,j] = 
+		case
+			{| i== 0} : A[i,j];
+			{| i>0} : (A[i,j] - SR_U[i,j,i-1]);
+		esac;
+	L[i,j] = 
+		case
+			{| j== 0} : (A[i,j] / U[j,j]);
+			{| j>0} : ((A[i,j] - SR_L[i,j,j-1]) / U[j,j]);
+		esac;
+
+	SR_U[i,j,k] = 
+		case 
+			{| k==0}: L[i,k] * U[k,j];
+			{| k>0}: SR_U[i,j,k-1] + L[i,k] * U[k,j];
+		esac;
+		
+	SR_L[i,j,k] = 
+		case 
+			{| k==0}: L[i,k] * U[k,j];
+			{| k>0}: SR_L[i,j,k-1] + L[i,k] * U[k,j];
+		esac;
+.

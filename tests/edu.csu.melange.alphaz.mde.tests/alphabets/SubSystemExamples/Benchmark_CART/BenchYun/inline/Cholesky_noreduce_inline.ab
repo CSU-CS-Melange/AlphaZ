@@ -1,0 +1,39 @@
+double sqrt(double);
+affine cholesky {Nb,Nl,b|Nl==0 && Nb>=1 && b>=3}
+input
+double A_bl {iBl,jBl,iLoc,jLoc|Nl==0 && iBl>=0 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3 && Nb>=1 && Nb>=iBl+1 && jBl>=0 && Nb>=jBl+1};
+output
+double L_bl {iBl,jBl,iLoc,jLoc|jBl==iBl && Nl==0 && b>=3 && iBl>=0 && Nb>=iBl+1 && b>=iLoc+1 && jLoc>=0 && iLoc>=jLoc}
+	|| {iBl,jBl,iLoc,jLoc|Nl==0 && b>=3 && Nb>=iBl+1 && jBl>=0 && iBl>=jBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+local
+double Temp1_bl {iBl,jBl,kBl,iLoc,jLoc,kLoc|jLoc==iLoc && kBl==iBl && jBl==iBl && Nl==0 && b>=3 && iBl>=0 && Nb>=iBl+1 && b>=iLoc+1 && kLoc>=0 && iLoc>=kLoc+1}
+	|| {iBl,jBl,kBl,iLoc,jLoc,kLoc|jLoc==iLoc && jBl==iBl && Nl==0 && b>=3 && Nb>=iBl+1 && kBl>=0 && iBl>=kBl+1 && iLoc>=0 && b>=iLoc+1 && kLoc>=0 && b>=kLoc+1};
+double Temp2_bl {iBl,jBl,kBl,iLoc,jLoc,kLoc|jBl==iBl && Nl==0 && b>=3 && Nb>=iBl+1 && kBl>=0 && iBl>=kBl+1 && b>=iLoc+1 && jLoc>=0 && iLoc>=jLoc+1 && kLoc>=0 && b>=kLoc+1}
+	|| {iBl,jBl,kBl,iLoc,jLoc,kLoc|kBl==jBl && Nl==0 && b>=3 && Nb>=iBl+1 && jBl>=0 && iBl>=jBl+1 && iLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && kLoc>=0 && jLoc>=kLoc+1}
+	|| {iBl,jBl,kBl,iLoc,jLoc,kLoc|kBl==iBl && jBl==iBl && Nl==0 && iBl>=0 && Nb>=iBl+1 && b>=iLoc+1 && iLoc>=jLoc+1 && kLoc>=0 && jLoc>=kLoc+1}
+	|| {iBl,jBl,kBl,iLoc,jLoc,kLoc|Nl==0 && b>=3 && Nb>=iBl+1 && iBl>=jBl+1 && kBl>=0 && jBl>=kBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && kLoc>=0 && b>=kLoc+1};
+let
+L_bl[iBl,jBl,iLoc,jLoc] = case
+	{|jLoc==0 && iLoc==0 && jBl==0 && iBl==0 && Nl==0 && Nb>=1 && b>=3} : sqrt(A_bl[iBl,jBl,iLoc,jLoc]);
+	{|jLoc==0 && jBl==0 && Nl==0 && Nb>=1 && b>=3 && iLoc>=0 && b>=iLoc+1 && iBl>=0 && iBl+iLoc>=1} : (A_bl[iBl,jBl,iLoc,jLoc] / L_bl[jBl,jBl,jLoc,jLoc]);
+	{|jLoc==0 && iLoc==0 && jBl==iBl && Nl==0 && Nb>=1 && b>=3} : sqrt((A_bl[jBl,jBl,jLoc,jLoc] - Temp1_bl[iBl,jBl,jBl-1,iLoc,jLoc,b+jLoc-1]));
+	{|jLoc==iLoc && jBl==iBl && Nl==0 && Nb>=1 && b>=3 && iLoc>=1 && b>=iLoc+1} : sqrt((A_bl[jBl,jBl,jLoc,jLoc] - Temp1_bl[iBl,jBl,jBl,iLoc,jLoc,jLoc-1]));
+	{|Nl==0 && Nb>=1 && b>=3 && jBl>=0 && iBl>=jBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=1 && jBl+jLoc>=1 && b>=jLoc+1}
+		|| {|jBl==iBl && Nl==0 && Nb>=1 && b>=3 && iBl>=1 && b>=iLoc+1 && jLoc>=1 && iLoc>=jLoc+1 && iLoc>=0 && b>=jLoc+1}
+		|| {|jBl==0 && iBl==0 && Nl==0 && Nb>=1 && b>=iLoc+1 && jLoc>=1 && iLoc>=jLoc+1 && iLoc>=0 && b>=jLoc+1 && b>=3} : ((A_bl[iBl,jBl,iLoc,jLoc] - Temp2_bl[iBl,jBl,jBl,iLoc,jLoc,jLoc-1]) / L_bl[jBl,jBl,jLoc,jLoc]);
+	{|jLoc==0 && Nl==0 && Nb>=1 && b>=3 && jBl>=1 && iBl>=jBl+1 && iLoc>=0 && b>=iLoc+1}
+		|| {|jLoc==0 && jBl==iBl && Nl==0 && Nb>=1 && b>=3 && iBl>=1 && b>=iLoc+1 && iLoc>=1} : ((A_bl[iBl,jBl,iLoc,jLoc] - Temp2_bl[iBl,jBl,jBl-1,iLoc,jLoc,b+jLoc-1]) / L_bl[jBl,jBl,jLoc,jLoc]);
+esac;
+
+Temp1_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc] = case
+	{|kLoc==0 && kBl==0 && Nl==0 && Nb>=1 && iLoc>=0 && jLoc>=0 && b>=jLoc+1 && b>=iLoc+1 && b>=3} : (L_bl[jBl,0,jLoc,0] * L_bl[jBl,0,jLoc,0]);
+	{|Nl==0 && Nb>=1 && b>=3 && b>=kLoc+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && kLoc>=1 && b>=jLoc+1 && kBl>=0 && kBl+kLoc>=1} : (Temp1_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc-1] + (L_bl[jBl,kBl,jLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]));
+	{|kLoc==0 && Nl==0 && Nb>=1 && b>=3 && b>=jLoc+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && kBl>=1} : (Temp1_bl[iBl,jBl,kBl-1,iLoc,jLoc,b+kLoc-1] + (L_bl[jBl,kBl,jLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]));
+esac;
+
+Temp2_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc] = case
+	{|kLoc==0 && kBl==0 && Nl==0 && Nb>=1 && iLoc>=0 && jLoc>=0 && b>=jLoc+1 && b>=iLoc+1 && b>=3} : (L_bl[iBl,0,iLoc,0] * L_bl[jBl,0,jLoc,0]);
+	{|Nl==0 && Nb>=1 && b>=3 && b>=kLoc+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && kLoc>=1 && b>=jLoc+1 && kBl>=0 && kBl+kLoc>=1} : (Temp2_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc-1] + (L_bl[iBl,kBl,iLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]));
+	{|kLoc==0 && Nl==0 && Nb>=1 && b>=3 && b>=jLoc+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && kBl>=1} : (Temp2_bl[iBl,jBl,kBl-1,iLoc,jLoc,b+kLoc-1] + (L_bl[iBl,kBl,iLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]));
+esac;
+.

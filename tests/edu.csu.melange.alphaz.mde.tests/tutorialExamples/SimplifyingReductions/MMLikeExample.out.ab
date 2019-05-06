@@ -1,0 +1,15 @@
+affine MMLikeExample {N|N-1>= 0}
+input
+float A {i,j|N-i-1>= 0 && j>= 0 && N-j-1>= 0 && i>= 0};
+float B {i,j|N-i-1>= 0 && j>= 0 && N-j-1>= 0 && i>= 0};
+output
+float Y {i|N-i-1>= 0 && i>= 0};
+local
+float Z {i,j|N-i-1>= 0 && j>= 0 && i-j>= 0};
+let
+Y[i] = reduce(+, (i,k->i), (Z * A));
+Z[i,j] = case
+{|-i+j== 0} : reduce(+, (i,j,k->i,k), {|-i+j== 0} || {|j>= 0 && i-j-1>= 0} : B[k,j]);
+{|i-j-1>= 0} : (B[j,i] + Z[i-1,j]);
+esac;
+.

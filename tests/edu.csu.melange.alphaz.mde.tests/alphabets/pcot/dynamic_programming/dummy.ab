@@ -1,0 +1,8 @@
+affine dummy {N| N>0}
+input
+output
+	int C  {i,j | i+j>=N>=(i,j) };
+local // No local variables
+let
+   C[i,j] = [i+j];
+.

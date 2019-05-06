@@ -1,0 +1,10 @@
+affine FS {N|N>1}
+ given
+  float X {i|0<=i<N};
+ returns
+  float Y {i|0<i<N}; 
+ using
+  
+ through
+  Y[j]=X[j-1];
+ .

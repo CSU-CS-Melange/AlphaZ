@@ -1,0 +1,327 @@
+affine stencil2D_5points_CART {Nb,Mb,Tb,Nl,Ml,Tl,b|Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && Tb>=0}
+				|| {Nb,Mb,Tb,Nl,Ml,Tl,b|Tl==0 && Ml==0 && Nl==0 && b>=3 && Mb>=1 && Nb>=1 && Tb>=0 && Nb+Mb>=3}
+input
+	double A_bl {iBl,jBl,iLoc,jLoc|jBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && Tb>=0}
+		|| {iBl,jBl,iLoc,jLoc|Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && Nb+Mb>=3 && Tb>=0 && b>=iLoc+1 && iBl>=0 && b>=3 && b>=jLoc+1 && Mb>=jBl+1 && jBl>=0 && iLoc>=0 && jLoc>=0};
+output
+	double B_bl {iBl,jBl,iLoc,jLoc|jBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && Tb>=0}
+		|| {iBl,jBl,iLoc,jLoc|Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && Nb+Mb>=3 && Tb>=0 && b>=iLoc+1 && iBl>=0 && b>=3 && b>=jLoc+1 && Mb>=jBl+1 && jBl>=0 && iLoc>=0 && jLoc>=0};
+local
+	double temp_bl {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=0 && iLoc>=0 && Mb>=1 && tLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && Tb>=jBl+1 && b>=3 && jLoc>=tLoc && iBl>=jBl+1 && jBl+Nb>=iBl+1}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl==iBl && jBl==iBl+1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=0 && b>=3 && jLoc>=0 && tLoc>=jLoc+1 && b>=iLoc+1 && iLoc>=tLoc && Tb>=iBl+1}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tLoc==0 && tBl==Tb && jBl==Tb && iBl==Tb && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Tb>=0 && iLoc>=0 && jLoc>=0 && Nb>=1 && b>=iLoc+1 && b>=jLoc+1 && b>=3}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|Tl==0 && Ml==0 && Nl==0 && tBl>=0 && iLoc>=0 && jLoc>=0 && tLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=tLoc+1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Nb>=iBl+1 && tBl+Mb>=jBl+1 && Tb>=tBl+1}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=0 && jLoc>=tLoc && iLoc>=tLoc && tLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && Tb>=iBl+1 && b>=3}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb && iLoc>=0 && jLoc>=0 && tLoc>=jLoc+1 && b>=iLoc+1 && Mb+Tb>=jBl+1 && b>=tLoc+1 && b>=3 && Mb>=1 && iBl+Mb>=jBl+1 && jBl+Nb>=iBl+Mb+1}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl==iBl && jBl==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && tLoc>=jLoc+1 && jLoc>=0 && b>=iLoc+1 && b>=3 && Mb>=1 && iLoc>=tLoc && Nb>=1 && Tb>=iBl+1 && iBl>=0 && Nb+Mb>=3}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Nb+Mb>=3 && b>=iLoc+1 && iBl>=0 && tLoc>=0 && b>=3 && jLoc>=tLoc && b>=jLoc+1 && Mb>=1 && Tb>=iBl+1 && Nb>=1 && iLoc>=tLoc}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && iLoc>=0 && jLoc>=0 && tLoc>=iLoc+1 && tLoc>=jLoc+1 && Nb+Tb>=iBl+1 && b>=tLoc+1 && b>=3 && Mb>=1 && Nb>=1}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=0 && iBl+Mb>=jBl+1 && jLoc>=0 && tLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && Tb>=iBl+1 && b>=3 && jBl>=iBl+1 && iLoc>=tLoc && Nb>=1}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tLoc==0 && tBl==Tb && Tl==0 && Ml==0 && Nl==0 && Tb>=0 && b>=iLoc+1 && Nb+Tb>=iBl+1 && b>=jLoc+1 && jLoc>=0 && b>=3 && Mb+Tb>=jBl+1 && iBl>=Tb && iLoc>=0 && iBl+Mb>=Tb+2 && jBl>=Tb}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl+Nb==iBl && jBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && iLoc>=0 && Nb>=1 && tLoc>=iLoc+1 && Mb>=1 && b>=jLoc+1 && Nb+Tb>=iBl+1 && b>=3 && jLoc>=tLoc}
+		|| {iBl,jBl,tBl,iLoc,jLoc,tLoc|tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && iLoc>=0 && jLoc>=0 && iBl+Mb>=jBl+Nb+1 && Nb+Tb>=iBl+1 && b>=jLoc+1 && b>=tLoc+1 && b>=3 && jBl+Nb>=iBl+1 && Nb>=1 && tLoc>=iLoc+1};
+let
+temp_bl[iBl,jBl,tBl,iLoc,jLoc,tLoc] = case
+	{|tLoc==0 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && Tb>=0}
+		|| {|tLoc==0 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && b>=3 && jLoc>=0 && b>=iLoc+1 && iLoc>=0 && Nb+Mb>=3 && Mb>=1 && Nb>=1 && Tb>=0 && b>=jLoc+1} : A_bl[iBl-tBl,jBl-tBl,iLoc-tLoc,jLoc-tLoc];
+	
+	{|tLoc==iLoc && tBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && iLoc>=1 && jLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && Tb>=0}
+		|| {|tLoc==iLoc && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && iLoc>=1 && jLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && iBl>=1 && Tb>=0}
+		|| {|tLoc==iLoc && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && b>=jLoc+1 && Tb>=0 && iLoc>=1 && jLoc>=1 && iBl>=1 && Mb>=1 && b>=iLoc+1 && Nb>=1 && Nb+Mb>=3}
+		|| {|tLoc==iLoc && tBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && Tb>=0 && b>=iLoc+1 && b>=jLoc+1 && Mb>=1 && jLoc>=1 && Nb>=1 && Nb+Mb>=3} : temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-1,tLoc-1];
+	
+	{|tLoc==0 && iLoc==0 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && iBl>=1 && jLoc>=1 && b>=jLoc+1 && Tb>=0}
+		|| {|tLoc==0 && iLoc==0 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && b>=jLoc+1 && Tb>=0 && Nb>=1 && jLoc>=1 && iBl>=1 && Mb>=1 && Nb+Mb>=3} : temp_bl[iBl-1,jBl,tBl-1,b+iLoc-1,jLoc-1,b+tLoc-1];
+	
+	{|tLoc==0 && jLoc==0 && iLoc==0 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && iBl>=1 && Tb>=0}
+		|| {|tLoc==0 && jLoc==0 && iLoc==0 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && Nb+Mb>=3 && Tb>=0 && Mb>=1 && Nb>=1 && iBl>=1} : temp_bl[iBl-1,jBl-1,tBl-1,b+iLoc-1,b+jLoc-1,b+tLoc-1];
+
+	{|tLoc==iLoc && jLoc==0 && tBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && iLoc>=1 && Tb>=0 && b>=iLoc+1}
+		||{|tLoc==iLoc && jLoc==0 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=3 && iLoc>=1 && iBl>=1 && b>=iLoc+1 && Tb>=0}
+		|| {|tLoc==iLoc && jLoc==0 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && b>=iLoc+1 && Tb>=0 && iLoc>=1 && Nb>=1 && iBl>=1 && Mb>=1 && Nb+Mb>=3}
+		|| {|tLoc==iLoc && jLoc==0 && tBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && Tb>=0 && b>=iLoc+1 && Nb+Mb>=3 && Mb>=1 && Nb>=1} : temp_bl[iBl,jBl-1,tBl,iLoc-1,b+jLoc-1,tLoc-1];
+		
+	{|tLoc==1 && jLoc==0 && iLoc==0 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && iBl>=Nb && Tb>=0 && Mb>=1 && Nb>=1} : temp_bl[iBl-1,jBl-1,tBl,b+iLoc-1,b+jLoc-1,tLoc-1];
+	
+	{|tLoc==0 && jLoc==0 && iLoc==b-1 && tBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=Nb && Mb>=1 && Tb>=0} : temp_bl[iBl,jBl-1,tBl-1,iLoc-1,b+jLoc-1,b+tLoc-1];
+
+	{|tLoc==iLoc+1 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && jLoc>=1 && b>=iLoc+2 && b>=jLoc+1 && iBl>=Nb && Nb>=1 && Mb>=1 && Tb>=0} : temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-1,tLoc-1];
+
+	{|tLoc==1 && iLoc==0 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && Mb>=1 && jLoc>=1 && b>=jLoc+1 && Tb>=0 && iBl>=Nb && Nb>=1} : temp_bl[iBl-1,jBl,tBl,b+iLoc-1,jLoc-1,tLoc-1];
+
+	{|tLoc==iLoc+1 && jLoc==0 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && Mb>=1 && b>=iLoc+2 && Tb>=0 && iBl>=Nb && Nb>=1} : temp_bl[iBl,jBl-1,tBl,iLoc-1,b+jLoc-1,tLoc-1];
+
+	{|tLoc==0 && iLoc==b-1 && tBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && Nb>=1 && b>=3 && jLoc>=1 && Mb>=1 && Tb>=0 && b>=jLoc+1 && iBl>=Nb} : temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc-1,b+tLoc-1];
+
+	{|tLoc==jLoc && iLoc==0 && tBl==0 && jBl==0 && Tl==0 && Ml==0 && Nl==0 && b>=3 && b>=jLoc+1 && jLoc>=1 && Nb+Mb>=iBl+3 && Tb>=0 && iBl>=1 && Mb>=1 && Nb>=iBl+1}
+		|| {|tLoc==jLoc && iLoc==0 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && Tb>=0 && jLoc>=1 && b>=jLoc+1 && Mb>=1 && iBl>=jBl+1 && jBl>=1 && jBl+Nb>=iBl+2}
+		|| {|tLoc==jLoc && iLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && b>=3 && Mb>=1 && jLoc>=1 && b>=jLoc+1 && Tb>=0 && Nb>=2 && iBl>=Nb && jLoc+b>=2}
+		|| {|tLoc==jLoc && iLoc==0 && tBl+Nb==iBl && jBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && jLoc>=2 && b>=3 && Mb>=1 && b>=jLoc+1 && Tb>=0 && Nb>=1 && iBl>=Nb}
+		|| {|tLoc==jLoc && iLoc==0 && tBl==0 && jBl==0 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && Nb>=2 && jLoc>=1 && b>=jLoc+1 && Tb>=0} : temp_bl[iBl-1,jBl,tBl,b+iLoc-1,jLoc-1,tLoc-1];
+		
+	{|tLoc==0 && jLoc==0 && iLoc==0 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && jBl>=1 && Mb>=1 && Tb>=0 && jBl+Nb>=iBl+2 && iBl>=jBl+1}
+		|| {|tLoc==0 && jLoc==0 && iLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && b>=3 && Nb>=2 && Tb>=0 && Mb>=1 && iBl>=Nb} : temp_bl[iBl-1,jBl-1,tBl-1,b+iLoc-1,b+jLoc-1,b+tLoc-1];
+	
+	{|tLoc==jLoc && tBl==0 && jBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && b>=iLoc+1 && iLoc>=jLoc+1 && jLoc>=1 && Tb>=0 && iLoc>=1 && b>=3 && b>=jLoc+1}
+		|| {|tLoc==jLoc && tBl==0 && jBl==0 && Tl==0 && Ml==0 && Nl==0 && b>=3 && b>=iLoc+1 && jLoc>=1 && Nb+Mb>=iBl+3 && Tb>=0 && iBl>=1 && Mb>=1 && b>=jLoc+1 && iLoc>=1 && Nb>=iBl+1}
+		|| {|tLoc==jLoc && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && jLoc>=1 && b>=jLoc+1 && b>=iLoc+1 && iBl>=jBl+1 && jBl>=1 && jBl+Nb>=iBl+2 && Tb>=0 && Mb>=1}
+		|| {|tLoc==jLoc && tBl==0 && jBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && jLoc>=1 && b>=iLoc+1 && iLoc>=jLoc+1 && Mb>=1 && Tb>=0 && Nb+Mb>=3 && Nb>=1 && iLoc>=1 && b>=3 && b>=jLoc+1}
+		|| {|tLoc==jLoc && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && jLoc+b>=iLoc+2 && jLoc>=1 && Tb>=0 && b>=iLoc+1 && iLoc>=jLoc+1 && iLoc>=1 && b>=3 && b>=jLoc+1}
+		|| {|tLoc==jLoc && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && jLoc>=1 && b>=jLoc+1 && b>=iLoc+1 && Nb>=2 && iBl>=Nb && jLoc+b>=iLoc+2 && Mb>=1 && Tb>=0}
+		|| {|tLoc==jLoc && tBl+Nb==iBl && jBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && jLoc>=iLoc+2 && iLoc>=1 && Mb>=1 && b>=jLoc+1 && Tb>=0 && Nb>=1 && iBl>=Nb && b>=3 && jLoc>=1 && b>=iLoc+1}
+		|| {|tLoc==jLoc && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && jLoc>=1 && b>=iLoc+1 && jLoc+Nb+b>=iLoc+3 && iBl>=1 && Mb>=1 && Nb>=1 && Nb+Mb>=3 && iLoc>=jLoc+1 && Tb>=0 && iLoc>=1 && b>=jLoc+1}
+		|| {|tLoc==jLoc && tBl==0 && jBl==0 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && iLoc>=1 && jLoc>=1 && b>=jLoc+1 && b>=iLoc+1 && Nb>=2 && Tb>=0} : temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-1,tLoc-1];
+	
+	{|tLoc==0 && jLoc==0 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && Tb>=0 && b>=iLoc+1 && Mb>=1 && iBl>=jBl+1 && jBl>=1 && jBl+Nb>=iBl+2}
+		|| {|tLoc==0 && jLoc==0 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && b>=iLoc+2 && iLoc>=1 && Tb>=0 && b>=3}
+		|| {|tLoc==0 && jLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && Mb>=1 && b>=iLoc+2 && Tb>=0 && Nb>=2 && iBl>=Nb}
+		|| {|tLoc==0 && jLoc==0 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && Tb>=0 && b>=iLoc+1 && Nb+b>=iLoc+3 && iBl>=1 && Mb>=1 && Nb>=1 && Nb+Mb>=3 && iLoc>=1} : temp_bl[iBl,jBl-1,tBl-1,iLoc-1,b+jLoc-1,b+tLoc-1];
+	
+	{|tLoc==jLoc+1 && iLoc==0 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && b>=3 && Mb>=1 && b>=jLoc+2 && Tb>=0 && jLoc>=1 && Nb>=1}
+		|| {|tLoc==jLoc+1 && iLoc==0 && tBl==0 && jBl==1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && Nb>=2 && jLoc>=1 && b>=jLoc+2 && Tb>=0}
+		|| {|tLoc==jLoc+1 && iLoc==0 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && b>=3 && jLoc>=1 && Mb>=1 && iBl>=1 && iBl+Mb>=3 && Tb>=0 && b>=jLoc+2 && Nb+Mb>=iBl+3 && Nb>=iBl+1}
+		|| {|tLoc==jLoc+1 && iLoc==0 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && Tb>=0 && jLoc>=1 && b>=jLoc+2 && Nb>=3}
+		|| {|tLoc==jLoc+1 && iLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+Mb+1 && Tl==0 && Ml==0 && Nl==0 && b>=3 && iBl>=Nb && jLoc>=1 && b>=jLoc+2 && Mb>=1 && Tb>=0 && Nb>=2}
+		|| {|tLoc==jLoc+1 && iLoc==0 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && Tb>=0 && jLoc>=1 && b>=jLoc+2 && Mb>=1 && jBl+Nb>=iBl+Mb+2 && iBl+Mb>=jBl+1 && jBl>=Mb+1} : temp_bl[iBl-1,jBl,tBl,b+iLoc-1,jLoc-1,tLoc-1];
+	
+	{|tLoc==0 && jLoc==b-1 && iLoc==0 && tBl+Mb==jBl+1 && Tl==0 && Ml==0 && Nl==0 && jBl+Nb>=iBl+Mb+1 && jBl>=Mb && iBl+Mb>=jBl+2 && Mb>=1 && b>=3 && Tb>=0}
+		|| {|tLoc==0 && jLoc==b-1 && iLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && Tb>=0 && b>=3 && Mb>=1 && Nb>=2} : temp_bl[iBl-1,jBl,tBl-1,b+iLoc-1,jLoc-1,b+tLoc-1];
+	
+	{|tLoc==1 && jLoc==0 && iLoc==0 && tBl==0 && jBl==1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && Nb>=2 && Tb>=0} || {|tLoc==1 && jLoc==0 && iLoc==0 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && b>=3 && Nb>=iBl+1 && Mb>=1 && iBl>=1 && iBl+Mb>=3 && Tb>=0 && Nb+Mb>=iBl+3} || {|tLoc==1 && jLoc==0 && iLoc==0 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && Tb>=0 && Nb>=3} || {|tLoc==1 && jLoc==0 && iLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+Mb+1 && Tl==0 && Ml==0 && Nl==0 && b>=3 && Tb>=0 && Mb>=1 && iBl>=Nb && Nb>=2} || {|tLoc==1 && jLoc==0 && iLoc==0 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && iBl+Mb>=jBl+1 && Mb>=1 && Tb>=0 && jBl>=Mb+1 && jBl+Nb>=iBl+Mb+2} : temp_bl[iBl-1,jBl-1,tBl,b+iLoc-1,b+jLoc-1,tLoc-1];
+	
+	{|tLoc==jLoc+1 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && iLoc>=1 && Mb>=1 && b>=jLoc+2 && Tb>=0 && jLoc>=iLoc+1 && Nb>=1 && b>=3 && jLoc>=1 && b>=iLoc+1}
+		|| {|tLoc==jLoc+1 && tBl==0 && jBl==1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && iLoc>=1 && jLoc>=1 && b>=jLoc+2 && b>=iLoc+1 && Nb>=2 && Tb>=0}
+		|| {|tLoc==jLoc+1 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && b>=3 && jLoc>=1 && Mb>=1 && iBl>=1 && iBl+Mb>=3 && Tb>=0 && b>=jLoc+2 && b>=iLoc+1 && iLoc>=1 && Nb>=iBl+1 && Nb+Mb>=iBl+3}
+		|| {|tLoc==jLoc+1 && tBl==0 && jBl==Mb && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Tb>=0 && iLoc>=jLoc+2 && jLoc>=1 && Mb>=1 && b>=iLoc+1 && iLoc>=1 && b>=3 && b>=jLoc+2}
+		|| {|tLoc==jLoc+1 && tBl==iBl && jBl==iBl+1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && Tb>=0 && iLoc>=jLoc+2 && jLoc>=1 && iBl>=1 && b>=iLoc+1 && iLoc>=1 && b>=3 && b>=jLoc+2}
+		|| {|tLoc==jLoc+1 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && iLoc>=1 && jLoc>=1 && b>=jLoc+2 && b>=iLoc+1 && Tb>=0 && Nb>=3}
+		|| {|tLoc==jLoc+1 && tBl+Nb==iBl+1 && jBl+Nb==iBl+Mb+1 && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && jLoc>=1 && b>=jLoc+2 && b>=iLoc+1 && Tb>=0 && Nb>=2 && iBl>=Nb && Mb>=1}
+		|| {|tLoc==jLoc+1 && tBl==iBl && jBl==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && jLoc>=1 && b>=iLoc+1 && iLoc>=jLoc+2 && iBl>=0 && Mb>=1 && Tb>=0 && Nb>=1 && iBl+Nb>=2 && Nb+Mb>=3 && iLoc>=1 && b>=3 && b>=jLoc+2}
+		|| {|tLoc==jLoc+1 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && jLoc>=1 && b>=jLoc+2 && b>=iLoc+1 && jBl+Nb>=iBl+Mb+2 && iBl+Mb>=jBl+1 && jBl>=Mb+1 && Tb>=0 && Mb>=1} : temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-1,tLoc-1];
+	
+	{|tLoc==1 && jLoc==0 && tBl==0 && jBl==1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && iLoc>=1 && Nb>=2 && b>=iLoc+1 && Tb>=0}
+		|| {|tLoc==1 && jLoc==0 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && b>=3 && Nb>=iBl+1 && Mb>=1 && iBl>=1 && iBl+Mb>=3 && Tb>=0 && b>=iLoc+1 && iLoc>=1 && Nb+Mb>=iBl+3}
+		|| {|tLoc==1 && jLoc==0 && tBl==0 && jBl==Mb && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Tb>=0 && iLoc>=2 && b>=3 && Mb>=1 && b>=iLoc+1}
+		|| {|tLoc==1 && jLoc==0 && tBl==iBl && jBl==iBl+1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && Tb>=0 && iLoc>=2 && b>=3 && iBl>=1 && b>=iLoc+1}
+		|| {|tLoc==1 && jLoc==0 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && b>=3 && iLoc>=1 && Tb>=0 && b>=iLoc+1 && Nb>=3}
+		|| {|tLoc==1 && jLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+Mb+1 && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && iBl>=Nb && b>=iLoc+1 && Mb>=1 && Tb>=0 && Nb>=2}
+		|| {|tLoc==1 && jLoc==0 && tBl==iBl && jBl==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && b>=3 && b>=iLoc+1 && iLoc>=2 && iBl>=0 && Mb>=1 && Tb>=0 && Nb>=1 && iBl+Nb>=2 && Nb+Mb>=3}
+		|| {|tLoc==1 && jLoc==0 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && b>=3 && iLoc>=1 && Tb>=0 && b>=iLoc+1 && Mb>=1 && jBl+Nb>=iBl+Mb+2 && iBl+Mb>=jBl+1 && jBl>=Mb+1} : temp_bl[iBl,jBl-1,tBl,iLoc-1,b+jLoc-1,tLoc-1];
+	
+	{|tLoc==0 && jLoc==b-1 && tBl+Mb==jBl+1 && Tl==0 && Ml==0 && Nl==0 && jBl+Nb>=iBl+Mb+1 && iLoc>=1 && iBl+Mb>=jBl+2 && Mb>=1 && b>=iLoc+1 && Tb>=0 && jBl>=Mb && b>=3}
+		|| {|tLoc==0 && jLoc==b-1 && tBl==1 && jBl==Mb && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==2 && iLoc>=1 && Tb>=0 && b>=3 && Mb>=1 && b>=iLoc+1}
+		|| {|tLoc==0 && jLoc==b-1 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=3 && Nb>=3 && Mb>=1 && b>=iLoc+1 && Tb>=0 && iLoc>=1}
+		|| {|tLoc==0 && jLoc==b-1 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==2 && iLoc>=1 && Tb>=0 && b>=3 && iBl>=2 && b>=iLoc+1}
+		|| {|tLoc==0 && jLoc==b-1 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb>=1 && iBl>=Nb && b>=3 && Mb>=Nb && Tb>=0 && Nb+b>=iLoc+3 && iLoc>=1 && 0>=Nb-2 && b>=iLoc+1}
+		|| {|tLoc==0 && jLoc==b-1 && tBl+Nb==iBl+1 && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && iLoc>=1 && b>=3 && Mb>=1 && b>=iLoc+2 && Tb>=0 && Nb>=2} : temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc-1,b+tLoc-1];
+	
+	{|jLoc==1 && iLoc==1 && tBl==0 && iBl==Nb && Tl==0 && Ml==0 && Nl==0 && Tb>=0 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && jBl>=1 && Nb>=1 && tLoc>=3 && Nb+Mb>=jBl+3}
+		|| {|jLoc==1 && iLoc==1 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && Tb>=0 && Nb+Mb>=iBl+3 && b>=tLoc+1 && Mb>=1 && iBl>=1 && tLoc>=3 && b>=3}
+		|| {|jLoc==1 && iLoc==1 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && Nb+Mb>=iBl+jBl+3 && Tb>=0 && jBl>=1 && iBl>=1}
+		|| {|jLoc==1 && iLoc==1 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && tLoc>=1 && tBl+tLoc+Mb+b>=jBl+4 && tBl+Nb>=iBl+1 && tBl+tLoc+Nb+b>=iBl+4 && b>=tLoc+1 && Tb>=0}
+		|| {|jLoc==1 && iLoc==1 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb+1 && Mb>=1 && tLoc>=3 && jBl+Nb>=iBl+Mb+1 && b>=3 && b>=tLoc+1 && iBl+Mb>=jBl+1 && Tb>=0}
+		|| {|jLoc==1 && iLoc==1 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb+1 && Tb>=0 && tLoc>=3 && iBl+Mb>=jBl+Nb+1 && b>=tLoc+1 && jBl+Nb>=iBl+1 && Nb>=1 && b>=3}
+		|| {|jLoc==1 && iLoc==1 && tBl==0 && jBl==Mb-1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Mb>=2 && b>=tLoc+1 && b>=3 && Tb>=0 && Nb>=2}
+		|| {|jLoc==1 && iLoc==1 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=3 && Tb>=0 && b>=tLoc+1 && Nb>=2 && b>=3}
+		|| {|jLoc==1 && iLoc==1 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && Tb>=0 && tLoc>=3 && Nb>=1 && b>=tLoc+1 && b>=3 && Mb>=1}
+		|| {|jLoc==1 && iLoc==1 && tBl==0 && jBl==Mb-1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Mb>=2 && b>=3 && tLoc>=3 && Tb>=0 && b>=tLoc+1} :
+			(((((temp_bl[iBl,jBl-1,tBl,iLoc-1,b+jLoc-2,tLoc-1] + temp_bl[iBl-1,jBl,tBl,b+iLoc-2,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc,tLoc-1]) / 5);
+	
+	{|jLoc==0 && iLoc==1 && tBl==0 && iBl==Nb && Tl==0 && Ml==0 && Nl==0 && Tb>=0 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && jBl>=1 && Nb>=1 && tLoc>=3 && Nb+Mb>=jBl+3}
+		|| {|jLoc==0 && iLoc==1 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && Tb>=0 && Nb+Mb>=iBl+3 && b>=tLoc+1 && Mb>=1 && iBl>=1 && tLoc>=2 && b>=3}
+		|| {|jLoc==0 && iLoc==1 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && Nb+Mb>=iBl+jBl+3 && Tb>=0 && jBl>=1 && iBl>=1}
+		|| {|jLoc==0 && iLoc==1 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && tLoc>=1 && tBl+tLoc+Mb+b>=jBl+3 && tBl+Nb>=iBl+1 && tBl+tLoc+Nb+b>=iBl+4 && b>=tLoc+1 && Tb>=0}
+		|| {|jLoc==0 && iLoc==1 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb+1 && Mb>=1 && tLoc>=2 && jBl+Nb>=iBl+Mb+1 && b>=3 && b>=tLoc+1 && iBl+Mb>=jBl+1 && Tb>=0}
+		|| {|jLoc==0 && iLoc==1 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb+1 && Tb>=0 && tLoc>=3 && iBl+Mb>=jBl+Nb+1 && b>=tLoc+1 && jBl+Nb>=iBl+1 && Nb>=1 && b>=3}
+		|| {|jLoc==0 && iLoc==1 && tBl==0 && jBl==Mb-1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Mb>=2 && b>=tLoc+1 && b>=3 && Tb>=0 && Nb>=2}
+		|| {|jLoc==0 && iLoc==1 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=2 && Tb>=0 && b>=tLoc+1 && Nb>=2 && b>=3}
+		|| {|jLoc==0 && iLoc==1 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && Tb>=0 && tLoc>=3 && Nb>=1 && b>=tLoc+1 && b>=3 && Mb>=1}
+		|| {|jLoc==0 && iLoc==1 && tBl==0 && jBl==Mb-1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Mb>=2 && b>=3 && tLoc>=3 && Tb>=0 && b>=tLoc+1} :
+			(((((temp_bl[iBl,jBl-1,tBl,iLoc-1,b+jLoc-2,tLoc-1] + temp_bl[iBl-1,jBl-1,tBl,b+iLoc-2,b+jLoc-1,tLoc-1]) + temp_bl[iBl,jBl-1,tBl,iLoc-1,b+jLoc-1,tLoc-1]) + temp_bl[iBl,jBl-1,tBl,iLoc,b+jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc,tLoc-1]) / 5);
+	
+	{|jLoc==0 && tBl==0 && iBl==Nb && Tl==0 && Ml==0 && Nl==0 && iLoc>=2 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && jBl>=1 && Nb>=1 && tLoc>=iLoc+2 && Nb+Mb>=jBl+3 && tLoc>=1 && Tb>=0 && b>=iLoc+1}
+		|| {|jLoc==0 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && iBl>=1 && tLoc+b>=iLoc+2 && b>=tLoc+1 && tLoc>=1 && b>=iLoc+1 && b>=3 && tLoc+b>=2 && Tb>=0 && Mb>=2 && iLoc>=tLoc+1 && iLoc>=2}
+		|| {|jLoc==0 && tBl==iBl && jBl==iBl+1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=0 && iLoc>=tLoc+1 && b>=tLoc+1 && Tb>=0 && b>=iLoc+1 && tLoc>=2 && iLoc>=2 && b>=3}
+		|| {|jLoc==0 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && b>=3 && Nb+Mb>=iBl+3 && b>=tLoc+1 && Mb>=1 && iBl>=1 && tLoc>=2 && iLoc>=2 && b>=iLoc+1 && Tb>=0}
+		|| {|jLoc==0 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && iLoc>=2 && b>=3 && b>=tLoc+1 && Nb+Mb>=iBl+jBl+3 && Tb>=0 && jBl>=1 && iBl>=1 && Mb>=jBl+1 && b>=iLoc+1}
+		|| {|jLoc==0 && tBl==0 && jBl==Mb-1 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && tLoc>=1 && Mb>=2 && b>=tLoc+1 && iLoc>=tLoc+1 && b>=iLoc+1 && b>=3 && Tb>=0 && iLoc>=2}
+		|| {|jLoc==0 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=iLoc+1 && tBl+tLoc+Mb+b>=jBl+3 && tBl+Nb>=iBl+1 && tBl+tLoc+Nb+b>=iBl+iLoc+3 && b>=tLoc+1 && Tb>=0 && iLoc>=2 && tLoc>=1}
+		|| {|jLoc==0 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb+1 && iLoc>=2 && b>=3 && jBl+Nb>=iBl+Mb+1 && b>=iLoc+1 && tLoc>=2 && b>=tLoc+1 && Tb>=0 && Mb>=1 && iBl+Mb>=jBl+1}
+		|| {|jLoc==0 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb+1 && iLoc>=2 && tLoc>=1 && iBl+Mb>=jBl+Nb+1 && b>=tLoc+1 && jBl+Nb>=iBl+1 && Nb>=1 && tLoc>=iLoc+2 && b>=3 && Tb>=0 && b>=iLoc+1}
+		|| {|jLoc==0 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=iLoc+1 && b>=3 && jBl>=iBl+1 && iBl+Mb>=jBl+1 && iBl+Nb+Mb>=jBl+3 && b>=tLoc+1 && iBl+tLoc+Mb+b>=jBl+3 && iLoc>=tLoc+1 && tLoc+Nb+b>=iLoc+3 && Nb>=1 && Tb>=0 && iLoc>=2 && tLoc>=1}
+		|| {|jLoc==0 && tBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=1 && b>=iLoc+1 && Tb>=0 && jBl>=1 && iLoc>=tLoc+1 && Mb>=jBl+1 && b>=3 && Nb+Mb>=jBl+3 && b>=tLoc+1 && iLoc>=2}
+		|| {|jLoc==0 && tBl==0 && jBl==Mb-1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && iLoc>=2 && Nb>=2 && b>=3 && b>=iLoc+1 && b>=tLoc+1 && Tb>=0 && Mb>=2}
+		|| {|jLoc==0 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=2 && iLoc>=2 && b>=3 && Nb>=2 && b>=iLoc+1 && Tb>=0 && b>=tLoc+1}
+		|| {|jLoc==0 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && iLoc>=2 && b>=3 && Nb>=1 && tLoc>=iLoc+2 && tLoc>=2 && b>=tLoc+1 && Tb>=0 && Mb>=1 && b>=iLoc+1}
+		|| {|jLoc==0 && tBl==0 && jBl==Mb-1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Mb>=2 && iLoc>=2 && tLoc>=1 && Tb>=0 && tLoc>=iLoc+2 && b>=3 && b>=tLoc+1 && b>=iLoc+1}
+		|| {|jLoc==0 && tBl==iBl && jBl==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=0 && b>=tLoc+1 && b>=iLoc+1 && Mb>=1 && iLoc>=tLoc+1 && tLoc>=2 && Nb+Mb>=3 && Nb>=1 && Tb>=0 && iLoc>=2 && b>=3} :
+			(((((temp_bl[iBl,jBl-1,tBl,iLoc-1,b+jLoc-2,tLoc-1] + temp_bl[iBl,jBl-1,tBl,iLoc-2,b+jLoc-1,tLoc-1]) + temp_bl[iBl,jBl-1,tBl,iLoc-1,b+jLoc-1,tLoc-1]) + temp_bl[iBl,jBl-1,tBl,iLoc,b+jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc,tLoc-1]) / 5);
+	
+	{|jLoc==1 && tBl==0 && iBl==Nb && Tl==0 && Ml==0 && Nl==0 && iLoc>=2 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && jBl>=1 && Nb>=1 && tLoc>=iLoc+2 && Nb+Mb>=jBl+3 && tLoc>=1 && Tb>=0 && b>=iLoc+1}
+		|| {|jLoc==1 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && iBl>=1 && tLoc+b>=iLoc+2 && b>=tLoc+1 && tLoc>=1 && b>=iLoc+1 && b>=3 && tLoc+b>=3 && Tb>=0 && Mb>=2 && iLoc>=tLoc+1 && iLoc>=2}
+		|| {|jLoc==1 && tBl==iBl && jBl==iBl+1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=0 && iLoc>=tLoc+1 && b>=tLoc+1 && Tb>=0 && b>=iLoc+1 && tLoc>=3 && iLoc>=2 && b>=3}
+		|| {|jLoc==1 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && b>=3 && Nb+Mb>=iBl+3 && b>=tLoc+1 && Mb>=1 && iBl>=1 && tLoc>=3 && iLoc>=2 && b>=iLoc+1 && Tb>=0}
+		|| {|jLoc==1 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && iLoc>=2 && b>=3 && b>=tLoc+1 && Nb+Mb>=iBl+jBl+3 && Tb>=0 && jBl>=1 && iBl>=1 && Mb>=jBl+1 && b>=iLoc+1}
+		|| {|jLoc==1 && tBl==0 && jBl==Mb-1 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && tLoc>=1 && Mb>=2 && b>=tLoc+1 && iLoc>=tLoc+1 && b>=iLoc+1 && b>=3 && Tb>=0 && iLoc>=2}
+		|| {|jLoc==1 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=iLoc+1 && tBl+tLoc+Mb+b>=jBl+4 && tBl+Nb>=iBl+1 && tBl+tLoc+Nb+b>=iBl+iLoc+3 && b>=tLoc+1 && Tb>=0 && iLoc>=2 && tLoc>=1}
+		|| {|jLoc==1 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb+1 && iLoc>=2 && b>=3 && jBl+Nb>=iBl+Mb+1 && b>=iLoc+1 && tLoc>=3 && b>=tLoc+1 && Tb>=0 && Mb>=1 && iBl+Mb>=jBl+1}
+		|| {|jLoc==1 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb+1 && iLoc>=2 && tLoc>=1 && iBl+Mb>=jBl+Nb+1 && b>=tLoc+1 && jBl+Nb>=iBl+1 && Nb>=1 && tLoc>=iLoc+2 && b>=3 && Tb>=0 && b>=iLoc+1}
+		|| {|jLoc==1 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=iLoc+1 && b>=3 && jBl>=iBl+1 && iBl+Mb>=jBl+1 && iBl+Nb+Mb>=jBl+3 && b>=tLoc+1 && iBl+tLoc+Mb+b>=jBl+4 && iLoc>=tLoc+1 && tLoc+Nb+b>=iLoc+3 && Nb>=1 && Tb>=0 && iLoc>=2 && tLoc>=1}
+		|| {|jLoc==1 && tBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=1 && b>=iLoc+1 && Tb>=0 && jBl>=1 && iLoc>=tLoc+1 && Mb>=jBl+1 && b>=3 && Nb+Mb>=jBl+3 && b>=tLoc+1 && iLoc>=2}
+		|| {|jLoc==1 && tBl==0 && jBl==Mb-1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && iLoc>=2 && Nb>=2 && b>=3 && b>=iLoc+1 && b>=tLoc+1 && Tb>=0 && Mb>=2}
+		|| {|jLoc==1 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=3 && iLoc>=2 && b>=3 && Nb>=2 && b>=iLoc+1 && Tb>=0 && b>=tLoc+1}
+		|| {|jLoc==1 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && iLoc>=2 && b>=3 && Nb>=1 && tLoc>=iLoc+2 && tLoc>=3 && b>=tLoc+1 && Tb>=0 && Mb>=1 && b>=iLoc+1}
+		|| {|jLoc==1 && tBl==0 && jBl==Mb-1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Mb>=2 && iLoc>=2 && tLoc>=1 && Tb>=0 && tLoc>=iLoc+2 && b>=3 && b>=tLoc+1 && b>=iLoc+1}
+		|| {|jLoc==1 && tBl==iBl && jBl==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=0 && b>=tLoc+1 && b>=iLoc+1 && Mb>=1 && iLoc>=tLoc+1 && tLoc>=3 && Nb+Mb>=3 && Nb>=1 && Tb>=0 && iLoc>=2 && b>=3} :
+			(((((temp_bl[iBl,jBl-1,tBl,iLoc-1,b+jLoc-2,tLoc-1] + temp_bl[iBl,jBl,tBl,iLoc-2,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc,tLoc-1]) / 5);
+	
+	{|iLoc==1 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=1 && Mb>=1 && tLoc>=1 && b>=3 && b>=jLoc+1 && b>=tLoc+1 && tLoc+Mb+b>=jLoc+3 && iBl>=jBl+1 && jBl+Nb>=iBl+2 && Tb>=0 && jLoc>=tLoc+1 && jLoc>=2}
+		|| {|iLoc==1 && tBl==0 && iBl==Nb && Tl==0 && Ml==0 && Nl==0 && b>=3 && Mb>=jBl+1 && b>=jLoc+1 && b>=tLoc+1 && jBl>=1 && Nb>=1 && tLoc>=3 && Nb+Mb>=jBl+3 && jLoc>=2 && Tb>=0}
+		|| {|iLoc==1 && tBl==0 && jBl==0 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=1 && jLoc>=2 && jLoc>=tLoc+1 && Nb>=2 && b>=3 && b>=jLoc+1 && Tb>=0 && b>=tLoc+1}
+		|| {|iLoc==1 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && jLoc>=2 && Nb+Mb>=iBl+3 && b>=tLoc+1 && Mb>=1 && iBl>=1 && tLoc>=jLoc+2 && tLoc>=1 && b>=3 && Tb>=0 && b>=jLoc+1}
+		|| {|iLoc==1 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && b>=tLoc+1 && b>=3 && jLoc>=2 && Nb+Mb>=iBl+jBl+3 && Tb>=0 && jBl>=1 && iBl>=1 && Mb>=jBl+1 && b>=jLoc+1}
+		|| {|iLoc==1 && tBl+Nb==iBl && jBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && b>=tLoc+1 && b>=jLoc+1 && jLoc>=tLoc+1 && Nb>=1 && tLoc>=3 && Tb>=0 && Mb>=1 && Nb+Mb>=3 && b>=3 && jLoc>=2}
+		|| {|iLoc==1 && tBl==0 && jBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && b>=3 && b>=jLoc+1 && jLoc>=tLoc+1 && iBl>=1 && Mb>=1 && Tb>=0 && Nb+Mb>=iBl+3 && jLoc>=2 && b>=tLoc+1}
+		|| {|iLoc==1 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=jLoc+1 && tBl+tLoc+Mb+b>=jBl+jLoc+3 && jLoc>=2 && tBl+tLoc+Nb+b>=iBl+4 && b>=tLoc+1 && Tb>=0 && tBl+Nb>=iBl+1 && tLoc>=1}
+		|| {|iLoc==1 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb+1 && tLoc>=1 && jLoc>=2 && jBl+Nb>=iBl+Mb+1 && b>=3 && tLoc>=jLoc+2 && b>=tLoc+1 && Tb>=0 && Mb>=1 && iBl+Mb>=jBl+1 && b>=jLoc+1}
+		|| {|iLoc==1 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb+1 && b>=3 && jLoc>=2 && iBl+Mb>=jBl+Nb+1 && b>=tLoc+1 && jBl+Nb>=iBl+1 && Nb>=1 && tLoc>=3 && b>=jLoc+1 && Tb>=0}
+		|| {|iLoc==1 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && jLoc>=tLoc+1 && tLoc+Mb+b>=jLoc+3 && jLoc>=2 && b>=jLoc+1 && b>=3 && tLoc>=1 && Nb>=2 && b>=tLoc+1 && Tb>=0 && tLoc+b>=3 && Mb>=1}
+		|| {|iLoc==1 && tBl==0 && jBl==Mb-1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=2 && jLoc>=2 && b>=3 && b>=jLoc+1 && b>=tLoc+1 && Tb>=0 && Mb>=2}
+		|| {|iLoc==1 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=jLoc+2 && tLoc>=1 && jLoc>=2 && Nb>=2 && b>=3 && Tb>=0 && b>=tLoc+1 && b>=jLoc+1}
+		|| {|iLoc==1 && tBl==iBl-1 && jBl==iBl-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && b>=tLoc+1 && Tb>=0 && tLoc>=3 && jLoc>=tLoc+1 && b>=jLoc+1 && b>=3 && jLoc>=2}
+		|| {|iLoc==1 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && b>=jLoc+1 && jLoc>=2 && Nb>=1 && tLoc>=3 && tLoc>=jLoc+2 && b>=tLoc+1 && Tb>=0 && Mb>=1 && b>=3}
+		|| {|iLoc==1 && tBl==0 && jBl==Mb-1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Mb>=2 && b>=3 && jLoc>=2 && Tb>=0 && tLoc>=3 && b>=jLoc+1 && b>=tLoc+1} :
+			(((((temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-2,tLoc-1] + temp_bl[iBl-1,jBl,tBl,b+iLoc-2,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc,tLoc-1]) / 5);
+	
+	{|tBl==0 && jBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && tLoc>=1 && Tb>=0 && jLoc>=tLoc+1 && iLoc>=tLoc+1 && b>=iLoc+1 && b>=jLoc+1 && iLoc>=2 && jLoc>=2 && b>=3 && b>=tLoc+1}
+		|| {|tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=1 && Mb>=1 && tLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && b>=3 && tLoc+Mb+b>=jLoc+3 && iBl>=jBl+1 && jBl+Nb>=iBl+2 && Tb>=0 && jLoc>=tLoc+1 && iLoc>=2 && b>=tLoc+1 && jLoc>=2}
+		|| {|tBl==0 && iBl==Nb && Tl==0 && Ml==0 && Nl==0 && iLoc>=2 && Mb>=jBl+1 && b>=jLoc+1 && b>=tLoc+1 && jBl>=1 && Nb>=1 && tLoc>=iLoc+2 && Nb+Mb>=jBl+3 && jLoc>=2 && Tb>=0 && b>=3 && b>=iLoc+1 && tLoc>=1}
+		|| {|tBl==0 && jBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && jLoc>=tLoc+1 && Nb>=1 && Mb>=1 && Tb>=0 && iLoc>=tLoc+1 && Nb+Mb>=3 && iLoc>=2 && jLoc>=2 && b>=3 && b>=tLoc+1}
+		|| {|tBl==0 && jBl==0 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=1 && iLoc>=2 && jLoc>=tLoc+1 && Nb>=2 && b>=iLoc+1 && b>=jLoc+1 && Tb>=0 && b>=3 && jLoc>=2 && b>=tLoc+1}
+		|| {|tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && iBl>=1 && tLoc+b>=iLoc+2 && jLoc>=2 && tLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && tLoc+b>=jLoc+2 && Tb>=0 && Mb>=2 && iLoc>=tLoc+1 && iLoc>=2 && b>=3 && b>=tLoc+1}
+		|| {|tBl==iBl && jBl==iBl+1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=0 && iLoc>=tLoc+1 && jLoc>=2 && Tb>=0 && b>=iLoc+1 && tLoc>=jLoc+2 && iLoc>=2 && b>=3 && tLoc>=1 && b>=tLoc+1 && b>=jLoc+1}
+		|| {|tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && jLoc>=2 && Nb+Mb>=iBl+3 && b>=tLoc+1 && Mb>=1 && iBl>=1 && tLoc>=jLoc+2 && iLoc>=2 && b>=iLoc+1 && Tb>=0 && b>=3 && b>=jLoc+1 && tLoc>=1}
+		|| {|tBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && iLoc>=2 && b>=3 && jLoc>=2 && Nb+Mb>=iBl+jBl+3 && Tb>=0 && jBl>=1 && iBl>=1 && Mb>=jBl+1 && b>=iLoc+1 && b>=jLoc+1 && b>=tLoc+1}
+		|| {|tBl+Nb==iBl && jBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && iLoc>=2 && b>=jLoc+1 && jLoc>=tLoc+1 && Nb>=1 && tLoc>=iLoc+2 && Tb>=0 && Mb>=1 && Nb+Mb>=3 && b>=3 && jLoc>=2 && tLoc>=1 && b>=iLoc+1 && b>=tLoc+1}
+		|| {|tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && iLoc>=tLoc+1 && tLoc+b>=iLoc+2 && tLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && tLoc+b>=jLoc+2 && Tb>=0 && jLoc>=tLoc+1 && iLoc>=2 && jLoc>=2 && b>=3 && b>=tLoc+1}
+		|| {|tBl==0 && jBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && b>=iLoc+1 && b>=jLoc+1 && jLoc>=tLoc+1 && iBl>=1 && Mb>=1 && Tb>=0 && Nb+Mb>=iBl+3 && iLoc>=2 && b>=3 && jLoc>=2 && b>=tLoc+1}
+		|| {|tBl==0 && jBl==Mb-1 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && tLoc>=1 && Mb>=2 && jLoc>=2 && iLoc>=tLoc+1 && b>=iLoc+1 && b>=jLoc+1 && Tb>=0 && iLoc>=2 && b>=3 && b>=tLoc+1}
+		|| {|Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=iLoc+1 && tBl+tLoc+Mb+b>=jBl+jLoc+3 && jLoc>=2 && tBl+tLoc+Nb+b>=iBl+iLoc+3 && b>=tLoc+1 && Tb>=0 && iLoc>=2 && b>=jLoc+1 && tBl+Nb>=iBl+1 && tLoc>=1}
+		|| {|tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb+1 && iLoc>=2 && jLoc>=2 && jBl+Nb>=iBl+Mb+1 && b>=iLoc+1 && tLoc>=jLoc+2 && b>=tLoc+1 && Tb>=0 && Mb>=1 && iBl+Mb>=jBl+1 && b>=3 && b>=jLoc+1 && tLoc>=1}
+		|| {|tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=iLoc+1 && Tb>=0 && b>=3 && Mb>=1 && tLoc+Mb+b>=jLoc+3 && b>=jLoc+1 && iLoc>=tLoc+1 && tLoc+Nb+b>=iLoc+3 && Nb>=1 && tLoc>=1 && Nb+Mb>=3 && jLoc>=tLoc+1 && iLoc>=2 && jLoc>=2 && b>=tLoc+1}
+		|| {|tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb+1 && iLoc>=2 && jLoc>=2 && iBl+Mb>=jBl+Nb+1 && b>=tLoc+1 && jBl+Nb>=iBl+1 && Nb>=1 && tLoc>=iLoc+2 && b>=jLoc+1 && Tb>=0 && b>=3 && b>=iLoc+1 && tLoc>=1}
+		|| {|tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && jLoc>=tLoc+1 && tLoc+Mb+b>=jLoc+3 && iLoc>=2 && b>=jLoc+1 && b>=3 && tLoc>=1 && Nb>=2 && b>=iLoc+1 && Tb>=0 && tLoc+b>=iLoc+2 && Mb>=1 && b>=tLoc+1 && jLoc>=2}
+		|| {|tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=iLoc+1 && b>=3 && jBl>=iBl+1 && iBl+Mb>=jBl+1 && iBl+Nb+Mb>=jBl+3 && b>=jLoc+1 && iBl+tLoc+Mb+b>=jBl+jLoc+3 && iLoc>=tLoc+1 && tLoc+Nb+b>=iLoc+3 && Nb>=1 && Tb>=0 && jLoc>=2 && tLoc>=1 && iLoc>=2 && b>=tLoc+1}
+		|| {|tBl==0 && iBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=1 && b>=iLoc+1 && Tb>=0 && jBl>=1 && iLoc>=tLoc+1 && Mb>=jBl+1 && b>=jLoc+1 && Nb+Mb>=jBl+3 && jLoc>=2 && iLoc>=2 && b>=3 && b>=tLoc+1}
+		|| {|tBl==0 && jBl==Mb-1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && iLoc>=2 && jLoc>=2 && b>=3 && b>=iLoc+1 && b>=jLoc+1 && b>=tLoc+1 && Mb>=2 && Nb>=2 && Tb>=0}
+		|| {|tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=jLoc+2 && iLoc>=2 && jLoc>=2 && Nb>=2 && b>=iLoc+1 && Tb>=0 && b>=tLoc+1 && b>=3 && b>=jLoc+1 && tLoc>=1}
+		|| {|tBl==iBl-1 && jBl==iBl-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && iLoc>=2 && Tb>=0 && tLoc>=iLoc+2 && jLoc>=tLoc+1 && b>=jLoc+1 && b>=3 && jLoc>=2 && tLoc>=1 && b>=iLoc+1 && b>=tLoc+1}
+		|| {|tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && iLoc>=2 && jLoc>=2 && Nb>=1 && tLoc>=iLoc+2 && tLoc>=jLoc+2 && b>=tLoc+1 && Tb>=0 && Mb>=1 && b>=3 && b>=jLoc+1 && tLoc>=1 && b>=iLoc+1}
+		|| {|tBl==0 && jBl==Mb-1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Mb>=2 && iLoc>=2 && jLoc>=2 && Tb>=0 && tLoc>=iLoc+2 && b>=jLoc+1 && b>=tLoc+1 && b>=3 && b>=iLoc+1 && tLoc>=1}
+		|| {|tBl==iBl && jBl==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=0 && jLoc>=2 && b>=iLoc+1 && Mb>=1 && iLoc>=tLoc+1 && tLoc>=jLoc+2 && Nb+Mb>=3 && Nb>=1 && Tb>=0 && iLoc>=2 && b>=3 && tLoc>=1 && b>=tLoc+1 && b>=jLoc+1} :
+			(((((temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-2,tLoc-1] + temp_bl[iBl,jBl,tBl,iLoc-2,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc-1,jLoc,tLoc-1]) / 5);
+	
+	{|tLoc==0 && iLoc==1 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=1 && Mb>=1 && Tb>=0 && b>=3 && b>=jLoc+1 && jLoc>=2 && Mb+b>=jLoc+3 && iBl>=jBl+1 && jBl+Nb>=iBl+2}
+		|| {|tLoc==0 && iLoc==1 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && iBl>=1 && b>=3 && jLoc>=2 && Tb>=0 && b>=jLoc+2 && Mb>=2}
+		|| {|tLoc==0 && iLoc==1 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && Tb>=0 && b>=3 && b>=jLoc+2 && jLoc>=2}
+		|| {|tLoc==0 && iLoc==1 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=jLoc+1 && tBl+Mb+b>=jBl+jLoc+3 && jLoc>=2 && tBl+Nb+b>=iBl+4 && tBl+Nb>=iBl+1 && Tb>=0}
+		|| {|tLoc==0 && iLoc==1 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=3 && Tb>=0 && b>=jLoc+1 && Mb>=1 && Mb+b>=jLoc+3 && jLoc>=2 && Nb+Mb>=3 && Nb+b>=4 && Nb>=1}
+		|| {|tLoc==0 && iLoc==1 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && jLoc>=2 && Mb+b>=jLoc+3 && Tb>=0 && b>=jLoc+1 && b>=3 && Mb>=1 && Nb>=2}
+		|| {|tLoc==0 && iLoc==1 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=3 && b>=jLoc+1 && jBl>=iBl+1 && iBl+Mb>=jBl+1 && iBl+Nb+Mb>=jBl+3 && jLoc>=2 && iBl+Mb+b>=jBl+jLoc+3 && Tb>=0 && Nb+b>=4 && Nb>=1} :
+			(((((temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc-2,b+tLoc-1] + temp_bl[iBl-1,jBl,tBl-1,b+iLoc-2,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc,b+tLoc-1]) / 5);
+	
+	{|tLoc==0 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=1 && Mb>=1 && iLoc>=2 && b>=iLoc+1 && b>=jLoc+1 && b>=3 && Mb+b>=jLoc+3 && iBl>=jBl+1 && jBl+Nb>=iBl+2 && Tb>=0 && jLoc>=2}
+		|| {|tLoc==0 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && iBl>=1 && b>=iLoc+2 && jLoc>=2 && Mb>=2 && b>=jLoc+2 && b>=3 && iLoc>=2 && Tb>=0}
+		|| {|tLoc==0 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && iLoc>=2 && b>=iLoc+2 && Tb>=0 && b>=jLoc+2 && b>=3 && jLoc>=2}
+		|| {|tLoc==0 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=iLoc+1 && tBl+Mb+b>=jBl+jLoc+3 && jLoc>=2 && tBl+Nb+b>=iBl+iLoc+3 && b>=jLoc+1 && Tb>=0 && iLoc>=2 && tBl+Nb>=iBl+1}
+		|| {|tLoc==0 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=iLoc+1 && Tb>=0 && b>=3 && Mb>=1 && Mb+b>=jLoc+3 && b>=jLoc+1 && iLoc>=2 && Nb+b>=iLoc+3 && Nb>=1 && jLoc>=2 && Nb+Mb>=3}
+		|| {|tLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && jLoc>=2 && Mb+b>=jLoc+3 && iLoc>=2 && b>=jLoc+1 && b>=3 && Mb>=1 && Nb>=2 && b>=iLoc+2 && Tb>=0}
+		|| {|tLoc==0 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=iLoc+1 && b>=3 && jBl>=iBl+1 && iBl+Mb>=jBl+1 && iBl+Nb+Mb>=jBl+3 && b>=jLoc+1 && iBl+Mb+b>=jBl+jLoc+3 && iLoc>=2 && Nb+b>=iLoc+3 && Nb>=1 && Tb>=0 && jLoc>=2} :
+			(((((temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc-2,b+tLoc-1] + temp_bl[iBl,jBl,tBl-1,iLoc-2,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc,b+tLoc-1]) / 5);
+	
+	{|jLoc==1 && iLoc==0 && tBl==0 && iBl==Nb && Tl==0 && Ml==0 && Nl==0 && Tb>=0 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && jBl>=1 && Nb>=1 && tLoc>=2 && Nb+Mb>=jBl+3}
+		|| {|jLoc==1 && iLoc==0 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && Tb>=0 && Nb+Mb>=iBl+3 && b>=tLoc+1 && Mb>=1 && iBl>=1 && tLoc>=3 && b>=3}
+		|| {|jLoc==1 && iLoc==0 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && Nb+Mb>=iBl+jBl+3 && Tb>=0 && jBl>=1 && iBl>=1}
+		|| {|jLoc==1 && iLoc==0 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && tLoc>=1 && tBl+tLoc+Mb+b>=jBl+4 && tBl+Nb>=iBl+1 && tBl+tLoc+Nb+b>=iBl+3 && b>=tLoc+1 && Tb>=0}
+		|| {|jLoc==1 && iLoc==0 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb+1 && Mb>=1 && tLoc>=3 && jBl+Nb>=iBl+Mb+1 && b>=3 && b>=tLoc+1 && iBl+Mb>=jBl+1 && Tb>=0}
+		|| {|jLoc==1 && iLoc==0 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb+1 && Tb>=0 && tLoc>=2 && iBl+Mb>=jBl+Nb+1 && b>=tLoc+1 && jBl+Nb>=iBl+1 && Nb>=1 && b>=3}
+		|| {|jLoc==1 && iLoc==0 && tBl==0 && jBl==Mb-1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Mb>=2 && b>=tLoc+1 && b>=3 && Tb>=0 && Nb>=2}
+		|| {|jLoc==1 && iLoc==0 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=3 && Tb>=0 && b>=tLoc+1 && Nb>=2 && b>=3}
+		|| {|jLoc==1 && iLoc==0 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && Tb>=0 && tLoc>=3 && Nb>=1 && b>=tLoc+1 && b>=3 && Mb>=1}
+		|| {|jLoc==1 && iLoc==0 && tBl==0 && jBl==Mb-1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Mb>=2 && b>=3 && tLoc>=2 && Tb>=0 && b>=tLoc+1} :
+			(((((temp_bl[iBl-1,jBl-1,tBl,b+iLoc-1,b+jLoc-2,tLoc-1] + temp_bl[iBl-1,jBl,tBl,b+iLoc-2,jLoc-1,tLoc-1]) + temp_bl[iBl-1,jBl,tBl,b+iLoc-1,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc,jLoc-1,tLoc-1]) + temp_bl[iBl-1,jBl,tBl,b+iLoc-1,jLoc,tLoc-1]) / 5);
+	
+	{|jLoc==0 && iLoc==0 && tBl==0 && iBl==Nb && Tl==0 && Ml==0 && Nl==0 && Tb>=0 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && jBl>=1 && Nb>=1 && tLoc>=2 && Nb+Mb>=jBl+3}
+		|| {|jLoc==0 && iLoc==0 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && Tb>=0 && Nb+Mb>=iBl+3 && b>=tLoc+1 && Mb>=1 && iBl>=1 && tLoc>=2 && b>=3}
+		|| {|jLoc==0 && iLoc==0 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && Mb>=jBl+1 && b>=3 && b>=tLoc+1 && Nb+Mb>=iBl+jBl+3 && Tb>=0 && jBl>=1 && iBl>=1}
+		|| {|jLoc==0 && iLoc==0 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && tLoc>=1 && tBl+tLoc+Mb+b>=jBl+3 && tBl+Nb>=iBl+1 && tBl+tLoc+Nb+b>=iBl+3 && b>=tLoc+1 && Tb>=0}
+		|| {|jLoc==0 && iLoc==0 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb+1 && Mb>=1 && tLoc>=2 && jBl+Nb>=iBl+Mb+1 && b>=3 && b>=tLoc+1 && iBl+Mb>=jBl+1 && Tb>=0}
+		|| {|jLoc==0 && iLoc==0 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb+1 && Tb>=0 && tLoc>=2 && iBl+Mb>=jBl+Nb+1 && b>=tLoc+1 && jBl+Nb>=iBl+1 && Nb>=1 && b>=3}
+		|| {|jLoc==0 && iLoc==0 && tBl==0 && jBl==Mb-1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Mb>=2 && b>=tLoc+1 && b>=3 && Tb>=0 && Nb>=2}
+		|| {|jLoc==0 && iLoc==0 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=2 && Tb>=0 && b>=tLoc+1 && Nb>=2 && b>=3}
+		|| {|jLoc==0 && iLoc==0 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && Tb>=0 && tLoc>=2 && Nb>=1 && b>=tLoc+1 && b>=3 && Mb>=1}
+		|| {|jLoc==0 && iLoc==0 && tBl==0 && jBl==Mb-1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Mb>=2 && b>=3 && tLoc>=2 && Tb>=0 && b>=tLoc+1} :
+			(((((temp_bl[iBl-1,jBl-1,tBl,b+iLoc-1,b+jLoc-2,tLoc-1] + temp_bl[iBl-1,jBl-1,tBl,b+iLoc-2,b+jLoc-1,tLoc-1]) + temp_bl[iBl-1,jBl-1,tBl,b+iLoc-1,b+jLoc-1,tLoc-1]) + temp_bl[iBl,jBl-1,tBl,iLoc,b+jLoc-1,tLoc-1]) + temp_bl[iBl-1,jBl,tBl,b+iLoc-1,jLoc,tLoc-1]) / 5);
+	
+	{|tLoc==0 && jLoc==1 && iLoc==0 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=1 && Mb>=1 && iBl>=jBl+1 && b>=3 && Tb>=0 && jBl+Nb>=iBl+2 && Mb+b>=4}
+		|| {|tLoc==0 && jLoc==1 && iLoc==0 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && Tb>=0 && tBl+Mb+b>=jBl+4 && tBl+Nb>=iBl+1 && tBl+Nb+b>=iBl+3}
+		|| {|tLoc==0 && jLoc==1 && iLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && Nb>=2 && Mb+b>=4 && b>=3 && Mb>=1 && Tb>=0} :
+			(((((temp_bl[iBl-1,jBl-1,tBl-1,b+iLoc-1,b+jLoc-2,b+tLoc-1] + temp_bl[iBl-1,jBl,tBl-1,b+iLoc-2,jLoc-1,b+tLoc-1]) + temp_bl[iBl-1,jBl,tBl-1,b+iLoc-1,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc,jLoc-1,b+tLoc-1]) + temp_bl[iBl-1,jBl,tBl-1,b+iLoc-1,jLoc,b+tLoc-1]) / 5);
+	
+	{|tLoc==0 && jLoc==0 && iLoc==0 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && Tb>=0 && tBl+Mb+b>=jBl+3 && tBl+Nb>=iBl+1 && tBl+Nb+b>=iBl+3} :
+		(((((temp_bl[iBl-1,jBl-1,tBl-1,b+iLoc-1,b+jLoc-2,b+tLoc-1] + temp_bl[iBl-1,jBl-1,tBl-1,b+iLoc-2,b+jLoc-1,b+tLoc-1]) + temp_bl[iBl-1,jBl-1,tBl-1,b+iLoc-1,b+jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl-1,tBl-1,iLoc,b+jLoc-1,b+tLoc-1]) + temp_bl[iBl-1,jBl,tBl-1,b+iLoc-1,jLoc,b+tLoc-1]) / 5);
+	
+	{|tLoc==0 && iLoc==0 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=1 && Mb>=1 && Tb>=0 && b>=3 && b>=jLoc+1 && jLoc>=2 && Mb+b>=jLoc+3 && iBl>=jBl+1 && jBl+Nb>=iBl+2}
+		|| {|tLoc==0 && iLoc==0 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=jLoc+1 && tBl+Mb+b>=jBl+jLoc+3 && jLoc>=2 && tBl+Nb+b>=iBl+3 && tBl+Nb>=iBl+1 && Tb>=0}
+		|| {|tLoc==0 && iLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && jLoc>=2 && Mb+b>=jLoc+3 && Tb>=0 && b>=jLoc+1 && b>=3 && Mb>=1 && Nb>=2} :
+			(((((temp_bl[iBl-1,jBl,tBl-1,b+iLoc-1,jLoc-2,b+tLoc-1] + temp_bl[iBl-1,jBl,tBl-1,b+iLoc-2,jLoc-1,b+tLoc-1]) + temp_bl[iBl-1,jBl,tBl-1,b+iLoc-1,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc,jLoc-1,b+tLoc-1]) + temp_bl[iBl-1,jBl,tBl-1,b+iLoc-1,jLoc,b+tLoc-1]) / 5);
+	
+	{|tLoc==0 && jLoc==0 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && iBl>=1 && b>=iLoc+2 && Tb>=0 && b>=3 && iLoc>=2 && Mb>=2}
+		|| {|tLoc==0 && jLoc==0 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=iLoc+1 && tBl+Mb+b>=jBl+3 && tBl+Nb>=iBl+1 && tBl+Nb+b>=iBl+iLoc+3 && iLoc>=2 && Tb>=0}
+		|| {|tLoc==0 && jLoc==0 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=iLoc+1 && b>=3 && jBl>=iBl+1 && iBl+Mb>=jBl+1 && iBl+Nb+Mb>=jBl+3 && iLoc>=2 && iBl+Mb+b>=jBl+3 && Tb>=0 && Nb+b>=iLoc+3 && Nb>=1} :
+			(((((temp_bl[iBl,jBl-1,tBl-1,iLoc-1,b+jLoc-2,b+tLoc-1] + temp_bl[iBl,jBl-1,tBl-1,iLoc-2,b+jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl-1,tBl-1,iLoc-1,b+jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl-1,tBl-1,iLoc,b+jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc,b+tLoc-1]) / 5);
+	
+	{|tLoc==0 && jLoc==1 && iLoc==1 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=1 && Mb>=1 && iBl>=jBl+1 && b>=3 && Tb>=0 && jBl+Nb>=iBl+2 && Mb+b>=4}
+		|| {|tLoc==0 && jLoc==1 && iLoc==1 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && iBl>=1 && b>=3 && Tb>=0 && Mb>=2}
+		|| {|tLoc==0 && jLoc==1 && iLoc==1 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && Tb>=0 && b>=3}
+		|| {|tLoc==0 && jLoc==1 && iLoc==1 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && Tb>=0 && tBl+Mb+b>=jBl+4 && tBl+Nb>=iBl+1 && tBl+Nb+b>=iBl+4}
+		|| {|tLoc==0 && jLoc==1 && iLoc==1 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=3 && Tb>=0 && Nb+b>=4 && Mb>=1 && Mb+b>=4 && Nb+Mb>=3 && Nb>=1}
+		|| {|tLoc==0 && jLoc==1 && iLoc==1 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && Nb>=2 && Mb+b>=4 && b>=3 && Mb>=1 && Tb>=0}
+		|| {|tLoc==0 && jLoc==1 && iLoc==1 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=3 && Nb+b>=4 && jBl>=iBl+1 && iBl+Mb>=jBl+1 && iBl+Nb+Mb>=jBl+3 && Tb>=0 && iBl+Mb+b>=jBl+4 && Nb>=1} :
+			(((((temp_bl[iBl,jBl-1,tBl-1,iLoc-1,b+jLoc-2,b+tLoc-1] + temp_bl[iBl-1,jBl,tBl-1,b+iLoc-2,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc,b+tLoc-1]) / 5);
+	
+	{|tLoc==0 && jLoc==1 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=1 && Mb>=1 && Tb>=0 && b>=iLoc+1 && b>=3 && iLoc>=2 && Mb+b>=4 && iBl>=jBl+1 && jBl+Nb>=iBl+2}
+		|| {|tLoc==0 && jLoc==1 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && iBl>=1 && b>=iLoc+2 && Tb>=0 && b>=3 && iLoc>=2 && Mb>=2}
+		|| {|tLoc==0 && jLoc==1 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && iLoc>=2 && b>=iLoc+2 && Tb>=0 && b>=3}
+		|| {|tLoc==0 && jLoc==1 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=iLoc+1 && tBl+Mb+b>=jBl+4 && tBl+Nb>=iBl+1 && tBl+Nb+b>=iBl+iLoc+3 && iLoc>=2 && Tb>=0}
+		|| {|tLoc==0 && jLoc==1 && tBl==iBl && jBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=iLoc+1 && Tb>=0 && b>=3 && Mb>=1 && Mb+b>=4 && iLoc>=2 && Nb+Mb>=3 && Nb+b>=iLoc+3 && Nb>=1}
+		|| {|tLoc==0 && jLoc==1 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && Tb>=0 && Mb+b>=4 && iLoc>=2 && b>=3 && b>=iLoc+2 && Mb>=1 && Nb>=2}
+		|| {|tLoc==0 && jLoc==1 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=iLoc+1 && b>=3 && jBl>=iBl+1 && iBl+Mb>=jBl+1 && iBl+Nb+Mb>=jBl+3 && iLoc>=2 && iBl+Mb+b>=jBl+4 && Tb>=0 && Nb+b>=iLoc+3 && Nb>=1} :
+			(((((temp_bl[iBl,jBl-1,tBl-1,iLoc-1,b+jLoc-2,b+tLoc-1] + temp_bl[iBl,jBl,tBl-1,iLoc-2,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc,jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc,b+tLoc-1]) / 5);
+	
+	{|tLoc==0 && jLoc==0 && iLoc==1 && tBl==iBl && jBl==iBl+Mb-1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && iBl>=1 && b>=3 && Tb>=0 && Mb>=2}
+		|| {|tLoc==0 && jLoc==0 && iLoc==1 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && Tb>=0 && tBl+Mb+b>=jBl+3 && tBl+Nb>=iBl+1 && tBl+Nb+b>=iBl+4}
+		|| {|tLoc==0 && jLoc==0 && iLoc==1 && tBl==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=1 && b>=3 && Nb+b>=4 && jBl>=iBl+1 && iBl+Mb>=jBl+1 && iBl+Nb+Mb>=jBl+3 && Tb>=0 && iBl+Mb+b>=jBl+3 && Nb>=1} :
+			(((((temp_bl[iBl,jBl-1,tBl-1,iLoc-1,b+jLoc-2,b+tLoc-1] + temp_bl[iBl-1,jBl-1,tBl-1,b+iLoc-2,b+jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl-1,tBl-1,iLoc-1,b+jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl-1,tBl-1,iLoc,b+jLoc-1,b+tLoc-1]) + temp_bl[iBl,jBl,tBl-1,iLoc-1,jLoc,b+tLoc-1]) / 5);
+	
+	{|iLoc==0 && tBl==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=1 && Mb>=1 && tLoc>=1 && b>=3 && b>=jLoc+1 && b>=tLoc+1 && tLoc+Mb+b>=jLoc+3 && iBl>=jBl+1 && jBl+Nb>=iBl+2 && Tb>=0 && jLoc>=tLoc+1 && jLoc>=2}
+		|| {|iLoc==0 && tBl==0 && iBl==Nb && Tl==0 && Ml==0 && Nl==0 && b>=3 && Mb>=jBl+1 && b>=jLoc+1 && b>=tLoc+1 && jBl>=1 && Nb>=1 && tLoc>=2 && Nb+Mb>=jBl+3 && jLoc>=2 && Tb>=0}
+		|| {|iLoc==0 && tBl==0 && jBl==0 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=1 && jLoc>=2 && jLoc>=tLoc+1 && Nb>=2 && b>=3 && b>=jLoc+1 && Tb>=0 && b>=tLoc+1}
+		|| {|iLoc==0 && tBl==0 && jBl==Mb && Tl==0 && Ml==0 && Nl==0 && Nb>=iBl+1 && jLoc>=2 && Nb+Mb>=iBl+3 && b>=tLoc+1 && Mb>=1 && iBl>=1 && tLoc>=jLoc+2 && tLoc>=1 && b>=3 && Tb>=0 && b>=jLoc+1}
+		|| {|iLoc==0 && tBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && b>=tLoc+1 && b>=3 && jLoc>=2 && Nb+Mb>=iBl+jBl+3 && Tb>=0 && jBl>=1 && iBl>=1 && Mb>=jBl+1 && b>=jLoc+1}
+		|| {|iLoc==0 && tBl+Nb==iBl && jBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && b>=tLoc+1 && b>=jLoc+1 && jLoc>=tLoc+1 && Nb>=1 && tLoc>=2 && Tb>=0 && Mb>=1 && Nb+Mb>=3 && b>=3 && jLoc>=2}
+		|| {|iLoc==0 && tBl==0 && jBl==0 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=iBl+1 && b>=3 && b>=jLoc+1 && jLoc>=tLoc+1 && iBl>=1 && Mb>=1 && Tb>=0 && Nb+Mb>=iBl+3 && jLoc>=2 && b>=tLoc+1}
+		|| {|iLoc==0 && Tl==0 && Ml==0 && Nl==0 && tBl>=1 && b>=3 && jBl>=tBl+1 && iBl>=tBl+1 && tBl+Mb>=jBl+1 && b>=jLoc+1 && tBl+tLoc+Mb+b>=jBl+jLoc+3 && jLoc>=2 && tBl+tLoc+Nb+b>=iBl+3 && b>=tLoc+1 && Tb>=0 && tBl+Nb>=iBl+1 && tLoc>=1}
+		|| {|iLoc==0 && tBl+Mb==jBl && Tl==0 && Ml==0 && Nl==0 && jBl>=Mb+1 && tLoc>=1 && jLoc>=2 && jBl+Nb>=iBl+Mb+1 && b>=3 && tLoc>=jLoc+2 && b>=tLoc+1 && Tb>=0 && Mb>=1 && iBl+Mb>=jBl+1 && b>=jLoc+1}
+		|| {|iLoc==0 && tBl+Nb==iBl && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb+1 && b>=3 && jLoc>=2 && iBl+Mb>=jBl+Nb+1 && b>=tLoc+1 && jBl+Nb>=iBl+1 && Nb>=1 && tLoc>=2 && b>=jLoc+1 && Tb>=0}
+		|| {|iLoc==0 && tBl+Nb==iBl+1 && jBl+Nb==iBl+1 && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && jLoc>=tLoc+1 && tLoc+Mb+b>=jLoc+3 && jLoc>=2 && b>=jLoc+1 && b>=3 && tLoc>=1 && Nb>=2 && b>=tLoc+1 && Tb>=0 && tLoc+b>=2 && Mb>=1}
+		|| {|iLoc==0 && tBl==0 && jBl==Mb-1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && tLoc>=1 && Nb>=2 && jLoc>=2 && b>=3 && b>=jLoc+1 && b>=tLoc+1 && Tb>=0 && Mb>=2}
+		|| {|iLoc==0 && tBl==0 && jBl==1 && iBl==Nb-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && tLoc>=jLoc+2 && tLoc>=1 && jLoc>=2 && Nb>=2 && b>=3 && Tb>=0 && b>=tLoc+1 && b>=jLoc+1}
+		|| {|iLoc==0 && tBl==iBl-1 && jBl==iBl-1 && Tl==0 && Ml==0 && Nl==0 && Mb==1 && Nb==1 && iBl>=1 && b>=tLoc+1 && Tb>=0 && tLoc>=2 && jLoc>=tLoc+1 && b>=jLoc+1 && b>=3 && jLoc>=2}
+		|| {|iLoc==0 && tBl+Nb==iBl && jBl+Nb==iBl+Mb && Tl==0 && Ml==0 && Nl==0 && iBl>=Nb && b>=jLoc+1 && jLoc>=2 && Nb>=1 && tLoc>=2 && tLoc>=jLoc+2 && b>=tLoc+1 && Tb>=0 && Mb>=1 && b>=3}
+		|| {|iLoc==0 && tBl==0 && jBl==Mb-1 && iBl==1 && Tl==0 && Ml==0 && Nl==0 && Nb==1 && Mb>=2 && b>=3 && jLoc>=2 && Tb>=0 && tLoc>=2 && b>=jLoc+1 && b>=tLoc+1} :
+			(((((temp_bl[iBl-1,jBl,tBl,b+iLoc-1,jLoc-2,tLoc-1] + temp_bl[iBl-1,jBl,tBl,b+iLoc-2,jLoc-1,tLoc-1]) + temp_bl[iBl-1,jBl,tBl,b+iLoc-1,jLoc-1,tLoc-1]) + temp_bl[iBl,jBl,tBl,iLoc,jLoc-1,tLoc-1]) + temp_bl[iBl-1,jBl,tBl,b+iLoc-1,jLoc,tLoc-1]) / 5);
+	
+esac;
+B_bl[iBl,jBl,iLoc,jLoc] = temp_bl[Tb+iBl,Tb+jBl,Tb,Tl+iLoc,Tl+jLoc,Tl];
+.

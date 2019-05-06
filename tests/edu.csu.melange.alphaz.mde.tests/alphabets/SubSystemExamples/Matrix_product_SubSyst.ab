@@ -1,0 +1,25 @@
+affine mat_product {N,M,K | N>0 && M>0 && K>0}	// Product between a N*K matrix and a K*M matrix
+input
+	double A {i,k | 0<=i<N && 0<=k<K};
+	double B {k,j | 0<=k<K && 0<=j<M};
+output
+	double C {i,j | 0<=i<N && 0<=j<M};
+let
+	use {iP,jP|0<=iP<N && 0<=jP<M} dot_product[K] ((pi,pj,k->pi,k)@A,(pi,pj,k->k,pj)@B) returns (C);
+.
+
+affine dot_product {N| N>0}	// Product between 2 vector of size N
+input
+	double vect1 {i | 0<=i<N };
+	double vect2 {i | 0<=i<N };
+output
+	double Res;
+local
+	double temp {i | 0<=i<N};
+let
+	temp[i] = case
+		{i|i==0}   : vect1[0] * vect2[0];
+		{i |0<i<N} : temp[i-1] + vect1[i]*vect2[i]; 
+	esac;
+	Res[] = temp[N-1];
+.

@@ -1,0 +1,14 @@
+affine simple_mem_map {N | N > 0 }
+
+input
+	int a {i, j| 0 <= (i, j) < N };
+output
+	int B {i, j| 0 <= (i, j) < N };
+local
+    int A {i, j| 0 <= (i, j) < N };
+let 
+	A[i, j] = a[i, j];
+	
+	B[i, j] = A[i, j];
+.
+	    

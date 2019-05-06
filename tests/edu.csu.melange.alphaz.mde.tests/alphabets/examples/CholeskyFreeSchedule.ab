@@ -1,0 +1,56 @@
+//float sqrt(float);
+affine CholeskyFreeSchedule {N| N>1}
+input
+//    float A {i,j | 0<=j<=i<N};
+output
+    int L {i,j | 0<=j<=i<N};
+    int AccL {i,j,k | 0<j<=i<N && 0<=k<j};
+let
+      AccL[i,j,k] = case
+              {|k==0} : 1+ ((L[i,k] max L[j,k]));
+              {|k > 0}: 1 + (AccL[i,j,k-1] max L[i,k] max L[j,k]);
+      esac;
+      L[i,j] = case
+              {|i==j==0}: 0;//sqrt(A);
+              {|i==j>0} : 1+AccL[i,j,j-1]; //sqrt(A - AccL[i,j,j-1]);
+              {|i>j==0} : 1+L[j,j]; //A / L[j,j];
+              {|i>j>0}  : 1+(AccL[i,j,j-1] max L[j,j]);  // (A - AccL[i,j,j-1]) / L[j,j];
+      esac;
+.
+affine CholeskyFreeScheduleCoBUnNormalized {N|N-2>= 0}
+input
+output
+int L {i,j|N-i-1>= 0 && j>= 0 && i-j>= 0};
+int AccL {i,j,k|N-j-1>= 0 && j-k>= 0 && -i+k-1>= 0 && i>= 0};
+local
+let
+AccL[i,j,k] = (i,j,k->j,k,i)@case
+{i,j,k|k== 0} : ((i,j,k->)@1 + ((i,j,k->i,k)@L max (i,j,k->j,k)@L));
+{i,j,k|k-1>= 0} : ((i,j,k->)@1 + (((i,j,k->i,j,k-1)@(i,j,k->k,i,j)@AccL max (i,j,k->i,k)@L) max (i,j,k->j,k)@L));
+esac;
+L[i,j] = case
+{|j== 0 && i== 0} : 0;
+{|-i+j== 0 && i-1>= 0} : (1 + (i,j->i,j,j-1)@(i,j,k->k,i,j)@AccL);
+{|j== 0 && i-1>= 0} : (1 + L[j,j]);
+{|j-1>= 0 && i-j-1>= 0} : (1 + ((i,j->i,j,j-1)@(i,j,k->k,i,j)@AccL max L[j,j]));
+esac;
+.
+//affine CholeskyFreeSchedule {N| N>1}
+//input
+// //    float A {i,j | 0<=j<=i<N};
+//output
+//    int L {i,j,k | 0<=j<=i<N && j==k};
+//      int AccL {i,j,k | 0<j<=i<N && 0<=k<j};
+//local
+//let
+//      AccL[i,j,k] = case
+//              {|k==0} : 1+ ((L[i,k,k] max L[j,k,k])); // foo(L[i,k], L[j,k]);
+//              {|k > 0}: 1 + (AccL[i,j,k-1] max L[i,k,k] max L[j,k,k]); //     AccL[i,j,k-1] + L[i,k] * L[j,k]);
+//      esac;
+//      L[i,j,k] = case
+//              {|i==j==0}: 0;//sqrt(A);
+//              {|i==j>0} : 1+AccL[i,j,j-1]; //sqrt(A - AccL[i,j,j-1]);
+//              {|i>j==0} : 1+L[j,j,j]; //A / L[j,j,j];
+//              {|i>j>0}  : 1+(AccL[i,j,j-1] max L[j,j,j]);  // (A - AccL[i,j,j-1]) / L[j,j,j];
+//      esac;
+//.

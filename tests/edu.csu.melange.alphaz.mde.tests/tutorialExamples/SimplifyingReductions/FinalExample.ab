@@ -1,0 +1,10 @@
+//Final Example from slides
+affine FinalExample {N|N>0}
+input
+	int A {i,x| 0<=i<N && 0<=x<2N};
+	int B {k,j| 0<=(k,j)<N};
+output
+	int Y {i| 0<=i<N};
+let
+    Y[i] = reduce(+, [j,k], {|0<=j<=i && 0<=k<=i} : A[i,j+k]*B[k,j]);
+.

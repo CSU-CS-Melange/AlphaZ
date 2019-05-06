@@ -1,0 +1,5 @@
+%include { polyhedralIR_common.tom }
+%include { polyhedralIR_defaultOperators.tom }
+%include { polyhedralIR_operators.tom }
+%include { polyhedralIR_terminals.tom }
+

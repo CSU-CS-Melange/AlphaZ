@@ -1,0 +1,26 @@
+affine FactorizeExample {N|N>0}
+input
+	int A,B {i|0<=i<N};
+output
+	int X {i|0<=i<N};
+let
+	X[i] = reduce(max,[j], A[i]+B[j]);
+.
+
+affine FactorizeExample2 {N|N>0}
+input
+	int A,B,C {i|0<=i<N};
+output
+	int X {i|0<=i<N};
+let
+	X[i] = reduce(max,[j], C[j]+A[i]+B[j]);
+.
+
+affine FactorizeExample3 {N|N>0}
+input
+	int A,B,C {i|0<=i<N};
+output
+	int X {i|0<=i<N};
+let
+	X[i] = reduce(max,[j], max(C[j],  (A[i]+B[j])));
+.

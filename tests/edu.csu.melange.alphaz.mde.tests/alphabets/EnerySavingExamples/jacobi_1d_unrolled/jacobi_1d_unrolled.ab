@@ -1,0 +1,41 @@
+/**/
+affine jacobi_1d {TSTEPS,N | TSTEPS > 3 && N > 5}
+input 
+output 
+	double B {t,i|0<=i<N && t==TSTEPS};
+local 
+	double temp_A {t,i|0<=i<N && 0<=t<TSTEPS};
+	double temp_B {t,i|0<=i<N && 0<=t<TSTEPS-1};
+let
+	temp_A[t,i] = case
+					{|t == 0} : [i] + 2;
+					{|t > 0 && 1<=i<N-1}:(temp_B[t-1,i-1] + temp_B[t-1,i] + temp_B[t-1,i+1])*0.33333;
+					{|t > 0 && 0==i } || {|t > 0 && i==N-1 } : temp_B[t-1,i];  
+					esac;
+	temp_B[t,i] = case
+					{|1<=i<N-1}  : (temp_A[t,i-1] + temp_A[t,i] + temp_A[t,i+1])*0.33333;
+					{|0==i } || {|i==N-1 } : temp_A[t,i];  
+					esac; 
+
+	B[t,i] = temp_A[t-1,i]; 
+.
+/**/
+//for write C verify
+/*
+affine jacobi_1d {TSTEPS,N | TSTEPS > 2 && N > 5}
+input 
+output 
+	double B {i|0<=i<N};
+local 
+	double temp_B {t,i|0<=i<N && 0<=t<TSTEPS};
+let
+
+	temp_B[t,i] = case
+						{|t == 0} : [i]+2;
+						{|t > 0 && 1<=i<N-1}  : (temp_B[t-1,i-1] + temp_B[t-1,i] + temp_B[t-1,i+1])*0.33333;
+						{|t > 0 && 0==i } || {|t > 0 && i==N-1 } : temp_B[t-1,i];  
+					esac; 
+
+	B[i] = temp_B[TSTEPS-1,i]; 
+.
+*/

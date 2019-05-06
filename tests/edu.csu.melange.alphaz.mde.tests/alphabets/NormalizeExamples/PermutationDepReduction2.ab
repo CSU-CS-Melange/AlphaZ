@@ -1,0 +1,9 @@
+affine PermutationDepReduction2 { N | N>0 }
+input
+	long I {i,j | 0<=(i,j)<N};
+output
+	long O {i | 0<=i<N};
+let
+	O = (i->i+5)@reduce(+, (i,j->N-i+j), I[i,j]);
+	// => O[i] = reduce(+, [i1], I[N-5-i,0] );
+.

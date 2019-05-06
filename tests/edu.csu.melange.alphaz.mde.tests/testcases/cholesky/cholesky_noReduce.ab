@@ -1,0 +1,21 @@
+double sqrt(double);
+affine cholesky {N|N>2}
+input
+	double A {i,j| 0<=(i,j)<N};
+output
+	double L {i,j| 0<=j<=i<N};
+local
+	double Temp {i,j,k | 0<j<=i<N && 0<=k<j};
+let
+L[i,j] = case
+	{|i==0 && j==0} :sqrt(A[i,j]);
+	{|i>0 && j==0} : A[i,j]/L[j,j];
+   	{|0<i==j} :sqrt( A[j,j] - Temp[i,j,j-1] );
+    {|0<j<i} : ( A[i,j]-Temp[i,j,j-1] ) / L[j,j];
+esac;
+
+Temp[i,j,k] = case
+	{| k==0 } : L[i,0]*L[j,0];
+	{| k>0 } : Temp[i,j,k-1] + L[i,k]*L[j,k];
+esac;
+.

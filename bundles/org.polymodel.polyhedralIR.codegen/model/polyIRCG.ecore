@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="polyIRCG" nsURI="polyIRCG" nsPrefix="polyIRCG">
+  <eClassifiers xsi:type="ecore:EClass" name="CompilationUnit">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="program" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Program"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="units" upperBound="-1"
+        eType="#//CodeUnit" containment="true" eOpposite="#//CodeUnit/compilationUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeUnit">
+    <eOperations name="findVariable" eType="#//AbstractVariable">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="findCGVariable" eType="#//CodeGenVariable">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="compilationUnit" eType="#//CompilationUnit"
+        eOpposite="#//CompilationUnit/units"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="system" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//AffineSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="headers" upperBound="-1"
+        eType="#//CodeUnitHeader" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="functions" upperBound="-1"
+        eType="#//Function" containment="true" eOpposite="#//Function/codeunit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+        eType="#//AbstractVariable" eOpposite="#//AbstractVariable/codeunit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="localParameters" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="compileTimeParameters"
+        upperBound="-1" eType="#//CompileTimeParameter"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subsystemFunctions" upperBound="-1"
+        eType="#//FunctionSignature"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeUnitHeader" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BasicCodeUnitHeader" eSuperTypes="#//CodeUnitHeader">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeclareStructs" eSuperTypes="#//CodeUnitHeader">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="structs" upperBound="-1"
+        eType="#//Struct" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Function">
+    <eOperations name="getDefaultFunctionSignature" eType="#//FunctionSignature">
+      <eParameters name="includeSystemParams" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="codeunit" eType="#//CodeUnit"
+        eOpposite="#//CodeUnit/functions"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnType" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locals" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specialLocals" upperBound="-1"
+        eType="#//CodeGenVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bodies" upperBound="-1"
+        eType="#//Body" containment="true" eOpposite="#//Body/function"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="entryPoint" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inlined" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numberOfTimeIterationsForFirstConditionCheck"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signature" eType="#//FunctionSignature"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionSignature">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//AbstractVariable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Struct">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//AbstractVariable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableFunctionParameter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//CodeGenVariable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractVariable" abstract="true">
+    <eOperations name="getTypeString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="asParameter" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="asParameterType" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="getPointerType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="getPrintfSpecifier" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="codeunit" lowerBound="1"
+        eType="#//CodeUnit" eOpposite="#//CodeUnit/variables"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="global" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BasicVariable" eSuperTypes="#//AbstractVariable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeGenVariable" eSuperTypes="#//AbstractVariable">
+    <eOperations name="getMPITypeString" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="getVolumeExpression" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+      <eParameters name="startingDim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="endingDim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getModFactor" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+      <eParameters name="dim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//MemoryDomain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="aligned" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="flattened" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="accessExpression" lowerBound="1"
+        eType="#//MemoryAccessExpression" changeable="false" volatile="true" derived="true"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isfrontpadded" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="forntpaddingValue" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MemoryDomain" abstract="true">
+    <eOperations name="getDim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="getNParams" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="getNIndices" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="getParams" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getIndices" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getBounds" lowerBound="2" upperBound="2" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+      <eParameters name="dim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getVolumeExpression" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+      <eParameters name="startingDim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="endingDim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zeroAligned" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScalarMemoryDomain" eSuperTypes="#//MemoryDomain"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MergedMemoryDomain" eSuperTypes="#//MemoryDomain">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="memoryDomains" upperBound="-1"
+        containment="true">
+      <eGenericType eClassifier="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//ValueContainedMap">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eTypeArguments eClassifier="#//MemoryDomain"/>
+      </eGenericType>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PseudoProjection" eSuperTypes="#//MemoryDomain">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" lowerBound="1"
+        eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Domain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modFactors" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Body" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//Function"
+        eOpposite="#//Function/bodies"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BasicBody" eSuperTypes="#//Body">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="string" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableInitialization" eSuperTypes="#//Body">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locals" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specialLocals" upperBound="-1"
+        eType="#//CodeGenVariable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FlagVariableReset" eSuperTypes="#//Body">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locals" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specialLocals" upperBound="-1"
+        eType="#//CodeGenVariable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableFinalization" eSuperTypes="#//Body">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locals" upperBound="-1"
+        eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specialLocals" upperBound="-1"
+        eType="#//CodeGenVariable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StructManagement" abstract="true" eSuperTypes="#//Body">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="instance" eType="#//AbstractVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="struct" eType="#//Struct"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PackStruct" eSuperTypes="#//StructManagement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomPackStruct" eSuperTypes="#//StructManagement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initValues" transient="true">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EMap">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eGenericType>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnpackStruct" eSuperTypes="#//StructManagement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Loop" abstract="true" eSuperTypes="#//Body">
+    <eOperations name="getMaxDimension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="generateScop" lowerBound="1" eType="ecore:EClass ../../org.polymodel.scop/model/scop.visitor.ecore#//ScopRoot"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDomain" lowerBound="1"
+        eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//ParameterDomain"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
+        eType="#//Statement" containment="true" eOpposite="#//Statement/containerLoop"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="declareIterators" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="iteratorNames" ordered="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="numConstantDimensions"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="0"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Statement" abstract="true" interface="true">
+    <eOperations name="getMacroBodyProvider" lowerBound="1" eType="#//MacroBodyProvider"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" lowerBound="1"
+        eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Domain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containerLoop" lowerBound="1"
+        eType="#//Loop" eOpposite="#//Loop/statements"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inlined" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scattering" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//AffineFunction"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BasicStatement" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="statement" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MemoryAccessExpression" abstract="true">
+    <eOperations name="getIndexingExpression" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+      <eParameters name="dim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getVolumeExpression" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+      <eParameters name="dim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getAccessExpressions" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
+        eType="#//CodeGenVariable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PseudoProjectiveAccessExpression" eSuperTypes="#//MemoryAccessExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IdentityAccessExpression" eSuperTypes="#//MemoryAccessExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MergedDomainAccessExpression" eSuperTypes="#//MemoryAccessExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="accessExpression" lowerBound="1"
+        eType="#//MemoryAccessExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifier" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompileTimeParameter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultValue" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="MacroBodyProvider" instanceClassName="org.polymodel.scop.cgenerator2.MacroBodyProvider"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CustomProviderStatement" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="provider" lowerBound="1"
+        eType="#//MacroBodyProvider"/>
+  </eClassifiers>
+  <eSubpackages name="C" nsURI="C" nsPrefix="C">
+    <eClassifiers xsi:type="ecore:EClass" name="EquationAsStatement" eSuperTypes="#//Statement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//CodeGenVariable"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="accessFunction" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//AffineFunction"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rhs" lowerBound="1" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Expression"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="varDecl" lowerBound="1"
+          eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//VariableDeclaration"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ParameterCheck" eSuperTypes="#//Body">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDomain" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//ParameterDomain"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CLoop" eSuperTypes="#//Loop">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="useMacros" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TiledCLoop" eSuperTypes="#//C/CLoop">
+      <eOperations name="getTileIndices" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="generateDTiledLoop" lowerBound="1" eType="#//C/DTiledLoop"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="optimize" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+          defaultValueLiteral="false"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tiles" upperBound="-1"
+          eType="#//C/TileSpecification" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="orderingDimensions" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="optimizedPointLoop" eType="#//C/CLoop"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ParallelizedCLoop" eSuperTypes="#//C/CLoop">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="parallelizedDims" upperBound="-1"
+          eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//targetMapping/ParallelizationSpecification"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="orderingDims" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subsystemVariables" upperBound="-1"
+          containment="true">
+        <eGenericType eClassifier="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//ValueContainedMap">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eTypeArguments eClassifier="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//VariableDeclaration"/>
+        </eGenericType>
+      </eStructuralFeatures>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ScopLoop" eSuperTypes="#//C/CLoop">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tiles" upperBound="-1"
+          eType="#//C/TileSpecification" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="scopRoot" eType="ecore:EClass ../../org.polymodel.scop/model/scop.visitor.ecore#//ScopRoot"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CVariable" eSuperTypes="#//CodeGenVariable"/>
+    <eClassifiers xsi:type="ecore:EClass" name="DTiledLoop">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="scop" lowerBound="1"
+          eType="ecore:EClass ../../org.polymodel.scop/model/scop.visitor.ecore#//ScopRoot"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tiledBlocks" upperBound="-1"
+          eType="#//C/DTiledBlock" containment="true" eOpposite="#//C/DTiledBlock/containerLoop"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dtilingOptions" eType="#//C/DTilingOptions"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="generatorLoop" lowerBound="1"
+          eType="#//C/TiledCLoop"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DTiledBlock">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="blockStart" eType="ecore:EClass ../../org.polymodel.scop/model/scop.visitor.ecore#//AbstractScopNode"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="pointLoopStart" lowerBound="1"
+          eType="ecore:EClass ../../org.polymodel.scop/model/scop.visitor.ecore#//AbstractScopNode"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tileLoopStart" lowerBound="1"
+          eType="ecore:EClass ../../org.polymodel.scop/model/scop.visitor.ecore#//AbstractScopNode"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="perfectLoopNest" lowerBound="1"
+          eType="ecore:EClass ../../org.polymodel.scop/model/scop.visitor.ecore#//ScopFor"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="containerLoop" eType="#//C/DTiledLoop"
+          changeable="false" eOpposite="#//C/DTiledLoop/tiledBlocks"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EDataType" name="DTilingOptions" instanceClassName="org.polymodel.scop.dtiler.DTilingOptions"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SubTileSpecification">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="level" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="start" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tileSizes" lowerBound="1"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tileType" lowerBound="1"
+          eType="ecore:EEnum ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//targetMapping/TILING_TYPE"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tileIndexPrefix" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tileSizePrefix" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TileSpecification">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="levels" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDim" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="endDim" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subTiles" upperBound="-1"
+          eType="#//C/SubTileSpecification"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="orderingPrefix" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eSubpackages name="wrapper" nsURI="wrapper" nsPrefix="wrapper">
+      <eClassifiers xsi:type="ecore:EClass" name="InputInitialization" eSuperTypes="#//C/CLoop">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="specialVar" eType="#//C/wrapper/SpecialVariable"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="OutputPrinting" eSuperTypes="#//C/CLoop">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="specialVar" eType="#//C/wrapper/SpecialVariable"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="OutputVerification" eSuperTypes="#//C/CLoop">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="specialVar" eType="#//C/wrapper/SpecialVariable"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="SpecialVariable">
+        <eOperations name="getMemoryAccessExpressions" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//affine/AffineExpression"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="varDecl" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//VariableDeclaration"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="access" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//AffineFunction"/>
+      </eClassifiers>
+    </eSubpackages>
+    <eSubpackages name="distributed" nsURI="distributed" nsPrefix="distributed">
+      <eClassifiers xsi:type="ecore:EClass" name="PartitioningComputation" eSuperTypes="#//Body">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="partitionedTile" lowerBound="1"
+            eType="#//C/TiledCLoop"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="DistributedPseudoProjection" eSuperTypes="#//PseudoProjection">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="distributedDims" upperBound="-1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="distributedDimSizes"
+            upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+            containment="true"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="MPICLoop" eSuperTypes="#//C/TiledCLoop">
+        <eOperations name="getSendBufferCopyLoop" lowerBound="1" eType="#//C/CLoop"/>
+        <eOperations name="getReceiveBufferCopyLoop" lowerBound="1" eType="#//C/CLoop"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="buffers" upperBound="-1"
+            eType="#//C/distributed/Buffer" containment="true"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="BufferMapping">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="valueAccess" lowerBound="1"
+            eType="#//MemoryAccessExpression" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="bufferAccess" lowerBound="1"
+            eType="#//MemoryAccessExpression" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="domain" lowerBound="1"
+            eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Domain"
+            containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="communicatedVariable"
+            lowerBound="1" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//targetMapping/CommunicatedVariableForTiledSpace"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Buffer">
+        <eOperations name="computeBufferSize" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+        <eOperations name="getSendDomain" lowerBound="1" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Domain"/>
+        <eOperations name="getReceiveDomain" lowerBound="1" eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Domain"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="bufferMappings" upperBound="-1"
+            eType="#//C/distributed/BufferMapping" containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
+            eType="#//CodeGenVariable"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="BufferMemoryDomain" eSuperTypes="#//MergedMemoryDomain">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="bufferingFactor" lowerBound="1"
+            eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+            containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="bufferID" lowerBound="1"
+            eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="BufferAccessExpression" eSuperTypes="#//MergedDomainAccessExpression">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="bufferingFactor" lowerBound="1"
+            eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+            containment="true"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="bufferID" lowerBound="1"
+            eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      </eClassifiers>
+    </eSubpackages>
+    <eSubpackages name="scan" nsURI="scan" nsPrefix="scan">
+      <eClassifiers xsi:type="ecore:EClass" name="BoundComputation" eSuperTypes="#//Body">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="lb" lowerBound="1"
+            eType="#//AbstractVariable"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="ub" lowerBound="1"
+            eType="#//AbstractVariable"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="ConstantTerm" lowerBound="1"
+            eType="#//AbstractVariable"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="volumeFunction" lowerBound="1"
+            eType="#//C/scan/VolumeFunction"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="volumeFunctionDerivative"
+            lowerBound="1" eType="#//C/scan/VolumeFunctionDerivative"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="initialValue" lowerBound="1"
+            eType="#//AbstractVariable"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VolumeFunction" eSuperTypes="#//Body">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="unknown" lowerBound="1"
+            eType="#//AbstractVariable"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VolumeFunctionDerivative" eSuperTypes="#//Body">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="unknown" lowerBound="1"
+            eType="#//AbstractVariable"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="ScanBody" eSuperTypes="#//Body">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="domain" lowerBound="1"
+            eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Domain"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="volumeFunction" lowerBound="1"
+            eType="#//C/scan/VolumeFunction"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="boundComputationFunction"
+            lowerBound="1" eType="#//C/scan/BoundComputation"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="originDomainVolume"
+            lowerBound="1" eType="#//C/scan/OriginDomainVolume"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="localReductionFunction"
+            lowerBound="1" eType="#//Function"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="localScanFunction"
+            lowerBound="1" eType="#//Function"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="localReductionVariables"
+            upperBound="-1" eType="#//CodeGenVariable"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="localScanReductionVariables"
+            upperBound="-1" eType="#//CodeGenVariable"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="localInitialVariables"
+            upperBound="-1" eType="#//CodeGenVariable"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="nthreadVariableName"
+            lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="threadNumVariableName"
+            lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="beginVariableName"
+            lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="endVariableName" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="scanReductionBody"
+            lowerBound="1" eType="#//C/scan/ScanReductionBody"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="OriginDomainVolume" eSuperTypes="#//Body"/>
+      <eClassifiers xsi:type="ecore:EClass" name="ScanReductionBody" eSuperTypes="#//Body">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="preProcessLoop" lowerBound="1"
+            eType="#//C/CLoop"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="scanLoop" lowerBound="1"
+            eType="#//C/CLoop"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="postProcessLoop" ordered="false"
+            lowerBound="1" eType="#//C/CLoop"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="matrixTempVariables"
+            upperBound="-1" eType="#//CodeGenVariable"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="initTempVariables"
+            lowerBound="1" upperBound="-1" eType="#//CodeGenVariable"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="assignmentLoop" lowerBound="1"
+            eType="#//C/CLoop"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="initValueUpdate" lowerBound="1"
+            eType="#//C/CLoop"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="initValueCopy" lowerBound="1"
+            eType="#//C/CLoop"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="matrixInitLoop" eType="#//C/CLoop"/>
+      </eClassifiers>
+    </eSubpackages>
+    <eSubpackages name="pcot" nsURI="pcot" nsPrefix="pcot">
+      <eClassifiers xsi:type="ecore:EClass" name="PCOTrecursion" eSuperTypes="#//Body">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="recursion" lowerBound="1"
+            eType="#//Function"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="PCOTbase" eSuperTypes="#//Body">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="loop" eType="#//Loop"/>
+      </eClassifiers>
+    </eSubpackages>
+  </eSubpackages>
+  <eSubpackages name="algebraEx" nsURI="org.polymodel.algebra.polyIRCG" nsPrefix="algebraEx">
+    <eClassifiers xsi:type="ecore:EClass" name="ModuloExpression" eSuperTypes="platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="numerator" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="denominator" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+          containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
+  <eSubpackages name="SIMD" nsURI="SIMD" nsPrefix="SIMD">
+    <eClassifiers xsi:type="ecore:EEnum" name="SIMD_WIDTH">
+      <eLiterals name="M128"/>
+      <eLiterals name="M256" value="1"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="SIMD_INS">
+      <eLiterals name="SSE"/>
+      <eLiterals name="AVX" value="1"/>
+      <eLiterals name="FMA" value="2"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VType">
+      <eOperations name="getSIMDName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="getNElements" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1"
+          eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//Type"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" lowerBound="1"
+          eType="#//SIMD/SIMD_WIDTH"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="ins" lowerBound="1" eType="#//SIMD/SIMD_INS"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VRegister" eSuperTypes="#//AbstractVariable">
+      <eOperations name="getRegTypeString" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="vtype" lowerBound="1"
+          eType="#//SIMD/VType"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="function" lowerBound="1"
+          eType="#//Function"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VRegisterInitialization" eSuperTypes="#//Body">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+          eType="#//SIMD/VRegister"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="locals" upperBound="-1"
+          eType="#//SIMD/VRegister"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+          eType="#//SIMD/VRegister"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SIMDStatement" eSuperTypes="#//Statement">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simdExp" lowerBound="1"
+          eType="#//SIMD/simdExp/SIMDExpression"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VRegFunctionParameter">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="register" lowerBound="1"
+          eType="#//SIMD/VRegister"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SIMDFunction" eSuperTypes="#//Function">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inputsimdRegs" upperBound="-1"
+          eType="#//SIMD/VRegister"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="outputsimdRegs" upperBound="-1"
+          eType="#//SIMD/VRegister"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="localsimdRegs" upperBound="-1"
+          eType="#//SIMD/VRegister"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SIMDCLoop" abstract="true" eSuperTypes="#//C/CLoop">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simdStatements" upperBound="-1"
+          eType="#//SIMD/SIMDStatement"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TiledSIMDCLoop" eSuperTypes="#//C/TiledCLoop">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="simdStatements" upperBound="-1"
+          eType="#//SIMD/SIMDStatement"/>
+    </eClassifiers>
+    <eSubpackages name="simdExp" nsURI="simdExp" nsPrefix="simdExp">
+      <eClassifiers xsi:type="ecore:EEnum" name="VOP">
+        <eLiterals name="ADD"/>
+        <eLiterals name="SUB" value="1"/>
+        <eLiterals name="MUL" value="2"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="SIMDExpression" abstract="true">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="vtype" lowerBound="1"
+            eType="#//SIMD/VType"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="BasicMemoryAddress">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="var" lowerBound="1"
+            eType="#//CodeGenVariable"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="access" lowerBound="1"
+            eType="ecore:EClass ../../org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore#//AffineFunction"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="aligned" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="isPointer" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VLoadExpression" eSuperTypes="#//SIMD/simdExp/SIMDExpression">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="dst" lowerBound="1"
+            eType="#//SIMD/VRegister"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="src" lowerBound="1"
+            eType="#//SIMD/simdExp/BasicMemoryAddress"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VStoreExpression" eSuperTypes="#//SIMD/simdExp/SIMDExpression">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="src" lowerBound="1"
+            eType="#//SIMD/VRegister"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="dst" lowerBound="1"
+            eType="#//SIMD/simdExp/BasicMemoryAddress"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VBinaryExpression" eSuperTypes="#//SIMD/simdExp/SIMDExpression">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" lowerBound="1"
+            eType="#//SIMD/simdExp/VOP"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="lreg" lowerBound="1"
+            eType="#//SIMD/simdExp/SIMDExpression"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="rreg" lowerBound="1"
+            eType="#//SIMD/simdExp/SIMDExpression"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VShiftExpression" eSuperTypes="#//SIMD/simdExp/SIMDExpression">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="reg1" lowerBound="1"
+            eType="#//SIMD/simdExp/SIMDExpression"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="reg2" lowerBound="1"
+            eType="#//SIMD/simdExp/SIMDExpression"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="dis" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VRegisterExpression" eSuperTypes="#//SIMD/simdExp/SIMDExpression">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="reg" lowerBound="1"
+            eType="#//SIMD/VRegister"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VAssignExpression" eSuperTypes="#//SIMD/simdExp/SIMDExpression">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="lreg" lowerBound="1"
+            eType="#//SIMD/VRegister"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="rexp" lowerBound="1"
+            eType="#//SIMD/simdExp/SIMDExpression"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VSetExpression" eSuperTypes="#//SIMD/simdExp/SIMDExpression">
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" upperBound="-1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VPermuteExpression" eSuperTypes="#//SIMD/simdExp/SIMDExpression">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="reg1" lowerBound="1"
+            eType="#//SIMD/simdExp/SIMDExpression"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="reg2" lowerBound="1"
+            eType="#//SIMD/simdExp/SIMDExpression"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="imm8" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="VShuffleExpression" eSuperTypes="#//SIMD/simdExp/SIMDExpression">
+        <eStructuralFeatures xsi:type="ecore:EReference" name="reg1" lowerBound="1"
+            eType="#//SIMD/simdExp/SIMDExpression"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="reg2" lowerBound="1"
+            eType="#//SIMD/simdExp/SIMDExpression"/>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="imm8" lowerBound="1"
+            eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eClassifiers>
+    </eSubpackages>
+  </eSubpackages>
+  <eSubpackages name="PCOT" nsURI="PCOT" nsPrefix="PCOT">
+    <eClassifiers xsi:type="ecore:EClass" name="RecursionBody" eSuperTypes="#//Body">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="parallel" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="baseFunction" lowerBound="1"
+          eType="#//Function"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="bandStart" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="bandEnd" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="paramStruct" lowerBound="1"
+          eType="#//Struct"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="localStruct" eType="#//Struct"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="recurStructs" lowerBound="1"
+          upperBound="-1" eType="#//Struct"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tileSizes" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>

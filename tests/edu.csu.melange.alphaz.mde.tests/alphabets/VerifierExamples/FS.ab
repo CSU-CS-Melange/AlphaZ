@@ -1,0 +1,51 @@
+affine FS_reduce {N|N-2>= 0}
+input
+	float L {i,k| 0<=k<i<N };
+	float b {i| 0<=i<N };
+output
+	float x {i| 0<=i<N };
+local
+
+let
+	x[i] = case
+			{|i== 0} : b[i];
+			{|i-1>= 0} : (b[i] - reduce(+, (i,k->i), L[i,k] * x[k]));
+		esac;
+.
+
+affine FS_normalized {N|N-2>= 0}
+input
+	float L {i,k| 0<=k<i<N };
+	float b {i| 0<=i<N };
+output
+	float x {i| 0<=i<N };
+local
+	float NR_x {i|N-i-1>= 0 && i-1>= 0};
+let
+	x[i] = case
+			{|i== 0} : b[i];
+			{|i-1>= 0} : (b[i] - NR_x[i]);
+		esac;
+	NR_x[i] = reduce(+, (i,k->i), (L[i,k] * x[k]));
+.
+
+affine FS_serialized {N|N-2>= 0}
+input
+	float L {i,k| 0<=k<i<N };
+	float b {i| 0<=i<N };
+output
+	float x {i| 0<=i<N };
+local
+	float SR_x {i,k| 0<=k<i<N};
+let
+	x[i] = 
+		case
+			{|i== 0} : b[i];
+			{|i-1>= 0} : (b[i] - SR_x[i,i-1]);
+		esac;
+	SR_x[i,k] = 
+		case
+			{| k==0}: L[i,k] * x[k];
+			{| k>0}: SR_x[i,k-1] + L[i,k] * x[k];
+		esac;
+.

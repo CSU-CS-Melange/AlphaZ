@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polymodel.isl/src" modelPluginID="org.polymodel.isl"
+    modelName="ISL" importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0"
+    copyrightFields="false" usedGenPackages="../../org.polymodel.algebra/model/algebra.genmodel#//algebra ../../org.polymodel/model/polymodel.genmodel#//polymodel"
+    operationReflection="true">
+  <foreignModel>ISL.ecore</foreignModel>
+  <genPackages prefix="Isl" basePackage="org.polymodel" disposableProviderFactory="true"
+      ecorePackage="ISL.ecore#/">
+    <genClasses ecoreClass="ISL.ecore#//ISLMap"/>
+    <genClasses ecoreClass="ISL.ecore#//ISLSet"/>
+    <genClasses ecoreClass="ISL.ecore#//ISLUnionMap">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ISL.ecore#//ISLUnionMap/maps"/>
+      <genOperations ecoreOperation="ISL.ecore#//ISLUnionMap/lexMax">
+        <genParameters ecoreParameter="ISL.ecore#//ISLUnionMap/lexMax/manager"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="ISL.ecore#//ISLUnionSet">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ISL.ecore#//ISLUnionSet/sets"/>
+    </genClasses>
+    <genClasses ecoreClass="ISL.ecore#//ISLBasicMap"/>
+    <genClasses ecoreClass="ISL.ecore#//ISLPoint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ISL.ecore#//ISLPoint/coordinates"/>
+    </genClasses>
+    <genClasses ecoreClass="ISL.ecore#//ISLFunction"/>
+  </genPackages>
+</genmodel:GenModel>

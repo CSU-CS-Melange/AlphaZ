@@ -1,0 +1,74 @@
+/**
+ */
+package org.polymodel.polyhedralIR.polyIRCG;
+
+import org.eclipse.emf.common.util.EList;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Flag Variable Reset</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.polymodel.polyhedralIR.polyIRCG.FlagVariableReset#getOutputs <em>Outputs</em>}</li>
+ *   <li>{@link org.polymodel.polyhedralIR.polyIRCG.FlagVariableReset#getLocals <em>Locals</em>}</li>
+ *   <li>{@link org.polymodel.polyhedralIR.polyIRCG.FlagVariableReset#getSpecialLocals <em>Special Locals</em>}</li>
+ * </ul>
+ *
+ * @see org.polymodel.polyhedralIR.polyIRCG.PolyIRCGPackage#getFlagVariableReset()
+ * @model
+ * @generated
+ */
+public interface FlagVariableReset extends Body {
+	/**
+	 * Returns the value of the '<em><b>Outputs</b></em>' reference list.
+	 * The list contents are of type {@link org.polymodel.polyhedralIR.polyIRCG.AbstractVariable}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Outputs</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Outputs</em>' reference list.
+	 * @see org.polymodel.polyhedralIR.polyIRCG.PolyIRCGPackage#getFlagVariableReset_Outputs()
+	 * @model
+	 * @generated
+	 */
+	EList<AbstractVariable> getOutputs();
+
+	/**
+	 * Returns the value of the '<em><b>Locals</b></em>' reference list.
+	 * The list contents are of type {@link org.polymodel.polyhedralIR.polyIRCG.AbstractVariable}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Locals</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Locals</em>' reference list.
+	 * @see org.polymodel.polyhedralIR.polyIRCG.PolyIRCGPackage#getFlagVariableReset_Locals()
+	 * @model
+	 * @generated
+	 */
+	EList<AbstractVariable> getLocals();
+
+	/**
+	 * Returns the value of the '<em><b>Special Locals</b></em>' reference list.
+	 * The list contents are of type {@link org.polymodel.polyhedralIR.polyIRCG.CodeGenVariable}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Special Locals</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Special Locals</em>' reference list.
+	 * @see org.polymodel.polyhedralIR.polyIRCG.PolyIRCGPackage#getFlagVariableReset_SpecialLocals()
+	 * @model
+	 * @generated
+	 */
+	EList<CodeGenVariable> getSpecialLocals();
+
+} // FlagVariableReset

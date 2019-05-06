@@ -1,0 +1,110 @@
+affine main_scop0 {L,M|L>= 0}
+input
+int _intput_X {t,i|i-1>= 0 && M>= 0 && L-t+2>= 0 && t-2>= 0 && L-i+1>= 0};
+int _intput_Y {t,i|i>= 0 && M>= 0 && L-t-1>= 0 && t+1>= 0 && L-i>= 0};
+output
+int _output_Y {t,i|i-1>= 0 && M>= 0 && L-t+1>= 0 && t-1>= 0 && L-i+1>= 0};
+int _output_X {i,j|L-i>= 0 && i>= 0 && L-j>= 0 && j>= 0};
+local
+int _tmp_X {i,j|L-i>= 0 && i>= 0 && L-j>= 0 && j>= 0};
+int _tmp_Y {t,i,j|M-t>= 0 && t>= 0 && L-t-i+1>= 0 && -t+i-1>= 0 && L-t-j+1>= 0 && -t+j-1>= 0};
+int _tmp_X_0 {t,i,j|M-t>= 0 && t>= 0 && L-t-i>= 0 && -t+i>= 0 && L-t-j>= 0 && -t+j>= 0};
+let
+_tmp_X = (i,j->)@0;
+_tmp_X_0 = (((case
+{t,i,j|-t>= 0} : (t,i,j->i-1,j)@_intput_Y;
+{t,i,j|t-1>= 0 && -t+i-1>= 0} : (t,i,j->t-1,i-1,j)@_tmp_Y;
+{t,i,j|t-1>= 0 && t-i>= 0 && i-2>= 0} : (t,i,j->i-2,i-1,j)@_tmp_Y;
+esac + (case
+{t,i,j|-t>= 0} : (t,i,j->1+i,j)@_intput_Y;
+{t,i,j|t-1>= 0} : (t,i,j->t-1,1+i,j)@_tmp_Y;
+esac + (case
+{t,i,j|-t>= 0} : (t,i,j->i,j-1)@_intput_Y;
+{t,i,j|t-1>= 0 && -t+j-1>= 0} : (t,i,j->t-1,i,j-1)@_tmp_Y;
+{t,i,j|t-1>= 0 && t-j>= 0 && j-2>= 0} : (t,i,j->j-2,i,j-1)@_tmp_Y;
+esac + case
+{t,i,j|-t>= 0} : (t,i,j->i,1+j)@_intput_Y;
+{t,i,j|t-1>= 0} : (t,i,j->t-1,i,1+j)@_tmp_Y;
+esac))) / (t,i,j->)@8) + (case
+{t,i,j|-t>= 0} : (t,i,j->i,j)@_intput_Y;
+{t,i,j|t-1>= 0} : (t,i,j->t-1,i,j)@_tmp_Y;
+esac / (t,i,j->)@2));
+_tmp_Y = (((case
+{t,i,j|-t>= 0 && -L+t+i-1>= 0 && -i+j+1>= 0 && L-t-j>= 0} : (t,i,j->L-j,i-1,j)@_tmp_X_0;
+{t,i,j|-t>= 0 && L-t-i>= 0 && L-t-j-1>= 0} : (t,i,j->t,i-1,j)@_tmp_X_0;
+{t,i,j|-L+t+j== 0 && -t>= 0 && L-t-i>= 0} : (t,i,j->L-j,i-1,j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && -L+t+j-1>= 0} : (t,i,j->L-j,i-1,j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && L-t-j>= 0} : (t,i,j->t-1,i-1,j)@_tmp_X_0;
+{t,i,j|-t>= 0 && -L+t+i-1>= 0 && i-j-2>= 0} : (t,i,j->1+L-i,i-1,j)@_tmp_X_0;
+esac + (case
+{t,i,j|t-1>= 0 && L-t-j>= 0 && L-t-i-1>= 0} : (t,i,j->t-1,1+i,j)@_tmp_X_0;
+{t,i,j|-L+t+j== 0 && -t>= 0 && L-t-i-2>= 0} : (t,i,j->L-j,1+i,j)@_tmp_X_0;
+{t,i,j|-L+t+i+1== 0 && -t>= 0 && L-t-j-1>= 0} : (t,i,j->L-i-1,1+i,j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && -L+t+j-1>= 0 && L-t-i-1>= 0} : (t,i,j->L-j,1+i,j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && -i+j-1>= 0 && -L+t+i>= 0 && L-i-1>= 0} : (t,i,j->L-j,1+i,j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && i-j>= 0 && -L+t+i>= 0 && L-i-1>= 0} : (t,i,j->L-i-1,1+i,j)@_tmp_X_0;
+{t,i,j|-L+t+j== 0 && -L+t+i+1== 0 && -t>= 0} : (t,i,j->L-j,1+i,j)@_tmp_X_0;
+{t,i,j|-t>= 0 && L-t-i-2>= 0 && L-t-j-1>= 0} : (t,i,j->t,1+i,j)@_tmp_X_0;
+esac + (case
+{t,i,j|t-1>= 0 && L-t-i>= 0} : (t,i,j->t-1,i,j-1)@_tmp_X_0;
+{t,i,j|-t>= 0 && L-t-i-1>= 0 && L-t-j>= 0} : (t,i,j->t,i,j-1)@_tmp_X_0;
+{t,i,j|-L+t+i== 0 && -t>= 0 && L-t-j>= 0} : (t,i,j->L-i,i,j-1)@_tmp_X_0;
+{t,i,j|-L+t+i== 0 && -t>= 0 && -L+t+j-1>= 0} : (t,i,j->1+L-j,i,j-1)@_tmp_X_0;
+{t,i,j|-t>= 0 && L-t-i-1>= 0 && -L+t+j-1>= 0} : (t,i,j->1+L-j,i,j-1)@_tmp_X_0;
+{t,i,j|t-1>= 0 && -L+t+i-1>= 0} : (t,i,j->L-i,i,j-1)@_tmp_X_0;
+esac + case
+{t,i,j|-L+t+j+1== 0 && -t>= 0 && L-t-i-1>= 0} : (t,i,j->L-j-1,i,1+j)@_tmp_X_0;
+{t,i,j|-L+t+i== 0 && -t>= 0 && L-t-j-2>= 0} : (t,i,j->L-i,i,1+j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && i-j-2>= 0 && -L+t+i-1>= 0} : (t,i,j->L-i,i,1+j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && L-j-1>= 0 && L-t-i>= 0 && -L+t+j>= 0} : (t,i,j->L-j-1,i,1+j)@_tmp_X_0;
+{t,i,j|-L+t+j+1== 0 && -L+t+i== 0 && -t>= 0} : (t,i,j->L-j-1,i,1+j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && L-j-1>= 0 && -L+t+i-1>= 0 && -i+j+1>= 0} : (t,i,j->L-j-1,i,1+j)@_tmp_X_0;
+{t,i,j|-t>= 0 && L-t-i-1>= 0 && L-t-j-2>= 0} : (t,i,j->t,i,1+j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && L-t-j-1>= 0 && L-t-i>= 0} : (t,i,j->t-1,i,1+j)@_tmp_X_0;
+esac))) / (t,i,j->)@8) + (case
+{t,i,j|-t>= 0 && L-t-i-1>= 0 && L-t-j-1>= 0} : (t,i,j->t,i,j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && -i+j>= 0 && -L+t+i-1>= 0} : (t,i,j->L-j,i,j)@_tmp_X_0;
+{t,i,j|-L+t+j== 0 && -t>= 0 && L-t-i-1>= 0} : (t,i,j->L-j,i,j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && L-t-j>= 0 && L-t-i>= 0} : (t,i,j->t-1,i,j)@_tmp_X_0;
+{t,i,j|-L+t+i== 0 && -t>= 0 && L-t-j-1>= 0} : (t,i,j->L-i,i,j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && -L+t+j-1>= 0 && L-t-i>= 0} : (t,i,j->L-j,i,j)@_tmp_X_0;
+{t,i,j|-L+t+j== 0 && -L+t+i== 0 && -t>= 0} : (t,i,j->L-j,i,j)@_tmp_X_0;
+{t,i,j|t-1>= 0 && i-j-1>= 0 && -L+t+i-1>= 0} : (t,i,j->L-i,i,j)@_tmp_X_0;
+esac / (t,i,j->)@2));
+_output_Y = case
+{a,b|-L+2M>= 0 && -L+2a-2>= 0 && L-a+1>= 0 && -a+b>= 0 && L-b+1>= 0} : (a,b->1+L-b,a,b)@_tmp_Y;
+{a,b|L-2M-1>= 0 && L-M-a>= 0 && -M+a-1>= 0 && -L+M+b-1>= 0 && L-b+1>= 0} : (a,b->1+L-b,a,b)@_tmp_Y;
+{a,b|L-2M-1>= 0 && L-M-a>= 0 && M-a>= 0 && a-1>= 0 && -L+a+b-2>= 0 && L-b+1>= 0} : (a,b->1+L-b,a,b)@_tmp_Y;
+{a,b|-L+2M>= 0 && -L+2a-2>= 0 && L-a+1>= 0 && a-b-1>= 0 && -L+a+b-2>= 0} : (a,b->1+L-a,a,b)@_tmp_Y;
+{a,b|-L+2M>= 0 && L-2a+1>= 0 && a-1>= 0 && -L+a+b-2>= 0 && L-b+1>= 0} : (a,b->1+L-b,a,b)@_tmp_Y;
+{a,b|L-2M-1>= 0 && L-M-a>= 0 && -M+a-1>= 0 && L-M-b>= 0 && M-b>= 0 && b-1>= 0} : (a,b->b-1,a,b)@_tmp_Y;
+{a,b|L-2M-1>= 0 && -L+M+a-1>= 0 && L-a+1>= 0 && a-b-1>= 0 && -L+a+b-2>= 0} : (a,b->1+L-a,a,b)@_tmp_Y;
+{a,b|L-2M-1>= 0 && L-M-a>= 0 && M-a>= 0 && a-1>= 0 && L-a-b+1>= 0 && -a+b>= 0} : (a,b->a-1,a,b)@_tmp_Y;
+{a,b|-L+2M>= 0 && L-2a+1>= 0 && a-1>= 0 && L-a-b+1>= 0 && a-b-1>= 0 && b-1>= 0} : (a,b->b-1,a,b)@_tmp_Y;
+{a,b|L-2M-1>= 0 && L-M-a>= 0 && -M+a-1>= 0 && L-M-b>= 0 && -M+b-1>= 0} : (a,b->M,a,b)@_tmp_Y;
+{a,b|L-2M-1>= 0 && -L+M+a-1>= 0 && L-a+1>= 0 && a-b-1>= 0 && L-a-b+1>= 0 && b-1>= 0} : (a,b->b-1,a,b)@_tmp_Y;
+{a,b|-L+2M>= 0 && -L+2a-2>= 0 && L-a+1>= 0 && a-b-1>= 0 && L-a-b+1>= 0 && b-1>= 0} : (a,b->b-1,a,b)@_tmp_Y;
+{a,b|L-2M-1>= 0 && -L+M+a-1>= 0 && L-a+1>= 0 && -a+b>= 0 && L-b+1>= 0} : (a,b->1+L-b,a,b)@_tmp_Y;
+{a,b|-L+2M>= 0 && L-2a+1>= 0 && a-1>= 0 && L-a-b+1>= 0 && -a+b>= 0} : (a,b->a-1,a,b)@_tmp_Y;
+{a,b|L-2M-1>= 0 && L-M-a>= 0 && M-a>= 0 && a-1>= 0 && L-a-b+1>= 0 && a-b-1>= 0 && b-1>= 0} : (a,b->b-1,a,b)@_tmp_Y;
+esac;
+_output_X = case
+{a,b|L-a>= 0 && L-b>= 0 && L-2M-1>= 0 && L-M-a-1>= 0 && M-a-1>= 0 && L-a-b-1>= 0 && a-b-1>= 0} : (a,b->b,a,b)@_tmp_X_0;
+{a,b|-L+a-1>= 0 && L-2M-1>= 0 && L-M-a-1>= 0 && L-M-b-1>= 0} : (a,b->M,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && L-2M-1>= 0 && L-M-a-1>= 0 && M-a-1>= 0 && -L+a+b>= 0} : (a,b->L-b,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && L-2M-1>= 0 && L-M-a-1>= 0 && -M+a>= 0 && -L+M+b>= 0} : (a,b->L-b,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && L-2M-1>= 0 && L-M-a-1>= 0 && M-a-1>= 0 && L-a-b-1>= 0 && -a+b>= 0} : (a,b->a,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && -L+2M>= 0 && -L+2a>= 0 && a-b-1>= 0 && L-a-b-1>= 0} : (a,b->b,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && -L+2M>= 0 && L-2a-1>= 0 && L-a-b-1>= 0 && a-b-1>= 0} : (a,b->b,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && -L+b-1>= 0 && L-2M-1>= 0 && L-M-a-1>= 0 && -M+a>= 0 && L-M-b-1>= 0} : (a,b->M,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && L-2M-1>= 0 && -L+M+a>= 0 && a-b-1>= 0 && -L+a+b>= 0} : (a,b->L-a,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && -L+2M>= 0 && -L+2a>= 0 && a-b-1>= 0 && -L+a+b>= 0} : (a,b->L-a,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && -L+2M>= 0 && L-2a-1>= 0 && -L+a+b>= 0} : (a,b->L-b,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && L-2M-1>= 0 && L-M-a-1>= 0 && -M+a>= 0 && L-M-b-1>= 0 && M-b-1>= 0} : (a,b->b,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && L-2M-1>= 0 && -L+M+a>= 0 && a-b-1>= 0 && L-a-b-1>= 0} : (a,b->b,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && L-2M-1>= 0 && L-M-a-1>= 0 && -M+a>= 0 && L-M-b-1>= 0 && -M+b>= 0} : (a,b->M,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && L-2M-1>= 0 && -L+M+a>= 0 && -a+b>= 0} : (a,b->L-b,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && -L+2M>= 0 && L-2a-1>= 0 && L-a-b-1>= 0 && -a+b>= 0} : (a,b->a,a,b)@_tmp_X_0;
+{a,b|L-a>= 0 && L-b>= 0 && -L+2M>= 0 && -L+2a>= 0 && -a+b>= 0} : (a,b->L-b,a,b)@_tmp_X_0;
+esac;
+.

@@ -1,0 +1,18 @@
+affine twoD {T,X,Y | T>0 && (X,Y) > 4}
+input
+   double Initial {i,j | 0<=i<X && 0<=j<Y};
+output
+   double Final {t,i,j | t==T && 0<=i<X && 0<=j<Y};
+local
+   double Intermediate {t,i,j | 0<=t<=T && 0<=i<X && 0<=j<Y};
+let
+   Intermediate[t,i,j] = case
+      {| t==0} : Initial[i,j];
+      {| t>0 && j==0} ||
+      {| t>0 && i==0} ||
+      {| t>0 && i==X-1} ||
+      {| t>0 && j==Y-1} : Intermediate[t-1,i,j];
+      {| t>0 && 0<i<X-1 && 0<j<Y-1} : (4*Intermediate[t-1,i,j] + Intermediate[t-1,i,j+1] + Intermediate[t-1,i,j-1] + Intermediate[t-1,i+1,j] + Intermediate[t-1,i-1,j]) / 8.0;
+   esac;
+   Final[t,i,j] = Intermediate[t,i,j];
+.

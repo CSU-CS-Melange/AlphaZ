@@ -1,0 +1,12 @@
+affine TRBEx {N|N>10}
+input
+   int A {i,j|0<=i<N && 0<=j<N};
+output
+   int X {i|0<=i<N};
+   int Y {|};
+let
+   X[i] = reduce(+, [j], {|i+j<N}:A[i,j]+A[j,i]);
+   Y[] = reduce(+, [i,j], A[i,j]+A[j,i]);
+
+
+.

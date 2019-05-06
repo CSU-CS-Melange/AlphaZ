@@ -1,0 +1,45 @@
+affine ForwardSubst {b| b>0}
+input
+	double L {i,j | 0<=j<=i<b};
+	double b {i | 0<=i<b};
+output
+	double x {i | 0<=i<b};
+let
+	x[i] = case
+		{i | i==0} : b[i]/L[i,i];
+		{i | 0<i<b} : (b[i] - reduce(+, [k], {i,k | 0<=k<i}: L[i,k]*x[k]) )/L[i,i];
+	esac;
+.
+
+affine matVectMult {b | b>0}
+input
+	double A {i,j | 0<=(i,j)<b};
+	double v {i|0<=i<b};
+output
+	double r {i|0<=i<b};
+let
+	r[i] = reduce(+,[k],A[i,k]*v[k]);
+.
+
+affine ForwardSubst_SubSystem {Nb,Nl,b|Nl==0 && Nb>=1 && b>=1}
+input
+	double L_bl {iBl,jBl,iLoc,jLoc|jBl==iBl && Nl==0 && iBl>=0 && Nb>=iBl+1 && jLoc>=0 && b>=iLoc+1 && iLoc>=jLoc}
+			|| {iBl,jBl,iLoc,jLoc|Nl==0 && jBl>=0 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && Nb>=iBl+1 && iBl>=jBl+1};
+	double b_bl {iBl,iLoc|Nl==0 && iBl>=0 && iLoc>=0 && b>=iLoc+1 && b>=1 && Nb>=iBl+1 && Nb>=1};
+output
+	double x_bl {iBl,iLoc|Nl==0 && iBl>=0 && iLoc>=0 && b>=iLoc+1 && b>=1 && Nb>=iBl+1 && Nb>=1};
+local
+	double xTemp0 {iBl,iLoc| iBl==0 && 0<=iLoc<b};
+	double xTemp1 {iBl,iLoc| 0<iBl<Nb && 0<=iLoc<b};
+	double tempRed {iBl, kBl, iLoc | 0<=kBl<iBl<Nb && 0<=iLoc<b};
+let
+	x_bl[iBl,iLoc] = case
+		{|iBl==0} : xTemp0;
+		{|0<iBl<Nb} : xTemp1;
+	esac;
+	
+	use {iBl|iBl==0} ForwardSubst[b] ((iBl,iLoc,jLoc->iBl,iBl,iLoc,jLoc)@L_bl, b_bl) returns (xTemp0);
+	use {iBl|0<iBl<Nb} ForwardSubst[b] ((iBl,iLoc,jLoc->iBl,iBl,iLoc,jLoc)@L_bl, b_bl - reduce(+, (iBl,kBl,iLoc->iBl,iLoc), tempRed)) returns (xTemp1);
+	
+	use {iBl,kBl| 0<=kBl<iBl<Nb} matVectMult[b] ( (iBl,kBl,iLoc,kLoc->iBl,kBl,iLoc,kLoc)@L_bl, (iBl,kBl,iLoc->iBl,iLoc)@x_bl) returns (tempRed);
+.

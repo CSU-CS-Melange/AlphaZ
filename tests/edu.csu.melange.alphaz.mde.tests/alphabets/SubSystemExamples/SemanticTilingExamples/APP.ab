@@ -1,0 +1,47 @@
+double trans(double);
+
+affine APP {N | N>2}
+input
+	double A {i,j | 0<=(i,j)<N};
+output
+	double O {i,j | 0<=(i,j)<N};
+local
+	double temp1 {i,j | 0<=(i,j)<N };
+	double temp2 {i,j | 0<=(i,j)<N };
+	double cross1 {i,j | 0<=(i,j)<N };		// cross[i,j,k] where k<=(i,j) 					 ==> Right-up-middle part of the cross
+	double cross2 {i,j | 0<=(i,j)<N };		// cross[i,j,k] where (i,j)<k (with an equality) ==> Left-bottom part of the cross
+let
+	O[i,j] = case
+		{| i==j==N-1} : cross1[i,i];
+		{| i==j<N} : cross1[i,i] + reduce(+, [l], {|i<l<N} : cross2[i,l] * temp1[l,j]);
+		{| i<j==N-1} : cross2[i,j];
+		{| i<j<N} : cross2[i,j] + reduce(+, [l], {|j<l<N} : cross2[i,l] * temp1[l,j]);
+		{| j<i==N-1} : cross2[i,j];
+		{| j<i<N} : cross2[i,j] + reduce(+, [l], {|i<l<N} : cross2[i,l] * temp1[l,j]);
+	esac;
+	
+	temp1[i,j] = case
+		{i,j | i==j} : temp2[i,j];		// Should not be used
+		{i,j | i==j-1} : cross1[i,j];
+		{i,j | i<j} : cross1[i,j] + reduce(+, [l], {|i<l<j} : cross2[i,l] * temp2[l,j]);
+		{i,j | j==i-1} : cross1[i,j];
+		{i,j | j<i} : cross1[i,j] + reduce(+, [l], {|j<l<i} : cross1[i,l] * temp1[l,j]);	
+	esac;
+	
+	temp2[i,j] = case
+		{i,j | j<i} : A[i,j] + reduce(+, [l], {| 0<=l<=j}: cross1[i,l] * temp2[l,j]);
+		{i,j | i<=j} : A[i,j] + reduce(+, [l], {| 0<=l<=i}: cross1[i,l] * temp2[l,j]);
+	esac;
+	
+	cross1[i,j] = case
+		{i,j| i==j} : trans(temp2[i,j]);			// middle of the cross - i=j=k
+		{i,j| i<j} : cross1[i,i] * temp1[i,j];		// right part of the cross - i=k<j
+		{i,j| j<i} : temp1[i,j] * cross1[j,j];		// top part of the cross - j=k<i
+	esac;
+	
+	cross2[i,j] = case
+		{i,j| i==j} : trans(temp2[i,j]);			// should not be used
+		{i,j| i<j} : temp2[i,j] * cross1[j,j];		// bottom part of the cross - i<j=k
+		{i,j| j<i} : cross1[i,i] * temp2[i,j];		// left part of the cross - j<i=k
+	esac;
+.

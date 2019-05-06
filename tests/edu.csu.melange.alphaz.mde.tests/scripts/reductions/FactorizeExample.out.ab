@@ -1,0 +1,20 @@
+affine FactorizeExample {N|N-1>= 0}
+input
+int A {i|i>= 0 && N-i-1>= 0};
+int B {i|i>= 0 && N-i-1>= 0};
+output
+int X {i|i>= 0 && N-i-1>= 0};
+local
+int NR_X {i|i>= 0 && N-i-2>= 0};
+int NR_X_ {i|-N+i+1== 0};
+let
+X[i] = case
+{ip|N-ip-2>= 0} : (NR_X + A);
+{ip|-N+ip+1== 0} : (NR_X_ + (ip->N-1)@A);
+esac;
+NR_X[i] = case
+{|i== 0} : reduce(max, (i,j->i), {|j== 0} : B[j]);
+{|i-1>= 0} : (reduce(max, (i,j->i), {|-i+j== 0} : B[j]) max NR_X[i-1]);
+esac;
+NR_X_[i] = reduce(max, (i,j->i), {|N-j-1>= 0} : B[j]);
+.

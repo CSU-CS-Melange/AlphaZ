@@ -1,0 +1,63 @@
+float sqrt(float);		// External function
+
+affine Cholesky_blocked {M,B | M>1 && B>7 }
+input
+	float Ab { alpha,beta, ii,jj | 0<=(alpha,beta)<M && 0<=(ii,jj)<B };
+output
+	float Lb { alpha,beta, ii,jj | 0<=beta<alpha<M && 0<=(ii,jj)<B } || { alpha,beta, ii,jj | 0<=alpha==beta<M && 0<=jj<=ii<B };
+let
+	Lb[alpha,beta, ii,jj] =			// TODO: potential confusion between i<=j and j<=i
+	case
+	{alpha,beta,ii,jj | 0<=beta==alpha<M && 0<=ii==jj<B} : sqrt( Ab[alpha,beta, ii,jj]
+				- case
+					{alpha,beta,ii,jj | beta==0} : 0;
+					{alpha,beta,ii,jj | beta>0 } : reduce(+, (alpha,beta,gamma, ii,jj,kk -> alpha,beta, ii,jj) ,
+								{alpha,beta,gamma,ii,jj,kk | 0<=gamma<beta && 0<=kk<B }: Lb[beta,gamma, jj,kk] * Lb[alpha,gamma, ii,kk]
+						);
+				esac
+				- case
+					{alpha,beta,ii,jj | jj==0 } : 0;
+					{alpha,beta,ii,jj | jj>0}: reduce(+, (alpha,beta,gamma, ii,jj,kk -> alpha,beta, ii,jj) ,
+								{alpha,beta,gamma,ii,jj,kk | gamma == beta && 0 <= kk < jj } : Lb[beta,gamma, jj,kk] * Lb[alpha,gamma, ii,kk]
+						);
+				esac
+				);
+	{alpha,beta,ii,jj | 0<=beta == alpha<M && 0<=jj<ii<B} || {alpha,beta,ii,jj | 0<=beta < alpha < M} : 1/Lb[beta,beta, jj,jj] * ( Ab[alpha,beta, ii,jj]
+				- case
+					{alpha,beta,ii,jj | beta==0} : 0;
+					{alpha,beta,ii,jj | beta>0 } : reduce(+, (alpha,beta,gamma, ii,jj,kk -> alpha,beta, ii,jj) ,
+								{alpha,beta,gamma,ii,jj,kk | 0<=gamma<beta && 0<=kk<B }: Lb[beta,gamma, jj,kk] * Lb[alpha,gamma, ii,kk]
+						);
+				esac
+				- case
+					{alpha,beta,ii,jj | jj==0} : 0;
+					{alpha,beta,ii,jj | jj>0} : reduce(+, (alpha,beta,gamma, ii,jj,kk -> alpha,beta, ii,jj) ,
+								{alpha,beta,gamma,ii,jj,kk | gamma == beta && 0 <= kk < jj } : Lb[beta,gamma, jj,kk] * Lb[alpha,gamma, ii,kk]
+						);
+				esac
+				);
+	esac;
+.
+
+
+/* ORIGINAL COMPUTATION
+affine Cholesky { N | N>0 }
+input
+	float A {i,j | 0<=(i,j)<N};
+output
+	float L {i,j | 0<=j<=i<N };
+let
+	L[i,j] = case
+		{i,j | 0<=i==j} : sqrt(A[i,j] - 
+			case
+				{i,j| j==0} : 0;
+				{i,j| j>0 } : reduce(+, (i,j,k->i,j), {i,j,k | 0<=k<j}: L[j,k]*L[i,k] )
+			esac );
+		{i,j | 0<=j<i} : 1/L[j,j] * (A[i,j] -
+			case
+				{i,j| j==0} : 0;
+				{i,j| j>0} : reduce(+, (i,j,k->i,j), {i,j,k | 0<=k<j}: L[j,k]*L[i,k])
+			esac );
+	esac;
+.
+*/

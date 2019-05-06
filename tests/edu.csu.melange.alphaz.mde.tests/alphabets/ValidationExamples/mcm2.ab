@@ -1,0 +1,48 @@
+affine mcm2{ N | N > 0 }
+input
+int  pA  { j |  j>=-1 && N-j>=3} || { j |  j>=0 && N-j>=2} || { j |  j>=1 && N-j>=1};
+
+output
+int  pMinCost  {  | };
+
+local
+int  S_1  { i | i >= 0 && i <= N-1};
+
+int  S_4  { j, i_0 | j >= 1 && j <= N-1 && i_0 >= 0 && i_0 <= N-j-1};
+
+int  S_6  { j, i_0, k | j >= 1 && j <= N-1 && i_0 >= 0 && i_0 <= N-j-1 && k >= i_0 && k <= i_0+j-1};
+
+int  S_7  { j, i_0, k | j >= 1 && j <= N-1 && i_0 >= 0 && i_0 <= N-j-1 && k >= i_0 && k <= i_0+j-1};
+
+int  S_8  { j, i_0 | j >= 1 && j <= N-1 && i_0 >= 0 && i_0 <= N-j-1};
+
+int  S_9  {  | };
+
+let
+S_1[i] = 0;
+S_4[j, i_0] = 99999999;
+S_6[j, i_0, k] = (case
+{ | k >= 1+i_0}:S_8[ k-i_0, i_0 ] ;
+{| i_0-k>=0}
+:S_1[ k ] ;
+esac+case
+{ | N >= 3+k && j+i_0 >= 2+k}:S_8[ j+i_0-1-k, 1+k ] ;
+{| -N+k>=-2} || {| -j-i_0+k>=-1 && N-k>=3}
+:S_1[ j+i_0 ] ;
+esac)+((pA[ i_0-1 ]*pA[ k ])*pA[ i_0+j ]);
+S_7[j, i_0, k] = min (case
+{ | k >= 1+i_0}:S_7[ j, i_0, k-1 ] ;
+{| i_0-k>=0}
+:S_4[ j, i_0 ] ;
+esac , S_6[ j, i_0, k ] );
+S_8[j, i_0] = S_7[ j, i_0, j+i_0-1 ] ;
+S_9[] = 
+case
+{ | 1 >= N}:S_1[ 0 ] ;
+{| N>=2}:S_8[ N-1, 0 ] ;
+esac;
+
+pMinCost[  ] = case
+{ | }:S_9[  ] ;
+esac;
+.

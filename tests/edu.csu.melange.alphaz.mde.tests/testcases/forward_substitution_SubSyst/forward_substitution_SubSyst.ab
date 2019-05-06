@@ -1,0 +1,27 @@
+ affine forward_substitution_SubSyst {N| N>=1}
+given
+	float A {i,j | 0<=j<i<N};
+	float B {i | 0<=i<N};
+returns
+	float X {i | 0<=i<N};
+using
+	float temp {i | 1<=i<N};
+through
+use{i|1<=i<N} dotProd[i](A,(i,j->j)@X) returns(temp);
+	X[i] = case
+		{i| i == 0}: B[i];
+		{i| i > 0 }: B[i]-temp[i];
+	esac;
+.
+
+
+affine dotProd {N| N>=1}
+given
+	float A {i | 0<=i<N};
+	float B {i | 0<=i<N};
+returns
+	float X ;
+using
+through
+	X = reduce(+,(i-> ),A*B);
+.

@@ -1,0 +1,22 @@
+affine matrix_product_withReduce {Pb,Qb,Rb,Pl,Ql,Rl,b|Rl==0 && Ql==0 && Pl==0 && Pb>=1 && b>=1 && Qb>=1 && Rb>=1}
+input
+	float A_bl {iBl,kBl,iLoc,kLoc|Rl==0 && Ql==0 && Pl==0 && iBl>=0 && iLoc>=0 && kLoc>=0 && b>=iLoc+1 && b>=kLoc+1 && b>=1 && Pb>=iBl+1 && kBl>=0 && Qb>=kBl+1 && Pb>=1 && Qb>=1 && Rb>=1};
+	float B_bl {kBl,jBl,kLoc,jLoc|Rl==0 && Ql==0 && Pl==0 && kBl>=0 && kLoc>=0 && jLoc>=0 && b>=kLoc+1 && b>=jLoc+1 && b>=1 && Qb>=kBl+1 && jBl>=0 && Rb>=jBl+1 && Pb>=1 && Qb>=1 && Rb>=1};
+output
+	float C_bl {iBl,jBl,iLoc,jLoc|Rl==0 && Ql==0 && Pl==0 && iBl>=0 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=1 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && Pb>=1 && Qb>=1 && Rb>=1};
+local
+	float _TempRed0 {pBl,qBl,rBl,pLoc,qLoc|Rl==0 && Ql==0 && Pl==0 && pBl>=0 && pLoc>=0 && qLoc>=0 && qBl>=0 && b>=pLoc+1 && b>=qLoc+1 && Qb>=rBl+1 && Rb>=qBl+1 && Pb>=pBl+1 && rBl>=0};
+let
+C_bl[iBl,jBl,iLoc,jLoc] = case
+	{pBl,qBl,pLoc,qLoc|pBl>=0 && Pb>=pBl+1 && qBl>=0 && Qb>=1 && Rb>=qBl+1 && Rb>=1 && Pb>=1} : case
+		{pBl,qBl,pLoc,qLoc|Rl==0 && Ql==0 && Pl==0 && pLoc>=0 && qLoc>=0 && b>=pLoc+1 && b>=qLoc+1 && b>=1} : reduce(+, (pBl,qBl,rBl,pLoc,qLoc->pBl,qBl,pLoc,qLoc), _TempRed0);
+	esac;
+esac;
+
+
+_TempRed0[pBl,qBl,rBl,pLoc,qLoc] = case
+	{|} : reduce(+, (pBl,qBl,rBl,pLoc,qLoc,rLoc->pBl,qBl,rBl,pLoc,qLoc), case
+		{|Rl==0 && Ql==0 && Pl==0 && pLoc>=0 && rLoc>=0 && b>=pLoc+1 && b>=rLoc+1 && b>=1 && qLoc>=0 && b>=qLoc+1} : (A_bl[pBl,rBl,pLoc,rLoc] * B_bl[rBl,qBl,rLoc,qLoc]);
+	esac);
+esac;
+.

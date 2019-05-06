@@ -1,0 +1,11 @@
+affine ReductionOSP {N|N>=2}
+input
+	int P {i|i>=0 && N>=i && N>=2};
+output
+	int FTable {i,j|i>=0 && j>=i && N>=j+1 && N>=2};
+let
+FTable = case
+	{i,j|j==i && N>=2} : (i,j->)@0;
+	{i,j|j>=i+1 && N>=2} : (i,j->i+1,j+1)@reduce(min, (i,j,k->i,j), (((i,j,k->i-1,k-1)@FTable + (i,j,k->k,j-1)@FTable) + (((i,j,k->i-1)@P * (i,j,k->k)@P) * (i,j,k->j)@P)));
+esac;
+.

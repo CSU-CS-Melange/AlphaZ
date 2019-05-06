@@ -1,0 +1,27 @@
+// Cyclic dependance between sub-systems
+affine system1 {N| N>0}
+given
+	long A1 {i| 0<=i<N};
+returns
+	long O1 {i| 0<=i<N};
+through
+	use system2[N] (A1) returns (O1);
+.
+
+affine system2 {N| N>0}
+given
+	long A2 {i| 0<=i<N};
+returns
+	long O2 {i| 0<=i<N};
+through
+	use system3[N] (A2) returns (O2);
+.
+
+affine system3 {N| N>0}
+given
+	long A3 {i| 0<=i<N};
+returns
+	long O3 {i| 0<=i<N};
+through
+	use system1[N] (A3) returns (O3);
+.

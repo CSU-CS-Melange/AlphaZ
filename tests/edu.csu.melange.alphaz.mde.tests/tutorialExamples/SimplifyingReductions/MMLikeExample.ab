@@ -1,0 +1,9 @@
+//The very first example from the SR paper
+affine MMLikeExample {N|N>0}
+input
+	float A,B {i,j|0<=(i,j)<N};
+output
+	float Y {i|0<=i<N};
+let
+	Y[i] = reduce(+, [j,k], {|0<=(j,k)<=i}: A[i,k] * B[k,j]);
+.

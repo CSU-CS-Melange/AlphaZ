@@ -1,0 +1,20 @@
+affine fillMatrices1_unafold {N , MAXLOOP |N >7 && MAXLOOP >7 && N>10}
+input
+	int Qprime {i , j |j <= N && 0 < i && 1 < j && i <= N };
+output
+	int QBI_SR2 {i ,j , ix |0 < i && 6 <=j -i - ix && 4 <= ix && j -i - ix -2 <= MAXLOOP && j <= N };
+let
+	QBI_SR2 [i ,j , ix ] = reduce ( min , (i ,j , ix , jp ->i ,j , jp - ix ), (Qprime [ ix , jp ]));
+.
+
+
+//affine fillMatrices1_unafold {N , MAXLOOP |N >7 && MAXLOOP >7 && N>10}
+//input
+//	int Qprime {i , j |j <= N && 0 < i && 1 < j && i <= N };
+//output
+//	int QBI_SR2 {i ,j , ip |0 < i && 6 <=j -i - ip && 4 <= ip && j -i - ip -2 <= MAXLOOP && j <= N };
+//let
+//	QBI_SR2 [i ,j , ip ] = reduce ( min , (i ,j , ip , jp ->i ,j , jp - ip ) , 
+//		{| - i +4 <= ip && -j + jp +3 >= 0 && j - jp -2 >= 0} : (Qprime [ ip , jp ])
+//	);
+//.

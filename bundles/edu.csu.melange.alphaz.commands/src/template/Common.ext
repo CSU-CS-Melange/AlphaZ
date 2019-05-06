@@ -1,0 +1,12 @@
+import commandIF;
+
+//Returns if an overloading has return value or not
+Boolean hasReturnValue(Command this): 
+	this.getOutput().toString().compareTo("void") != 0;
+	
+//Returns Inputs used by the BasicCommand
+List getItems(Overloading this):
+	((BasicCommand)(this.eContainer)).inputs;
+
+String javaString(String str):
+	JAVA commandIF.util.EscapeString.java(java.lang.String);

@@ -1,0 +1,15 @@
+import polyIRCG;
+import polyIRCG::C;
+import polyhedralIR;
+	
+String getPCountName():JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.PGAS.PGASC.getPCountName();
+	
+String getCopyInFunctionName():JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.PGAS.PGASC.getCopyInFunctionName();
+	
+String getCopyOutFunctionName():JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.PGAS.PGASC.getCopyOutFunctionName();
+	
+String getPartitioningComputation(TiledCLoop this):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.PGAS.PGASC.getPartitioningComputation(org.polymodel.polyhedralIR.polyIRCG.C.TiledCLoop);

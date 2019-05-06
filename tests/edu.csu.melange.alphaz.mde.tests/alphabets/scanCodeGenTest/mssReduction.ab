@@ -1,0 +1,15 @@
+affine MssReduction {N | N > 1}
+input
+	int X {i | 0 <= i <= N};
+output
+	int m {|};
+local 
+	int T {i | 0 <= i <= N};
+let	
+	T[i] = case
+			{| i == 0}: X[0];
+			{| i > 0}: max(T[i-1], X[i]);
+			esac;
+			
+	m[] = T[N];
+.

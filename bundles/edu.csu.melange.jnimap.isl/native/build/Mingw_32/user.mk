@@ -1,0 +1,12 @@
+#PROTECTED REGION ID(user_Mingw_32) ENABLED START#
+
+CC=i586-mingw32msvc-gcc
+
+EXTRA_CFLAGS=
+JAVA_HOME = /usr/lib/jvm/java-7-openjdk-amd64
+JAVA_EXTRA_INC= -I$(JAVA_HOME)/include/linux
+EXTRA_LIBS=
+EXTRA_INCDIR=
+#PROTECTED REGION END#
+
+JAVA_H=$(JAVA_HOME)/bin/javah

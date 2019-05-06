@@ -1,0 +1,21 @@
+affine StripMM {n,b,N|N>0&&b>0&&n>0}
+given
+	float A{ii,i,j| 0<=j<N && 0<=ii<n && 0<=i<b};
+	float B{i,jj,j| 0<=i<N && 0<=jj<n && 0<=j<b};
+returns
+	float C {ii,jj,i,j| 0<=(i,j)<b && 0<=(ii,jj)<n};
+using // No local variables
+through
+use {ii,jj| 0<=(ii,jj)<n} MM[b,N,b] ((ii,jj,i,j->ii,i,j)@A,(ii,jj,i,j->i,jj,j)@B) returns(C);
+.
+
+affine MM {P,Q,R| (P,Q,R)>0}
+given
+	float A {i,j | 0<=i<P && 0<=j<Q};
+	float B {i,j | 0<=i<Q && 0<=j<R};
+returns
+	float C {i,j | 0<=i<P && 0<=j<R};
+using // No local variables
+through
+   C[i,j]      = reduce(+, [k], A[i,k]*B[k,j]);
+.

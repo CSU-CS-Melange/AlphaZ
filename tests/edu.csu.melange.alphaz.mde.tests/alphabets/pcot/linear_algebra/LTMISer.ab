@@ -1,0 +1,18 @@
+affine LTMISer {N | N > 1}
+input
+	double L {i,j | 0<=j<=i<N};
+output
+	double LI {i,j | 0<=j<=i<N};
+local
+	double LITemp {i,j,k | 0<=j<=k<i<N };
+let
+	LI[i,j] = case
+	    {|i==j} : 1.0/L[i,j];
+	    {|i>j} : LITemp[i,j,i-1];
+	esac;
+	
+	LITemp[i,j,k] = case
+		{|k==j} : -L[i,k]/LI[k,j];
+		{|i>k>j} : LITemp[i,j,k-1] - L[i,k]*LITemp[k,j,k-1];
+	esac;
+.

@@ -1,0 +1,49 @@
+float sqrt(float);
+affine SPDMI4 {N| N > 1}
+input
+	float A {i,j | 1<=j<=i<=N};
+output
+    float AInverse{i,j | 1<=j<=i<=N};	
+local
+    float L {i,j | 1<=j<=i<=N}; 
+    float LInverse {i,j| 1<=j<=i<=N};
+    float reduceSubs1 {i,j,k|1<=j<=i<=N && 1<=k<i && i==j && i>1};
+    float reduceSubs2 {i,j,k|1<=j<i<=N && j>1 && 1<=k<j};
+    float reduceSubs3 {i,j,k|1<=j<i<=N && j<=k<i};
+    float reduceSubs4 {i,j,k|1<=j<=i<=N && i<=k<=N};   
+let
+   reduceSubs1[i,j,k]= 
+   case
+   {|k==1}         : L[i,k]*L[i,k];
+   {|k>1}          : reduceSubs1[i,j,k-1] + (L[j,k]*L[i,k]);
+   esac;
+   reduceSubs2[i,j,k] = 
+   case
+   {|k==1}	       : L[j,k]*L[i,k];
+   {|k>1}          : reduceSubs2[i,j,k-1] + L[j,k]*L[i,k];
+   esac;
+   L[i,j] = 
+   case
+   {|i==j && i==1} : sqrt(A[i,j]);
+   {|i==j && i>1}  : sqrt(A[i,j]-reduceSubs1[i,j,i-1]);
+   {|i>j && j==1}  : (1/L[j,j])*A[i,j];
+   {|i>j}          : (1/L[j,j])*(A[i,j]-reduceSubs2[i,j,j-1]);      
+   esac; 
+   reduceSubs3[i,j,k]=
+   case
+   {|k==j}         : L[i,k]*LInverse[k,j];
+   {|k>j}          : reduceSubs3[i,j,k-1] +L[i,k]*LInverse[k,j];      
+   esac;
+   LInverse[i,j]= 
+   case
+   {|i==j}	       : 1/L[i,j];
+   {|i>j}	       :-(1/L[i,i]) *reduceSubs3[i,j,i-1];
+   esac;
+   reduceSubs4[i,j,k] = 
+   case
+   {|k==i}         : LInverse[k,i]*LInverse[k,j];
+   {|k>i}          : reduceSubs4[i,j,k-1] + LInverse[k,i]*LInverse[k,j];
+   esac;
+  
+   AInverse[i,j] = reduceSubs4[i,j,N]; 
+.

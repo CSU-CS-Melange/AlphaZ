@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="polymodel" nsURI="org.polymodel" nsPrefix="polymodel">
+  <eClassifiers xsi:type="ecore:EClass" name="Domain" eSuperTypes="#//PolymodelVisitable">
+    <eOperations name="union">
+      <eGenericType eTypeParameter="#//Domain/union/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+      <eParameters name="domain" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="image">
+      <eGenericType eTypeParameter="#//Domain/image/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+      <eParameters name="relation" eType="#//AbstractRelation"/>
+    </eOperations>
+    <eOperations name="difference">
+      <eGenericType eTypeParameter="#//Domain/difference/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+      <eParameters name="domain" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="intersection">
+      <eGenericType eTypeParameter="#//Domain/intersection/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+      <eParameters name="domain" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="isEmpty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="simplify">
+      <eGenericType eTypeParameter="#//Domain/simplify/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+      <eParameters name="context" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="simplify">
+      <eGenericType eTypeParameter="#//Domain/simplify.1/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="boundingBox">
+      <eGenericType eTypeParameter="#//Domain/boundingBox/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="equivalence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="domain" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitDomain(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eOperations name="isUniverse" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="lexMin">
+      <eGenericType eTypeParameter="#//Domain/lexMin/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="lexMax">
+      <eGenericType eTypeParameter="#//Domain/lexMax/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="detectEqualities">
+      <eGenericType eTypeParameter="#//Domain/detectEqualities/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="affineHull">
+      <eGenericType eTypeParameter="#//Domain/affineHull/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="polyhedralHull" lowerBound="1">
+      <eGenericType eTypeParameter="#//Domain/polyhedralHull/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="toMatrices" upperBound="-1" eType="#//matrix/Matrix"/>
+    <eOperations name="complement" lowerBound="1">
+      <eGenericType eTypeParameter="#//Domain/complement/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="cartesianProduct">
+      <eGenericType eTypeParameter="#//Domain/cartesianProduct/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+      <eParameters name="domain" eType="#//Domain"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="polyhedra" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntConstraintSystem"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dimensions" eType="#//DomainDimensions"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//Label"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DimensionsManager" eSuperTypes="#//PolymodelVisitable">
+    <eOperations name="getDimension" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable">
+      <eParameters name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getDimension" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable">
+      <eParameters name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="getInputDimension" eType="#//InputDimension">
+      <eParameters name="var" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    </eOperations>
+    <eOperations name="getOutputDimension" eType="#//OutputDimension">
+      <eParameters name="var" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    </eOperations>
+    <eOperations name="getParameter" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable">
+      <eParameters name="position" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getParameter" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable">
+      <eParameters name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eParameters name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitDimensionsManager(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dimensions" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputsDimensions" upperBound="-1"
+        eType="#//InputDimension" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputsDimensions" upperBound="-1"
+        eType="#//OutputDimension" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractRelation" abstract="true" eSuperTypes="#//PolymodelVisitable">
+    <eOperations name="accept">
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eOperations name="reverse" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/reverse/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+      <eParameters name="manager" lowerBound="1" eType="#//DimensionsManager"/>
+    </eOperations>
+    <eOperations name="isBijective" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isSingleValued" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isEmpty" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="equivalence" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="map" eType="#//AbstractRelation"/>
+    </eOperations>
+    <eOperations name="intersectDomain" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/intersectDomain/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+      <eParameters name="context" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="intersectRange" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/intersectRange/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+      <eParameters name="context" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="intersection" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/intersection/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+      <eParameters name="map" eType="#//AbstractRelation"/>
+    </eOperations>
+    <eOperations name="union" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/union/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+      <eParameters name="map" eType="#//AbstractRelation"/>
+    </eOperations>
+    <eOperations name="difference" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/difference/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+      <eParameters name="map" lowerBound="1" eType="#//AbstractRelation"/>
+    </eOperations>
+    <eOperations name="buildFunction">
+      <eGenericType eTypeParameter="#//AbstractRelation/buildFunction/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Function"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="getDomain" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/getDomain/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="getRange" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/getRange/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Domain"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="applyDomain" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/applyDomain/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+      <eParameters name="map" lowerBound="1" eType="#//AbstractRelation"/>
+    </eOperations>
+    <eOperations name="applyRange" lowerBound="1">
+      <eGenericType eTypeParameter="#//AbstractRelation/applyRange/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+      <eParameters name="map" lowerBound="1" eType="#//AbstractRelation"/>
+    </eOperations>
+    <eOperations name="transitiveClosure">
+      <eGenericType eTypeParameter="#//AbstractRelation/transitiveClosure/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="exactTransitiveClosure">
+      <eGenericType eTypeParameter="#//AbstractRelation/exactTransitiveClosure/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="simplify">
+      <eGenericType eTypeParameter="#//AbstractRelation/simplify/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//AbstractRelation"/>
+      </eTypeParameters>
+    </eOperations>
+    <eOperations name="toMatrices" upperBound="-1" eType="#//matrix/Matrix"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dimensions" eType="#//RelationDimensions"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="basicRelations" upperBound="-1"
+        eType="#//BasicRelation" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExistentialVariable" eSuperTypes="platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable #//PolymodelVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitExistentialVariable(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="definition" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//Domain"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DomainDimensions" eSuperTypes="#//PolymodelVisitable">
+    <eOperations name="copy" eType="#//DomainDimensions"/>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitDomainDimensions(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eOperations name="getParameterDimensionOf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eParameters name="variable" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    </eOperations>
+    <eOperations name="getDimensionOf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eParameters name="variable" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="indices" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="existential" upperBound="-1"
+        eType="#//ExistentialVariable" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IndexDimension" eSuperTypes="platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable #//PolymodelVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitIndexDimension(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelationDimensions" eSuperTypes="#//PolymodelVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitRelationDimensions(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eOperations name="getParameterDimensionOf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eParameters name="variable" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    </eOperations>
+    <eOperations name="getInputDimensionOf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eParameters name="variable" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    </eOperations>
+    <eOperations name="getOutputDimensionOf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
+      <eParameters name="variable" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//InputDimension"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="#//OutputDimension"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="existential" upperBound="-1"
+        eType="#//ExistentialVariable" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BasicRelation" eSuperTypes="#//PolymodelVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitBasicRelation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="input" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntConstraintSystem"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="output" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntConstraintSystem"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="relation" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntConstraintSystem"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="in" eType="#//Label" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="out" eType="#//Label" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//AbstractRelation #//PolymodelVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitRelation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Function" eSuperTypes="#//PolymodelVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitFunction(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eOperations name="getExpression" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+      <eParameters name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="getExpressions" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+    <eOperations name="buildRelation">
+      <eGenericType eTypeParameter="#//Function/buildRelation/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Relation"/>
+      </eTypeParameters>
+      <eParameters name="manager" lowerBound="1" eType="#//DimensionsManager"/>
+    </eOperations>
+    <eOperations name="equivalence" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="func" lowerBound="1" eType="#//Function"/>
+    </eOperations>
+    <eOperations name="compose" lowerBound="1">
+      <eGenericType eTypeParameter="#//Function/compose/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Function"/>
+      </eTypeParameters>
+      <eParameters name="func" lowerBound="1" eType="#//Function"/>
+    </eOperations>
+    <eOperations name="inverse">
+      <eGenericType eTypeParameter="#//Function/inverse/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Function"/>
+      </eTypeParameters>
+      <eParameters name="manager" lowerBound="1" eType="#//DimensionsManager"/>
+    </eOperations>
+    <eOperations name="inverseInContext">
+      <eGenericType eTypeParameter="#//Function/inverseInContext/T"/>
+      <eTypeParameters name="T">
+        <eBounds eClassifier="#//Function"/>
+      </eTypeParameters>
+      <eParameters name="manager" lowerBound="1" eType="#//DimensionsManager"/>
+      <eParameters name="context" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="toMatrix" eType="#//matrix/Matrix"/>
+    <eOperations name="uniformizeInContext" lowerBound="1" eType="#//Function">
+      <eParameters name="context" lowerBound="1" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="nullspace" eType="#//Function"/>
+    <eOperations name="linearPart" lowerBound="1" eType="#//matrix/Matrix"/>
+    <eOperations name="linearPartWithParameters" lowerBound="1" eType="#//matrix/Matrix"/>
+    <eOperations name="linearPartAsFunction" lowerBound="1" eType="#//Function"/>
+    <eOperations name="constantPart" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eOperations name="isUniform" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isIdentity" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expressionsMap" upperBound="-1"
+        containment="true">
+      <eGenericType eClassifier="#//ValueContainedMap">
+        <eTypeArguments eClassifier="#//OutputDimension"/>
+        <eTypeArguments eClassifier="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dimensions" eType="#//DomainDimensions"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="in" eType="#//Label" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="out" eType="#//Label" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueContainedMap" instanceClassName="java.util.Map$Entry">
+    <eTypeParameters name="K"/>
+    <eTypeParameters name="V"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key">
+      <eGenericType eTypeParameter="#//ValueContainedMap/K"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" containment="true">
+      <eGenericType eTypeParameter="#//ValueContainedMap/V"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//PolymodelVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitLabel(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelationDimension" abstract="true" eSuperTypes="platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable #//PolymodelVisitable">
+    <eOperations name="accept">
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dimension" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputDimension" eSuperTypes="#//RelationDimension #//PolymodelVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitInputDimension(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutputDimension" eSuperTypes="#//RelationDimension #//PolymodelVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitOutputDimension(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PolymodelVisitor" abstract="true">
+    <eOperations name="visitDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="if(d.getDimensions()!=null)&#xA;&#x9;d.getDimensions().accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//Domain"/>
+    </eOperations>
+    <eOperations name="visitDimensionsManager">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="for(InputDimension o: d.getInputsDimensions())&#xA;&#x9; o.accept(this);&#xA;for(OutputDimension o: d.getOutputsDimensions())&#xA;&#x9; o.accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//DimensionsManager"/>
+    </eOperations>
+    <eOperations name="visitExistentialVariable">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="if(e.getDomain()!=null)&#xA;&#x9;e.getDomain().accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="e" eType="#//ExistentialVariable"/>
+    </eOperations>
+    <eOperations name="visitDomainDimensions">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="for(ExistentialVariable o: d.getExistential())&#xA;&#x9; o.accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//DomainDimensions"/>
+    </eOperations>
+    <eOperations name="visitIndexDimension">
+      <eParameters name="i" eType="#//IndexDimension"/>
+    </eOperations>
+    <eOperations name="visitRelationDimensions">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="for(ExistentialVariable o: r.getExistential())&#xA;&#x9; o.accept(this);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="r" eType="#//RelationDimensions"/>
+    </eOperations>
+    <eOperations name="visitBasicRelation">
+      <eParameters name="b" eType="#//BasicRelation"/>
+    </eOperations>
+    <eOperations name="visitFunction">
+      <eParameters name="f" eType="#//Function"/>
+    </eOperations>
+    <eOperations name="visitRelation">
+      <eParameters name="r" eType="#//Relation"/>
+    </eOperations>
+    <eOperations name="visitLabel">
+      <eParameters name="l" eType="#//Label"/>
+    </eOperations>
+    <eOperations name="visitInputDimension">
+      <eParameters name="i" eType="#//InputDimension"/>
+    </eOperations>
+    <eOperations name="visitOutputDimension">
+      <eParameters name="o" eType="#//OutputDimension"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PolymodelVisitable" abstract="true"
+      interface="true">
+    <eOperations name="accept">
+      <eParameters name="visitor" eType="#//PolymodelVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eSubpackages name="matrix" nsURI="org.polymodel.matrix" nsPrefix="matrix">
+    <eClassifiers xsi:type="ecore:EClass" name="Matrix">
+      <eOperations name="inverse" eType="#//matrix/Matrix"/>
+      <eOperations name="inverseInContext" eType="#//matrix/Matrix">
+        <eParameters name="context" eType="#//matrix/Matrix"/>
+      </eOperations>
+      <eOperations name="mul" eType="#//matrix/Matrix">
+        <eParameters name="b" eType="#//matrix/Matrix"/>
+      </eOperations>
+      <eOperations name="add" eType="#//matrix/Matrix">
+        <eParameters name="b" eType="#//matrix/Matrix"/>
+      </eOperations>
+      <eOperations name="sub" eType="#//matrix/Matrix">
+        <eParameters name="b" eType="#//matrix/Matrix"/>
+      </eOperations>
+      <eOperations name="transpose" eType="#//matrix/Matrix"/>
+      <eOperations name="identity" eType="#//matrix/Matrix">
+        <eParameters name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="findHermiteBasis" lowerBound="2" upperBound="2" eType="#//matrix/Matrix"/>
+      <eOperations name="isUnimodular" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="isInHNF" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="isIntegral" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="left_hermite" upperBound="-1" eType="#//matrix/Matrix"/>
+      <eOperations name="isIdentity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="isSquare" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="toConstraints" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntConstraintSystem">
+        <eParameters name="variables" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      </eOperations>
+      <eOperations name="getNbCols" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNbRows" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="set">
+        <eParameters name="row" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="col" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      </eOperations>
+      <eOperations name="get" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+        <eParameters name="row" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="col" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="equivalence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="m" eType="#//matrix/Matrix"/>
+      </eOperations>
+      <eOperations name="nullspace" eType="#//matrix/Matrix"/>
+      <eOperations name="toDomain" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntConstraintSystem">
+        <eParameters name="params" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+        <eParameters name="indices" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      </eOperations>
+      <eOperations name="toFunction" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+        <eParameters name="params" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+        <eParameters name="indices" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      </eOperations>
+      <eOperations name="rowRank" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="columnRank" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="isFullRowRank" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="isFullColumnRank" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="columnSpace" lowerBound="1" eType="#//matrix/Matrix"/>
+      <eOperations name="hermiteNormalForm" lowerBound="1" upperBound="2" eType="#//matrix/Matrix"/>
+      <eOperations name="appendRow" lowerBound="1" eType="#//matrix/Matrix">
+        <eParameters name="mat" lowerBound="1" eType="#//matrix/Matrix"/>
+      </eOperations>
+      <eOperations name="appendColumn" lowerBound="1" eType="#//matrix/Matrix">
+        <eParameters name="mat" lowerBound="1" eType="#//matrix/Matrix"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="rows" upperBound="-1"
+          eType="#//matrix/MatrixRow" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MatrixRow">
+      <eOperations name="getSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="toConstraint" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntConstraint">
+        <eParameters name="variables" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      </eOperations>
+      <eOperations name="get" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong">
+        <eParameters name="col" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="set">
+        <eParameters name="col" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELongObject"/>
+    </eClassifiers>
+  </eSubpackages>
+</ecore:EPackage>

@@ -1,0 +1,10 @@
+affine NREx {N|N>0}
+input
+	int Y;
+	int A{i|0<=i<N};
+output
+	int X;
+	
+let
+	X[] = Y[] + reduce(+,[i], A[i]);
+.

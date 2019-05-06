@@ -1,0 +1,8 @@
+affine oneDim {T|T>0 }
+given
+    double x0 {i |0<=i<= T};
+returns
+    double x;
+through
+    x = reduce(+, [i], x0[i]);
+.

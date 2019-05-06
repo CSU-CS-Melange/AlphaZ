@@ -1,0 +1,159 @@
+float sqrt(float);
+
+/*affine baseCholeskySquare {N| N>1}
+input
+	float A {i,j | 0<=(i,j)<N};
+output
+	float L {i,j | 0<=(i,j)<N};
+local 
+	float temp {i,j| 0 < j <= i <N};
+let
+	L[i,j] = case
+			{|i < j}: 0;
+			{|i == j == 0}: sqrt(A[i,j]);
+			{|i == j > 0}: sqrt(A[j,j]-temp[i,j]);
+			{|i > j && j == 0}: A[i,j]/L[j,j];
+			{|i > j > 0}: (A[i,j] - temp[i,j])/L[j,j];
+			esac;
+	temp[i,j] = reduce(+, (i,j,k->i,j), {|k < j}:L[i,k]*L[j,k]);
+.
+
+
+affine baseMxMT {N| N>1}
+input
+	float A, B {i,j | 0<=(i,j)<N};
+output
+	float C {i,j | 0<=(i,j)<N};
+let
+	C[i,j]	= reduce(+, [k], A[i,k]*B[j,k]);
+.
+
+affine baseTriInv {N| N>1}
+input
+	float L {i,j | 0<=(i,j)<N};
+	float A {i,j | 0<=(i,j)<N};
+output
+	float B {i,j | 0<=(i,j)<N};
+local 
+	float temp {i,j | 0<=i<N && 0<j<N};
+let
+	B[i,j]	= case
+	{|j == 0}: A[i,j]/L[j,j];
+	{|j > 0}: (A[i,j]-temp[i,j])/L[j,j];
+	esac;
+	temp[i,j] = reduce(+, [k], {|k<j}:B[i,k]*L[j,k]);
+.
+
+affine BlockCholesky {n, b| (n,b)>2}
+input
+	float A {ii,jj,i,j | 0<=(ii,jj)<n && 0<=(i,j)<b};
+output
+	float L {ii,jj,i,j | 0<=jj<=ii<n && 0<=(i,j)<b};
+local
+	float L00 {i,j | 0<=(i,j)<b};
+	float Ldiag {ii,i,j | 0<ii<n && 0<=(i,j)<b};
+	float Lrest {ii,jj,i,j | 0<=jj<ii<n && 0<=(i,j)<b};
+	float InvInp {ii,i,j | 0<=ii<n-1 && 0<=(i,j)<b}; // Note: the inverse of the last block is not needed
+	float MxMTOuts {ii,jj,kk,i,j | 0<=kk<jj<=ii<n && 0<=(i,j)<b};
+	float Temp  {ii,jj,i,j | 0<=jj<=ii<n && 0<=(i,j)<b};
+let
+	L[ii,jj,i,j] = case
+	{|ii==jj==0}:L00[i,j];
+	{|ii==jj>0}: Ldiag[ii,i,j];
+	Lrest;
+	esac;
+	
+	InvInp[ii,i,j] = case
+	{|ii==0}:L00[i,j];
+	{|ii>0}:Ldiag[ii,i,j];
+	esac;
+	//compute A'[ii,jj,i,j] = A[ii,jj,i,j] - sum(L[ii,kk,i,j]*L[jj,kk,i,j])
+	Temp[ii,jj,i,j] = case
+	{|jj==0}:A;
+	{|jj > 0}: A-reduce(+,(ii,jj,kk,i,j->ii,jj,i,j),MxMTOuts);
+	esac;
+	
+	//COMPUTE THE L00: The first block can be computed as regular cholesky
+	use baseCholeskySquare[b] ((i,j->0,0,i,j)@A) returns (L00);
+	use {ii,jj,kk| 0<=kk<jj<=ii<n} baseMxMT[b] ((ii,jj,kk,i,j -> ii,kk,i,j)@L,(ii,jj,kk,i,j -> jj,kk,i,j)@L) returns (MxMTOuts);
+	//compute the diaginal block with normal cholesky
+	use {ii|0<ii<n} baseCholeskySquare[b] ((ii,i,j->ii,ii,i,j)@Temp) returns (Ldiag);
+	use {ii,jj|0<=jj<ii<n} baseTriInv[b] ((ii,jj,i,j->jj,i,j)@InvInp, Temp) returns (Lrest);
+.
+*/
+affine baseCholeskySquare {N| N>1}
+input
+	double A {i,j | 0<=(i,j)<N};
+output
+	double L {i,j | 0<=j<=i<N};
+local 
+	double temp {i,j| 0<j<=i<N};
+let
+	L[i,j] = case
+			{|i == j == 0}: sqrt(A[i,j]);
+			{|i == j > 0}: sqrt(A[j,j]-temp[i,j]);
+			{|i > j && j == 0}: A[i,j]/L[j,j];
+			{|i > j > 0}: (A[i,j] - temp[i,j])/L[j,j];
+			esac;
+	temp[i,j] = reduce(+, (i,j,k->i,j), {|k < j}:L[i,k]*L[j,k]);
+.
+
+
+affine baseMxMT {N| N>1}
+input
+	double A, B {i,j | 0<=(i,j)<N};
+output
+	double C {i,j | 0<=(i,j)<N};
+let
+	C[i,j]	= reduce(+, [k], A[i,k]*B[j,k]);
+.
+
+affine baseTriInv {N| N>1}
+input
+	double L {i,j | 0<=j<=i<N};
+	double A {i,j | 0<=(i,j)<N};
+output
+	double B {i,j | 0<=(i,j)<N};
+local 
+	double temp {i,j | 0<=i<N && 0<j<N};
+let
+	B[i,j]	= case
+	{|j == 0}: A[i,j]/L[j,j];
+	{|j > 0}: (A[i,j]-temp[i,j])/L[j,j];
+	esac;
+	temp[i,j] = reduce(+, [k], {|k<j}:B[i,k]*L[j,k]);
+.
+
+affine BlockCholesky {n, b| (n,b)>2}
+input
+	double A {ii,jj,i,j | 0<=(ii,jj)<n && 0<=(i,j)<b};
+output
+	double L {ii,jj,i,j | 0<=jj<ii<n && 0<=(i,j)<b} || {ii,jj,i,j| 0<=jj==ii<n && 0 <=j<=i<b};
+local
+	double Ldiag {ii,i,j | 0<=ii<n && 0<=j<=i<b};
+	double Lrest {ii,jj,i,j | 0<=jj<ii<n && 0<=(i,j)<b};
+	double MxMTOuts {ii,jj,kk,i,j | 0<=kk<jj<=ii<n && 0<=(i,j)<b};
+	double Temp_MxMTouts {ii,jj,kk,i,j|0<=kk<jj<=ii<n && 0<=(i,j)<b};
+	double Temp  {ii,jj,i,j | 0<=jj<=ii<n && 0<=(i,j)<b};
+let
+	L[ii,jj,i,j] = case
+	{|ii==jj}: Ldiag[ii,i,j];
+	Lrest;
+	esac;
+	
+	Temp_MxMTouts[ii,jj,kk,i,j] = case
+		{|kk==0}: MxMTOuts;
+		{|kk>0}: Temp_MxMTouts[ii,jj,kk-1,i,j] + MxMTOuts[ii,jj,kk,i,j];
+		esac;
+	//compute A'[ii,jj,i,j] = A[ii,jj,i,j] - sum(L[ii,kk,i,j]*L[jj,kk,i,j])
+	Temp[ii,jj,i,j] = case
+	{|jj==0}:A;
+	{|jj > 0}: A-Temp_MxMTouts[ii,jj,jj-1,i,j];
+	esac;
+	
+	//COMPUTE THE L00: The first block can be computed as regular cholesky 
+	//compute the diaginal block with normal cholesky
+	use {ii|0<=ii<n} baseCholeskySquare[b] ((ii,i,j->ii,ii,i,j)@Temp) returns (Ldiag);
+	use {ii,jj,kk| 0<=kk<jj<=ii<n} baseMxMT[b] ((ii,jj,kk,i,j -> ii,kk,i,j)@L,(ii,jj,kk,i,j -> jj,kk,i,j)@L) returns (MxMTOuts);
+	use {ii,jj|0<=jj<ii<n} baseTriInv[b] ((ii,jj,i,j->jj,i,j)@Ldiag, Temp) returns (Lrest);
+.

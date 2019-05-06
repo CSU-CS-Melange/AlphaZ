@@ -1,0 +1,12 @@
+affine HMMER {N | N > 1}
+input
+	int A {i | 0 <= i < N};
+	int B {i | 0 <= i < N};
+output
+	int C {i | 0 <= i < N}; 
+let
+	C[i] = case
+			{|i==0}: A[0];
+			{|i > 0}: max(C[i-1]+B[i], A[i]);
+			esac;
+.

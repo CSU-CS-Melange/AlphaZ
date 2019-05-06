@@ -1,0 +1,151 @@
+// Default operators
+
+%op T IntTerm(coef : long ) {
+	/*PROTECTED REGION ID(tom_operator_IntTerm) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntTerm}
+	get_slot(coef,t) {((org.polymodel.algebra.IntTerm)$t).getCoef()}
+	make(coef){org.polymodel.algebra.internal.AlgebraTomFactory.IntTerm($coef)}
+	/*PROTECTED REGION END*/
+}
+
+%op V Variable(name : String ) {
+	/*PROTECTED REGION ID(tom_operator_Variable) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.Variable}
+	get_slot(name,t) {((org.polymodel.algebra.Variable)$t).getName()}
+	make(name){org.polymodel.algebra.internal.AlgebraTomFactory.Variable($name)}
+	/*PROTECTED REGION END*/
+}
+
+%op C IntConstraint(comparisonOperator : org_polymodel_algebra_ComparisonOperator ,lhs : E , rhs : E ) {
+	/*PROTECTED REGION ID(tom_operator_IntConstraint) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraint}
+	get_slot(comparisonOperator,t) {((org.polymodel.algebra.IntConstraint)$t).getComparisonOperator()}
+	get_slot(lhs,t) {((org.polymodel.algebra.IntConstraint)$t).getLhs()}
+	get_slot(rhs,t) {((org.polymodel.algebra.IntConstraint)$t).getRhs()}
+	make(comparisonOperator, lhs, rhs){org.polymodel.algebra.internal.AlgebraTomFactory.IntConstraint($comparisonOperator, $lhs, $rhs)}
+	/*PROTECTED REGION END*/
+}
+
+%op ICS IntConstraintSystem(constraints : CL ) {
+	/*PROTECTED REGION ID(tom_operator_IntConstraintSystem) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraintSystem}
+	get_slot(constraints,t) {enforce(((org.polymodel.algebra.IntConstraintSystem)$t).getConstraints())}
+	make(constraints){org.polymodel.algebra.internal.AlgebraTomFactory.IntConstraintSystem($constraints)}
+	/*PROTECTED REGION END*/
+}
+
+%op E CompositeIntExpression(operator : org_polymodel_algebra_CompositeOperator ,left : E , right : E ) {
+	/*PROTECTED REGION ID(tom_operator_CompositeIntExpression) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.CompositeIntExpression}
+	get_slot(operator,t) {((org.polymodel.algebra.CompositeIntExpression)$t).getOperator()}
+	get_slot(left,t) {((org.polymodel.algebra.CompositeIntExpression)$t).getLeft()}
+	get_slot(right,t) {((org.polymodel.algebra.CompositeIntExpression)$t).getRight()}
+	make(operator, left, right){org.polymodel.algebra.internal.AlgebraTomFactory.CompositeIntExpression($operator, $left, $right)}
+	/*PROTECTED REGION END*/
+}
+
+%op E SelectExpression(condition : ICSL , then : E , else : E ) {
+	/*PROTECTED REGION ID(tom_operator_SelectExpression) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.SelectExpression}
+	get_slot(condition,t) {enforce(((org.polymodel.algebra.SelectExpression)$t).getCondition())}
+	get_slot(then,t) {((org.polymodel.algebra.SelectExpression)$t).getThen()}
+	get_slot(else,t) {((org.polymodel.algebra.SelectExpression)$t).getElse()}
+	make(condition, then, else){org.polymodel.algebra.internal.AlgebraTomFactory.SelectExpression($condition, $then, $else)}
+	/*PROTECTED REGION END*/
+}
+
+%op E AffineExpression(terms : terms ) {
+	/*PROTECTED REGION ID(tom_operator_AffineExpression) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.affine.AffineExpression}
+	get_slot(terms,t) {enforce(((org.polymodel.algebra.affine.AffineExpression)$t).getTerms())}
+	make(terms){org.polymodel.algebra.internal.AlgebraTomFactory.AffineExpression($terms)}
+	/*PROTECTED REGION END*/
+}
+
+%op T AffineTerm(coef : long ,variable : V ) {
+	/*PROTECTED REGION ID(tom_operator_AffineTerm) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.affine.AffineTerm}
+	get_slot(coef,t) {((org.polymodel.algebra.affine.AffineTerm)$t).getCoef()}
+	get_slot(variable,t) {((org.polymodel.algebra.affine.AffineTerm)$t).getVariable()}
+	make(coef, variable){org.polymodel.algebra.internal.AlgebraTomFactory.AffineTerm($coef, $variable)}
+	/*PROTECTED REGION END*/
+}
+
+%op E QuasiAffineExpression(terms : terms ) {
+	/*PROTECTED REGION ID(tom_operator_QuasiAffineExpression) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.QuasiAffineExpression}
+	get_slot(terms,t) {enforce(((org.polymodel.algebra.quasiAffine.QuasiAffineExpression)$t).getTerms())}
+	make(terms){org.polymodel.algebra.internal.AlgebraTomFactory.QuasiAffineExpression($terms)}
+	/*PROTECTED REGION END*/
+}
+
+%op T SimpleQuasiAffineTerm(coef : long , operator : org_polymodel_algebra_quasiAffine_QuasiAffineOperator ,expression : E ) {
+	/*PROTECTED REGION ID(tom_operator_SimpleQuasiAffineTerm) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getCoef()}
+	get_slot(operator,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getOperator()}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.SimpleQuasiAffineTerm)$t).getExpression()}
+	make(coef, operator, expression){org.polymodel.algebra.internal.AlgebraTomFactory.SimpleQuasiAffineTerm($coef, $operator, $expression)}
+	/*PROTECTED REGION END*/
+}
+
+%op T NestedQuasiAffineTerm(coef : long , operator : org_polymodel_algebra_quasiAffine_QuasiAffineOperator ,expression : E ) {
+	/*PROTECTED REGION ID(tom_operator_NestedQuasiAffineTerm) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm}
+	get_slot(coef,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getCoef()}
+	get_slot(operator,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getOperator()}
+	get_slot(expression,t) {((org.polymodel.algebra.quasiAffine.NestedQuasiAffineTerm)$t).getExpression()}
+	make(coef, operator, expression){org.polymodel.algebra.internal.AlgebraTomFactory.NestedQuasiAffineTerm($coef, $operator, $expression)}
+	/*PROTECTED REGION END*/
+}
+
+%op E PolynomialExpression(terms : pterms ) {
+	/*PROTECTED REGION ID(tom_operator_PolynomialExpression) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.polynomials.PolynomialExpression}
+	get_slot(terms,t) {enforce(((org.polymodel.algebra.polynomials.PolynomialExpression)$t).getTerms())}
+	make(terms){org.polymodel.algebra.internal.AlgebraTomFactory.PolynomialExpression($terms)}
+	/*PROTECTED REGION END*/
+}
+
+%op pvar PolynomialVariable(exponent : long ,variable : V ) {
+	/*PROTECTED REGION ID(tom_operator_PolynomialVariable) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.polynomials.PolynomialVariable}
+	get_slot(exponent,t) {((org.polymodel.algebra.polynomials.PolynomialVariable)$t).getExponent()}
+	get_slot(variable,t) {((org.polymodel.algebra.polynomials.PolynomialVariable)$t).getVariable()}
+	make(exponent, variable){org.polymodel.algebra.internal.AlgebraTomFactory.PolynomialVariable($exponent, $variable)}
+	/*PROTECTED REGION END*/
+}
+
+%op pterm PolynomialTerm(numerator : long , denominator : long ,variables : pvars ) {
+	/*PROTECTED REGION ID(tom_operator_PolynomialTerm) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.polynomials.PolynomialTerm}
+	get_slot(numerator,t) {((org.polymodel.algebra.polynomials.PolynomialTerm)$t).getNumerator()}
+	get_slot(denominator,t) {((org.polymodel.algebra.polynomials.PolynomialTerm)$t).getDenominator()}
+	get_slot(variables,t) {enforce(((org.polymodel.algebra.polynomials.PolynomialTerm)$t).getVariables())}
+	make(numerator, denominator, variables){org.polymodel.algebra.internal.AlgebraTomFactory.PolynomialTerm($numerator, $denominator, $variables)}
+	/*PROTECTED REGION END*/
+}
+
+%op E ReductionExpression(operator : org_polymodel_algebra_reductions_ReductionOperator ,expressions : EL ) {
+	/*PROTECTED REGION ID(tom_operator_ReductionExpression) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.reductions.ReductionExpression}
+	get_slot(operator,t) {((org.polymodel.algebra.reductions.ReductionExpression)$t).getOperator()}
+	get_slot(expressions,t) {enforce(((org.polymodel.algebra.reductions.ReductionExpression)$t).getExpressions())}
+	make(operator, expressions){org.polymodel.algebra.internal.AlgebraTomFactory.ReductionExpression($operator, $expressions)}
+	/*PROTECTED REGION END*/
+}

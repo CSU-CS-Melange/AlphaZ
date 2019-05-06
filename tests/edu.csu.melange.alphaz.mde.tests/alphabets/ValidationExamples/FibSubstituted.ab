@@ -1,0 +1,13 @@
+affine FibSubstituted {N|N>0}
+input
+output
+	int F;
+local
+	int Fib {i| 0<=i<=N};
+let
+	F = (->N)@Fib;
+ 	Fib = case
+ 		{i|i<=1}: 1;
+ 		{i|i>1} : (i->i-1)@Fib + (i->i-2)@Fib;
+ 		esac;
+ 		.

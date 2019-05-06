@@ -1,0 +1,10 @@
+affine mat_product {N,M,K|N>=1 && M>=1 && K>=1}
+input
+double A {i,k|i>=0 && N>=i+1 && k>=0 && K>=k+1 && N>=1 && M>=1 && K>=1};
+double B {k,j|k>=0 && K>=k+1 && j>=0 && M>=j+1 && N>=1 && M>=1 && K>=1};
+output
+double C {i,j|i>=0 && N>=i+1 && j>=0 && M>=j+1 && N>=1 && M>=1 && K>=1};
+local
+let
+C = reduce(+, (iP,jP,i->iP,jP), ((iP,jP,i->iP,i)@A * (iP,jP,i->i,jP)@B));
+.

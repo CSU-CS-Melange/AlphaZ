@@ -1,0 +1,29 @@
+import commandIF;
+extension template::Common reexport;
+
+//Returns the package name of a given Category
+String getPackage(Category this):
+	"edu.csu.melange.alphaz.commands.scripts";
+	
+String getFilename(Command this):
+	"edu/csu/melange/alphaz/commands/scripts/" + this.getName().toFirstUpper() + ".java";
+	
+String getCommandFullName(Command this):
+	this.getCategory().getCategoryPath()+"."+this.getName();
+	
+String getCategoryPath(Category this):
+	if this.eContainer == null then 
+		this.name
+	else
+		getCategoryPath((Category)this.eContainer).toLowerCase() +"."+ this.name.toFirstUpper();
+
+Set getImports(BasicCommand this):
+	JAVA commandIF.util.ImportResolver.resolve(commandIF.BasicCommand);
+
+String getCommandName(Command this):
+	if this.getCategory().commandPrefix == null then
+		this.getName()
+	else
+		this.getCategory().commandPrefix + this.getName().toFirstUpper();
+	
+	

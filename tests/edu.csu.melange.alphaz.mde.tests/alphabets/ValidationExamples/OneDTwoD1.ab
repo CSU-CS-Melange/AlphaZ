@@ -1,0 +1,17 @@
+affine OneDTwoD1 {N,TMAX | N>0 && TMAX>0}
+input
+    float A {i| 0<=i<=N};
+output
+    float B {t, i| 0<=i<=N && t==TMAX-1};
+local
+    float Local {t,i | 0<=i<=N && 0<=t<TMAX};
+let                                                                                                             
+   Local[t,i] =
+     case
+      // {|t==0}: A[i];
+       {|t>0 && i==0}: Local[t-1,i];
+       {|t>0 && i==N}: Local[t-1,i];
+       {|t>0 && 0<i<N}: 0.5 * (Local[t, i-1] + Local[t-1,i+1]);
+     esac;
+   B[t,i] = Local[t,i];
+.

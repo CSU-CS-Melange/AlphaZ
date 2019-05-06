@@ -1,0 +1,4090 @@
+mapping ISL[linux_32, linux_64, cygwin_32, mingw_32, macosx_32, macosx_64];
+
+library {
+	libname = "ISL";
+	linux_32 = "libisl.so.13";
+	linux_64 = "libisl.so.15";
+	macosx_32 = "libisl.13.dylib";
+	macosx_64 = "libisl.15.dylib";
+}
+
+library {
+	libname = "GMP";
+	linux_32 = "libgmp.so.10";
+	linux_64 = "libgmp.so.10";
+	macosx_32 = "libgmp.10.dylib";
+	macosx_64 = "libgmp.10.dylib";
+}
+
+module vertices {
+//parametric vertices inspection
+	isl_vertex* isl_vertices_get_vertex_at(keep isl_vertices* vertices, int pos);
+	isl_vertex* isl_cell_get_vertex_at(keep isl_cell* cell, int pos);
+	int isl_vertices_numberof_vertex(keep isl_vertices* vertices);
+	int isl_cell_numberof_vertex(keep isl_cell* cell);
+}
+
+module ast {
+	boolean isl_ast_node_is_for(keep struct isl_ast_node* node);
+	boolean isl_ast_node_is_if(keep struct isl_ast_node* node);
+	boolean isl_ast_node_is_block(keep struct isl_ast_node* node);
+	boolean isl_ast_node_is_user(keep struct isl_ast_node* node);
+	boolean isl_ast_expr_is_id(keep struct isl_ast_expr* e);
+	boolean isl_ast_expr_is_operation(keep struct isl_ast_expr* e);
+	boolean isl_ast_expr_is_literal(keep struct isl_ast_expr* e);
+
+	isl_union_map* isl_ast_node_user_get_schedule(keep struct isl_ast_node* node);
+	boolean isl_ast_node_is_unscanned(keep struct isl_ast_node* node);
+	
+	//	struct isl_id_list* isl_id_list_get_id_at(keep struct isl_id_list* list, int pos);
+	//	int isl_id_list_get_numberof_id(keep struct isl_id_list* bset);
+}
+
+module codegen {
+	struct isl_ast_node* isl_ast_build_node_from_schedule_map_EX(keep struct isl_ast_build *build, take isl_union_map *schedule, string exName);
+	struct isl_ast_node* isl_ast_build_node_from_schedule_EX(keep struct isl_ast_build *build, take isl_schedule *schedule, string exName);
+}
+
+module collections {
+//inspection of (union/basic) map/set
+	isl_constraint* isl_basic_set_get_constraint_at(keep isl_basic_set* bset, int pos);
+	isl_constraint* isl_basic_map_get_constraint_at(keep isl_basic_map* bmap, int pos);
+	isl_basic_set* isl_set_get_basic_set_at(keep isl_set* set, int pos);
+	isl_basic_map* isl_map_get_basic_map_at(keep isl_map* map, int pos);
+	isl_set* isl_union_set_get_set_at(keep isl_union_set* uset, int pos);
+	isl_map* isl_union_map_get_map_at(keep isl_union_map* umap, int pos);
+	int isl_basic_map_numberof_constraint(keep isl_basic_map* bmap);
+	int isl_map_numberof_basic_map(keep isl_map* map);
+
+	//affs
+	int isl_pw_multi_aff_numberof_piece(keep isl_pw_multi_aff* pma);
+	struct isl_pw_multi_aff_piece* isl_pw_multi_aff_get_piece_at(keep isl_pw_multi_aff* pma, int pos);
+
+	//parametric vertices inspection
+	int isl_vertices_numberof_cell(keep isl_vertices* vertices);
+	isl_cell* isl_vertices_get_cell_at(keep isl_vertices* vertices, int pos);
+
+	//enumeration of points (for bounded sets)
+	int isl_union_set_numberof_points(keep isl_union_set* uset);
+	isl_point* isl_union_set_get_point_at(keep isl_union_set* uset, int pos);
+	int isl_set_numberof_points(keep isl_set* set);
+	isl_point* isl_set_get_point_at(keep isl_set* set, int pos);
+
+}
+
+module scheduling {
+	isl_schedule* isl_compute_schedule(isl_ctx* ctx, take isl_union_set* domain, take isl_union_map* validity, take isl_union_map* proximity,
+	// options
+	int max_coefficient, int max_constant_term, int fuse, int maximize_band_depth, int outer_coincidence, int split_scaled, int algorithm, int separate_components);
+}
+
+module dataflow {
+	isl_union_map* compute_ADA(take isl_union_set* domains, take isl_union_map* writes, take isl_union_map* reads, take isl_union_map* idSchedule, boolean memoryBased);
+	isl_union_map* compute_ADA_custom(take isl_union_set* domains, take isl_union_map* writes, take isl_union_map* reads, take isl_union_map* idSchedule, boolean RAW, boolean WAW, boolean WAR);
+	isl_union_map* compute_ADA_custom_rar(take isl_union_set* domains, take isl_union_map* writes, take isl_union_map* reads, take isl_union_map* idSchedule, boolean RAW, boolean WAW, boolean WAR, boolean RAR);
+
+	struct isl_dataflow_analysis* alloc_dataflow_analysis();
+	struct isl_dataflow_analysis* isl_array_dataflow_analysis(take isl_union_map* sink, take isl_union_map* must_source, take isl_union_map* may_source, take isl_union_map* schedule);
+}
+
+/*module liveness {
+	struct isl_liveness_analysis* alloc_liveness_analysis() ;
+	void free_liveness_analysis(struct isl_liveness_analysis* result) ;
+	struct isl_liveness_analysis *isl_array_liveness_analysis(
+	isl_union_map *sink,isl_union_map *must_source,
+	isl_union_map *may_source,isl_union_map *schedule);
+}*/
+module tostring {
+	string isl_val_to_string(keep isl_val* val, int format);
+	string isl_multi_val_to_string(keep isl_multi_val* mv, int format);
+
+	string isl_val_list_to_string(keep isl_val_list* vlist, int format);
+
+	string isl_id_to_string(keep isl_id* id, int format);
+	string isl_id_list_to_string(keep isl_id_list* idlist, int format);
+
+	string isl_basic_set_to_string(keep isl_basic_set* bset, int format);
+	string isl_set_to_string(keep isl_set* set, int format);
+	string isl_union_set_to_string(keep isl_union_set* set, int format);
+
+	string isl_basic_set_list_to_string(keep isl_basic_set_list* bsetlist, int format);
+	string isl_set_list_to_string(keep isl_set_list* setlist, int format);
+
+	string isl_basic_map_to_string(keep isl_basic_map* map, int format);
+	string isl_map_to_string(keep isl_map* map, int format);
+	string isl_union_map_to_string(keep isl_union_map* map, int format);
+
+	string isl_aff_to_string(keep isl_aff* aff, int format);
+	string isl_aff_list_to_string(keep isl_aff_list* afflist, int format);
+	string isl_multi_aff_to_string(keep isl_multi_aff* maff, int format);
+	
+	string isl_pw_aff_to_string(keep isl_pw_aff* pwa, int format);
+	string isl_pw_aff_list_to_string(keep isl_pw_aff_list* pwalist, int format);
+	string isl_multi_pw_aff_to_string(keep isl_multi_pw_aff* mpa, int format);
+		
+	string isl_pw_multi_aff_to_string(keep isl_pw_multi_aff* pma, int format);
+	string isl_union_pw_multi_aff_to_string(keep isl_union_pw_multi_aff* upma, int format);
+
+	string isl_constraint_to_string(keep isl_constraint* constraint, int format);
+	string isl_constraint_list_to_string(keep isl_constraint_list* constraintlist, int format);
+
+	string isl_ast_node_to_string(keep struct isl_ast_node* node);
+	string isl_ast_expr_to_string(keep struct isl_ast_expr* expr);
+
+	string isl_ast_node_list_to_string(keep struct isl_ast_node_list* node);
+	string isl_ast_expr_list_to_string(keep struct isl_ast_expr_list* expr);
+
+	//polynomials
+	string isl_qpolynomial_to_string(keep isl_qpolynomial* qp, int format);
+	string isl_qpolynomial_fold_to_string(keep isl_qpolynomial_fold* qpf, int format);
+	string isl_pw_qpolynomial_to_string(keep isl_pw_qpolynomial* set, int format);
+	string isl_pw_qpolynomial_fold_to_string(keep isl_pw_qpolynomial_fold* pwqpf, int format);
+	string isl_union_pw_qpolynomial_to_string(keep isl_union_pw_qpolynomial* upwqp, int format);
+	string isl_union_pw_qpolynomial_fold_to_string(keep isl_union_pw_qpolynomial_fold* upwqpf, int format);
+
+	string isl_schedule_to_string(keep isl_schedule* s, int format);
+}
+
+module lexnext {
+	isl_map* lex_next(keep isl_set* dom, int nbInnerLoop);
+	isl_map* lex_next_power(keep isl_set* dom, int nbInnerLoop, int power);
+}
+
+module lexpred {
+	isl_map* lex_pred(keep isl_set* dom, int nbInnerLoop);
+	isl_map* lex_pred_power(keep isl_set* dom, int nbInnerLoop, int power);
+}
+
+//most methods in misc were to deal with isl_int and were removed
+module misc {
+	void init_isl_error_handler();
+
+	isl_set* clear_tuple_name(take isl_set* s);
+	isl_map* clear_in_tuple_name(take isl_map* m);
+	isl_map* clear_out_tuple_name(take isl_map* m);
+}
+
+module polynomial {
+	int isl_qpolynomial_get_exp_at(keep isl_qpolynomial* qp, int termPos, enum isl_dim_type type, unsigned dim);
+
+	int isl_qpolynomial_numberof_terms(keep isl_qpolynomial* qp);
+	isl_term* isl_qpolynomial_get_term_at(keep isl_qpolynomial* qp, int pos);
+
+	int isl_pw_qpolynomial_numberof_piece(keep isl_pw_qpolynomial* pwqp);
+	struct isl_qpolynomial_piece* isl_pw_qpolynomial_get_piece_at(keep isl_pw_qpolynomial* pwqp, int pos);
+	int isl_pw_qpolynomial_numberof_lifted_piece(keep isl_pw_qpolynomial* pwqp);
+	struct isl_qpolynomial_piece* isl_pw_qpolynomial_get_lifted_piece_at(keep isl_pw_qpolynomial* pwqp, int pos);
+
+	int isl_qpolynomial_fold_number_of_qpolynomial(keep isl_qpolynomial_fold* fold);
+	isl_qpolynomial* isl_qpolynomial_fold_get_qpolynomial_at(keep isl_qpolynomial_fold* fold, int pos);
+
+	int isl_pw_qpolynomial_fold_numberof_piece(keep isl_pw_qpolynomial_fold* pwf);
+	struct isl_qpolynomial_fold_piece* isl_pw_qpolynomial_fold_get_piece_at(keep isl_pw_qpolynomial_fold* pwf, int pos);
+	int isl_pw_qpolynomial_fold_numberof_lifted_piece(keep isl_pw_qpolynomial_fold* pwf);
+	struct isl_qpolynomial_fold_piece* isl_pw_qpolynomial_fold_get_lifted_piece_at(keep isl_pw_qpolynomial_fold* pwf, int pos);
+}
+
+//functions for capturing outputs to stdout and stderr from Java side
+module stdio {
+	void record_stdout_start();
+	string record_stdout_end();
+	void record_stderr_start();
+	string record_stderr_end();
+}
+
+//typedef isl_int as ISLInt;
+
+// defined in polynomial_type.h
+enum isl_fold {
+	isl_fold_min = 0 ,
+	isl_fold_max = 1 ,
+	isl_fold_list = 2
+} as ISLFold;
+
+// defined in isl/space.h
+enum isl_dim_type {
+	isl_dim_cst = 0 ,
+	isl_dim_param = 1 ,
+	isl_dim_in = 2 ,
+	isl_dim_out = 3 ,
+	isl_dim_set = isl_dim_out ,
+	isl_dim_div = 4 ,
+	isl_dim_all = 5
+} as ISLDimType;
+
+typedef isl_ctx as ISLContext;
+typedef isl_val as ISLVal;
+typedef isl_val_list as ISLValList;
+typedef isl_multi_val as ISLMultiVal;
+typedef isl_id as ISLIdentifier;
+typedef isl_id_list as ISLIdentifierList;
+typedef isl_space as ISLSpace;
+typedef isl_local_space as ISLLocalSpace;
+struct isl_options as ISLOptions;
+typedef isl_printer as ISLPrinter;
+typedef isl_set as ISLSet;
+typedef isl_basic_set as ISLBasicSet;
+typedef isl_union_set as ISLUnionSet;
+typedef isl_basic_set_list as ISLBasicSetList;
+typedef isl_set_list as ISLSetList;
+typedef isl_map as ISLMap;
+typedef isl_basic_map as ISLBasicMap;
+typedef isl_union_map as ISLUnionMap;
+typedef isl_aff as ISLAff;
+typedef isl_aff_list as ISLAffList;
+typedef isl_multi_aff as ISLMultiAff;
+typedef isl_pw_aff as ISLPWAff;
+typedef isl_pw_aff_list as ISLPWAffList;
+typedef isl_multi_pw_aff as ISLMultiPWAff;
+typedef isl_union_pw_aff as ISLUnionPWAff;
+typedef isl_union_pw_aff_list as ISLUnionPWAffList;
+typedef isl_multi_union_pw_aff as ISLMultiUnionPWAff;
+typedef isl_pw_multi_aff as ISLPWMultiAff;
+typedef isl_union_pw_multi_aff as ISLUnionPWMultiAff;
+typedef isl_point as ISLPoint;
+typedef isl_term as ISLTerm;
+typedef isl_constraint as ISLConstraint;
+typedef isl_constraint_list as ISLConstraintList;
+typedef isl_mat as ISLMatrix;
+typedef isl_vec as ISLVector;
+typedef isl_vertices as ISLVertices;
+typedef isl_cell as ISLCell;
+typedef isl_vertex as ISLVertex;
+typedef isl_qpolynomial as ISLQPolynomial;
+typedef isl_pw_qpolynomial as ISLPWQPolynomial;
+typedef isl_qpolynomial_fold as ISLQPolynomialFold;
+typedef isl_pw_qpolynomial_fold as ISLPWQPolynomialFold;
+typedef isl_union_pw_qpolynomial as ISLUnionPWQPolynomial;
+typedef isl_union_pw_qpolynomial_fold as ISLUnionPWQPolynomialFold;
+typedef isl_schedule as ISLSchedule;
+//typedef isl_fixed_box as ISLFixedBox; removed for compatibility with 0.15
+//typedef isl_stride_info as ISLStrideInfo; removed for compatibility with 0.15
+
+//non-isl class
+unmapped ISLStandardIO;
+
+//non-isl struct
+struct isl_qpolynomial_piece {
+	copyOnGet isl_set* set;
+	copyOnGet isl_qpolynomial* qp;
+} as ISLQPolynomialPiece;
+
+struct isl_qpolynomial_fold_piece {
+	copyOnGet isl_set* set;
+	copyOnGet isl_qpolynomial_fold* fold;
+} as ISLQPolynomialFoldPiece;
+
+struct isl_dataflow_analysis {
+	copyOnGet isl_union_map* must_dep;
+	copyOnGet isl_union_map* may_dep;
+	copyOnGet isl_union_map* must_no_source;
+	copyOnGet isl_union_map* may_no_source;
+} as ISLDataflowAnalysis;
+
+struct isl_pw_multi_aff_piece {
+	copyOnGet isl_set* set;
+	copyOnGet isl_multi_aff* maff;
+} as ISLPWMultiAffPiece;
+
+/*
+ * Code generation
+ * 
+ * 
+ */
+enum isl_ast_node_type {
+//	isl_ast_node_error = -1,
+	isl_ast_node_for = 1 ,
+	isl_ast_node_if = 2 ,
+	isl_ast_node_block = 3 ,
+	isl_ast_node_user = 4
+} as ISLAstNodeType;
+
+enum isl_ast_expr_type {
+//isl_ast_expr_error = -1,
+	isl_ast_expr_op = 1 ,
+	isl_ast_expr_id = 2 ,
+	isl_ast_expr_int = 3
+} as ISLAstExprType;
+
+enum isl_ast_op_type {
+//isl_ast_op_error=-1
+	isl_ast_op_and = 0 ,
+	isl_ast_op_and_then = 1 ,
+	isl_ast_op_or = 2 ,
+	isl_ast_op_or_else = 3 ,
+	isl_ast_op_max = 4 ,
+	isl_ast_op_min = 5 ,
+	isl_ast_op_minus = 6 ,
+	isl_ast_op_add = 7 ,
+	isl_ast_op_sub = 8 ,
+	isl_ast_op_mul = 9 ,
+	isl_ast_op_div = 10 ,
+	isl_ast_op_fdiv_q = 11 ,
+	isl_ast_op_pdiv_q = 12 ,
+	isl_ast_op_pdiv_r = 13 ,
+	isl_ast_op_zdiv_r = 14 ,
+	isl_ast_op_cond = 15 ,
+	isl_ast_op_select = 16 ,
+	isl_ast_op_eq = 17 ,
+	isl_ast_op_le = 18 ,
+	isl_ast_op_lt = 19 ,
+	isl_ast_op_ge = 20 ,
+	isl_ast_op_gt = 21 ,
+	isl_ast_op_call = 22,
+	isl_ast_op_access = 23,
+	isl_ast_op_member = 24,
+	isl_ast_op_address_of = 25
+} as ISLAstOpType;
+
+struct isl_ast_build as ISLASTBuild;
+struct isl_ast_node as ISLASTNode;
+struct isl_ast_node as ISLASTIfNode extending ISLASTNode;
+struct isl_ast_node as ISLASTForNode extending ISLASTNode;
+struct isl_ast_node as ISLASTBlockNode extending ISLASTNode;
+struct isl_ast_node as ISLASTUserNode extending ISLASTNode;
+struct isl_ast_node as ISLASTUnscannedNode extending ISLASTNode;
+struct isl_ast_expr as ISLASTExpression;
+struct isl_ast_expr as ISLASTIdentifier extending ISLASTExpression;
+struct isl_ast_expr as ISLASTLiteral extending ISLASTExpression;
+struct isl_ast_expr as ISLASTOperation extending ISLASTExpression;
+struct isl_ast_node_list as ISLASTNodeList;
+struct isl_ast_expr_list as ISLASTExpressionList;
+
+include"<isl/aff.h>";
+include"<isl/aff_type.h>";
+include"<isl/arg.h>";
+include"<isl/ast_build.h>";
+include"<isl/ast.h>";
+include"<isl/ast_type.h>";
+include"<isl/constraint.h>";
+include"<isl/ctx.h>";
+include"<isl/flow.h>";
+include"<isl/hash.h>";
+//include"<isl/hmap.h>";
+include"<isl/id.h>";
+include"<isl/id_to_ast_expr.h>";
+//include"<isl/id_to_id.h>"; removed for compatibility with 0.15
+include"<isl/id_to_pw_aff.h>";
+include"<isl/ilp.h>";
+include"<isl/list.h>";
+include"<isl/local_space.h>";
+include"<isl/lp.h>";
+include"<isl/map.h>";
+include"<isl/map_to_basic_set.h>";
+include"<isl/map_type.h>";
+include"<isl/mat.h>";
+//include"<isl/maybe_ast_expr.h>";
+//include"<isl/maybe_basic_set.h>";
+//include"<isl/maybe.h>";
+//include"<isl/maybe_id.h>";
+//include"<isl/maybe_pw_aff.h>";
+//include"<isl/maybe_templ.h>";
+include"<isl/multi.h>";
+include"<isl/obj.h>";
+include"<isl/options.h>";
+include"<isl/point.h>";
+include"<isl/polynomial.h>";
+include"<isl/polynomial_type.h>";
+include"<isl/printer.h>";
+//include"<isl/printer_type.h>";  removed for compatibility with 0.15
+include"<isl/schedule.h>";
+include"<isl/schedule_node.h>";
+include"<isl/schedule_type.h>";
+include"<isl/set.h>";
+include"<isl/set_type.h>";
+include"<isl/space.h>";
+include"<isl/stdint.h>";
+include"<isl/stream.h>";
+include"<isl/union_map.h>";
+include"<isl/union_map_type.h>";
+include"<isl/union_set.h>";
+include"<isl/union_set_type.h>";
+include"<isl/val_gmp.h>";
+include"<isl/val.h>";
+include"<isl/vec.h>";
+include"<isl/version.h>";
+include"<isl/vertices.h>";
+//include"<isl/fixed_box.h>";  removed for compatibility with 0.15
+//include"<isl/stride_info.h>"; removed for compatibility with 0.15
+
+group ISLContext {
+	struct isl_options* isl_ctx_options(isl_ctx* ctx);
+
+	[private static rename=alloc]
+	isl_ctx* isl_ctx_alloc();
+
+	[rename=free]
+	void isl_ctx_free(isl_ctx* ctx);
+	
+	
+	[static]
+	void record_stdout_start();
+	
+	[static]
+	string record_stdout_end();
+	
+	[static]
+	void record_stderr_start();
+	
+	[static]
+	string record_stderr_end();
+}
+
+group ISLVal {
+	[static rename=buildZero]
+	isl_val* isl_val_zero(isl_ctx* ctx);
+	[static rename=buildFromLong]
+	isl_val* isl_val_int_from_si(isl_ctx* ctx, long i);
+	[static rename=buildFromString]
+	isl_val* isl_val_read_from_str(isl_ctx* ctx, const string str);
+
+
+	[rename=getContext]
+	isl_ctx* isl_val_get_ctx(keep isl_val* val);
+	[rename=copy]
+	isl_val* isl_val_copy(keep isl_val* i);
+	[rename=free]
+	void isl_val_free(take isl_val* i);
+
+	//Setter
+	[rename=setValue]
+	isl_val* isl_val_set_si(take isl_val* v, long i);
+
+	//Getter
+	[rename=getNumerator]
+	long isl_val_get_num_si(keep isl_val* v);
+	[rename=getDenominator]
+	long isl_val_get_den_si(keep isl_val* v);
+	[rename=getDoubleValue]
+	double isl_val_get_d(keep isl_val* v);
+
+	//Unary Properties
+	[rename=sign]
+	int isl_val_sgn(keep isl_val* v);
+	[rename=isZero]
+	boolean isl_val_is_zero(keep isl_val* v);
+	[rename=isOne]
+	boolean isl_val_is_one(keep isl_val* v);
+	[rename=isNegOne]
+	boolean isl_val_is_negone(keep isl_val* v);
+	[rename=isNonNegative]
+	boolean isl_val_is_nonneg(keep isl_val* v);
+	[rename=isNonPositive]
+	boolean isl_val_is_nonpos(keep isl_val* v);
+	[rename=isPositive]
+	boolean isl_val_is_pos(keep isl_val* v);
+	[rename=isNegative]
+	boolean isl_val_is_neg(keep isl_val* v);
+	[rename=isInteger]
+	boolean isl_val_is_int(keep isl_val* v);
+	[rename=isRational]
+	boolean isl_val_is_rat(keep isl_val* v);
+	[rename=isNaN]
+	boolean isl_val_is_nan(keep isl_val* v);
+	[rename=isInfinity]
+	boolean isl_val_is_infty(keep isl_val* v);
+	[rename=isNegInfinity]
+	boolean isl_val_is_neginfty(keep isl_val* v);
+
+	//Binary Properties
+	[rename=lt]
+	boolean isl_val_lt(keep isl_val* v1, keep isl_val* v2);
+	[rename=le]
+	boolean isl_val_le(keep isl_val* v1, keep isl_val* v2);
+	[rename=gt]
+	boolean isl_val_gt(keep isl_val* v1, keep isl_val* v2);
+	[rename=ge]
+	boolean isl_val_ge(keep isl_val* v1, keep isl_val* v2);
+	[rename=eq]
+	boolean isl_val_eq(keep isl_val* v1, keep isl_val* v2);
+	[rename=ne]
+	boolean isl_val_ne(keep isl_val* v1, keep isl_val* v2);
+
+	[rename=isDivisibleBy]
+	boolean isl_val_is_divisible_by(keep isl_val* v1, keep isl_val* v2);
+
+	[rename=compareTo]
+	int isl_val_cmp_si(keep isl_val* v, long i);
+
+	//Unary OP
+	[rename=abs]
+	isl_val* isl_val_abs(take isl_val* v);
+	[rename=neg]
+	isl_val* isl_val_neg(take isl_val* v);
+	[rename=floor]
+	isl_val* isl_val_floor(take isl_val* v);
+	[rename=ceil]
+	isl_val* isl_val_ceil(take isl_val* v);
+	[rename=trunc]
+	isl_val* isl_val_trunc(take isl_val* v);
+
+	//	returns 2^v; not binded since it seems unnecessary and a bit confusing
+	//	isl_val *isl_val_2exp(take isl_val *v);
+
+	//Binary OP
+	[rename=min]
+	isl_val* isl_val_min(take isl_val* v1, take isl_val* v2);
+	[rename=max]
+	isl_val* isl_val_max(take isl_val* v1, take isl_val* v2);
+	[rename=add]
+	isl_val* isl_val_add(take isl_val* v1, take isl_val* v2);
+	//	isl_val *isl_val_add_ui(take isl_val *v1, unsigned long v2);
+	[rename=sub]
+	isl_val* isl_val_sub(take isl_val* v1, take isl_val* v2);
+	//isl_val *isl_val_sub_ui(take isl_val *v1, unsigned long v2);
+	[rename=mul]
+	isl_val* isl_val_mul(take isl_val* v1, take isl_val* v2);
+	//isl_val *isl_val_mul_ui(take isl_val *v1, unsigned long v2);
+	[rename=div]
+	isl_val* isl_val_div(take isl_val* v1, take isl_val* v2);
+
+	[rename=mod]
+	isl_val* isl_val_mod(take isl_val* v1, take isl_val* v2);
+	[rename=gcd]
+	isl_val* isl_val_gcd(take isl_val* v1, take isl_val* v2);
+
+	//module
+	[static rename=_toString]
+	string isl_val_to_string(keep isl_val* val, int format);
+}
+
+group ISLMultiVal {
+	[static rename=buildFromValList]
+	isl_multi_val* isl_multi_val_from_val_list(take isl_space* space, take isl_val_list* list);
+
+	[static rename=buildZero]
+	isl_multi_val* isl_multi_val_zero(take isl_space* space);
+
+	[rename=getContext]
+	isl_ctx* isl_multi_val_get_ctx(keep isl_multi_val* mv);
+	[rename=getSpace]
+	isl_space *isl_multi_val_get_space(keep isl_multi_val *mv);
+	[rename=copy]
+	isl_multi_val* isl_multi_val_copy(keep isl_multi_val* mv);
+	[rename=free]
+	void isl_multi_val_free(take isl_multi_val* mv);
+
+	[rename=getNbDims]
+	unsigned isl_multi_val_dim(keep isl_multi_val* mv, enum isl_dim_type type);
+
+	[rename=getVal]
+	isl_val* isl_multi_val_get_val(keep isl_multi_val* mv, int pos);
+	[rename=setVal]
+	isl_multi_val* isl_multi_val_set_val(take isl_multi_val* mv, int pos, take isl_val* val);
+
+	[rename=setDimName]
+	isl_multi_val* isl_multi_val_set_dim_name(take isl_multi_val* mv, enum isl_dim_type type, unsigned pos, string s);
+	[rename=getTupleName]
+	string isl_multi_val_get_tuple_name(keep isl_multi_val* mv, enum isl_dim_type type);
+	[rename=setTupleName]
+	isl_multi_val* isl_multi_val_set_tuple_name(take isl_multi_val* mv, enum isl_dim_type type, string s);
+
+	//	[rename=findDimByID]
+	//	int isl_multi_val_find_dim_by_id(keep isl_multi_val* mv, enum isl_dim_type type, keep isl_id* id);
+	[rename=hasTupleName]
+	boolean isl_multi_val_has_tuple_id(keep isl_multi_val* mv, enum isl_dim_type type);
+	[rename=isWrapping]
+	boolean isl_multi_val_range_is_wrapping(keep isl_multi_val* mv);
+
+	//	[rename=getDimID]
+	//	isl_id* isl_multi_val_get_dim_id(keep isl_multi_val* mv, enum isl_dim_type type, unsigned pos);
+	//	[rename=getTupleID]
+	//	isl_id* isl_multi_val_get_tuple_id(keep isl_multi_val* mv, enum isl_dim_type type);
+	//	[rename=setDimID]
+	//	isl_multi_val* isl_multi_val_set_dim_id(take isl_multi_val* mv, enum isl_dim_type type, unsigned pos, take isl_id* id);
+	//	[rename=setTupleID]
+	//	isl_multi_val* isl_multi_val_set_tuple_id(take isl_multi_val* mv, enum isl_dim_type type, take isl_id* id);
+	//	[rename=resetTupleID]
+	//	isl_multi_val* isl_multi_val_reset_tuple_id(take isl_multi_val* mv, enum isl_dim_type type);
+	//isl_multi_val* isl_multi_val_reset_user(take isl_multi_val* mv);
+	[rename=insertDims]
+	isl_multi_val* isl_multi_val_insert_dims(take isl_multi_val* mv, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=addDims]
+	isl_multi_val* isl_multi_val_add_dims(take isl_multi_val* mv, enum isl_dim_type type, unsigned n);
+	[rename=dropDims]
+	isl_multi_val* isl_multi_val_drop_dims(take isl_multi_val* mv, enum isl_dim_type type, unsigned first, unsigned n);
+
+	//Operations
+	[rename=alignParams]
+	isl_multi_val* isl_multi_val_align_params(take isl_multi_val* mv, take isl_space* model);
+	[rename=fromRange]
+	isl_multi_val* isl_multi_val_from_range(take isl_multi_val* mv);
+	[rename=rangeSplice]
+	isl_multi_val* isl_multi_val_range_splice(take isl_multi_val* mv1, unsigned pos, take isl_multi_val* mv2);
+	[rename=rangeProduct]
+	isl_multi_val* isl_multi_val_range_product(take isl_multi_val* mv1, take isl_multi_val* mv2);
+	[rename=rangeFactorDomain]
+	isl_multi_val* isl_multi_val_range_factor_domain(take isl_multi_val* mv);
+	[rename=rangeFactorRange]
+	isl_multi_val* isl_multi_val_range_factor_range(take isl_multi_val* mv);
+	//	[rename=rangeProduct]
+	//	isl_multi_val* isl_multi_val_flat_range_product(take isl_multi_val* mv1, take isl_multi_aff* mv2);
+	[rename=product]
+	isl_multi_val* isl_multi_val_product(take isl_multi_val* mv1, take isl_multi_val* mv2);
+	[rename=add]
+	isl_multi_val* isl_multi_val_add_val(take isl_multi_val* mv, take isl_val* v);
+	[rename=mod]
+	isl_multi_val* isl_multi_val_mod_val(take isl_multi_val* mv, take isl_val* v);
+	[rename=scale]
+	isl_multi_val* isl_multi_val_scale_val(take isl_multi_val* mv, take isl_val* v);
+	[rename=scale]
+	isl_multi_val* isl_multi_val_scale_multi_val(take isl_multi_val* mv1, take isl_multi_val* mv2);
+	[rename=scaleDown]
+	isl_multi_val* isl_multi_val_scale_down_multi_val(take isl_multi_val* mv1, take isl_multi_val* mv2);
+
+	//module
+	[static rename=_toString]
+	string isl_multi_val_to_string(keep isl_multi_val* mv, int format);
+
+}
+
+group ISLIdentifier {
+	[static rename=alloc]
+	isl_id* isl_id_alloc(isl_ctx* ctx, string name, void* ignored user);
+
+	[rename=getContext]
+	isl_ctx* isl_id_get_ctx(keep isl_id* id);
+
+	[rename=getName]
+	string isl_id_get_name(keep isl_id* id);
+	
+	long isl_id_get_user(keep isl_id* id);
+
+	[rename=copy]
+	isl_id* isl_id_copy(keep isl_id* id);
+
+	[rename=free]
+	void isl_id_free(take isl_id* id);
+
+	//module
+	[static rename=_toString]
+	string isl_id_to_string(keep isl_id* id, int format);
+}
+
+group ISLSpace {
+	[static rename=alloc]
+	isl_space* isl_space_alloc(isl_ctx* ctx, unsigned nparam, unsigned n_in, unsigned n_out);
+	[static rename=allocParams]
+	isl_space* isl_space_params_alloc(isl_ctx* ctx, unsigned nparam);
+	[static rename=allocSet]
+	isl_space* isl_space_set_alloc(isl_ctx* ctx, unsigned nparam, unsigned dim);
+
+	[rename=getContext]
+	isl_ctx* isl_space_get_ctx(keep isl_space* dim);
+	[rename=copy]
+	isl_space* isl_space_copy(keep isl_space* space);
+	[rename=free]
+	void isl_space_free(take isl_space* space);
+	
+	[rename=getNbDims]
+	unsigned isl_space_dim(keep isl_space* space, enum isl_dim_type type);
+
+	[rename=isParamSpace]
+	boolean isl_space_is_params(keep isl_space* space);
+	[rename=isSetSpace]
+	boolean isl_space_is_set(keep isl_space* space);
+	[rename=isMapSpace]
+	boolean isl_space_is_map(keep isl_space* space);
+
+	[rename=isEqual]
+	boolean isl_space_is_equal(keep isl_space* space1, keep isl_space* space2);
+	[rename=isDomain]
+	boolean isl_space_is_domain(keep isl_space* space1, keep isl_space* space2);
+	[rename=isRange]
+	boolean isl_space_is_range(keep isl_space* space1, keep isl_space* space2);
+
+	//space names
+	[rename=setName]
+	isl_space* isl_space_set_dim_name(take isl_space* space, enum isl_dim_type type, unsigned pos, string name);
+	[rename=getName]
+	string isl_space_get_dim_name(keep isl_space* space, enum isl_dim_type type, unsigned pos);
+	[rename=hasName]
+	boolean isl_space_has_dim_name(keep isl_space* space, enum isl_dim_type type, unsigned pos);
+
+	[rename=findDimByName]
+	int isl_space_find_dim_by_name(keep isl_space* space, enum isl_dim_type type, string name);
+
+	//tuple names
+	[rename=setTupleName]
+	isl_space* isl_space_set_tuple_name(take isl_space* space, enum isl_dim_type type, string s);
+	[rename=getTupleName]
+	string isl_space_get_tuple_name(keep isl_space* space, enum isl_dim_type type);
+	[rename=hasTupleName]
+	int isl_space_has_tuple_name(keep isl_space* space, enum isl_dim_type type);
+
+	//ID based ones are disabled for now	
+	//  isl_space *isl_space_set_dim_id(take isl_space *space, enum isl_dim_type type, unsigned pos, take isl_id *id);
+	//  isl_id *isl_space_get_dim_id(keep isl_space *space, enum isl_dim_type type, unsigned pos);
+	//	int isl_space_has_dim_id(keep isl_space *space, enum isl_dim_type type, unsigned pos);
+	//	int isl_space_find_dim_by_id(keep isl_space *space, enum isl_dim_type type, keep isl_id *id);
+	//  isl_space *isl_space_set_tuple_id(take isl_space *space, enum isl_dim_type type, take isl_id *id);
+	//	isl_space *isl_space_reset_tuple_id(take isl_space *space, enum isl_dim_type type);
+	//	int isl_space_has_tuple_id(keep isl_space *space, enum isl_dim_type type);
+	//	isl_id *isl_space_get_tuple_id(keep isl_space *space, enum isl_dim_type type);
+	[rename=isWrapping]
+	boolean isl_space_is_wrapping(keep isl_space* space);
+	[rename=domainIsWrapping]
+	boolean isl_space_domain_is_wrapping(keep isl_space* space);
+	[rename=rangeIsWrapping]
+	boolean isl_space_range_is_wrapping(keep isl_space* space);
+	[rename=domain]
+	isl_space* isl_space_domain(take isl_space* space);
+	[rename=fromDomain]
+	isl_space* isl_space_from_domain(take isl_space* space);
+	[rename=range]
+	isl_space* isl_space_range(take isl_space* space);
+	[rename=fromRange]
+	isl_space* isl_space_from_range(take isl_space* space);
+	[rename=domainMap]
+	isl_space* isl_space_domain_map(take isl_space* space);
+	[rename=rangeMap]
+	isl_space* isl_space_range_map(take isl_space* space);
+	[rename=params]
+	isl_space* isl_space_params(take isl_space* space);
+	[rename=setFromParams]
+	isl_space* isl_space_set_from_params(take isl_space* space);
+	[rename=reverse]
+	isl_space* isl_space_reverse(take isl_space* space);
+	[rename=join]
+	isl_space* isl_space_join(take isl_space* left, take isl_space* right);
+	[rename=alignParams]
+	isl_space* isl_space_align_params(take isl_space* space1, take isl_space* space2);
+
+	[rename=insertDims]
+	isl_space* isl_space_insert_dims(take isl_space* space, enum isl_dim_type type, unsigned pos, unsigned n);
+	[rename=addDims]
+	isl_space* isl_space_add_dims(take isl_space* space, enum isl_dim_type type, unsigned n);
+	[rename=dropDims]
+	isl_space* isl_space_drop_dims(take isl_space* space, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=moveDims]
+	isl_space* isl_space_move_dims(take isl_space* space, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+	[rename=mapFromSet]
+	isl_space* isl_space_map_from_set(take isl_space* space);
+	[rename=mapFromDomainAndRange]
+	isl_space* isl_space_map_from_domain_and_range(take isl_space* domain, take isl_space* range);
+	//	isl_space *isl_space_zip(take isl_space *space);
+	//	isl_space *isl_space_curry(take isl_space *space);
+	//	isl_space *isl_space_uncurry(take isl_space *space);
+	[rename=wrap]
+	isl_space* isl_space_wrap(take isl_space* space);
+	[rename=unwrap]
+	isl_space* isl_space_unwrap(take isl_space* space);
+
+	[rename=product]
+	isl_space* isl_space_product(take isl_space* left, take isl_space* right);
+
+	//lex stuff
+	[rename=lexLT]
+	isl_map* isl_map_lex_lt(take isl_space* set_space);
+	[rename=lexLE]
+	isl_map* isl_map_lex_le(take isl_space* set_space);
+	[rename=lexGT]
+	isl_map* isl_map_lex_gt(take isl_space* set_space);
+	[rename=lexGE]
+	isl_map* isl_map_lex_ge(take isl_space* set_space);
+	[rename=lexLTfirst]
+	isl_map* isl_map_lex_lt_first(take isl_space* space, unsigned n);
+	[rename=lexLEfirst]
+	isl_map* isl_map_lex_le_first(take isl_space* space, unsigned n);
+	[rename=lexGTfirst]
+	isl_map* isl_map_lex_gt_first(take isl_space* space, unsigned n);
+	[rename=lexGEfirst]
+	isl_map* isl_map_lex_ge_first(take isl_space* space, unsigned n);
+
+	//not in the manual
+	
+//!! no longer exists
+//	[rename=isCompatibleWith]
+//	boolean isl_space_compatible(keep isl_space* dim1, keep isl_space* dim2);
+
+//	[rename=isMatching]  //deprecated in 0.19
+//	boolean isl_space_match(keep isl_space* dim1, enum isl_dim_type dim1_type, keep isl_space* dim2, enum isl_dim_type dim2_type);
+
+	//	[rename=dropInputs]
+	//	isl_space* isl_space_drop_inputs(isl_space* dim, unsigned first, unsigned num);
+	//	[rename=dropOutputs]
+	//	isl_space* isl_space_drop_outputs(isl_space* dim, unsigned first, unsigned num);
+	//	[rename=extend]
+	//	isl_space* isl_space_extend(isl_space* dim, unsigned nparam, unsigned n_in, unsigned n_out);
+}
+
+group ISLLocalSpace {
+	[rename=getContext]
+	isl_ctx* isl_local_space_get_ctx(keep isl_local_space* ls);
+	[rename=getSpace]
+	isl_space* isl_local_space_get_space(keep isl_local_space* ls);
+	[rename=copy]
+	isl_local_space* isl_local_space_copy(keep isl_local_space* ls);
+	[rename=free]
+	void isl_local_space_free(take isl_local_space* ls);
+
+	[rename=isSetSpace]
+	boolean isl_local_space_is_set(keep isl_local_space* ls);
+	[rename=getNbDims]
+	int isl_local_space_dim(keep isl_local_space* ls, enum isl_dim_type type);
+
+	[rename=hasName]
+	boolean isl_local_space_has_dim_name(keep isl_local_space* ls, enum isl_dim_type type, unsigned pos);
+	[rename=getName]
+	string isl_local_space_get_dim_name(keep isl_local_space* ls, enum isl_dim_type type, unsigned pos);
+	[rename=setName]
+	isl_local_space* isl_local_space_set_dim_name(take isl_local_space* ls, enum isl_dim_type type, unsigned pos, string s);
+	[rename=getDivAt]
+	isl_aff* isl_local_space_get_div(keep isl_local_space* ls, int pos);
+
+	//	isl_local_space *isl_local_space_set_tuple_id(take isl_local_space *ls, enum isl_dim_type type, take isl_id *id);
+	//	int isl_local_space_has_dim_id(keep isl_local_space *ls, enum isl_dim_type type, unsigned pos);
+	//	isl_id *isl_local_space_get_dim_id(keep isl_local_space *ls, enum isl_dim_type type, unsigned pos);
+	//	isl_local_space *isl_local_space_set_dim_id(take isl_local_space *ls, enum isl_dim_type type, unsigned pos, take isl_id *id);
+	[rename=isEqual]
+	boolean isl_local_space_is_equal(keep isl_local_space* ls1, keep isl_local_space* ls2);
+
+	//Unary Operations	 
+	[rename=domain]
+	isl_local_space* isl_local_space_domain(take isl_local_space* ls);
+	[rename=range]
+	isl_local_space* isl_local_space_range(take isl_local_space* ls);
+	[rename=fromDomain]
+	isl_local_space* isl_local_space_from_domain(take isl_local_space* ls);
+
+	[rename=flattenDomain]
+	isl_local_space* isl_local_space_flatten_domain(take isl_local_space* ls);
+	[rename=flattenRange]
+	isl_local_space* isl_local_space_flatten_range(take isl_local_space* ls);
+	[rename=lifting]
+	isl_basic_map* isl_local_space_lifting(take isl_local_space* ls);
+
+	[rename=addDims]
+	isl_local_space* isl_local_space_add_dims(take isl_local_space* ls, enum isl_dim_type type, unsigned n);
+	[rename=insertDims]
+	isl_local_space* isl_local_space_insert_dims(take isl_local_space* ls, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=dropDims]
+	isl_local_space* isl_local_space_drop_dims(take isl_local_space* ls, enum isl_dim_type type, unsigned first, unsigned n);
+
+	[rename=intersect]
+	isl_local_space* isl_local_space_intersect(take isl_local_space* ls1, take isl_local_space* ls2);
+
+	[static rename=fromSpace]
+	isl_local_space* isl_local_space_from_space(take isl_space* dim);
+}
+
+group ISLOptions {
+	[static]
+	struct isl_options* isl_options_new_with_defaults();
+
+	[rename=getCoalesceBoundedWrapping]
+	int isl_options_get_coalesce_bounded_wrapping(isl_ctx* ctx);
+	[rename=setCoalesceBoundedWrapping]
+	int isl_options_set_coalesce_bounded_wrapping(isl_ctx* ctx, int val);
+}
+
+group ISLSet {
+	[static rename=buildFromString]
+	isl_set* isl_set_read_from_str(isl_ctx* ctx, string str);
+	[rename=toUnionSet]
+	isl_union_set* isl_union_set_from_set(take isl_set* set);
+	[rename=toSetFromParamSet]
+	isl_set* isl_set_from_params(take isl_set* set);
+	[rename=toPWMultiAff]
+	isl_pw_multi_aff* isl_pw_multi_aff_from_set(take isl_set* set);
+	[rename=toList]
+	isl_set_list* isl_set_list_from_set(take isl_set* el);
+
+	[static rename=buildEmpty]
+	isl_set* isl_set_empty(take isl_space* space);
+	[static rename=buildUniverse]
+	isl_set* isl_set_universe(take isl_space* space);
+	[static rename=buildNonNegUniverse]
+	isl_set* isl_set_nat_universe(take isl_space* space);
+
+	[rename=getContext]
+	isl_ctx* isl_set_get_ctx(keep isl_set* set);
+	[rename=getSpace]
+	isl_space* isl_set_get_space(keep isl_set* set);
+	[rename=copy]
+	isl_set* isl_set_copy(keep isl_set* set);
+	[rename=free]
+	void isl_set_free(take isl_set* set);
+
+	[rename=addConstraint]
+	isl_set* isl_set_add_constraint(take isl_set* set, take isl_constraint* constraint);
+	[rename=getNbBasicSets]
+	int isl_set_n_basic_set(keep isl_set* set);
+	[rename=makeDisjoint]
+	isl_set* isl_set_make_disjoint(take isl_set* set);
+
+	//quasi-Aff
+	[rename=computeDivs]
+	isl_set* isl_set_compute_divs(take isl_set* set);
+//	[rename=alignDivs] //deprecated in 0.19
+//	isl_set* isl_set_align_divs(take isl_set* set);
+	[rename=removeDivs]
+	isl_set* isl_set_remove_divs(take isl_set* set);
+	[rename=removeUnknownDivs]
+	isl_set* isl_set_remove_unknown_divs(take isl_set* set);
+	[rename=removeDivsInvolvingDims]
+	isl_set* isl_set_remove_divs_involving_dims(take isl_set* set, enum isl_dim_type type, unsigned first, unsigned n);
+
+	[rename=getNbDims]
+	unsigned isl_set_dim(keep isl_set* set, enum isl_dim_type type);
+	[rename=getTupleName]
+	string isl_set_get_tuple_name(keep isl_set* set);
+	[rename=setTupleName]
+	isl_set* isl_set_set_tuple_name(take isl_set* set, string s);
+	[rename=getDimName]
+	string isl_set_get_dim_name(keep isl_set* set, enum isl_dim_type type, unsigned pos);
+	[rename=setDimName]
+	isl_set* isl_set_set_dim_name(take isl_set* set, enum isl_dim_type type, unsigned pos, string s);
+	[rename=hasTupleName]
+	boolean isl_set_has_tuple_name(keep isl_set* set);
+	[rename=hasDimName]
+	boolean isl_set_has_dim_name(keep isl_set* set, enum isl_dim_type type, unsigned pos);
+	[rename=findDimByName]
+	int isl_set_find_dim_by_name(keep isl_set* set, enum isl_dim_type type, string name);
+	[rename=involvesDims]
+	boolean isl_set_involves_dims(keep isl_set* set, enum isl_dim_type type, unsigned first, unsigned n);
+
+	[rename=getTupleID]
+	isl_id* isl_set_get_tuple_id(keep isl_set* set);       
+	[rename=getDimID]
+	isl_id* isl_set_get_dim_id(keep isl_set* set, enum isl_dim_type type, unsigned pos);  
+	[rename=hasTupleID]
+	boolean isl_set_has_tuple_id(keep isl_set* set);  
+	[rename=hasDimID]
+	boolean isl_set_has_dim_id(keep isl_set* set, enum isl_dim_type type, unsigned pos);  
+	[rename=setTupleID]
+	isl_set* isl_set_set_tuple_id(take isl_set* set,take isl_id* id);     
+	[rename=setDimID]
+	isl_set* isl_set_set_dim_id(take isl_set* set, enum isl_dim_type type, unsigned pos,take isl_id* id);
+	[rename=findDimByID]
+	int isl_set_find_dim_by_id(keep isl_set* set, enum isl_dim_type type,keep isl_id* id);  
+	[rename=resetTupleID]
+	isl_set* isl_set_reset_tuple_id(take isl_set* set);  
+	     
+	[rename=hasUpperBound]
+	boolean isl_set_dim_has_upper_bound(keep isl_set* set, enum isl_dim_type type, unsigned pos);
+	[rename=hasLowerBound]
+	boolean isl_set_dim_has_lower_bound(keep isl_set* set, enum isl_dim_type type, unsigned pos);
+	[rename=hasAnyUpperBound]
+	boolean isl_set_dim_has_any_upper_bound(keep isl_set* set, enum isl_dim_type type, unsigned pos);
+	[rename=hasAnyLowerBound]
+	boolean isl_set_dim_has_any_lower_bound(keep isl_set* set, enum isl_dim_type type, unsigned pos);
+
+	//Unary Properties	
+	[rename=plainIsEmpty]
+	boolean isl_set_plain_is_empty(keep isl_set *set);
+	[rename=isEmpty]
+	boolean isl_set_is_empty(keep isl_set* set);
+	
+	[rename=plainIsUniverse]
+	boolean isl_set_plain_is_universe(keep isl_set* set);
+	
+	[rename=isSingleton]
+	boolean isl_set_is_singleton(keep isl_set* set);
+	
+	
+	[rename=isParamSet]
+	boolean isl_set_is_params(keep isl_set* set);
+	[rename=isWrapping]
+	boolean isl_set_is_wrapping(keep isl_set* set);
+	
+	[rename=samplePoint]
+    isl_point *isl_set_sample_point(take isl_set *set);
+
+	//Binary Properties
+	
+	[rename=plainIsEqual]
+	boolean isl_set_plain_is_equal(keep isl_set* set1, keep isl_set* set2);
+	[rename=isEqual]
+	boolean isl_set_is_equal(keep isl_set* set1, keep isl_set* set2);
+	
+	[rename=plainIsDisjoint]
+	boolean isl_set_plain_is_disjoint(keep isl_set* set1, keep isl_set* set2);
+	[rename=isDisjoint]
+	boolean isl_set_is_disjoint(keep isl_set* set1, keep isl_set* set2);
+	[rename=isSubset]
+	boolean isl_set_is_subset(keep isl_set* set1, keep isl_set* set2);
+	[rename=isStrictSubset]
+	boolean isl_set_is_strict_subset(keep isl_set* set1, keep isl_set* set2);
+
+	//Unary Operations
+	[rename=paramSet]
+	isl_set* isl_set_params(take isl_set* set);
+	[rename=complement]
+	isl_set* isl_set_complement(take isl_set* set);
+	[rename=projectOut]
+	isl_set* isl_set_project_out(take isl_set* set, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=eliminate]
+	isl_set* isl_set_eliminate(take isl_set* set, enum isl_dim_type type, unsigned first, unsigned n);
+	//Slicing
+	[rename=sliceFixed]
+	isl_set* isl_set_fix_si(take isl_set* set, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceFixed]
+	isl_set* isl_set_fix_val(take isl_set* set, enum isl_dim_type type, unsigned pos, take isl_val* v);
+	[rename=sliceLB]
+	isl_set* isl_set_lower_bound_si(take isl_set* set, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceLB]
+	isl_set* isl_set_lower_bound_val(take isl_set* set, enum isl_dim_type type, unsigned pos, take isl_val* value);
+	[rename=sliceUB]
+	isl_set* isl_set_upper_bound_si(take isl_set* set, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceUB]
+	isl_set* isl_set_upper_bound_val(take isl_set* set, enum isl_dim_type type, unsigned pos, take isl_val* value);
+	[rename=sliceEquate]
+	isl_set* isl_set_equate(take isl_set* set, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=identity]
+	isl_map* isl_set_identity(take isl_set* set);
+	[rename=coalesce]
+	isl_set* isl_set_coalesce(take isl_set* set);
+	[rename=detectEqualities]
+	isl_set* isl_set_detect_equalities(take isl_set* set);
+	[rename=removeRedundancies]
+	isl_set* isl_set_remove_redundancies(take isl_set* set);
+	[rename=convexHull]
+	isl_basic_set* isl_set_convex_hull(take isl_set* set);
+	[rename=affineHull]
+	isl_basic_set* isl_set_affine_hull(take isl_set* set);
+	[rename=polyhedralHull]
+	isl_basic_set* isl_set_polyhedral_hull(take isl_set* set);
+	[rename=simpleHull]
+	isl_basic_set* isl_set_simple_hull(take isl_set* set);
+	[rename=unshiftedSimpleHull]
+	isl_basic_set* isl_set_unshifted_simple_hull(take isl_set* set);
+	[rename=dropConstraintsInvolvingDims]
+	isl_set* isl_set_drop_constraints_involving_dims(take isl_set* set, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=sample]
+	isl_basic_set* isl_set_sample(take isl_set* set);
+
+	//ILP - disabled for now
+	//isl_basic_set* isl_set_coefficients(take isl_set* set);
+	//isl_basic_set* isl_set_solutions(take isl_set* set);
+	//isl_val* isl_set_max_val(keep isl_set* set,keep isl_aff* obj);
+	//isl_val* isl_set_min_val(keep isl_set* set,keep isl_aff* obj);
+	//isl_pw_aff* isl_set_dim_max(take isl_set* set, int pos);
+	//isl_pw_aff* isl_set_dim_min(take isl_set* set, int pos);
+
+	//dimension manipulation
+	[rename=unwrap]
+	isl_map* isl_set_unwrap(take isl_set* set);
+	[rename=flatten]
+	isl_set* isl_set_flatten(take isl_set* set);
+	[rename=flattenAsMap]
+	isl_map* isl_set_flatten_map(take isl_set* set);
+	[rename=lift]
+	isl_set* isl_set_lift(take isl_set* set);
+	[rename=alignParams]
+	isl_set* isl_set_align_params(take isl_set* set, take isl_space* model);
+	[rename=addDims]
+	isl_set* isl_set_add_dims(take isl_set* set, enum isl_dim_type type, unsigned n);
+	[rename=insertDims]
+	isl_set* isl_set_insert_dims(take isl_set* set, enum isl_dim_type type, unsigned pos, unsigned n);
+	[rename=moveDims]
+	isl_set* isl_set_move_dims(take isl_set* set, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+
+	//Binary Operations
+	[rename=intersectParams]
+	isl_set* isl_set_intersect_params(take isl_set* set, take isl_set* params);
+	[rename=intersect]
+	isl_set* isl_set_intersect(take isl_set* set1, take isl_set* set2);
+	[rename=union]
+	isl_set* isl_set_union(take isl_set* set1, take isl_set* set2);
+	[rename=subtract]
+	isl_set* isl_set_subtract(take isl_set* set1, take isl_set* set2);
+	[rename=apply]
+	isl_set* isl_set_apply(take isl_set* set, take isl_map* map);
+	[rename=preimage]
+	isl_set* isl_set_preimage_multi_aff(take isl_set* set, take isl_multi_aff* ma);
+	[rename=preimage]
+	isl_set* isl_set_preimage_pw_multi_aff(take isl_set* set, take isl_pw_multi_aff* pma);
+	[rename=preimage]
+	isl_set* isl_set_preimage_multi_pw_aff(take isl_set* set, take isl_multi_pw_aff* mpa);
+	[rename=product]
+	isl_set* isl_set_product(take isl_set* set1, take isl_set* set2);
+	[rename=flatProduct]
+    isl_set* isl_set_flat_product(take isl_set* set1, take isl_set* set2);
+	[rename=gist]
+	isl_set* isl_set_gist(take isl_set* set, take isl_set* context);
+	[rename=gistParams]
+	isl_set* isl_set_gist_params(take isl_set* set, take isl_set* context);
+
+	//lex order
+	[rename=partialLexMin]
+	isl_set* isl_set_partial_lexmin(take isl_set* set, take isl_set* dom, isl_set* * ignored empty);
+	[rename=partialLexMax]
+	isl_set* isl_set_partial_lexmax(take isl_set* set, take isl_set* dom, isl_set* * ignored empty);
+	[rename=lexMin]
+	isl_set* isl_set_lexmin(take isl_set* set);
+	[rename=lexMax]
+	isl_set* isl_set_lexmax(take isl_set* set);
+	[rename=lexMinAsPWMultiAff]
+	isl_pw_multi_aff* isl_set_lexmin_pw_multi_aff(take isl_set* set);
+	[rename=lexMaxAsPWMultiAff]
+	isl_pw_multi_aff* isl_set_lexmax_pw_multi_aff(take isl_set* set);
+	
+	//strides removed for compatibility with 0.15
+	//[rename=getStrideInfo]
+	//isl_stride_info *isl_set_get_stride_info(keep isl_set *set, int pos);
+	//[rename=getStride]
+    //isl_val *isl_set_get_stride(keep isl_set *set, int pos);	
+	
+
+	//not in manual
+	[rename=getNbDims]
+	unsigned isl_set_n_dim(keep isl_set* set);
+	[rename=getNbParams]
+	unsigned isl_set_n_param(keep isl_set* set);
+	
+//!!! no longer exists
+//	[rename=addBasicSet]
+//	isl_set* isl_set_add_basic_set(take isl_set* set, take isl_basic_set* bset);
+	//	[rename=getBasicSetList]
+	//	isl_basic_set_list *isl_set_get_basic_set_list(keep isl_set *set);
+
+	//module defined methods
+	[rename=getBasicSetAt]
+	isl_basic_set* isl_set_get_basic_set_at(keep isl_set* set, int pos);
+
+	[rename=getNbPoints]
+	int isl_set_numberof_points(keep isl_set* set);
+	[rename=getPointAt]
+	isl_point* isl_set_get_point_at(keep isl_set* set, int pos);
+
+	[static rename=_toString]
+	string isl_set_to_string(keep isl_set* set, int format);
+
+	[rename=getLexNextMap]
+	isl_map* lex_next(keep isl_set* dom, int nbInnerLoop);
+	[rename=getLexNextPowerMap]
+	isl_map* lex_next_power(keep isl_set* dom, int nbInnerLoop, int power);
+
+	[rename=getLexPredMap]
+	isl_map* lex_pred(keep isl_set* dom, int nbInnerLoop);
+	[rename=getLexPredPowerMap]
+	isl_map* lex_pred_power(keep isl_set* dom, int nbInnerLoop, int power);
+
+	[rename=clearTupleName]
+	isl_set* clear_tuple_name(take isl_set* m);
+
+	//was in original jnimap, removed since its probably incorrect 
+	//[class=ISLMap,public,rename=flatten]
+	//isl_map *isl_set_flatten_map(isl_set *set);
+
+	//undocumented
+	//	[rename=extend]
+	//	isl_set* isl_set_extend(isl_set* base, unsigned nparam, unsigned dim);
+}
+
+group ISLBasicSet {
+	[static rename=buildFromString]
+	isl_basic_set* isl_basic_set_read_from_str(isl_ctx* ctx, string str);
+	[rename=toSet]
+	isl_set* isl_set_from_basic_set(take isl_basic_set* bset);
+	[rename=toUnionSet]
+	isl_union_set* isl_union_set_from_basic_set(take isl_basic_set* bset);
+	[rename=toBasicSetFromParamSet]
+	isl_basic_set* isl_basic_set_from_params(take isl_basic_set* bset);
+	[rename=toList]
+	isl_basic_set_list* isl_basic_set_list_from_basic_set(take isl_basic_set* el);
+
+	[static rename=buildEmpty]
+	isl_basic_set* isl_basic_set_empty(take isl_space* space);
+	[static rename=buildUniverse]
+	isl_basic_set* isl_basic_set_universe(take isl_space* space);
+	[static rename=buildNonNegUniverse]
+	isl_basic_set* isl_basic_set_nat_universe(take isl_space* space);
+
+	[rename=getContext]
+	isl_ctx* isl_basic_set_get_ctx(keep isl_basic_set* set);
+	[rename=getSpace]
+	isl_space* isl_basic_set_get_space(keep isl_basic_set* set);
+	[rename=getLocalSpace]
+	isl_local_space* isl_basic_set_get_local_space(keep isl_basic_set* bset);
+	[rename=copy]
+	isl_basic_set* isl_basic_set_copy(keep isl_basic_set* bset);
+	[rename=free]
+	void isl_basic_set_free(take isl_basic_set* bset);
+
+	[rename=addConstraint]
+	isl_basic_set* isl_basic_set_add_constraint(take isl_basic_set* bset, take isl_constraint* constraint);
+
+	//queries
+	[rename=getNbConstraints]
+	int isl_basic_set_n_constraint(keep isl_basic_set* bset);
+	[rename=getNbDims]
+	unsigned isl_basic_set_dim(keep isl_basic_set* bset, enum isl_dim_type type);
+	
+	
+	[rename=setDimName]
+	isl_basic_set* isl_basic_set_set_dim_name(take isl_basic_set* bset, enum isl_dim_type type, unsigned pos, string s);
+	[rename=setTupleID]
+	isl_basic_set* isl_basic_set_set_tuple_id(take isl_basic_set* bset, take isl_id* id);
+	[rename=setTupleName]
+	isl_basic_set* isl_basic_set_set_tuple_name(take isl_basic_set* set, string s);
+	
+	[rename=involvesDims]
+	boolean isl_basic_set_involves_dims(keep isl_basic_set* bset, enum isl_dim_type type, unsigned first, unsigned n);
+
+	[rename=getDimID]
+	isl_id* isl_basic_set_get_dim_id(keep isl_basic_set* bset, enum isl_dim_type type, unsigned pos);
+	[rename=getDimName]
+	string isl_basic_set_get_dim_name(keep isl_basic_set* bset, enum isl_dim_type type, unsigned pos);
+	[rename=getTupleName]
+	string isl_basic_set_get_tuple_name(keep isl_basic_set* bset);
+	
+	
+	//Quasi-Aff stuff
+	[rename=removeDivs]
+	isl_basic_set* isl_basic_set_remove_divs(take isl_basic_set* bset);
+	[rename=removeUnknownDivs]
+	isl_basic_set* isl_basic_set_remove_unknown_divs(take isl_basic_set* bset);
+	[rename=removeDivsInvolvingDims]
+	isl_basic_set* isl_basic_set_remove_divs_involving_dims(take isl_basic_set* bset, enum isl_dim_type type, unsigned first, unsigned n);
+
+	//matrix form
+	[static rename=fromConstraintMatrices]
+	isl_basic_set* isl_basic_set_from_constraint_matrices(take isl_space* space, take isl_mat* eq, take isl_mat* ineq, enum isl_dim_type c1, enum isl_dim_type c2, enum isl_dim_type c3, enum isl_dim_type c4);
+	[rename=getEqualityMatrix]
+	isl_mat* isl_basic_set_equalities_matrix(keep isl_basic_set* bset, enum isl_dim_type c1, enum isl_dim_type c2, enum isl_dim_type c3, enum isl_dim_type c4);
+	[rename=getInequalityMatrix]
+	isl_mat* isl_basic_set_inequalities_matrix(keep isl_basic_set* bset, enum isl_dim_type c1, enum isl_dim_type c2, enum isl_dim_type c3, enum isl_dim_type c4);
+
+	//Unary Properties
+	[rename=plainIsEmpty]
+	boolean isl_basic_set_plain_is_empty(keep isl_basic_set* bset);
+	[rename=isEmpty]
+	boolean isl_basic_set_is_empty(keep isl_basic_set* bset);
+	
+	//[rename=plainIsUniverse] removed for compatibility with 0.15
+	//boolean isl_basic_set_plain_is_universe(keep isl_basic_set* bset);
+	[rename=isUniverse]
+	boolean isl_basic_set_is_universe(keep isl_basic_set* bset);
+	
+	[rename=isWrapping]
+	boolean isl_basic_set_is_wrapping(keep isl_basic_set* bset);
+	
+	[rename=samplePoint]
+	isl_point *isl_basic_set_sample_point(take isl_basic_set *bset);
+
+	//Binary Properties
+	[rename=plainIsEqual]
+	boolean isl_basic_set_plain_is_equal(keep isl_basic_set* bset1, keep isl_basic_set* bset2);
+	[rename=isEqual]
+	boolean isl_basic_set_is_equal(keep isl_basic_set* bset1, keep isl_basic_set* bset2);
+	
+	[rename=isDisjoint]
+	boolean isl_basic_set_is_disjoint(keep isl_basic_set* bset1, keep isl_basic_set* bset2);
+	[rename=isSubset]
+	boolean isl_basic_set_is_subset(keep isl_basic_set* bset1, keep isl_basic_set* bset2);
+
+	//Unary Operations
+	[rename=paramSet]
+	isl_basic_set* isl_basic_set_params(take isl_basic_set* bset);
+	[rename=projectOut]
+	isl_basic_set* isl_basic_set_project_out(take isl_basic_set* bset, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=eliminate]
+	isl_basic_set* isl_basic_set_eliminate(take isl_basic_set* bset, enum isl_dim_type type, unsigned first, unsigned n);
+	
+	//Slicing
+	[rename=sliceFixed]
+	isl_basic_set* isl_basic_set_fix_si(take isl_basic_set* bset, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceFixed]
+	isl_basic_set* isl_basic_set_fix_val(take isl_basic_set* bset, enum isl_dim_type type, unsigned pos, take isl_val* v);
+	[rename=detectEqualities]
+	isl_basic_set* isl_basic_set_detect_equalities(take isl_basic_set* bset);
+	[rename=removeRedundancies]
+	isl_basic_set* isl_basic_set_remove_redundancies(take isl_basic_set* bset);
+	[rename=affineHull]
+	isl_basic_set* isl_basic_set_affine_hull(take isl_basic_set* bset);
+	[rename=coefficients]
+	isl_basic_set* isl_basic_set_coefficients(take isl_basic_set* bset);
+	[rename=dropConstraintsInvolvingDims]
+	isl_basic_set* isl_basic_set_drop_constraints_involving_dims(take isl_basic_set* bset, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=dropConstraintsNotInvolvingDims]
+	isl_basic_set* isl_basic_set_drop_constraints_not_involving_dims(take isl_basic_set* bset, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=sample]
+	isl_basic_set* isl_basic_set_sample(take isl_basic_set* bset);
+	//ILP - disabled for now
+	//isl_val* isl_basic_set_max_val(keep isl_basic_set* bset,keep isl_aff* obj);
+	//isl_basic_set* isl_basic_set_solutions(take isl_basic_set* bset);
+
+	//dimension manipulation
+	[rename=unwrap]
+	isl_basic_map* isl_basic_set_unwrap(take isl_basic_set* bset);
+	[rename=flatten]
+	isl_basic_set* isl_basic_set_flatten(take isl_basic_set* bset);
+	[rename=lift]
+	isl_basic_set* isl_basic_set_lift(take isl_basic_set* bset);
+	[rename=alignParams]
+	isl_basic_set* isl_basic_set_align_params(take isl_basic_set* bset, take isl_space* model);
+	[rename=addDims]
+	isl_basic_set* isl_basic_set_add_dims(take isl_basic_set* bset, enum isl_dim_type type, unsigned n);
+	[rename=insertDims]
+	isl_basic_set* isl_basic_set_insert_dims(take isl_basic_set* bset, enum isl_dim_type type, unsigned pos, unsigned n);
+	[rename=moveDims]
+	isl_basic_set* isl_basic_set_move_dims(take isl_basic_set* bset, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+
+	//Binary Operations
+	[rename=intersectParams]
+	isl_basic_set* isl_basic_set_intersect_params(take isl_basic_set* bset1, take isl_basic_set* bset2);
+	[rename=intersect]
+	isl_basic_set* isl_basic_set_intersect(take isl_basic_set* bset1, take isl_basic_set* bset2);
+	[rename=union]
+	isl_set* isl_basic_set_union(take isl_basic_set* bset1, take isl_basic_set* bset2);
+	[rename=apply]
+	isl_basic_set* isl_basic_set_apply(take isl_basic_set* bset, take isl_basic_map* bmap);
+	[rename=preimage]
+	isl_basic_set* isl_basic_set_preimage_multi_aff(take isl_basic_set* bset, take isl_multi_aff* ma);
+	[rename=flatProduct]
+	isl_basic_set* isl_basic_set_flat_product(take isl_basic_set* bset1, take isl_basic_set* bset2);
+	[rename=gist]
+	isl_basic_set* isl_basic_set_gist(take isl_basic_set* bset, take isl_basic_set* context);
+
+	//lex order
+	[rename=partialLexMin]
+	isl_set* isl_basic_set_partial_lexmin(take isl_basic_set* bset, take isl_basic_set* dom, isl_set* * ignored empty);
+	[rename=partialLexMax]
+	isl_set* isl_basic_set_partial_lexmax(take isl_basic_set* bset, take isl_basic_set* dom, isl_set* * ignored empty);
+	[rename=lexMin]
+	isl_set* isl_basic_set_lexmin(take isl_basic_set* bset);
+	[rename=lexMax]
+	isl_set* isl_basic_set_lexmax(take isl_basic_set* bset);
+	[rename=partialLexMinAsPWMultiAff]
+	isl_pw_multi_aff* isl_basic_set_partial_lexmin_pw_multi_aff(take isl_basic_set* bset, take isl_basic_set* dom, isl_set* * ignored empty);
+	[rename=partialLexMaxAsPWMultiAff]
+	isl_pw_multi_aff* isl_basic_set_partial_lexmax_pw_multi_aff(take isl_basic_set* bset, take isl_basic_set* dom, isl_set* * ignored empty);
+
+	//vertices
+	[rename=computeVertices]
+	isl_vertices* isl_basic_set_compute_vertices(keep isl_basic_set* bset);
+
+	//user module 
+	[static rename=_toString]
+	string isl_basic_set_to_string(keep isl_basic_set* bset, int format);
+
+	[rename=getConstraintAt]
+	isl_constraint* isl_basic_set_get_constraint_at(keep isl_basic_set* bset, int pos);
+
+}
+
+group ISLUnionSet {
+
+	[static rename=buildFromString]
+	isl_union_set* isl_union_set_read_from_str(isl_ctx* ctx, string str);
+	[rename=toSet]
+	isl_set* isl_set_from_union_set(take isl_union_set* uset);
+	[rename=toMultiAff]
+	isl_union_pw_multi_aff* isl_union_pw_multi_aff_from_union_set(take isl_union_set* uset);
+
+	[static rename=buildEmpty]
+	isl_union_set* isl_union_set_empty(take isl_space* space);
+	[static rename=buildUniverse]
+	isl_union_set* isl_union_set_universe(take isl_union_set* uset);
+	[static rename=fromDomainAndRange]
+	isl_union_map* isl_union_map_from_domain_and_range(take isl_union_set *domain, take isl_union_set *range);
+
+	[rename=getContext]
+	isl_ctx* isl_union_set_get_ctx(keep isl_union_set* uset);	
+	[rename=getSpace]
+	isl_space* isl_union_set_get_space(keep isl_union_set* uset);
+	[rename=copy]
+	isl_union_set* isl_union_set_copy(keep isl_union_set* uset);
+	[rename=free]
+	void isl_union_set_free(take isl_union_set* uset);//FIXME
+	
+	[rename=getNbSets]
+	int isl_union_set_n_set(keep isl_union_set* uset);
+	[rename=computeDivs]
+	isl_union_set* isl_union_set_compute_divs(take isl_union_set* uset);
+	[rename=extractSet]
+	isl_set* isl_union_set_extract_set(keep isl_union_set* uset, take isl_space* space);
+
+	//	Unary Properties
+	[rename=isEmpty]
+	boolean isl_union_set_is_empty(keep isl_union_set* uset);
+	[rename=isParamSet]
+	boolean isl_union_set_is_params(keep isl_union_set* uset);
+	
+	//[rename=samplePoint] removed for compatibility with 0.15
+    //isl_point *isl_union_set_sample_point(take isl_union_set *uset);
+
+	//Binary Properties
+	[rename=isEqual]
+	boolean isl_union_set_is_equal(keep isl_union_set* uset1, keep isl_union_set* uset2);
+	[rename=isDisjoint]
+	boolean isl_union_set_is_disjoint(keep isl_union_set* uset1, keep isl_union_set* uset2);
+	[rename=isSubset]
+	boolean isl_union_set_is_subset(keep isl_union_set* uset1, keep isl_union_set* uset2);
+	[rename=isStrictSubset]
+	boolean isl_union_set_is_strict_subset(keep isl_union_set* uset1, keep isl_union_set* uset2);
+
+	//Unary Operations
+	[rename=projectOut]
+    isl_union_set* isl_union_set_project_out(take isl_union_set* uset, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=paramSet]
+    isl_set* isl_union_set_params(take isl_union_set* uset);
+	[rename=identity]
+	isl_union_map* isl_union_set_identity(take isl_union_set* uset);
+	[rename=coalesce]
+	isl_union_set* isl_union_set_coalesce(take isl_union_set* set);
+	[rename=detectEqualities]
+	isl_union_set* isl_union_set_detect_equalities(take isl_union_set* uset);
+	[rename=removeRedundancies]
+    isl_union_set* isl_union_set_remove_redundancies(take isl_union_set* uset);
+    [rename=affineHull]
+    isl_union_set* isl_union_set_affine_hull(take isl_union_set* uset);
+    [rename=polyhedralHull]
+    isl_union_set *isl_union_set_polyhedral_hull(take isl_union_set* uset);
+	[rename=unwrap]
+	isl_union_map* isl_union_set_unwrap(take isl_union_set* uset);
+	[rename=lift]
+	isl_union_set* isl_union_set_lift(take isl_union_set* uset);
+
+	[rename=addSet]
+	isl_union_set* isl_union_set_add_set(take isl_union_set* uset, take isl_set* set);
+
+	//Binary Operators
+	[rename=intersectParams]
+	isl_union_set* isl_union_set_intersect_params(take isl_union_set* uset, take isl_set* set);
+	[rename=intersect]
+	isl_union_set* isl_union_set_intersect(take isl_union_set* uset1, take isl_union_set* uset2);
+	[rename=union]
+	isl_union_set* isl_union_set_union(take isl_union_set* uset1, take isl_union_set* uset2);
+	[rename=subtract]
+	isl_union_set* isl_union_set_subtract(take isl_union_set* uset1, take isl_union_set* uset2);
+	[rename=apply]
+	isl_union_set* isl_union_set_apply(take isl_union_set* uset, take isl_union_map* umap);
+	[rename=preimage]
+	isl_union_set* isl_union_set_preimage_multi_aff(take isl_union_set* uset, take isl_multi_aff* ma);
+	[rename=preimage]
+	isl_union_set* isl_union_set_preimage_pw_multi_aff(take isl_union_set* uset, take isl_pw_multi_aff* pma);
+	[rename=preimage]
+	isl_union_set* isl_union_set_preimage_union_pw_multi_aff(take isl_union_set* uset, take isl_union_pw_multi_aff* upma);
+	[rename=product]
+	isl_union_set* isl_union_set_product(take isl_union_set* uset1, take isl_union_set* uset2);
+	[rename=gist]
+	isl_union_set* isl_union_set_gist(take isl_union_set* uset, take isl_union_set* context);
+	[rename=gistParams]
+	isl_union_set* isl_union_set_gist_params(take isl_union_set* uset, take isl_set* set);
+
+	[rename=lexMin]
+	isl_union_set* isl_union_set_lexmin(take isl_union_set* uset);
+	[rename=lexMax]
+	isl_union_set* isl_union_set_lexmax(take isl_union_set* uset);
+
+	//user module 
+	[static rename=_toString]
+	string isl_union_set_to_string(keep isl_union_set* map, int format);
+
+	[rename=getSetAt]
+	isl_set* isl_union_set_get_set_at(keep isl_union_set* uset, int pos);
+
+	// not in manual
+	//	[rename=lex_lt_union_set]
+	//	isl_union_map* isl_union_set_lex_lt_union_set(isl_union_set* uset1, isl_union_set* uset2);
+	//
+	//	[rename=lex_le_union_set]
+	//	isl_union_map* isl_union_set_lex_le_union_set(isl_union_set* uset1, isl_union_set* uset2);
+	//
+	//	[rename=lex_gt_union_set]
+	//	isl_union_map* isl_union_set_lex_gt_union_set(isl_union_set* uset1, isl_union_set* uset2);
+	//
+	//	[rename=lex_ge_union_set]
+	//	isl_union_map* isl_union_set_lex_ge_union_set(isl_union_set* uset1, isl_union_set* uset2);
+}
+
+group ISLMap {
+	[static rename=buildFromString]
+	isl_map* isl_map_read_from_str(isl_ctx* ctx, string str);
+	[rename=toUnionMap]
+	isl_union_map* isl_union_map_from_map(take isl_map* map);
+	[rename=toPWMultiAff]
+	isl_pw_multi_aff* isl_pw_multi_aff_from_map(take isl_map* map);
+
+	[static rename=buildEmpty]
+	isl_map* isl_map_empty(take isl_space* space);
+	[static rename=buildUniverse]
+	isl_map* isl_map_universe(take isl_space* space);
+	[static rename=buildNonNegUniverse]
+	isl_map* isl_map_nat_universe(take isl_space* space);
+	[static rename=buildIdentity]
+	isl_map* isl_map_identity(take isl_space* space);
+
+	[rename=getContext]
+	isl_ctx* isl_map_get_ctx(keep isl_map* map);
+	[rename=getSpace]
+	isl_space* isl_map_get_space(keep isl_map* map);
+	[rename=copy]
+	isl_map* isl_map_copy(keep isl_map* map);
+	[rename=free]
+	void isl_map_free(take isl_map* map);
+
+	[rename=addConstraint]
+	isl_map* isl_map_add_constraint(take isl_map* map, take isl_constraint* constraint);
+	[rename=makeDisjoint]
+	isl_map* isl_map_make_disjoint(take isl_map* map);
+
+	[rename=computeDivs]
+	isl_map* isl_map_compute_divs(take isl_map* map);
+//	[rename=alignDivs] //deprecated in 0.19
+//	isl_map* isl_map_align_divs(take isl_map* map);
+	[rename=removeDivs]
+	isl_map* isl_map_remove_divs(take isl_map* map);
+	[rename=removeUnknownDivs]
+	isl_map* isl_map_remove_unknown_divs(take isl_map* map);
+	[rename=removeDivsInvolvingDims]
+	isl_map* isl_map_remove_divs_involving_dims(take isl_map* map, enum isl_dim_type type, unsigned first, unsigned n);
+
+	[rename=getNbDims]
+	unsigned isl_map_dim(keep isl_map* map, enum isl_dim_type type);
+
+	[rename=getTupleName]
+	string isl_map_get_tuple_name(keep isl_map* map, enum isl_dim_type type);
+	[rename=setTupleName]
+	isl_map* isl_map_set_tuple_name(take isl_map* map, enum isl_dim_type type, string s);
+	[rename=getDimName]
+	string isl_map_get_dim_name(keep isl_map* map, enum isl_dim_type type, unsigned pos);
+	[rename=setDimName]
+	isl_map* isl_map_set_dim_name(take isl_map* map, enum isl_dim_type type, unsigned pos, string s);
+	[rename=hasTupleName]
+	boolean isl_map_has_tuple_name(keep isl_map* map, enum isl_dim_type type);
+	[rename=hasDimName]
+	boolean isl_map_has_dim_name(keep isl_map* map, enum isl_dim_type type, unsigned pos);
+	[rename=findDimByName]
+	int isl_map_find_dim_by_name(keep isl_map* map, enum isl_dim_type type, string name);
+	[rename=involvesDims]
+	boolean isl_map_involves_dims(keep isl_map* map, enum isl_dim_type type, unsigned first, unsigned n);
+
+	//Identifier related method disabled for now TODO
+	//[rename=getTupleID]  
+	//isl_id* isl_map_get_tuple_id(keep isl_map* map, enum isl_dim_type type);    
+	//[rename=getDimID]
+	//isl_id* isl_map_get_dim_id(keep isl_map* map, enum isl_dim_type type, unsigned pos);  
+	//[rename=hasTupleID]
+	//boolean isl_map_has_tuple_id(keep isl_map* map, enum isl_dim_type type);    
+	//[rename=hasDimID]
+	//boolean isl_map_has_dim_id(keep isl_map* map, enum isl_dim_type type, unsigned pos);  
+	//[rename=setTupleID]
+	//isl_map* isl_map_set_tuple_id(take isl_map* map, enum isl_dim_type type,take isl_id* id);  
+	//[rename=setDimID]
+	//isl_map* isl_map_set_dim_id(take isl_map* map, enum isl_dim_type type, unsigned pos,take isl_id* id);
+	//[rename=findDimByID]
+	//int isl_map_find_dim_by_id(keep isl_map* map, enum isl_dim_type type,keep isl_id* id);  
+	//[rename=resetTupleID]
+	//isl_map* isl_map_reset_tuple_id(take isl_map* map, enum isl_dim_type type);  
+
+
+	//Unary Properties
+	[rename=isEmpty]
+	boolean isl_map_is_empty(keep isl_map* map);
+	[rename=isBijective]
+	boolean isl_map_is_bijective(keep isl_map* map);
+	[rename=isInjective]
+	boolean isl_map_is_injective(keep isl_map* map);
+	[rename=isSingleValued]
+	boolean isl_map_is_single_valued(keep isl_map* map);
+	[rename=domainIsWrapping]
+	boolean isl_map_domain_is_wrapping(keep isl_map* map);
+	[rename=rangeIsWrapping]
+	boolean isl_map_range_is_wrapping(keep isl_map* map);
+	[rename=canCurry]
+	boolean isl_map_can_curry(keep isl_map* map);
+	[rename=canUncurry]
+	boolean isl_map_can_uncurry(keep isl_map* map);
+	[rename=canZip]
+	boolean isl_map_can_zip(keep isl_map* map);
+	[rename=isPlainEmpty]
+	boolean isl_map_plain_is_empty(keep isl_map* map);
+	[rename=isPlainInjective]
+	boolean isl_map_plain_is_injective(keep isl_map* map);
+	[rename=isPlainSingleValued]
+	boolean isl_map_plain_is_single_valued(keep isl_map* map);
+	//isl_val* isl_map_plain_get_val_if_fixed(keep isl_map* map, enum isl_dim_type type, unsigned pos);
+
+
+	//Binary Properties
+	[rename=isEqual]
+	boolean isl_map_is_equal(keep isl_map* map1, keep isl_map* map2);
+	[rename=isDisjoint]
+	boolean isl_map_is_disjoint(keep isl_map* map1, keep isl_map* map2);
+	[rename=isSubset]
+	boolean isl_map_is_subset(keep isl_map* map1, keep isl_map* map2);
+	[rename=isStrictSubset]
+	boolean isl_map_is_strict_subset(keep isl_map* map1, keep isl_map* map2);
+	[rename=isPlainEqual]
+	boolean isl_map_plain_is_equal(keep isl_map* map1, keep isl_map* map2);
+
+	//Unary Operations	 
+	[static rename=fromDomain]
+	isl_map* isl_map_from_domain(take isl_set* set);
+	[static rename=fromRange]
+	isl_map* isl_map_from_range(take isl_set* set);
+	[static rename=fromDomainAndRange]
+	isl_map* isl_map_from_domain_and_range(take isl_set* domain, take isl_set* range);
+	[rename=paramSet]
+	isl_set* isl_map_params(take isl_map* map);
+	[rename=complement]
+	isl_map* isl_map_complement(take isl_map* map);
+	[rename=reverse]
+	isl_map* isl_map_reverse(take isl_map* map);
+	[rename=projectOut]
+	isl_map* isl_map_project_out(take isl_map* map, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=domain]
+	isl_set* isl_map_domain(take isl_map* bmap);
+	[rename=range]
+	isl_set* isl_map_range(take isl_map* map);
+	[rename=domainMap]
+	isl_map* isl_map_domain_map(take isl_map* map);
+	[rename=rangeMap]
+	isl_map* isl_map_range_map(take isl_map* map);
+	[rename=eliminate]
+	isl_map* isl_map_eliminate(take isl_map* map, enum isl_dim_type type, unsigned first, unsigned n);
+
+	//Slicing
+	[rename=sliceFixed]
+	isl_map* isl_map_fix_si(take isl_map* map, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceFixed]
+	isl_map* isl_map_fix_val(take isl_map* map, enum isl_dim_type type, unsigned pos, take isl_val* v);
+	[rename=sliceLB]
+	isl_map* isl_map_lower_bound_si(take isl_map* map, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceUB]
+	isl_map* isl_map_upper_bound_si(take isl_map* map, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceEquate]
+	isl_map* isl_map_equate(take isl_map* map, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=sliceOppose]
+	isl_map* isl_map_oppose(take isl_map* map, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=sliceGE]
+	isl_map* isl_map_order_ge(take isl_map* map, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=sliceGT]
+	isl_map* isl_map_order_gt(take isl_map* map, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=sliceLE]
+	isl_map* isl_map_order_le(take isl_map* map, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=sliceLT]
+	isl_map* isl_map_order_lt(take isl_map* map, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=deltas]
+	isl_set* isl_map_deltas(take isl_map* map);
+	[rename=deltasMap]
+	isl_map* isl_map_deltas_map(take isl_map* map);
+	[rename=coalesce]
+	isl_map* isl_map_coalesce(take isl_map* map);
+	[rename=detectEqualities]
+	isl_map* isl_map_detect_equalities(take isl_map* map);
+	[rename=removeRedundancies]
+	isl_map* isl_map_remove_redundancies(take isl_map* map);
+	[rename=convexHull]
+	isl_basic_map* isl_map_convex_hull(take isl_map* map);
+	[rename=affineHull]
+	isl_basic_map* isl_map_affine_hull(take isl_map* map);
+	[rename=polyhedralHull]
+	isl_basic_map* isl_map_polyhedral_hull(take isl_map* map);
+	[rename=simpleHull]
+	isl_basic_map* isl_map_simple_hull(take isl_map* map);
+	[rename=unshiftedSimpleHull]
+	isl_basic_map* isl_map_unshifted_simple_hull(take isl_map* map);
+	[rename=dropConstraintsInvolvingDims]
+	isl_map* isl_map_drop_constraints_involving_dims(take isl_map* map, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=sample]
+	isl_basic_map* isl_map_sample(take isl_map* map);
+
+	//ILP - disabled for now
+	//isl_pw_aff* isl_map_dim_max(take isl_map* map, int pos);
+
+	//use _val version for later ISL versions
+	[rename=power]
+	isl_map* isl_map_fixed_power_val(take isl_map* map, take isl_val* exp);
+	[rename=parametricPower]
+	isl_map* isl_map_power(take isl_map* map, boolean* exact);
+	[rename=transitiveClosure]
+	isl_map* isl_map_transitive_closure(take isl_map* map, boolean* exact);
+	[rename=reachingPathLengths]
+	isl_map* isl_map_reaching_path_lengths(take isl_map* map, boolean* exact);
+
+	//dimensions
+	[rename=wrap]
+	isl_set* isl_map_wrap(take isl_map* map);
+	[rename=flatten]
+	isl_map* isl_map_flatten(take isl_map* map);
+	[rename=flattenDomain]
+	isl_map* isl_map_flatten_domain(take isl_map* map);
+	[rename=flattenRange]
+	isl_map* isl_map_flatten_range(take isl_map* map);
+	[rename=zip]
+	isl_map* isl_map_zip(take isl_map* map);
+	[rename=curry]
+	isl_map* isl_map_curry(take isl_map* map);
+	[rename=uncurry]
+	isl_map* isl_map_uncurry(take isl_map* map);
+	[rename=alignParams]
+	isl_map* isl_map_align_params(take isl_map* map, take isl_space* model);
+	[rename=addDims]
+	isl_map* isl_map_add_dims(take isl_map* map, enum isl_dim_type type, unsigned n);
+	[rename=insertDims]
+	isl_map* isl_map_insert_dims(take isl_map* map, enum isl_dim_type type, unsigned pos, unsigned n);
+	[rename=moveDims]
+	isl_map* isl_map_move_dims(take isl_map* map, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+
+	//Binary Operations
+	[rename=intersectParams]
+	isl_map* isl_map_intersect_params(take isl_map* map, take isl_set* params);
+	[rename=intersectDomain]
+	isl_map* isl_map_intersect_domain(take isl_map* map, take isl_set* set);
+	[rename=intersectRange]
+	isl_map* isl_map_intersect_range(take isl_map* map, take isl_set* set);
+	[rename=intersect]
+	isl_map* isl_map_intersect(take isl_map* map1, take isl_map* map2);
+	[rename=union]
+	isl_map* isl_map_union(take isl_map* map1, take isl_map* map2);
+	[rename=subtract]
+	isl_map* isl_map_subtract(take isl_map* map1, take isl_map* map2);
+	[rename=subtractDomain]
+	isl_map* isl_map_subtract_domain(take isl_map* map, take isl_set* dom);
+	[rename=subtractRange]
+	isl_map* isl_map_subtract_range(take isl_map* map, take isl_set* dom);
+	[rename=applyDomain]
+	isl_map* isl_map_apply_domain(take isl_map* map1, take isl_map* map2);
+	[rename=applyRange]
+	isl_map* isl_map_apply_range(take isl_map* map1, take isl_map* map2);
+	[rename=preimageDomain]
+	isl_map* isl_map_preimage_domain_multi_aff(take isl_map* map, take isl_multi_aff* ma);
+	[rename=preimageDomain]
+	isl_map* isl_map_preimage_domain_pw_multi_aff(take isl_map* map, take isl_pw_multi_aff* pma);
+	[rename=preimageDomain]
+	isl_map* isl_map_preimage_domain_multi_pw_aff(take isl_map* map, take isl_multi_pw_aff* mpa);
+	[rename=preimageRange]
+	isl_map* isl_map_preimage_range_multi_aff(take isl_map* map, take isl_multi_aff* ma);
+	[rename=preimageRange]
+	isl_map* isl_map_preimage_range_pw_multi_aff(take isl_map* map, take isl_pw_multi_aff* pma);
+	[rename=product]
+	isl_map* isl_map_product(take isl_map* map1, take isl_map* map2);
+	[rename=domainProduct]
+	isl_map* isl_map_domain_product(take isl_map* map1, take isl_map* map2);
+	[rename=rangeProduct]
+	isl_map* isl_map_range_product(take isl_map* map1, take isl_map* map2);
+	[rename=flatProduct]
+    isl_map *isl_map_flat_product(take isl_map *map1, take isl_map *map2);
+
+	[rename=gist]
+	isl_map* isl_map_gist(take isl_map* map, take isl_map* context);
+	[rename=gistParams]
+	isl_map* isl_map_gist_params(take isl_map* map, take isl_set* context);
+	[rename=gistDomain]
+	isl_map* isl_map_gist_domain(take isl_map* map, take isl_set* context);
+	[rename=gistRange]
+	isl_map* isl_map_gist_range(take isl_map* map, take isl_set* context);
+
+	[rename=partialLexMin]
+	isl_map* isl_map_partial_lexmin(take isl_map* map, take isl_set* dom, isl_set* * ignored empty);
+	[rename=partialLexMax]
+	isl_map* isl_map_partial_lexmax(take isl_map* map, take isl_set* dom, isl_set* * ignored empty);
+	[rename=lexMin]
+	isl_map* isl_map_lexmin(take isl_map* map);
+	[rename=lexMax]
+	isl_map* isl_map_lexmax(take isl_map* map);
+	[rename=lexMinAsPWMultiAff]
+	isl_pw_multi_aff* isl_map_lexmin_pw_multi_aff(take isl_map* map);
+	[rename=lexMaxAsPWMultiAff]
+	isl_pw_multi_aff* isl_map_lexmax_pw_multi_aff(take isl_map* map);
+	
+	//fixed box removed for compatibility with 0.15
+	//[rename=getRangeSimpleFixedBoxHull]
+	//isl_fixed_box* isl_map_get_range_simple_fixed_box_hull(keep isl_map *map);
+	
+	//stride removed for compatibility with 0.15
+	//[rename=getRangeStrideInfo]
+	//isl_stride_info* isl_map_get_range_stride_info(keep isl_map *map, int pos);
+
+	//user module
+	[rename=getBasicMapAt]
+	isl_basic_map* isl_map_get_basic_map_at(keep isl_map* map, int pos);
+	[rename=getNbBasicMaps]
+	int isl_map_numberof_basic_map(keep isl_map* map);
+
+	[static rename=_toString]
+	string isl_map_to_string(keep isl_map* map, int format);
+
+	[rename=clearInputTupleName]
+	isl_map* clear_in_tuple_name(take isl_map* m);
+	[rename=clearOutputTupleName]
+	isl_map* clear_out_tuple_name(take isl_map* m);
+
+	//no longer necessary
+	//	[rename=transitiveClosure]
+	//	struct isl_transitive_closure_result* isl_map_transitive_closure_jnimap(isl_map* map);
+}
+
+group ISLBasicMap {
+	[static rename=buildFromString]
+	isl_basic_map* isl_basic_map_read_from_str(isl_ctx* ctx, string str);
+	[rename=toMap]
+	isl_map* isl_map_from_basic_map(take isl_basic_map* bmap);
+	[rename=toUnionMap]
+	isl_union_map* isl_union_map_from_basic_map(take isl_basic_map* bmap);
+
+	[static rename=buildEmpty]
+	isl_basic_map* isl_basic_map_empty(take isl_space* space);
+	[static rename=buildUniverse]
+	isl_basic_map* isl_basic_map_universe(take isl_space* space);
+	[static rename=buildNonNegUniverse]
+	isl_basic_map* isl_basic_map_nat_universe(take isl_space* space);
+	[static rename=buildIdentity]
+	isl_basic_map* isl_basic_map_identity(take isl_space* space);
+	
+	[rename=getContext]
+	isl_ctx* isl_basic_map_get_ctx(keep isl_basic_map* bmap);
+	[rename=getSpace]
+	isl_space* isl_basic_map_get_space(keep isl_basic_map* bmap);
+	[rename=copy]
+	isl_basic_map* isl_basic_map_copy(keep isl_basic_map* bmap);
+	[rename=free]
+	void isl_basic_map_free(take isl_basic_map* bmap);
+
+	[rename=addConstraint]
+	isl_basic_map* isl_basic_map_add_constraint(take isl_basic_map* bmap, take isl_constraint* constraint);
+
+	//queries
+	[rename=getNbDims]
+	unsigned isl_basic_map_dim(keep isl_basic_map* bmap, enum isl_dim_type type);
+	[rename=getTupleName]
+	string isl_basic_map_get_tuple_name(keep isl_basic_map* bmap, enum isl_dim_type type);
+	[rename=setTupleName]
+	isl_basic_map* isl_basic_map_set_tuple_name(take isl_basic_map* bmap, enum isl_dim_type type, string s);
+	[rename=getDimName]
+	string isl_basic_map_get_dim_name(keep isl_basic_map* bmap, enum isl_dim_type type, unsigned pos);
+	[rename=setDimName]
+	isl_basic_map* isl_basic_map_set_dim_name(take isl_basic_map* bmap, enum isl_dim_type type, unsigned pos, string s);
+	[rename=involvesDims]
+	boolean isl_basic_map_involves_dims(keep isl_basic_map* bmap, enum isl_dim_type type, unsigned first, unsigned n);
+
+	[rename=hasDimID]
+	boolean isl_basic_map_has_dim_id(keep isl_basic_map* bmap, enum isl_dim_type type, unsigned pos);
+
+	//quasi-Aff
+	[rename=removeDivs]
+	isl_basic_map* isl_basic_map_remove_divs(take isl_basic_map* bmap);
+	[rename=removeDivsInvolvingDims]
+	isl_basic_map* isl_basic_map_remove_divs_involving_dims(take isl_basic_map* bmap, enum isl_dim_type type, unsigned first, unsigned n);
+
+	//matrix form
+	[static rename=fromConstraintMatrices]
+	isl_basic_map* isl_basic_map_from_constraint_matrices(take isl_space* space, take isl_mat* eq, take isl_mat* ineq, enum isl_dim_type c1, enum isl_dim_type c2, enum isl_dim_type c3, enum isl_dim_type c4, enum isl_dim_type c5);
+	[rename=getEqualityMatrix]
+	isl_mat* isl_basic_map_equalities_matrix(keep isl_basic_map* bmap, enum isl_dim_type c1, enum isl_dim_type c2, enum isl_dim_type c3, enum isl_dim_type c4, enum isl_dim_type c5);
+
+	[rename=getInequalityMatrix]
+	isl_mat* isl_basic_map_inequalities_matrix(keep isl_basic_map* bmap, enum isl_dim_type c1, enum isl_dim_type c2, enum isl_dim_type c3, enum isl_dim_type c4, enum isl_dim_type c5);
+
+	//Unary Properties
+	[rename=plainIsEmpty]
+	boolean isl_basic_map_plain_is_empty(keep isl_basic_map* bmap);
+	[rename=isEmpty]
+	boolean isl_basic_map_is_empty(keep isl_basic_map* bmap);
+	[rename=isUniverse]
+	boolean isl_basic_map_is_universe(keep isl_basic_map* bmap);
+	[rename=isSingleValued]
+	boolean isl_basic_map_is_single_valued(keep isl_basic_map* bmap);
+	[rename=canCurry]
+	boolean isl_basic_map_can_curry(keep isl_basic_map* bmap);
+	[rename=canUncurry]
+	boolean isl_basic_map_can_uncurry(keep isl_basic_map* bmap);
+	[rename=canZip]
+	boolean isl_basic_map_can_zip(keep isl_basic_map* bmap);
+
+	//boolean isl_basic_map_plain_is_empty(keep isl_basic_map *bmap);
+	//isl_val* isl_basic_map_plain_get_val_if_fixed(keep isl_basic_map* bmap, enum isl_dim_type type, unsigned pos);
+
+
+	//Binary Properties
+	[rename=isEqual]
+	boolean isl_basic_map_is_equal(keep isl_basic_map* bmap1, keep isl_basic_map* bmap2);
+	[rename=isDisjoint]
+	boolean isl_basic_map_is_disjoint(keep isl_basic_map* bmap1, keep isl_basic_map* bmap2);
+	[rename=isSubset]
+	boolean isl_basic_map_is_subset(keep isl_basic_map* bmap1, keep isl_basic_map* bmap2);
+	[rename=isStrictSubset]
+	boolean isl_basic_map_is_strict_subset(keep isl_basic_map* bmap1, keep isl_basic_map* bmap2);
+
+	//Unary Operations
+	[rename=reverse]
+	isl_basic_map* isl_basic_map_reverse(take isl_basic_map* bmap);
+	[rename=projectOut]
+	isl_basic_map* isl_basic_map_project_out(take isl_basic_map* bmap, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=domain]
+	isl_basic_set* isl_basic_map_domain(take isl_basic_map* bmap);
+	[rename=range]
+	isl_basic_set* isl_basic_map_range(take isl_basic_map* bmap);
+	[rename=domainMap]
+	isl_basic_map* isl_basic_map_domain_map(take isl_basic_map* bmap);
+	[rename=rangeMap]
+	isl_basic_map* isl_basic_map_range_map(take isl_basic_map* bmap);
+	[rename=eliminate]
+	isl_basic_map* isl_basic_map_eliminate(take isl_basic_map* bmap, enum isl_dim_type type, unsigned first, unsigned n);
+
+	//Slicing
+	[rename=sliceFixed]
+	isl_basic_map* isl_basic_map_fix_si(take isl_basic_map* bmap, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceFixed]
+	isl_basic_map* isl_basic_map_fix_val(take isl_basic_map* bmap, enum isl_dim_type type, unsigned pos, take isl_val* v);
+	[rename=sliceLB]
+	isl_basic_map* isl_basic_map_lower_bound_si(take isl_basic_map* bmap, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceUB]
+	isl_basic_map* isl_basic_map_upper_bound_si(take isl_basic_map* bmap, enum isl_dim_type type, unsigned pos, int value);
+	[rename=sliceEquate]
+	isl_basic_map* isl_basic_map_equate(take isl_basic_map* bmap, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=sliceGE]
+	isl_basic_map* isl_basic_map_order_ge(take isl_basic_map* bmap, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=sliceGT]
+	isl_basic_map* isl_basic_map_order_gt(take isl_basic_map* bmap, enum isl_dim_type type1, int pos1, enum isl_dim_type type2, int pos2);
+	[rename=deltas]
+	isl_basic_set* isl_basic_map_deltas(take isl_basic_map* bmap);
+	[rename=deltasMap]
+	isl_basic_map* isl_basic_map_deltas_map(take isl_basic_map* bmap);
+	[rename=detectEqualities]
+	isl_basic_map* isl_basic_map_detect_equalities(take isl_basic_map* bmap);
+	[rename=removeRedundancies]
+	isl_basic_map* isl_basic_map_remove_redundancies(take isl_basic_map* bmap);
+	[rename=affineHull]
+	isl_basic_map* isl_basic_map_affine_hull(take isl_basic_map* bmap);
+	[rename=dropConstraintsInvolvingDims]
+	isl_basic_map* isl_basic_map_drop_constraints_involving_dims(take isl_basic_map* bmap, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=sample]
+	isl_basic_map* isl_basic_map_sample(take isl_basic_map* bmap);
+
+	//dimensions
+	[rename=wrap]
+	isl_basic_set* isl_basic_map_wrap(take isl_basic_map* bmap);
+	[rename=flatten]
+	isl_basic_map* isl_basic_map_flatten(take isl_basic_map* bmap);
+	[rename=flattenDomain]
+	isl_basic_map* isl_basic_map_flatten_domain(take isl_basic_map* bmap);
+	[rename=flattenRange]
+	isl_basic_map* isl_basic_map_flatten_range(take isl_basic_map* bmap);
+	[rename=zip]
+	isl_basic_map* isl_basic_map_zip(take isl_basic_map* bmap);
+	[rename=curry]
+	isl_basic_map* isl_basic_map_curry(take isl_basic_map* bmap);
+	[rename=uncurry]
+	isl_basic_map* isl_basic_map_uncurry(take isl_basic_map* bmap);
+	[rename=alignParams]
+	isl_basic_map* isl_basic_map_align_params(take isl_basic_map* bmap, take isl_space* model);
+	[rename=insertDims]
+	isl_basic_map* isl_basic_map_insert_dims(take isl_basic_map* bmap, enum isl_dim_type type, unsigned pos, unsigned n);
+	[rename=moveDims]
+	isl_basic_map* isl_basic_map_move_dims(take isl_basic_map* bmap, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+
+	//Binary Operations
+	[rename=intersectDomain]
+	isl_basic_map* isl_basic_map_intersect_domain(take isl_basic_map* bmap, take isl_basic_set* bset);
+	[rename=intersectRange]
+	isl_basic_map* isl_basic_map_intersect_range(take isl_basic_map* bmap, take isl_basic_set* bset);
+	[rename=intersect]
+	isl_basic_map* isl_basic_map_intersect(take isl_basic_map* bmap1, take isl_basic_map* bmap2);
+	[rename=union]
+	isl_map* isl_basic_map_union(take isl_basic_map* bmap1, take isl_basic_map* bmap2);
+	[rename=applyDomain]
+	isl_basic_map* isl_basic_map_apply_domain(take isl_basic_map* bmap1, take isl_basic_map* bmap2);
+	[rename=applyRange]
+	isl_basic_map* isl_basic_map_apply_range(take isl_basic_map* bmap1, take isl_basic_map* bmap2);
+	[rename=preimageDomain]
+	isl_basic_map* isl_basic_map_preimage_domain_multi_aff(take isl_basic_map* bmap, take isl_multi_aff* ma);
+	[rename=preimageRange]
+	isl_basic_map* isl_basic_map_preimage_range_multi_aff(take isl_basic_map* bmap, take isl_multi_aff* ma);
+	[rename=gist]
+	isl_basic_map* isl_basic_map_gist(take isl_basic_map* bmap, take isl_basic_map* context);
+
+	//lex order
+	[rename=partialLexMin]
+	isl_map* isl_basic_map_partial_lexmin(take isl_basic_map* bmap, take isl_basic_set* dom, isl_set* * ignored empty);
+	[rename=partialLexMax]
+	isl_map* isl_basic_map_partial_lexmax(take isl_basic_map* bmap, take isl_basic_set* dom, isl_set* * ignored empty);
+	[rename=lexMin]
+	isl_map* isl_basic_map_lexmin(take isl_basic_map* bmap);
+	[rename=lexMax]
+	isl_map* isl_basic_map_lexmax(take isl_basic_map* bmap);
+	[rename=lexMinAsPWMultiAff]
+	isl_pw_multi_aff* isl_basic_map_lexmin_pw_multi_aff(take isl_basic_map* bmap);
+	[rename=partialLexMinAsPWMultiAff]
+	isl_pw_multi_aff* isl_basic_map_partial_lexmin_pw_multi_aff(take isl_basic_map* bmap, take isl_basic_set* dom, isl_set* * ignored empty);
+	[rename=partialLexMaxAsPWMultiAff]
+	isl_pw_multi_aff* isl_basic_map_partial_lexmax_pw_multi_aff(take isl_basic_map* bmap, take isl_basic_set* dom, isl_set* * ignored empty);
+
+	//	[rename=extend]
+	//	isl_basic_map* isl_basic_map_extend(isl_basic_map* base, unsigned nparam, unsigned n_in, unsigned n_out, unsigned extra, unsigned n_eq, unsigned n_ineq);
+	//	[rename=extend_constraints]
+	//	isl_basic_map* isl_basic_map_extend_constraints(isl_basic_map* base, unsigned n_eq, unsigned n_ineq);
+
+	//module
+	[rename=getNumberOfConstraints]
+	int isl_basic_map_numberof_constraint(keep isl_basic_map* bmap);
+
+	[rename=getConstraintAt]
+	isl_constraint* isl_basic_map_get_constraint_at(keep isl_basic_map* bmap, int pos);
+
+	[static rename=_toString]
+	string isl_basic_map_to_string(keep isl_basic_map* bmap, int format);
+}
+
+group ISLUnionMap {
+	[static rename=buildFromString]
+	isl_union_map* isl_union_map_read_from_str(isl_ctx* ctx, string str);
+	[rename=toMap]
+	isl_map* isl_map_from_union_map(take isl_union_map* umap);
+
+	[static rename=buildEmpty]
+	isl_union_map* isl_union_map_empty(take isl_space* space);
+	[static rename=buildUniverse]
+	isl_union_map* isl_union_map_universe(take isl_union_map* umap);
+
+	[rename=getContext]
+	isl_ctx* isl_union_map_get_ctx(keep isl_union_map* umap);
+	[rename=getSpace]
+	isl_space* isl_union_map_get_space(keep isl_union_map* umap);
+	[rename=copy]
+	isl_union_map* isl_union_map_copy(keep isl_union_map* umap);
+	[rename=free]
+	void isl_union_map_free(take isl_union_map* umap);//FIXME
+	
+	[rename=getNbMaps]
+	int isl_union_map_n_map(keep isl_union_map* umap);
+	[rename=computeDivs]
+	isl_union_map* isl_union_map_compute_divs(take isl_union_map* umap);
+
+	[rename=extractMap]
+	isl_map* isl_union_map_extract_map(keep isl_union_map* umap, take isl_space* space);
+
+	//do not exist in 10.0 TODO
+	//		[rename=getDimID]
+	//		isl_id* isl_union_map_get_dim_id(keep isl_union_map* umap, enum isl_dim_type type, unsigned pos);
+	[rename=getNbDims]
+	unsigned isl_union_map_dim(keep isl_union_map* umap, enum isl_dim_type type);
+
+	//Unary Properties
+	[rename=isEmpty]
+	boolean isl_union_map_is_empty(keep isl_union_map* umap);
+	[rename=isBijective]
+	boolean isl_union_map_is_bijective(keep isl_union_map* umap);
+	[rename=isInjective]
+	boolean isl_union_map_is_injective(keep isl_union_map* umap);
+	[rename=isSingleValued]
+	boolean isl_union_map_is_single_valued(keep isl_union_map* umap);
+	//boolean isl_union_map_plain_is_injective(keep isl_union_map *umap);
+
+
+	//Binary Properties
+	[rename=isEqual]
+	boolean isl_union_map_is_equal(keep isl_union_map* umap1, keep isl_union_map* umap2);
+	[rename=isSubset]
+	boolean isl_union_map_is_subset(keep isl_union_map* umap1, keep isl_union_map* umap2);
+	[rename=isStrictSubset]
+	boolean isl_union_map_is_strict_subset(keep isl_union_map* umap1, keep isl_union_map* umap2);
+
+	//Unary Operations
+	[rename=paramSet]
+	isl_set* isl_union_map_params(take isl_union_map* umap);
+	[rename=reverse]
+	isl_union_map* isl_union_map_reverse(take isl_union_map* umap);
+	[rename=projectOut]
+	isl_union_map* isl_union_map_project_out(take isl_union_map* umap, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=domain]
+	isl_union_set* isl_union_map_domain(take isl_union_map* umap);
+	[rename=range]
+	isl_union_set* isl_union_map_range(take isl_union_map* umap);
+	[rename=domainMap]
+	isl_union_map* isl_union_map_domain_map(take isl_union_map* umap);
+	[rename=rangeMap]
+	isl_union_map* isl_union_map_range_map(take isl_union_map* umap);
+	[rename=deltas]
+	isl_union_set* isl_union_map_deltas(take isl_union_map* umap);
+	[rename=deltasMap]
+	isl_union_map* isl_union_map_deltas_map(take isl_union_map* umap);
+	[rename=coalesce]
+	isl_union_map* isl_union_map_coalesce(take isl_union_map* umap);
+	[rename=detectEqualities]
+	isl_union_map* isl_union_map_detect_equalities(take isl_union_map* umap);
+	[rename=affineHull]
+	isl_union_map* isl_union_map_affine_hull(take isl_union_map* umap);
+	[rename=polyhedralHull]
+	isl_union_map* isl_union_map_polyhedral_hull(take isl_union_map* umap);
+	[rename=simpleHull]
+	isl_union_map* isl_union_map_simple_hull(take isl_union_map* umap);
+
+	[rename=parametricPower]
+	isl_union_map* isl_union_map_power(take isl_union_map* umap, boolean* exact);
+	[rename=power]
+	isl_union_map* isl_union_map_fixed_power_val(take isl_union_map* umap, take isl_val* exp);
+	[rename=transitiveClosure]
+	isl_union_map* isl_union_map_transitive_closure(take isl_union_map* umap, boolean* exact);
+
+	[rename=wrap]
+	isl_union_set* isl_union_map_wrap(take isl_union_map* umap);
+	[rename=zip]
+	isl_union_map* isl_union_map_zip(take isl_union_map* umap);
+	[rename=curry]
+	isl_union_map* isl_union_map_curry(take isl_union_map* umap);
+	[rename=uncurry]
+	isl_union_map* isl_union_map_uncurry(take isl_union_map* umap);
+
+	[rename=addMap]
+	isl_union_map* isl_union_map_add_map(take isl_union_map* umap, take isl_map* map);
+
+	//Binary Operations
+	[rename=intersectParams]
+	isl_union_map* isl_union_map_intersect_params(take isl_union_map* umap, take isl_set* set);
+	[rename=intersectDomain]
+	isl_union_map* isl_union_map_intersect_domain(take isl_union_map* umap, take isl_union_set* uset);
+	[rename=intersectRange]
+	isl_union_map* isl_union_map_intersect_range(take isl_union_map* umap, take isl_union_set* uset);
+	[rename=intersect]
+	isl_union_map* isl_union_map_intersect(take isl_union_map* umap1, take isl_union_map* umap2);
+	[rename=union]
+	isl_union_map* isl_union_map_union(take isl_union_map* umap1, take isl_union_map* umap2);
+	[rename=subtract]
+	isl_union_map* isl_union_map_subtract(take isl_union_map* umap1, take isl_union_map* umap2);
+	[rename=subtractDomain]
+	isl_union_map* isl_union_map_subtract_domain(take isl_union_map* umap, take isl_union_set* dom);
+	[rename=subtractRange]
+	isl_union_map* isl_union_map_subtract_range(take isl_union_map* umap, take isl_union_set* dom);
+	[rename=applyDomain]
+	isl_union_map* isl_union_map_apply_domain(take isl_union_map* umap1, take isl_union_map* umap2);
+	[rename=applyRange]
+	isl_union_map* isl_union_map_apply_range(take isl_union_map* umap1, take isl_union_map* umap2);
+	[rename=preimageDomain]
+	isl_union_map* isl_union_map_preimage_domain_multi_aff(take isl_union_map* umap, take isl_multi_aff* ma);
+	[rename=preimageDomain]
+	isl_union_map* isl_union_map_preimage_domain_pw_multi_aff(take isl_union_map* umap, take isl_pw_multi_aff* pma);
+	[rename=preimageDomain]
+	isl_union_map* isl_union_map_preimage_domain_union_pw_multi_aff(take isl_union_map* umap, take isl_union_pw_multi_aff* upma);
+	[rename=preimageRange]
+	isl_union_map* isl_union_map_preimage_range_multi_aff(take isl_union_map* umap, take isl_multi_aff* ma);
+	[rename=preimageRange]
+	isl_union_map* isl_union_map_preimage_range_pw_multi_aff(take isl_union_map* umap, take isl_pw_multi_aff* pma);
+	[rename=preimageRange]
+	isl_union_map* isl_union_map_preimage_range_union_pw_multi_aff(take isl_union_map* umap, take isl_union_pw_multi_aff* upma);
+	[rename=gist]
+	isl_union_map* isl_union_map_gist(take isl_union_map* umap, take isl_union_map* context);
+	[rename=gistParams]
+	isl_union_map* isl_union_map_gist_params(take isl_union_map* umap, take isl_set* set);
+	[rename=gistDomain]
+	isl_union_map* isl_union_map_gist_domain(take isl_union_map* umap, take isl_union_set* uset);
+	[rename=gistRange]
+	isl_union_map* isl_union_map_gist_range(take isl_union_map* umap, take isl_union_set* uset);
+
+	//lex order
+	[rename=lexMin]
+	isl_union_map* isl_union_map_lexmin(take isl_union_map* umap);
+	[rename=lexMax]
+	isl_union_map* isl_union_map_lexmax(take isl_union_map* umap);
+	[rename=lexLT]
+	isl_union_map *isl_union_map_lex_lt_union_map(take isl_union_map *umap1, take isl_union_map *umap2);
+	[rename=lexLE]
+	isl_union_map *isl_union_map_lex_le_union_map(take isl_union_map *umap1, take isl_union_map *umap2);
+	[rename=lexGT]
+	isl_union_map *isl_union_map_lex_gt_union_map(take isl_union_map *umap1, take isl_union_map *umap2);
+	[rename=lexGE]
+	isl_union_map *isl_union_map_lex_ge_union_map(take isl_union_map *umap1, take isl_union_map *umap2);
+
+	//modules
+	[static rename=_toString]
+	string isl_union_map_to_string(keep isl_union_map* map, int format);
+
+	[rename=getMapAt]
+	isl_map* isl_union_map_get_map_at(keep isl_union_map* umap, int pos);
+
+	//	//no longer necessary
+	//	[rename=transitiveClosure]
+	//	struct isl_transitive_closure_result* isl_union_map_transitive_closure_jnimap(isl_union_map* umap);
+}
+
+group ISLConstraint {
+	[rename=toBasicMap]
+	isl_basic_map* isl_basic_map_from_constraint(take isl_constraint* constraint);
+	[rename=toBasicSet]
+	isl_basic_set* isl_basic_set_from_constraint(take isl_constraint* constraint);
+
+	[static rename=buildEquality]
+	isl_constraint* isl_equality_alloc(take isl_local_space* ls);
+	[static rename=buildInequality]
+	isl_constraint* isl_inequality_alloc(take isl_local_space* ls);
+	
+	[rename=getContext]
+	isl_ctx *isl_constraint_get_ctx(keep isl_constraint *c);
+	[rename=getSpace]
+	isl_space* isl_constraint_get_space(keep isl_constraint* constraint);
+	[rename=getLocalSpace]
+	isl_local_space* isl_constraint_get_local_space(keep isl_constraint* constraint);
+	[rename=copy]
+	isl_constraint* isl_constraint_copy(keep isl_constraint* c);
+	[rename=free]
+	void isl_constraint_free(take isl_constraint* c);//FIXME
+
+	[rename=setConstant]
+	isl_constraint* isl_constraint_set_constant_si(take isl_constraint* constraint, int v);
+	[rename=setConstant]
+	isl_constraint* isl_constraint_set_constant_val(take isl_constraint* constraint, take isl_val* v);
+	[rename=setCoefficient]
+	isl_constraint* isl_constraint_set_coefficient_si(take isl_constraint* constraint, enum isl_dim_type type, int pos, int v);
+	[rename=setCoefficient]
+	isl_constraint* isl_constraint_set_coefficient_val(take isl_constraint* constraint, enum isl_dim_type type, int pos, take isl_val* v);
+
+	[rename=isEqual]
+	boolean isl_constraint_is_equal(keep isl_constraint* constraint1, keep isl_constraint* constraint2);
+
+	[rename=isEquality]
+	boolean isl_constraint_is_equality(keep isl_constraint* constraint);
+	[rename=isDivConstraint]
+	boolean isl_constraint_is_div_constraint(keep isl_constraint* constraint);
+	[rename=isLowerBound]
+	boolean isl_constraint_is_lower_bound(keep isl_constraint* constraint, enum isl_dim_type type, unsigned pos);
+	[rename=isUpperBound]
+	boolean isl_constraint_is_upper_bound(keep isl_constraint* constraint, enum isl_dim_type type, unsigned pos);
+	[rename=getConstantVal]
+	isl_val* isl_constraint_get_constant_val(keep isl_constraint* constraint);
+	[rename=getCoefficientVal]
+	isl_val* isl_constraint_get_coefficient_val(keep isl_constraint* constraint, enum isl_dim_type type, int pos);
+	[rename=involvesDims]
+	boolean isl_constraint_involves_dims(keep isl_constraint* constraint, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=getDiv]
+	isl_aff* isl_constraint_get_div(keep isl_constraint* constraint, int pos);
+
+	[rename=getDimName]
+	string isl_constraint_get_dim_name(keep isl_constraint* constraint, enum isl_dim_type type, unsigned pos);
+
+	[rename=getBound]
+	isl_aff* isl_constraint_get_bound(keep isl_constraint* constraint, enum isl_dim_type type, int pos);
+	[rename=getAff]
+	isl_aff* isl_constraint_get_aff(keep isl_constraint* constraint);
+
+	//undocumented functions
+	//	[rename=getSpace]
+	//	isl_space* isl_constraint_get_space(isl_constraint* constraint);
+
+	//	[rename=getNbDim]
+	//	int isl_constraint_dim(isl_constraint* constraint, enum isl_dim_type type);
+
+	//module
+	[static rename=_toString]
+	string isl_constraint_to_string(keep isl_constraint* constraint, int format);
+}
+
+group ISLTerm {
+	[rename=getContext]
+	isl_ctx* isl_term_get_ctx(keep isl_term* term);
+	[rename=copy]
+	isl_term* isl_term_copy(keep isl_term* term);
+	[rename=free]
+	void isl_term_free(take isl_term* term);
+
+	[rename=getNbDims]
+	unsigned isl_term_dim(keep isl_term* term, enum isl_dim_type type);
+
+	[rename=getCoefficientVal]
+	isl_val* isl_term_get_coefficient_val(keep isl_term* term);
+
+	[rename=getExponent]
+	int isl_term_get_exp(keep isl_term* term, enum isl_dim_type type, unsigned pos);
+
+	[rename=getDiv]
+	isl_aff* isl_term_get_div(keep isl_term* term, unsigned pos);
+}
+
+group ISLQPolynomial {
+	[rename=toPWQPolynomial]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_from_qpolynomial(take isl_qpolynomial* qp);
+	[rename=toQPolynomialFold this=1]
+	isl_qpolynomial_fold* isl_qpolynomial_fold_alloc(enum isl_fold type, take isl_qpolynomial* qp);
+
+	[rename=getContext]
+	isl_ctx* isl_qpolynomial_get_ctx(keep isl_qpolynomial* qp);
+	[rename=getSpace]
+	isl_space *isl_qpolynomial_get_space(keep isl_qpolynomial *qp);
+	[rename=getDomainSpace]
+	isl_space* isl_qpolynomial_get_domain_space(keep isl_qpolynomial* qp);
+	[rename=copy]
+	isl_qpolynomial* isl_qpolynomial_copy(keep isl_qpolynomial* qp);
+	[rename=free]
+	void isl_qpolynomial_free(take isl_qpolynomial* qp);
+
+	[rename=getNbDims]
+	unsigned isl_qpolynomial_dim(keep isl_qpolynomial* qp, enum isl_dim_type type);
+
+	[rename=involvesDims]
+	boolean isl_qpolynomial_involves_dims(keep isl_qpolynomial* qp, enum isl_dim_type type, unsigned first, unsigned n);
+
+	[rename=getConstantVal]
+	isl_val* isl_qpolynomial_get_constant_val(keep isl_qpolynomial* qp);
+
+	[rename=setDimName]
+	isl_qpolynomial* isl_qpolynomial_set_dim_name(take isl_qpolynomial* qp, enum isl_dim_type type, unsigned pos, string s);
+
+	[static rename=buildZero]
+	isl_qpolynomial* isl_qpolynomial_zero_on_domain(take isl_space* dim);
+	[static rename=buildOne]
+	isl_qpolynomial* isl_qpolynomial_one_on_domain(take isl_space* dim);
+	[static rename=buildInfinity]
+	isl_qpolynomial* isl_qpolynomial_infty_on_domain(take isl_space* dim);
+	[static rename=buildNegInfinity]
+	isl_qpolynomial* isl_qpolynomial_neginfty_on_domain(take isl_space* dim);
+	[static rename=buildNaN]
+	isl_qpolynomial* isl_qpolynomial_nan_on_domain(take isl_space* dim);
+	[static rename=buildFromVal]
+	isl_qpolynomial* isl_qpolynomial_val_on_domain(take isl_space* dim, take isl_val* val);
+	[static rename=buildFromAff]
+	isl_qpolynomial* isl_qpolynomial_from_aff(take isl_aff* aff);
+	[static rename=buildFromVar]
+	isl_qpolynomial* isl_qpolynomial_var_on_domain(take isl_space* dim, enum isl_dim_type type, unsigned pos);
+
+	//Properties
+	[rename=isPlainEqual]
+	boolean isl_qpolynomial_plain_is_equal(keep isl_qpolynomial* qp1, keep isl_qpolynomial* qp2);
+	[rename=isZero]
+	boolean isl_qpolynomial_is_zero(keep isl_qpolynomial* qp);
+	[rename=isNaN]
+	boolean isl_qpolynomial_is_nan(keep isl_qpolynomial* qp);
+	[rename=isInfinity]
+	boolean isl_qpolynomial_is_infty(keep isl_qpolynomial* qp);
+	[rename=isNegInfinity]
+	boolean isl_qpolynomial_is_neginfty(keep isl_qpolynomial* qp);
+	[rename=getSign]
+	int isl_qpolynomial_sgn(keep isl_qpolynomial* qp);
+
+	//Operations
+	[rename=neg]
+	isl_qpolynomial* isl_qpolynomial_neg(take isl_qpolynomial* qp);
+	[rename=add]
+	isl_qpolynomial* isl_qpolynomial_add(take isl_qpolynomial* qp1, take isl_qpolynomial* qp2);
+	[rename=sub]
+	isl_qpolynomial* isl_qpolynomial_sub(take isl_qpolynomial* qp1, take isl_qpolynomial* qp2);
+	[rename=mul]
+	isl_qpolynomial* isl_qpolynomial_mul(take isl_qpolynomial* qp1, take isl_qpolynomial* qp2);
+	[rename=pow]
+	isl_qpolynomial* isl_qpolynomial_pow(take isl_qpolynomial* qp, unsigned power);
+	[rename=scale]
+	isl_qpolynomial* isl_qpolynomial_scale_val(take isl_qpolynomial* qp, take isl_val* v);
+
+	//dimensions
+	[rename=insertDims]
+	isl_qpolynomial* isl_qpolynomial_insert_dims(take isl_qpolynomial* qp, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=addDims]
+	isl_qpolynomial* isl_qpolynomial_add_dims(take isl_qpolynomial* qp, enum isl_dim_type type, unsigned n);
+	[rename=moveDims]
+	isl_qpolynomial* isl_qpolynomial_move_dims(take isl_qpolynomial* qp, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+	[rename=dropDims]
+	isl_qpolynomial* isl_qpolynomial_drop_dims(take isl_qpolynomial* qp, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=alignParams]
+	isl_qpolynomial* isl_qpolynomial_align_params(take isl_qpolynomial* qp, take isl_space* model);
+	[rename=gist]
+	isl_qpolynomial* isl_qpolynomial_gist(take isl_qpolynomial* qp, take isl_set* context);
+
+	//modules
+	[rename=getExponentAt]
+	int isl_qpolynomial_get_exp_at(keep isl_qpolynomial* qp, int termPos, enum isl_dim_type type, unsigned dim);
+	[rename=getNbTerms]
+	int isl_qpolynomial_numberof_terms(keep isl_qpolynomial* qp);
+	[rename=getTermAt]
+	isl_term* isl_qpolynomial_get_term_at(keep isl_qpolynomial* qp, int pos);
+
+	[static rename=_toString]
+	string isl_qpolynomial_to_string(keep isl_qpolynomial* qp, int format);
+
+}
+
+group ISLPWQPolynomial {
+	[static rename=buildFromString]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_read_from_str(isl_ctx* ctx, string str);
+
+	[rename=getContext]
+	isl_ctx* isl_pw_qpolynomial_get_ctx(keep isl_pw_qpolynomial* pwqp);
+	[rename=getSpace]
+	isl_space *isl_pw_qpolynomial_get_space(keep isl_pw_qpolynomial *pwqp);
+	[rename=getDomainSpace]
+	isl_space* isl_pw_qpolynomial_get_domain_space(keep isl_pw_qpolynomial* pwqp);
+	[rename=copy]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_copy(keep isl_pw_qpolynomial* pwqp);
+	[rename=free]
+	void isl_pw_qpolynomial_free(take isl_pw_qpolynomial* pwqp);
+
+	[rename=isPlainEqual]
+	boolean isl_pw_qpolynomial_plain_is_equal(keep isl_pw_qpolynomial* pwqp1, keep isl_pw_qpolynomial* pwqp2);
+
+	[static rename=buildZero]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_zero(take isl_space* dim);
+	[static rename=build]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_alloc(take isl_set* set, take isl_qpolynomial* qp);
+
+	[rename=isZero]
+	boolean isl_pw_qpolynomial_is_zero(keep isl_pw_qpolynomial* pwqp);
+	[rename=resetDomainSpace]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_reset_domain_space(take isl_pw_qpolynomial* pwqp, take isl_space* dim);
+	[rename=getNbDims]
+	unsigned isl_pw_qpolynomial_dim(keep isl_pw_qpolynomial* pwqp, enum isl_dim_type type);
+	[rename=involvesDims]
+	boolean isl_pw_qpolynomial_involves_dims(keep isl_pw_qpolynomial* pwqp, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=hasEqualSpace]
+	boolean isl_pw_qpolynomial_has_equal_space(keep isl_pw_qpolynomial* pwqp1, keep isl_pw_qpolynomial* pwqp2);
+
+	//Unary Ops
+	[rename=setDimName]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_set_dim_name(take isl_pw_qpolynomial* pwqp, enum isl_dim_type type, unsigned pos, string s);
+	[rename=domain]
+	isl_set* isl_pw_qpolynomial_domain(take isl_pw_qpolynomial* pwqp);
+	[rename=intersectDomain]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_intersect_domain(take isl_pw_qpolynomial* pwpq, take isl_set* set);
+	[rename=intersectParams]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_intersect_params(take isl_pw_qpolynomial* pwpq, take isl_set* set);
+	[rename=projectDomainOnParams]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_project_domain_on_params(take isl_pw_qpolynomial* pwqp);
+	[rename=dropDims]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_drop_dims(take isl_pw_qpolynomial* pwqp, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=splitDims]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_split_dims(take isl_pw_qpolynomial* pwqp, enum isl_dim_type type, unsigned first, unsigned n);
+
+	//Binary Ops
+	[rename=add]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_add(take isl_pw_qpolynomial* pwqp1, take isl_pw_qpolynomial* pwqp2);
+	[rename=sub]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_sub(take isl_pw_qpolynomial* pwqp1, take isl_pw_qpolynomial* pwqp2);
+	[rename=addDisjoint]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_add_disjoint(take isl_pw_qpolynomial* pwqp1, take isl_pw_qpolynomial* pwqp2);
+	[rename=neg]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_neg(take isl_pw_qpolynomial* pwqp);
+	[rename=mul]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_mul(take isl_pw_qpolynomial* pwqp1, take isl_pw_qpolynomial* pwqp2);
+	[rename=scale]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_scale_val(take isl_pw_qpolynomial* pwqp, take isl_val* v);
+	[rename=pow]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_pow(take isl_pw_qpolynomial* pwqp, unsigned exponent);
+
+	//dimensions
+	[rename=insertDims]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_insert_dims(take isl_pw_qpolynomial* pwqp, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=addDims]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_add_dims(take isl_pw_qpolynomial* pwqp, enum isl_dim_type type, unsigned n);
+	[rename=moveDims]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_move_dims(take isl_pw_qpolynomial* pwqp, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+
+	//	isl_pw_qpolynomial* isl_pw_qpolynomial_fix_val(take isl_pw_qpolynomial* pwqp, enum isl_dim_type type, unsigned n, take isl_val* v);
+	[rename=eval]
+	isl_val* isl_pw_qpolynomial_eval(take isl_pw_qpolynomial* pwqp, take isl_point* pnt);
+	[rename=max]
+	isl_val* isl_pw_qpolynomial_max(take isl_pw_qpolynomial* pwqp);
+	[rename=min]
+	isl_val* isl_pw_qpolynomial_min(take isl_pw_qpolynomial* pwqp);
+
+	[rename=bound]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_bound(take isl_pw_qpolynomial* pwqp, enum isl_fold type, boolean* tight);
+	[rename=coalesce]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_coalesce(take isl_pw_qpolynomial* pwqp);
+	[rename=gist]
+	isl_pw_qpolynomial* isl_pw_qpolynomial_gist(take isl_pw_qpolynomial* pwqp, take isl_set* context);
+
+	//modules
+	[rename=getNbPieces]
+	int isl_pw_qpolynomial_numberof_piece(keep isl_pw_qpolynomial* pwqp);
+	[rename=getPieceAt]
+	struct isl_qpolynomial_piece* isl_pw_qpolynomial_get_piece_at(keep isl_pw_qpolynomial* pwqp, int pos);
+	[rename=getNbLiftedPieces]
+	int isl_pw_qpolynomial_numberof_lifted_piece(keep isl_pw_qpolynomial* pwqp);
+	[rename=getLiftedPieceAt]
+	struct isl_qpolynomial_piece* isl_pw_qpolynomial_get_lifted_piece_at(keep isl_pw_qpolynomial* pwqp, int pos);
+
+	[static rename=_toString]
+	string isl_pw_qpolynomial_to_string(keep isl_pw_qpolynomial* pwqp, int format);
+
+}
+
+group ISLUnionPWQPolynomial {
+	[rename=getContext]
+	isl_ctx* isl_union_pw_qpolynomial_get_ctx(keep isl_union_pw_qpolynomial* upwqp);
+	[rename=getSpace]
+	isl_space *isl_union_pw_qpolynomial_get_space(keep isl_union_pw_qpolynomial *upwqp);
+	[rename=copy]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_copy(keep isl_union_pw_qpolynomial* upwqp);
+	[rename=free]
+	void isl_union_pw_qpolynomial_free(take isl_union_pw_qpolynomial* upwqp);
+
+	[rename=isPlainEqual]
+	boolean isl_union_pw_qpolynomial_plain_is_equal(keep isl_union_pw_qpolynomial* upwqp1, keep isl_union_pw_qpolynomial* upwqp2);
+
+	[static rename=buildZero]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_zero(take isl_space* dim);
+
+	[rename=add]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_add_pw_qpolynomial(take isl_union_pw_qpolynomial* upwqp, take isl_pw_qpolynomial* pwqp);
+	[rename=add]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_add(take isl_union_pw_qpolynomial* upwqp1, take isl_union_pw_qpolynomial* upwqp2);
+	[rename=sub]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_sub(take isl_union_pw_qpolynomial* upwqp1, take isl_union_pw_qpolynomial* upwqp2);
+	[rename=mul]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_mul(take isl_union_pw_qpolynomial* upwqp1, take isl_union_pw_qpolynomial* upwqp2);
+	[rename=scale]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_scale_val(take isl_union_pw_qpolynomial* upwqp, take isl_val* v);
+	[rename=domain]
+	isl_union_set* isl_union_pw_qpolynomial_domain(take isl_union_pw_qpolynomial* upwqp);
+	[rename=intersectDomain]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_intersect_domain(take isl_union_pw_qpolynomial* upwpq, take isl_union_set* uset);
+	[rename=intersectParams]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_intersect_params(take isl_union_pw_qpolynomial* upwpq, take isl_set* set);
+
+	[rename=eval]
+	isl_val* isl_union_pw_qpolynomial_eval(take isl_union_pw_qpolynomial* upwqp, take isl_point* pnt);
+
+	[rename=coalesce]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_coalesce(take isl_union_pw_qpolynomial* upwqp);
+	[rename=gist]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_gist(take isl_union_pw_qpolynomial* upwqp, take isl_union_set* context);
+	[rename=gistParams]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_gist_params(take isl_union_pw_qpolynomial* upwqp, take isl_set* context);
+	[rename=alignParams]
+	isl_union_pw_qpolynomial* isl_union_pw_qpolynomial_align_params(take isl_union_pw_qpolynomial* upwqp, take isl_space* model);
+
+	//	isl_pw_qpolynomial *isl_union_pw_qpolynomial_extract_pw_qpolynomial(keep isl_union_pw_qpolynomial *upwqp,take isl_space *dim);
+
+
+	//module
+	[static rename=_toString]
+	string isl_union_pw_qpolynomial_to_string(keep isl_union_pw_qpolynomial* upwqp, int format);
+}
+
+group ISLQPolynomialFold {
+	[rename=getContext]
+	isl_ctx* isl_qpolynomial_fold_get_ctx(keep isl_qpolynomial_fold* fold);
+	[rename=getSpace]
+	isl_space *isl_qpolynomial_fold_get_space(keep isl_qpolynomial_fold *fold);
+	[rename=copy]
+	isl_qpolynomial_fold* isl_qpolynomial_fold_copy(keep isl_qpolynomial_fold* fold);
+	[rename=free]
+	void isl_qpolynomial_fold_free(take isl_qpolynomial_fold* fold);
+
+	[rename=getType]
+	enum isl_fold isl_qpolynomial_fold_get_type(keep isl_qpolynomial_fold* fold);
+
+	[rename=buildEmpty]
+	isl_qpolynomial_fold* isl_qpolynomial_fold_empty(enum isl_fold type, take isl_space* dim);
+
+	//	int isl_qpolynomial_fold_is_empty(keep isl_qpolynomial_fold *fold);
+	//	int isl_qpolynomial_fold_plain_is_equal(keep isl_qpolynomial_fold *fold1,keep isl_qpolynomial_fold *fold2);
+	//	isl_space *isl_qpolynomial_fold_get_space(keep isl_qpolynomial_fold *fold);
+	//	isl_qpolynomial_fold *isl_qpolynomial_fold_fold(take isl_qpolynomial_fold *fold1,take isl_qpolynomial_fold *fold2);
+	//	isl_qpolynomial_fold *isl_qpolynomial_fold_scale_val(take isl_qpolynomial_fold *fold,take isl_val *v);
+	//	isl_qpolynomial_fold *isl_qpolynomial_fold_move_dims(take isl_qpolynomial_fold *fold, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+	//	isl_qpolynomial_fold *isl_qpolynomial_fold_substitute(take isl_qpolynomial_fold *fold, enum isl_dim_type type, unsigned first, unsigned n,keep isl_qpolynomial **subs);
+	//	isl_val *isl_qpolynomial_fold_eval(take isl_qpolynomial_fold *fold,take isl_point *pnt);
+	//	isl_qpolynomial_fold *isl_qpolynomial_fold_gist_params(take isl_qpolynomial_fold *fold,take isl_set *context);
+	[rename=gist]
+	isl_qpolynomial_fold* isl_qpolynomial_fold_gist(take isl_qpolynomial_fold* fold, take isl_set* context);
+
+	//module
+	[rename=getNbQPolynomials]
+	int isl_qpolynomial_fold_number_of_qpolynomial(keep isl_qpolynomial_fold* fold);
+	[rename=getQPolynomialAt]
+	isl_qpolynomial* isl_qpolynomial_fold_get_qpolynomial_at(keep isl_qpolynomial_fold* fold, int pos);
+
+	[static rename=_toString]
+	string isl_qpolynomial_fold_to_string(keep isl_qpolynomial_fold* qpf, int format);
+
+}
+
+group ISLPWQPolynomialFold {
+	//isl_pw_qpolynomial_fold *isl_pw_qpolynomial_fold_alloc( enum isl_fold type,take isl_set *set,take isl_qpolynomial_fold *fold);
+
+	[rename=getContext]
+	isl_ctx* isl_pw_qpolynomial_fold_get_ctx(keep isl_pw_qpolynomial_fold* pwf);
+	[rename=getSpace]
+	isl_space *isl_pw_qpolynomial_fold_get_space(keep isl_pw_qpolynomial_fold *pwf);
+	[rename=getDomainSpace]
+	isl_space* isl_pw_qpolynomial_fold_get_domain_space(keep isl_pw_qpolynomial_fold* pwf);
+	[rename=copy]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_copy(keep isl_pw_qpolynomial_fold* pwf);
+	[rename=free]
+	void isl_pw_qpolynomial_fold_free(take isl_pw_qpolynomial_fold* pwf);
+
+	[rename=isPlainEqual]
+	boolean isl_pw_qpolynomial_fold_plain_is_equal(keep isl_pw_qpolynomial_fold* pwf1, keep isl_pw_qpolynomial_fold* pwf2);
+
+	[rename=isZero]
+	boolean isl_pw_qpolynomial_fold_is_zero(keep isl_pw_qpolynomial_fold* pwf);
+
+	[rename=resetSpace]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_reset_space(take isl_pw_qpolynomial_fold* pwf, take isl_space* dim);
+
+	[rename=getNbDims]
+	unsigned isl_pw_qpolynomial_fold_dim(keep isl_pw_qpolynomial_fold* pwf, enum isl_dim_type type);
+	[rename=hasEqualSpace]
+	boolean isl_pw_qpolynomial_fold_has_equal_space(keep isl_pw_qpolynomial_fold* pwf1, keep isl_pw_qpolynomial_fold* pwf2);
+
+	//size_t isl_pw_qpolynomial_fold_size(keep isl_pw_qpolynomial_fold *pwf);
+	[static rename=buildZero]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_zero(take isl_space* dim, enum isl_fold type);
+
+	[rename=setDimName]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_set_dim_name(take isl_pw_qpolynomial_fold* pwf, enum isl_dim_type type, unsigned pos, string s);
+
+	[rename=domain]
+	isl_set* isl_pw_qpolynomial_fold_domain(take isl_pw_qpolynomial_fold* pwf);
+
+	//Binary Ops
+	[rename=intersectDomain]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_intersect_domain(take isl_pw_qpolynomial_fold* pwf, take isl_set* set);
+	[rename=intersectParams]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_intersect_params(take isl_pw_qpolynomial_fold* pwf, take isl_set* set);
+	[rename=add]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_add(take isl_pw_qpolynomial_fold* pwf1, take isl_pw_qpolynomial_fold* pwf2);
+	[rename=fold]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_fold(take isl_pw_qpolynomial_fold* pwf1, take isl_pw_qpolynomial_fold* pwf2);
+	[rename=addDisjoint]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_add_disjoint(take isl_pw_qpolynomial_fold* pwf1, take isl_pw_qpolynomial_fold* pwf2);
+	[rename=scale]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_scale_val(take isl_pw_qpolynomial_fold* pwf, take isl_val* v);
+	[rename=projectDomainOnParams]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_project_domain_on_params(take isl_pw_qpolynomial_fold* pwf);
+
+	[rename=dropDims]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_drop_dims(take isl_pw_qpolynomial_fold* pwf, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=moveDims]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_move_dims(take isl_pw_qpolynomial_fold* pwf, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+
+	//	[rename=eval]
+	//	isl_val *isl_pw_qpolynomial_fold_eval(take isl_pw_qpolynomial_fold *pwf,take isl_point *pnt);
+	[rename=coalesce]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_coalesce(take isl_pw_qpolynomial_fold* pwf);
+	[rename=gist]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_gist(take isl_pw_qpolynomial_fold* pwf, take isl_set* context);
+	[rename=gistParams]
+	isl_pw_qpolynomial_fold* isl_pw_qpolynomial_fold_gist_params(take isl_pw_qpolynomial_fold* pwf, take isl_set* context);
+	//	[rename=max]
+	//	isl_val *isl_pw_qpolynomial_fold_max(take isl_pw_qpolynomial_fold *pwf);
+	//	[rename=min]
+	//	isl_val *isl_pw_qpolynomial_fold_min(take isl_pw_qpolynomial_fold *pwf);
+	//	[rename=bound]
+	//	isl_pw_qpolynomial_fold *isl_pw_qpolynomial_fold_bound(take isl_pw_qpolynomial_fold *pwf, int *tight);
+	//	[rename=apply]
+	//	isl_pw_qpolynomial_fold *isl_set_apply_pw_qpolynomial_fold(take isl_set *set,take isl_pw_qpolynomial_fold *pwf, int *tight);
+	//	[rename=apply]
+	//	isl_pw_qpolynomial_fold *isl_map_apply_pw_qpolynomial_fold(take isl_map *map,take isl_pw_qpolynomial_fold *pwf, int *tight);
+	//	[rename=toPolynomial]
+	//	isl_pw_qpolynomial *isl_pw_qpolynomial_to_polynomial(take isl_pw_qpolynomial *pwqp, int sign);
+
+
+	//undocumented ISL function !
+	//	[rename=max]
+	//	isl_val* isl_pw_qpolynomial_fold_max(take isl_pw_qpolynomial_fold* pwf);
+	//	[rename=min]
+	//	isl_val* isl_pw_qpolynomial_fold_min(take isl_pw_qpolynomial_fold* pwf);
+
+	//	//undocumented ISL function !
+	//	[rename=getMax]
+	//	isl_qpolynomial* isl_pw_qpolynomial_fold_max(isl_pw_qpolynomial_fold* pwf);
+	//	[rename=getMin]
+	//	isl_qpolynomial* isl_pw_qpolynomial_fold_min(isl_pw_qpolynomial_fold* pwf);
+
+	//user modules
+	[rename=getNbPieces]
+	int isl_pw_qpolynomial_fold_numberof_piece(keep isl_pw_qpolynomial_fold* pwf);
+	[rename=getPieceAt]
+	struct isl_qpolynomial_fold_piece* isl_pw_qpolynomial_fold_get_piece_at(keep isl_pw_qpolynomial_fold* pwf, int pos);
+
+	[rename=getNbLiftedPieces]
+	int isl_pw_qpolynomial_fold_numberof_lifted_piece(keep isl_pw_qpolynomial_fold* pwf);
+	[rename=getLiftedPieceAt]
+	struct isl_qpolynomial_fold_piece* isl_pw_qpolynomial_fold_get_lifted_piece_at(keep isl_pw_qpolynomial_fold* pwf, int pos);
+
+	[static rename=_toString]
+	string isl_pw_qpolynomial_fold_to_string(keep isl_pw_qpolynomial_fold* pwqpf, int format);
+}
+
+group ISLUnionPWQPolynomialFold {
+	[rename=getContext]
+	isl_ctx *isl_union_pw_qpolynomial_fold_get_ctx(keep isl_union_pw_qpolynomial_fold *upwf);
+	[rename=getSpace]
+	isl_space *isl_union_pw_qpolynomial_fold_get_space(keep isl_union_pw_qpolynomial_fold *upwf);
+	[rename=copy]
+	isl_union_pw_qpolynomial_fold* isl_union_pw_qpolynomial_fold_copy(keep isl_union_pw_qpolynomial_fold* upwf);
+	[rename=free]
+	void isl_union_pw_qpolynomial_fold_free(take isl_union_pw_qpolynomial_fold* upwf);
+	
+	[rename=gist]
+	isl_union_pw_qpolynomial_fold* isl_union_pw_qpolynomial_fold_gist(take isl_union_pw_qpolynomial_fold* upwf, take isl_union_set* context);
+	[rename=coalesce]
+	isl_union_pw_qpolynomial_fold* isl_union_pw_qpolynomial_fold_coalesce(take isl_union_pw_qpolynomial_fold* upwf);
+
+	[rename=domain]
+	isl_union_set* isl_union_pw_qpolynomial_fold_domain(take isl_union_pw_qpolynomial_fold* upwf);
+	[rename=intersectDomain]
+	isl_union_pw_qpolynomial_fold* isl_union_pw_qpolynomial_fold_intersect_domain(take isl_union_pw_qpolynomial_fold* upwf, take isl_union_set* uset);
+	[rename=intersectParams]
+	isl_union_pw_qpolynomial_fold* isl_union_pw_qpolynomial_fold_intersect_params(take isl_union_pw_qpolynomial_fold* upwf, take isl_set* set);
+	//module
+	[static rename=_toString]
+	string isl_union_pw_qpolynomial_fold_to_string(keep isl_union_pw_qpolynomial_fold* upwqpf, int format);
+}
+
+group ISLAff {
+	[static rename=buildFromString]
+	isl_aff* isl_aff_read_from_str(isl_ctx* ctx, string str);
+	[rename=toMultiAff]
+	isl_multi_aff* isl_multi_aff_from_aff(take isl_aff* aff);
+
+	[rename=toEqualityConstraint]
+	isl_constraint* isl_equality_from_aff(take isl_aff* aff);
+	[rename=toInequalityConstraint]
+	isl_constraint* isl_inequality_from_aff(take isl_aff* aff);
+
+	[static rename=buildZero]
+	isl_aff* isl_aff_zero_on_domain(take isl_local_space* ls);
+	//[static rename=buildParamOnDomainSpace]  removed for compatibility with 0.15
+    //isl_aff *isl_aff_param_on_domain_space_id(take isl_space *space, take isl_id *id);
+//	[static rename=buildValOnDomain]
+//	isl_aff *isl_aff_val_on_domain(take isl_local_space *ls, take isl_val *val);
+//	[static rename=buildVarOnDomain]
+//    isl_aff *isl_aff_var_on_domain(take isl_local_space *ls, enum isl_dim_type type, unsigned pos);
+//	[static rename=buildNaNOnDomain]
+//    isl_aff *isl_aff_nan_on_domain(take isl_local_space *ls);
+	
+	[rename=getContext]
+	isl_ctx* isl_aff_get_ctx(keep isl_aff* aff);
+	[rename=getSpace]
+	isl_space* isl_aff_get_space(keep isl_aff* aff);
+	[rename=getLocalSpace]
+	isl_local_space* isl_aff_get_local_space(keep isl_aff* aff);
+	[rename=copy]
+	isl_aff* isl_aff_copy(keep isl_aff* aff);
+	[rename=free]
+	void isl_aff_free(take isl_aff* aff);//FIXME
+	
+	[rename=getDomainSpace]
+	isl_space* isl_aff_get_domain_space(keep isl_aff* aff);
+	[rename=getDomainLocalSpace]
+	isl_local_space* isl_aff_get_domain_local_space(keep isl_aff* aff);
+	
+	[rename=alignParams]
+	isl_aff* isl_aff_align_params(take isl_aff* aff, take isl_space* model);
+		
+	//dimensions
+	[rename=getNbDims]
+	int isl_aff_dim(keep isl_aff* aff, enum isl_dim_type type);
+	[rename=involvesDims]
+	boolean isl_aff_involves_dims(keep isl_aff* aff, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=insertDims]
+	isl_aff* isl_aff_insert_dims(take isl_aff* aff, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=addDims]
+	isl_aff* isl_aff_add_dims(take isl_aff* aff, enum isl_dim_type type, unsigned n);
+	[rename=moveDims]
+	isl_aff* isl_aff_move_dims(take isl_aff* aff, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+	[rename=dropDims]
+	isl_aff* isl_aff_drop_dims(take isl_aff* aff, enum isl_dim_type type, unsigned first, unsigned n);
+	//	isl_aff* isl_aff_project_domain_on_params(take isl_aff* aff);
+	
+	[rename=getDimName]
+	string isl_aff_get_dim_name(keep isl_aff* aff, enum isl_dim_type type, unsigned pos);
+	[rename=setDimName]
+	isl_aff* isl_aff_set_dim_name(take isl_aff* aff, enum isl_dim_type type, unsigned pos, string s);
+
+	[rename=getConstantVal]
+	isl_val* isl_aff_get_constant_val(keep isl_aff* aff);
+	[rename=getCoefficientVal]
+	isl_val* isl_aff_get_coefficient_val(keep isl_aff* aff, enum isl_dim_type type, int pos);
+	[rename=getDenominatorVal]
+	isl_val* isl_aff_get_denominator_val(keep isl_aff* aff);
+	[rename=setConstant]
+	isl_aff* isl_aff_set_constant_si(take isl_aff* aff, int v);
+	[rename=setConstant]
+	isl_aff* isl_aff_set_constant_val(take isl_aff* aff, take isl_val* v);
+	[rename=setCoefficient]
+	isl_aff* isl_aff_set_coefficient_si(take isl_aff* aff, enum isl_dim_type type, int pos, int v);
+	[rename=setCoefficient]
+	isl_aff* isl_aff_set_coefficient_val(take isl_aff* aff, enum isl_dim_type type, int pos, take isl_val* v);
+
+	//isl_aff* isl_aff_add_constant_si(take isl_aff* aff, int v);
+	//isl_aff* isl_aff_add_constant_val(take isl_aff* aff, take isl_val* v);
+	//isl_aff* isl_aff_add_constant_num_si(take isl_aff* aff, int v);
+	//isl_aff* isl_aff_add_coefficient_si(take isl_aff* aff, enum isl_dim_type type, int pos, int v);
+	//isl_aff* isl_aff_add_coefficient_val(take isl_aff* aff, enum isl_dim_type type, int pos, take isl_val* v);
+	[rename=isConstant]
+	boolean isl_aff_is_cst(keep isl_aff* aff);
+
+	//isl_aff* isl_aff_set_tuple_id(take isl_aff* aff, enum isl_dim_type type, take isl_id* id);
+	//isl_aff* isl_aff_set_dim_id(take isl_aff* aff, enum isl_dim_type type, unsigned pos, take isl_id* id);
+	[rename=isEqual]
+	boolean isl_aff_plain_is_equal(keep isl_aff* aff1, keep isl_aff* aff2);
+	[rename=isPlainZero]
+	boolean isl_aff_plain_is_zero(keep isl_aff* aff);
+	[rename=isNaN]
+	boolean isl_aff_is_nan(keep isl_aff* aff);
+	[rename=getDiv]
+	isl_aff* isl_aff_get_div(keep isl_aff* aff, int pos);
+
+	//Unary OP
+	[rename=negate]
+	isl_aff* isl_aff_neg(take isl_aff* aff);
+	[rename=ceil]
+	isl_aff* isl_aff_ceil(take isl_aff* aff);
+	[rename=floor]
+	isl_aff* isl_aff_floor(take isl_aff* aff);
+	
+	//Binary OP
+	[rename=add]
+	isl_aff* isl_aff_add(take isl_aff* aff1, take isl_aff* aff2);
+	[rename=sub]
+	isl_aff* isl_aff_sub(take isl_aff* aff1, take isl_aff* aff2);
+	[rename=mul]
+	isl_aff* isl_aff_mul(take isl_aff* aff1, take isl_aff* aff2);
+	[rename=div]
+	isl_aff* isl_aff_div(take isl_aff* aff1, take isl_aff* aff2);
+	[rename=scale]
+	isl_aff* isl_aff_scale_val(take isl_aff* aff, take isl_val* v);
+	[rename=mod]
+	isl_aff* isl_aff_mod_val(take isl_aff* aff, take isl_val* mod);
+
+	//	isl_aff* isl_aff_scale_down_ui(take isl_aff* aff, unsigned f);
+	//	isl_aff* isl_aff_scale_down_val(take isl_aff* aff, take isl_val* v);
+
+	[rename=gist]
+	isl_aff* isl_aff_gist(take isl_aff* aff, take isl_set* context);
+	//	isl_aff* isl_aff_gist_params(take isl_aff* aff, take isl_set* context);
+	[rename=pullback]
+	isl_aff* isl_aff_pullback_aff(take isl_aff* aff1, take isl_aff* aff2);
+	[rename=pullback]
+	isl_aff* isl_aff_pullback_multi_aff(take isl_aff* aff, take isl_multi_aff* ma);
+
+
+	//	isl_basic_set* isl_aff_zero_basic_set(take isl_aff* aff);
+	//	isl_basic_set* isl_aff_neg_basic_set(take isl_aff* aff);
+	//	isl_basic_set* isl_aff_le_basic_set(take isl_aff* aff1, take isl_aff* aff2);
+	//	isl_basic_set* isl_aff_ge_basic_set(take isl_aff* aff1, take isl_aff* aff2);
+	
+	//[rename=eval] removed for compatibility with 0.15
+	//isl_val* isl_aff_eval(take isl_aff *aff, take isl_point *pnt);
+	
+	//ISLAff to Set  removed for compatibility with 0.15
+	/*[static rename=toEQBasicSet]
+	isl_basic_set *isl_aff_eq_basic_set(take isl_aff *aff1, take isl_aff *aff2);
+    [static rename=toLEBasicSet]
+    isl_basic_set *isl_aff_le_basic_set(take isl_aff *aff1, take isl_aff *aff2);
+    [static rename=toLTBasicSet]
+    isl_basic_set *isl_aff_lt_basic_set(take isl_aff *aff1, take isl_aff *aff2);
+    [static rename=toGEBasicSet]
+	isl_basic_set *isl_aff_ge_basic_set(take isl_aff *aff1, take isl_aff *aff2);
+	[static rename=toGTBasicSet]
+	isl_basic_set *isl_aff_gt_basic_set(take isl_aff *aff1, take isl_aff *aff2);
+	[static rename=toEQSet]
+    isl_set *isl_aff_eq_set(take isl_aff *aff1, take isl_aff *aff2);
+    [static rename=toNESet]
+    isl_set *isl_aff_ne_set(take isl_aff *aff1, take isl_aff *aff2);
+    [static rename=toLESet]
+    isl_set *isl_aff_le_set(take isl_aff *aff1, take isl_aff *aff2);
+    [static rename=toLTSet]
+	isl_set *isl_aff_lt_set(take isl_aff *aff1, take isl_aff *aff2);
+	[static rename=toGESet]
+	isl_set *isl_aff_ge_set(take isl_aff *aff1, take isl_aff *aff2);
+	[static rename=toGTSet]
+    isl_set *isl_aff_gt_set(take isl_aff *aff1, take isl_aff *aff2);*/
+	//module
+	[static rename=_toString]
+	string isl_aff_to_string(keep isl_aff* aff, int format);
+}
+
+
+group ISLAffList {
+	[static rename=build]
+	isl_aff_list* isl_aff_list_alloc(isl_ctx* ctx, int n);
+
+	[rename=getContext]
+	isl_ctx* isl_aff_list_get_ctx(keep isl_aff_list* list);
+
+	[rename=copy]
+	isl_aff_list* isl_aff_list_copy(keep isl_aff_list* list);
+	[rename=free]
+	void isl_aff_list_free(take isl_aff_list* list);
+
+	[rename=getNbAffs]
+	int isl_aff_list_n_aff(keep isl_aff_list* list);
+	[rename=get]
+	isl_aff* isl_aff_list_get_aff(keep isl_aff_list* list, int index);
+	[rename=set]
+	isl_aff_list* isl_aff_list_set_aff(take isl_aff_list* list, int index, take isl_aff* aff);
+
+	[rename=insert]
+	isl_aff_list* isl_aff_list_insert(take isl_aff_list* list, unsigned pos, take isl_aff* el);
+	[rename=add]
+	isl_aff_list* isl_aff_list_add(take isl_aff_list* list, take isl_aff* el);
+	[rename=drop]
+	isl_aff_list* isl_aff_list_drop(take isl_aff_list* list, unsigned first, unsigned n);
+	[rename=concat]
+	isl_aff_list* isl_aff_list_concat(take isl_aff_list* list1, take isl_aff_list* list2);
+
+	//module
+	[static rename=_toString]
+	string isl_aff_list_to_string(keep isl_aff_list* afflist, int format);
+}
+
+group ISLMultiAff {
+	//[rename=toBasicSet] removed for compatibility with 0.15
+    //isl_basic_set *isl_basic_set_from_multi_aff(take isl_multi_aff *maff);
+    //[rename=toSet] removed for compatibility with 0.15
+    //isl_set *isl_set_from_multi_aff(take isl_multi_aff *maff);
+	[rename=toBasicMap]
+	isl_basic_map* isl_basic_map_from_multi_aff(take isl_multi_aff* maff);
+	[rename=toMap]
+    isl_map* isl_map_from_multi_aff(take isl_multi_aff *maff);
+	[rename=toMultiPWAff]
+	isl_multi_pw_aff* isl_multi_pw_aff_from_multi_aff(take isl_multi_aff* ma);
+	[rename=toMultiUnionPWAff]
+    isl_multi_union_pw_aff* isl_multi_union_pw_aff_from_multi_aff(take isl_multi_aff *ma);
+    
+	
+	[rename=getContext]
+	isl_ctx* isl_multi_aff_get_ctx(keep isl_multi_aff* maff);
+    [rename=getSpace]
+    isl_space *isl_multi_aff_get_space(keep isl_multi_aff *maff);
+	[rename=copy]
+	isl_multi_aff* isl_multi_aff_copy(keep isl_multi_aff* maff);
+	[rename=free]
+	void isl_multi_aff_free(take isl_multi_aff* maff);
+	
+    [rename=getDomainSpace]
+	isl_space *isl_multi_aff_get_domain_space(keep isl_multi_aff *maff);
+	
+	[rename=alignParams]
+	isl_multi_aff *isl_multi_aff_align_params(take isl_multi_aff *multi, take isl_space *model);
+	
+	
+	[static rename=buildFromString]
+	isl_multi_aff* isl_multi_aff_read_from_str(isl_ctx* ctx, string str);
+	[static rename=buildZero]
+	isl_multi_aff* isl_multi_aff_zero(take isl_space* space);
+	[static rename=buildIdentity]
+	isl_multi_aff* isl_multi_aff_identity(take isl_space* space);
+	[static rename=buildDomainMap]
+	isl_multi_aff* isl_multi_aff_domain_map(take isl_space* space);
+	[static rename=buildRangeMap]
+	isl_multi_aff* isl_multi_aff_range_map(take isl_space* space);
+	[static rename=buildProjectOutMap]
+	isl_multi_aff* isl_multi_aff_project_out_map(take isl_space* space, enum isl_dim_type type, unsigned first, unsigned n);
+	[static rename=buildFromAffList]
+	isl_multi_aff *isl_multi_aff_from_aff_list(take isl_space *space, take isl_aff_list *list);
+
+	//Dimensions
+	[rename=getNbDims]
+	unsigned isl_multi_aff_dim(keep isl_multi_aff* maff, enum isl_dim_type type);
+	[rename=involvesDims]
+	boolean isl_multi_aff_involves_dims(keep isl_multi_aff *ma, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=insertDims]
+    isl_multi_aff *isl_multi_aff_insert_dims(take isl_multi_aff *ma, enum isl_dim_type type, unsigned first, unsigned n);
+    [rename=addDims]
+    isl_multi_aff *isl_multi_aff_add_dims(take isl_multi_aff *ma, enum isl_dim_type type, unsigned n);
+    [rename=dropDims]
+    isl_multi_aff *isl_multi_aff_drop_dims(take isl_multi_aff *maff, enum isl_dim_type type, unsigned first, unsigned n);
+    [rename=moveDims]
+    isl_multi_aff *isl_multi_aff_move_dims(take isl_multi_aff *ma, enum isl_dim_type dst_type, unsigned dst_pos, 
+    										enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+    										
+	[rename=setDimName]
+	isl_multi_aff* isl_multi_aff_set_dim_name(take isl_multi_aff* aff, enum isl_dim_type type, unsigned pos, string s);
+
+	[rename=getAff]
+	isl_aff* isl_multi_aff_get_aff(keep isl_multi_aff* multi, int pos);
+	[rename=setAff]
+	isl_multi_aff* isl_multi_aff_set_aff(take isl_multi_aff* multi, int pos, take isl_aff* aff);
+
+	[rename=isPlainEqual]
+	boolean isl_multi_aff_plain_is_equal(keep isl_multi_aff* maff1, keep isl_multi_aff* maff2);
+
+	//Unary OP
+	[rename=negate]
+    isl_multi_aff *isl_multi_aff_neg(take isl_multi_aff *ma);
+	[rename=floor]
+	isl_multi_aff* isl_multi_aff_floor(take isl_multi_aff* ma);
+	[rename=flattenDomain]
+    isl_multi_aff *isl_multi_aff_flatten_domain(take isl_multi_aff *ma);
+	[rename=flattenRange]
+    isl_multi_aff *isl_multi_aff_flatten_range(take isl_multi_aff *ma);
+
+
+	//Binary Op
+	[rename=add]
+	isl_multi_aff* isl_multi_aff_add(take isl_multi_aff* maff1, take isl_multi_aff* maff2);
+	[rename=sub]
+	isl_multi_aff* isl_multi_aff_sub(take isl_multi_aff* ma1, take isl_multi_aff* ma2);
+	[rename=product]
+	isl_multi_aff* isl_multi_aff_product(take isl_multi_aff* ma1, take isl_multi_aff* ma2);
+	[rename=gistParams]
+	isl_multi_aff* isl_multi_aff_gist_params(take isl_multi_aff* maff, take isl_set* context);
+	[rename=gist]
+	isl_multi_aff* isl_multi_aff_gist(take isl_multi_aff* maff, take isl_set* context);
+	[rename=pullback]
+	isl_multi_aff* isl_multi_aff_pullback_multi_aff(take isl_multi_aff *ma1, take isl_multi_aff *ma2);
+	[rename=flatRangeProduct]
+    isl_multi_aff* isl_multi_aff_flat_range_product(take isl_multi_aff *ma1, take isl_multi_aff *ma2);
+	
+	//	isl_multi_aff* isl_multi_aff_lift(take isl_multi_aff* maff, isl_local_space* * ls);
+	//	isl_set* isl_multi_aff_lex_le_set(take isl_multi_aff* ma1, take isl_multi_aff* ma2);
+	//	isl_set* isl_multi_aff_lex_ge_set(take isl_multi_aff* ma1, take isl_multi_aff* ma2);
+
+	//module
+	[static rename=_toString]
+	string isl_multi_aff_to_string(keep isl_multi_aff* maff, int format);
+}
+
+group ISLPWAff {
+	[rename=toMultiPWAff]
+	isl_multi_pw_aff* isl_multi_pw_aff_from_pw_aff(take isl_pw_aff* pa);
+	[rename=toPWMultiAff]
+	isl_pw_multi_aff* isl_pw_multi_aff_from_pw_aff(take isl_pw_aff* pa);
+	[rename=toSet]
+	isl_set* isl_set_from_pw_aff(take isl_pw_aff* pwaff);
+	[rename=toMap]
+	isl_map* isl_map_from_pw_aff(take isl_pw_aff* pwaff);
+
+	[rename=getContext]
+	isl_ctx* isl_pw_aff_get_ctx(keep isl_pw_aff* pwaff);
+    [rename=getSpace]
+    isl_space *isl_pw_aff_get_space(keep isl_pw_aff *pwaff);
+	[rename=getDomainSpace]
+    isl_space *isl_pw_aff_get_domain_space(keep isl_pw_aff *pwaff);
+	[rename=copy]
+	isl_pw_aff* isl_pw_aff_copy(keep isl_pw_aff* pwaff);
+	[rename=free]
+	void isl_pw_aff_free(take isl_pw_aff* pwaff);
+
+	[rename=buildFromString]
+	isl_pw_aff* isl_pw_aff_read_from_str(isl_ctx* ctx, string str);
+	[static rename=build]
+	isl_pw_aff* isl_pw_aff_alloc(take isl_set* set, take isl_aff* aff);
+	[static rename=buildEmpty]
+	isl_pw_aff* isl_pw_aff_empty(take isl_space* dim);
+	[static rename=buildZero]
+	isl_pw_aff* isl_pw_aff_zero_on_domain(take isl_local_space* ls);
+	[static rename=buildFromVar]
+	isl_pw_aff* isl_pw_aff_var_on_domain(take isl_local_space* ls, enum isl_dim_type type, unsigned pos);
+	[static rename=buildNaN]
+	isl_pw_aff* isl_pw_aff_nan_on_domain(take isl_local_space* ls);
+
+	//isl_pw_aff* isl_set_indicator_function(take isl_set* set);
+	[rename=getDimName]
+	string isl_pw_aff_get_dim_name(keep isl_pw_aff* pa, enum isl_dim_type type, unsigned pos);
+
+	//boolean isl_pw_aff_has_dim_id(keep isl_pw_aff* pa, enum isl_dim_type type, unsigned pos);
+	//isl_id* isl_pw_aff_get_dim_id(keep isl_pw_aff* pa, enum isl_dim_type type, unsigned pos);
+	//isl_pw_aff* isl_pw_aff_set_dim_id(take isl_pw_aff* pma, enum isl_dim_type type, unsigned pos, take isl_id* id);
+	//int isl_pw_aff_has_tuple_id(keep isl_pw_aff* pa, enum isl_dim_type type);
+	//	isl_id* isl_pw_aff_get_tuple_id(keep isl_pw_aff* pa, enum isl_dim_type type);
+	//	isl_pw_aff* isl_pw_aff_set_tuple_id(take isl_pw_aff* pwaff, enum isl_dim_type type, take isl_id* id);
+	//	isl_pw_aff* isl_pw_aff_reset_tuple_id(take isl_pw_aff* pa, enum isl_dim_type type);
+	[rename=isEmpty]
+	boolean isl_pw_aff_is_empty(keep isl_pw_aff* pwaff);
+	[rename=involvesNaN]
+	boolean isl_pw_aff_involves_nan(keep isl_pw_aff* pa);
+	//int isl_pw_aff_plain_cmp(keep isl_pw_aff* pa1, keep isl_pw_aff* pa2);
+	[rename=isPlainEqual]
+	boolean isl_pw_aff_plain_is_equal(keep isl_pw_aff* pwaff1, keep isl_pw_aff* pwaff2);
+	[rename=isEqual]
+	boolean isl_pw_aff_is_equal(keep isl_pw_aff* pa1, keep isl_pw_aff* pa2);
+
+	[rename=getNbDims]
+	unsigned isl_pw_aff_dim(keep isl_pw_aff* pwaff, enum isl_dim_type type);
+	[rename=involvesDims]
+	boolean isl_pw_aff_involves_dims(keep isl_pw_aff* pwaff, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=isConstant]
+	boolean isl_pw_aff_is_cst(keep isl_pw_aff* pwaff);
+	isl_pw_aff* isl_pw_aff_align_params(take isl_pw_aff* pwaff, take isl_space* model);
+
+	[rename=paramSet]
+	isl_set* isl_pw_aff_params(take isl_pw_aff* pwa);
+	[rename=domain]
+	isl_set* isl_pw_aff_domain(take isl_pw_aff* pwaff);
+	[rename=fromRange]
+	isl_pw_aff* isl_pw_aff_from_range(take isl_pw_aff* pwa);
+
+	[rename=min]
+	isl_pw_aff* isl_pw_aff_min(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	[rename=max]
+	isl_pw_aff* isl_pw_aff_max(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	[rename=mul]
+	isl_pw_aff* isl_pw_aff_mul(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	[rename=div]
+	isl_pw_aff* isl_pw_aff_div(take isl_pw_aff* pa1, take isl_pw_aff* pa2);
+	[rename=add]
+	isl_pw_aff* isl_pw_aff_add(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	[rename=sub]
+	isl_pw_aff* isl_pw_aff_sub(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+
+	[rename=neg]
+	isl_pw_aff* isl_pw_aff_neg(take isl_pw_aff* pwaff);
+	[rename=ceil]
+	isl_pw_aff* isl_pw_aff_ceil(take isl_pw_aff* pwaff);
+	[rename=floor]
+	isl_pw_aff* isl_pw_aff_floor(take isl_pw_aff* pwaff);
+	[rename=mod]
+	isl_pw_aff* isl_pw_aff_mod_val(take isl_pw_aff* pa, take isl_val* mod);
+
+	[rename=unionMin]
+	isl_pw_aff* isl_pw_aff_union_min(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	[rename=unionMax]
+	isl_pw_aff* isl_pw_aff_union_max(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	[rename=unionAdd]
+	isl_pw_aff* isl_pw_aff_union_add(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+
+	//	isl_pw_aff* isl_pw_aff_tdiv_q(take isl_pw_aff* pa1, take isl_pw_aff* pa2);
+	//	isl_pw_aff* isl_pw_aff_tdiv_r(take isl_pw_aff* pa1, take isl_pw_aff* pa2);
+	[rename=intersectParamSet]
+	isl_pw_aff* isl_pw_aff_intersect_params(take isl_pw_aff* pa, take isl_set* set);
+	[rename=intersectDomain]
+	isl_pw_aff* isl_pw_aff_intersect_domain(take isl_pw_aff* pa, take isl_set* set);
+
+	//isl_pw_aff* isl_pw_aff_cond(take isl_pw_aff* cond, take isl_pw_aff* pwaff_true, take isl_pw_aff* pwaff_false);
+	[rename=scale]
+	isl_pw_aff* isl_pw_aff_scale_val(take isl_pw_aff* pa, take isl_val* v);
+	[rename=scaleDown]
+	isl_pw_aff* isl_pw_aff_scale_down_val(take isl_pw_aff* pa, take isl_val* f);
+	[rename=insertDims]
+	isl_pw_aff* isl_pw_aff_insert_dims(take isl_pw_aff* pwaff, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=addDims]
+	isl_pw_aff* isl_pw_aff_add_dims(take isl_pw_aff* pwaff, enum isl_dim_type type, unsigned n);
+	[rename=moveDims]
+	isl_pw_aff* isl_pw_aff_move_dims(take isl_pw_aff* pa, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+	[rename=dropDims]
+	isl_pw_aff* isl_pw_aff_drop_dims(take isl_pw_aff* pwaff, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=coalesce]
+	isl_pw_aff* isl_pw_aff_coalesce(take isl_pw_aff* pwqp);
+	[rename=gist]
+	isl_pw_aff* isl_pw_aff_gist(take isl_pw_aff* pwaff, take isl_set* context);
+	//	isl_pw_aff* isl_pw_aff_gist_params(take isl_pw_aff* pwaff, take isl_set* context);
+	//	isl_pw_aff* isl_pw_aff_pullback_multi_aff(take isl_pw_aff* pa, take isl_multi_aff* ma);
+	//	isl_pw_aff* isl_pw_aff_pullback_pw_multi_aff(take isl_pw_aff* pa, take isl_pw_multi_aff* pma);
+	//	isl_pw_aff* isl_pw_aff_pullback_multi_pw_aff(take isl_pw_aff* pa, take isl_multi_pw_aff* mpa);
+	
+	//[rename=eval] removed for compatibility with 0.15
+	//isl_val* isl_pw_aff_eval(take isl_pw_aff *pa, take isl_point *pnt);
+	
+	[rename=getNbPieces]
+	int isl_pw_aff_n_piece(keep isl_pw_aff* pwaff);
+
+	//	isl_set* isl_pw_aff_nonneg_set(take isl_pw_aff* pwaff);
+	//	isl_set* isl_pw_aff_zero_set(take isl_pw_aff* pwaff);
+	//	isl_set* isl_pw_aff_non_zero_set(take isl_pw_aff* pwaff);
+	//	isl_set* isl_pw_aff_eq_set(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	//	isl_set* isl_pw_aff_ne_set(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	//	isl_set* isl_pw_aff_le_set(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	//	isl_set* isl_pw_aff_lt_set(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	//	isl_set* isl_pw_aff_ge_set(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+	//	isl_set* isl_pw_aff_gt_set(take isl_pw_aff* pwaff1, take isl_pw_aff* pwaff2);
+
+	//module
+	[static rename=_toString]
+	string isl_pw_aff_to_string(keep isl_pw_aff* pwa, int format);
+
+}
+
+group ISLPWAffList {
+	[static rename=build]
+	isl_pw_aff_list* isl_pw_aff_list_alloc(isl_ctx* ctx, int n);
+
+	[rename=getContext]
+	isl_ctx* isl_pw_aff_list_get_ctx(keep isl_pw_aff_list* list);
+
+	[rename=copy]
+	isl_pw_aff_list* isl_pw_aff_list_copy(keep isl_pw_aff_list* list);
+	[rename=free]
+	void isl_pw_aff_list_free(take isl_pw_aff_list* list);
+
+	[rename=getNbPWAffs]
+	int isl_pw_aff_list_n_pw_aff(keep isl_pw_aff_list* list);
+	[rename=get]
+	isl_pw_aff* isl_pw_aff_list_get_pw_aff(keep isl_pw_aff_list* list, int index);
+	[rename=set]
+	isl_pw_aff_list* isl_pw_aff_list_set_pw_aff(take isl_pw_aff_list* list, int index, take isl_pw_aff* pa);
+
+	[rename=insert]
+	isl_pw_aff_list* isl_pw_aff_list_insert(take isl_pw_aff_list* list, unsigned pos, take isl_pw_aff* el);
+	[rename=add]
+	isl_pw_aff_list* isl_pw_aff_list_add(take isl_pw_aff_list* list, take isl_pw_aff* el);
+	[rename=drop]
+	isl_pw_aff_list* isl_pw_aff_list_drop(take isl_pw_aff_list* list, unsigned first, unsigned n);
+	[rename=concat]
+	isl_pw_aff_list* isl_pw_aff_list_concat(take isl_pw_aff_list* list1, take isl_pw_aff_list* list2);
+
+	//module
+	[static rename=_toString]
+	string isl_pw_aff_list_to_string(keep isl_pw_aff_list* palist, int format);
+}
+
+group ISLMultiPWAff {
+	[rename=toPWMultiAff]
+	isl_pw_multi_aff* isl_pw_multi_aff_from_multi_pw_aff(take isl_multi_pw_aff* mpa);
+	[rename=toSet]
+	isl_set* isl_set_from_multi_pw_aff(take isl_multi_pw_aff* mpa);
+	[rename=toMap]
+	isl_map* isl_map_from_multi_pw_aff(take isl_multi_pw_aff* mpa);
+	[rename=toMultiUnionPWAff]
+	isl_multi_union_pw_aff* isl_multi_union_pw_aff_from_multi_pw_aff(take isl_multi_pw_aff* mpa);
+
+	[static rename=buildFromString]
+	isl_multi_pw_aff* isl_multi_pw_aff_read_from_str(isl_ctx* ctx, string str);
+	[static rename=buildIdentity]
+	isl_multi_pw_aff* isl_multi_pw_aff_identity(take isl_space* space);
+	[static rename=buildFromPWAffList]
+	isl_multi_pw_aff *isl_multi_pw_aff_from_pw_aff_list(take isl_space *space, take isl_pw_aff_list *list);
+
+	[rename=getContext]
+	isl_ctx* isl_multi_pw_aff_get_ctx(keep isl_multi_pw_aff* mpa);
+	[rename=getSpace]
+	isl_space* isl_multi_pw_aff_get_space(keep isl_multi_pw_aff* mpa);
+	[rename=getDomainSpace]
+	isl_space* isl_multi_pw_aff_get_domain_space(keep isl_multi_pw_aff* mpa);
+	[rename=copy]
+	isl_multi_pw_aff* isl_multi_pw_aff_copy(keep isl_multi_pw_aff* mpa);
+	[rename=free]
+	void isl_multi_pw_aff_free(take isl_multi_pw_aff* mpa);
+
+	[rename=intersectParams]
+	isl_multi_pw_aff* isl_multi_pw_aff_intersect_params(take isl_multi_pw_aff* mpa, take isl_set* set);
+	[rename=intersectDomain]
+	isl_multi_pw_aff* isl_multi_pw_aff_intersect_domain(take isl_multi_pw_aff* mpa, take isl_set* domain);
+
+	[rename=domain]
+	isl_set* isl_multi_pw_aff_domain(take isl_multi_pw_aff* mpa);
+
+	[rename=coalesce]
+	isl_multi_pw_aff* isl_multi_pw_aff_coalesce(take isl_multi_pw_aff* mpa);
+	[rename=gist]
+	isl_multi_pw_aff* isl_multi_pw_aff_gist(take isl_multi_pw_aff* mpa, take isl_set* set);
+	//isl_multi_pw_aff *isl_multi_pw_aff_gist_params(take isl_multi_pw_aff *mpa, take isl_set *set);
+	[rename=isEqual]
+	boolean isl_multi_pw_aff_is_equal(keep isl_multi_pw_aff* mpa1, keep isl_multi_pw_aff* mpa2);
+	//isl_multi_pw_aff *isl_multi_pw_aff_pullback_multi_aff(take isl_multi_pw_aff *mpa, take isl_multi_aff *ma);
+	//isl_multi_pw_aff *isl_multi_pw_aff_pullback_pw_multi_aff(take isl_multi_pw_aff *mpa, take isl_pw_multi_aff *pma);
+	//isl_multi_pw_aff *isl_multi_pw_aff_pullback_multi_pw_aff(take isl_multi_pw_aff *mpa1, take isl_multi_pw_aff *mpa2);
+	[rename=moveDims]
+	isl_multi_pw_aff* isl_multi_pw_aff_move_dims(take isl_multi_pw_aff* pma, enum isl_dim_type dst_type, unsigned dst_pos, enum isl_dim_type src_type, unsigned src_pos, unsigned n);
+
+	//module
+	[static rename=_toString]
+	string isl_multi_pw_aff_to_string(keep isl_multi_pw_aff* mpa, int format);
+}
+
+group ISLUnionPWAff {
+	[rename=toUnionMap]
+	isl_union_map* isl_union_map_from_union_pw_aff(take isl_union_pw_aff *upa);
+	[rename=toUnionPWMultiAff]
+	isl_union_pw_multi_aff* isl_union_pw_multi_aff_from_union_pw_aff(take isl_union_pw_aff *upa);
+	[rename=toMultiUnionPWAff]
+	isl_multi_union_pw_aff* isl_multi_union_pw_aff_from_union_pw_aff(take isl_union_pw_aff *upa);
+              
+
+	[rename=getContext]
+	isl_ctx *isl_union_pw_aff_get_ctx(keep isl_union_pw_aff *upa);
+    [rename=getSpace]
+    isl_space *isl_union_pw_aff_get_space(keep isl_union_pw_aff *upa);
+	[rename=copy]
+	isl_union_pw_aff *isl_union_pw_aff_copy(keep isl_union_pw_aff *upa);
+	[rename=free]
+	void isl_union_pw_aff_free(take isl_union_pw_aff* upa);
+	//[rename=buildFromString] removed for compatibility with 0.15
+	//isl_union_pw_aff* isl_union_pw_aff_read_from_str(isl_ctx *ctx, string str);
+	
+	[static rename=buildEmpty]
+	isl_union_pw_aff *isl_union_pw_aff_empty(take isl_space *space);
+
+	//ISLUnionPWAff is incomplete
+
+}
+
+group ISLUnionPWAffList {
+	[static rename=build]
+	isl_union_pw_aff_list* isl_union_pw_aff_list_alloc(isl_ctx* ctx, int n);
+
+	[rename=getContext]
+	isl_ctx* isl_union_pw_aff_list_get_ctx(keep isl_union_pw_aff_list* list);
+
+	[rename=copy]
+	isl_union_pw_aff_list* isl_union_pw_aff_list_copy(keep isl_union_pw_aff_list* list);
+	[rename=free]
+	void isl_union_pw_aff_list_free(take isl_union_pw_aff_list* list);
+
+	[rename=getNbUnionPWAffs]
+	int isl_union_pw_aff_list_n_union_pw_aff(keep isl_union_pw_aff_list* list);
+	[rename=get]
+	isl_union_pw_aff_list* isl_union_pw_aff_list_get_union_pw_aff(keep isl_union_pw_aff_list* list, int index);
+	[rename=set]
+	isl_union_pw_aff_list* isl_union_pw_aff_list_set_union_pw_aff(take isl_union_pw_aff_list* list, int index, take isl_union_pw_aff* pa);
+
+	[rename=insert]
+	isl_union_pw_aff_list* isl_union_pw_aff_list_insert(take isl_union_pw_aff_list* list, unsigned pos, take isl_union_pw_aff* el);
+	[rename=add]
+	isl_union_pw_aff_list* isl_union_pw_aff_list_add(take isl_union_pw_aff_list* list, take isl_union_pw_aff* el);
+	[rename=drop]
+	isl_union_pw_aff_list* isl_union_pw_aff_list_drop(take isl_union_pw_aff_list* list, unsigned first, unsigned n);
+	[rename=concat]
+	isl_union_pw_aff_list* isl_union_pw_aff_list_concat(take isl_union_pw_aff_list* list1, take isl_union_pw_aff_list* list2);
+	
+}
+
+group ISLMultiUnionPWAff {
+	[static rename=buildFromString]
+	isl_multi_union_pw_aff* isl_multi_union_pw_aff_read_from_str(isl_ctx* ctx, string str);
+	
+	[static rename=buildZero]
+	isl_multi_union_pw_aff* isl_multi_union_pw_aff_zero(take isl_space *space);
+	
+	[static rename=buildFromValueOnDomain]
+	isl_multi_union_pw_aff* isl_multi_union_pw_aff_multi_val_on_domain(take isl_union_set *domain, take isl_multi_val *mv);
+	[static rename=buildFromMultiAffOnDomain]
+    isl_multi_union_pw_aff* isl_multi_union_pw_aff_multi_aff_on_domain(take isl_union_set *domain, take isl_multi_aff *ma);
+	
+	[static rename=buildFromUnionPWAffList]
+    isl_multi_union_pw_aff* isl_multi_union_pw_aff_from_union_pw_aff_list(take isl_space *space, take isl_union_pw_aff_list *list);
+	
+	
+	[rename=getContext]
+	isl_ctx* isl_multi_union_pw_aff_get_ctx(keep isl_multi_union_pw_aff* mupa);
+	[rename=getSpace]
+	isl_space* isl_multi_union_pw_aff_get_space(keep isl_multi_union_pw_aff* mupa);
+	[rename=copy]
+	isl_multi_union_pw_aff* isl_multi_union_pw_aff_copy(keep isl_multi_union_pw_aff* mupa);
+	[rename=free]
+	void isl_multi_union_pw_aff_free(take isl_multi_union_pw_aff* mupa);
+}
+
+
+group ISLPWMultiAff {
+	[rename=toMultiPWAff]
+	isl_multi_pw_aff* isl_multi_pw_aff_from_pw_multi_aff(take isl_pw_multi_aff* pma);
+	[rename=toMap]
+	isl_map* isl_map_from_pw_multi_aff(take isl_pw_multi_aff* pma);
+	[rename=toSet]
+	isl_set* isl_set_from_pw_multi_aff(take isl_pw_multi_aff* pma);
+	
+	[rename=getContext]
+	isl_ctx* isl_pw_multi_aff_get_ctx(keep isl_pw_multi_aff* pma);
+	[rename=getSpace]
+	isl_space* isl_pw_multi_aff_get_space(keep isl_pw_multi_aff* pma);
+	[rename=getDomainSpace]
+	isl_space* isl_pw_multi_aff_get_domain_space(keep isl_pw_multi_aff* pma);
+	[rename=copy]
+	isl_pw_multi_aff* isl_pw_multi_aff_copy(keep isl_pw_multi_aff* pma);
+	[rename=free]
+	void isl_pw_multi_aff_free(take isl_pw_multi_aff* pma);
+
+	[static rename=buildFromString]
+	isl_pw_multi_aff* isl_pw_multi_aff_read_from_str(isl_ctx* ctx, string str);
+	[static rename=build]
+	isl_pw_multi_aff* isl_pw_multi_aff_alloc(take isl_set* set, take isl_multi_aff* maff);
+	[static rename=buildZero]
+	isl_pw_multi_aff* isl_pw_multi_aff_zero(take isl_space* space);
+	[static rename=buildIdentity]
+	isl_pw_multi_aff* isl_pw_multi_aff_identity(take isl_space* space);
+	[static rename=buildEmpty]
+	isl_pw_multi_aff* isl_pw_multi_aff_empty(take isl_space* space);
+	[static rename=buildFromDomain]
+	isl_pw_multi_aff* isl_pw_multi_aff_from_domain(take isl_set* set);
+	//	[static rename=buildProjectOutMap]
+	//	isl_pw_multi_aff *isl_pw_multi_aff_project_out_map(take isl_space *space, enum isl_dim_type type,	unsigned first, unsigned n);
+	[rename=getNbDims]
+	unsigned isl_pw_multi_aff_dim(keep isl_pw_multi_aff* pma, enum isl_dim_type type);
+
+	[rename=getPWAff]
+	isl_pw_aff* isl_pw_multi_aff_get_pw_aff(keep isl_pw_multi_aff* pma, int pos);
+	[rename=setPWAff]
+	isl_pw_multi_aff* isl_pw_multi_aff_set_pw_aff(take isl_pw_multi_aff* pma, unsigned pos, take isl_pw_aff* pa);
+
+	[rename=hasTupleName]
+	boolean isl_pw_multi_aff_has_tuple_name(keep isl_pw_multi_aff* pma, enum isl_dim_type type);
+	[rename=getTupleName]
+	string isl_pw_multi_aff_get_tuple_name(keep isl_pw_multi_aff* pma, enum isl_dim_type type);
+	//	isl_id* isl_pw_multi_aff_get_tuple_id(keep isl_pw_multi_aff* pma, enum isl_dim_type type);
+	//	int isl_pw_multi_aff_has_tuple_id(keep isl_pw_multi_aff* pma, enum isl_dim_type type);
+	//	isl_pw_multi_aff* isl_pw_multi_aff_set_tuple_id(take isl_pw_multi_aff* pma, enum isl_dim_type type, take isl_id* id);
+	[rename=getDimName]
+	string isl_pw_multi_aff_get_dim_name(keep isl_pw_multi_aff* pma, enum isl_dim_type type, unsigned pos);
+	//isl_id* isl_pw_multi_aff_get_dim_id(keep isl_pw_multi_aff* pma, enum isl_dim_type type, unsigned pos);
+	//isl_pw_multi_aff* isl_pw_multi_aff_set_dim_id(take isl_pw_multi_aff* pma, enum isl_dim_type type, unsigned pos, take isl_id* id);
+	[rename=dropDims]
+	isl_pw_multi_aff* isl_pw_multi_aff_drop_dims(take isl_pw_multi_aff* pma, enum isl_dim_type type, unsigned first, unsigned n);
+	[rename=domain]
+	isl_set* isl_pw_multi_aff_domain(take isl_pw_multi_aff* pma);
+
+	[rename=isEqual]
+	boolean isl_pw_multi_aff_plain_is_equal(keep isl_pw_multi_aff* pma1, keep isl_pw_multi_aff* pma2);
+
+	//	isl_pw_multi_aff* isl_pw_multi_aff_fix_si(take isl_pw_multi_aff* pma, enum isl_dim_type type, unsigned pos, int value);
+	[rename=unionAdd]
+	isl_pw_multi_aff* isl_pw_multi_aff_union_add(take isl_pw_multi_aff* pma1, take isl_pw_multi_aff* pma2);
+	[rename=add]
+	isl_pw_multi_aff* isl_pw_multi_aff_add(take isl_pw_multi_aff* pma1, take isl_pw_multi_aff* pma2);
+	[rename=sub]
+	isl_pw_multi_aff* isl_pw_multi_aff_sub(take isl_pw_multi_aff* pma1, take isl_pw_multi_aff* pma2);
+	[rename=scale]
+	isl_pw_multi_aff* isl_pw_multi_aff_scale_val(take isl_pw_multi_aff* pma, take isl_val* v);
+	[rename=scale]
+	isl_pw_multi_aff* isl_pw_multi_aff_scale_multi_val(take isl_pw_multi_aff* pma, take isl_multi_val* mv);
+
+	[rename=unionLexMin]
+	isl_pw_multi_aff* isl_pw_multi_aff_union_lexmin(take isl_pw_multi_aff* pma1, take isl_pw_multi_aff* pma2);
+	[rename=unionLexMax]
+	isl_pw_multi_aff* isl_pw_multi_aff_union_lexmax(take isl_pw_multi_aff* pma1, take isl_pw_multi_aff* pma2);
+	[rename=rangeProduct]
+	isl_pw_multi_aff* isl_pw_multi_aff_range_product(take isl_pw_multi_aff* pma1, take isl_pw_multi_aff* pma2);
+	[rename=flatRangeProduct]
+	isl_pw_multi_aff* isl_pw_multi_aff_flat_range_product(take isl_pw_multi_aff* pma1, take isl_pw_multi_aff* pma2);
+	[rename=product]
+	isl_pw_multi_aff* isl_pw_multi_aff_product(take isl_pw_multi_aff* pma1, take isl_pw_multi_aff* pma2);
+
+	[rename=intersectParamSet]
+	isl_pw_multi_aff* isl_pw_multi_aff_intersect_params(take isl_pw_multi_aff* pma, take isl_set* set);
+	[rename=intersectDomain]
+	isl_pw_multi_aff* isl_pw_multi_aff_intersect_domain(take isl_pw_multi_aff* pma, take isl_set* set);
+	[rename=projectDomainOnParams]
+	isl_pw_multi_aff* isl_pw_multi_aff_project_domain_on_params(take isl_pw_multi_aff* pma);
+	[rename=alignParams]
+	isl_pw_multi_aff* isl_pw_multi_aff_align_params(take isl_pw_multi_aff* pma, take isl_space* model);
+	[rename=coalesce]
+	isl_pw_multi_aff* isl_pw_multi_aff_coalesce(take isl_pw_multi_aff* pma);
+	//	[rename=gistParams]
+	//	isl_pw_multi_aff* isl_pw_multi_aff_gist_params(take isl_pw_multi_aff* pma, take isl_set* set);
+	[rename=gist]
+	isl_pw_multi_aff* isl_pw_multi_aff_gist(take isl_pw_multi_aff* pma, take isl_set* set);
+
+	//	isl_pw_multi_aff* isl_pw_multi_aff_pullback_multi_aff(take isl_pw_multi_aff* pma, take isl_multi_aff* ma);
+	//	isl_pw_multi_aff* isl_pw_multi_aff_pullback_pw_multi_aff(take isl_pw_multi_aff* pma1, take isl_pw_multi_aff* pma2);
+
+	//module
+	[rename=getNbPieces]
+	int isl_pw_multi_aff_numberof_piece(keep isl_pw_multi_aff* pma);
+	[rename=getPiece]
+	struct isl_pw_multi_aff_piece* isl_pw_multi_aff_get_piece_at(keep isl_pw_multi_aff* pma, int pos);
+
+	[static rename=_toString]
+	string isl_pw_multi_aff_to_string(keep isl_pw_multi_aff* pma, int format);
+}
+
+group ISLUnionPWMultiAff {
+	[static rename=buildFromString]
+	isl_union_pw_multi_aff* isl_union_pw_multi_aff_read_from_str(isl_ctx* ctx, string str);
+	[rename=toUnionMap]
+	isl_union_map* isl_union_map_from_union_pw_multi_aff(take isl_union_pw_multi_aff* upma);
+
+	[rename=getContext]
+	isl_ctx* isl_union_pw_multi_aff_get_ctx(keep isl_union_pw_multi_aff* upma);
+	[rename=getSpace]
+	isl_space* isl_union_pw_multi_aff_get_space(keep isl_union_pw_multi_aff* upma);
+	[rename=copy]
+	isl_union_pw_multi_aff* isl_union_pw_multi_aff_copy(keep isl_union_pw_multi_aff* upma);
+	[rename=free]
+	void isl_union_pw_multi_aff_free(take isl_union_pw_multi_aff* upma);
+
+
+	[static rename=buildEmpty]
+	isl_union_pw_multi_aff* isl_union_pw_multi_aff_empty(take isl_space* space);
+	[static rename=buildFromDomain]
+	isl_union_pw_multi_aff* isl_union_pw_multi_aff_from_domain(take isl_union_set* uset);
+
+	[rename=add]
+	isl_union_pw_multi_aff* isl_union_pw_multi_aff_add_pw_multi_aff(take isl_union_pw_multi_aff* upma, take isl_pw_multi_aff* pma);
+	[rename=add]
+	isl_union_pw_multi_aff* isl_union_pw_multi_aff_add(take isl_union_pw_multi_aff* upma1, take isl_union_pw_multi_aff* upma2);
+	[rename=sub]
+	isl_union_pw_multi_aff* isl_union_pw_multi_aff_sub(take isl_union_pw_multi_aff* upma1, take isl_union_pw_multi_aff* upma2);
+
+	//module
+	[static rename=_toString]
+	string isl_union_pw_multi_aff_to_string(keep isl_union_pw_multi_aff* upma, int format);
+
+}
+
+group ISLPoint {
+	[rename=getContext]
+	isl_ctx* isl_point_get_ctx(keep isl_point* pnt);
+	[rename=getSpace]
+	isl_space* isl_point_get_space(keep isl_point* pnt);
+	[rename=copy]
+	isl_point* isl_point_copy(keep isl_point* pnt);
+	[rename=free]
+	void isl_point_free(take isl_point* pnt);
+
+	[static rename=buildZero]
+	isl_point* isl_point_zero(take isl_space* dim);
+
+	[rename=getCoordinateVal]
+	isl_val* isl_point_get_coordinate_val(keep isl_point* pnt, enum isl_dim_type type, int pos);
+	[rename=setCoordinate]
+	isl_point* isl_point_set_coordinate_val(take isl_point* pnt, enum isl_dim_type type, int pos, take isl_val* v);
+
+	[rename=add]
+	isl_point* isl_point_add_ui(take isl_point* pnt, enum isl_dim_type type, int pos, unsigned val);
+	[rename=sub]
+	isl_point* isl_point_sub_ui(take isl_point* pnt, enum isl_dim_type type, int pos, unsigned val);
+}
+
+group ISLMatrix {
+	[static rename=build]
+	isl_mat* isl_mat_alloc(isl_ctx* ctx, unsigned n_row, unsigned n_col);
+
+	[rename=getContext]
+	isl_ctx* isl_mat_get_ctx(keep isl_mat* mat);
+
+	[rename=copy]
+	isl_mat* isl_mat_copy(keep isl_mat* mat);
+	[rename=free]
+	void isl_mat_free(take isl_mat* mat);//FIXME
+	[rename=getNbRows]
+	int isl_mat_rows(keep isl_mat* mat);
+	[rename=getNbCols]
+	int isl_mat_cols(keep isl_mat* mat);
+
+	[rename=getElementVal]
+	isl_val* isl_mat_get_element_val(keep isl_mat* mat, int row, int col);
+	[rename=setElement]
+	isl_mat* isl_mat_set_element_si(take isl_mat* mat, int row, int col, int v);
+	[rename=setElement]
+	isl_mat* isl_mat_set_element_val(take isl_mat* mat, int row, int col, take isl_val* v);
+
+	[rename=rightInverse]
+	isl_mat* isl_mat_right_inverse(take isl_mat* mat);
+	[rename=rightKernel]
+	isl_mat* isl_mat_right_kernel(take isl_mat* mat);
+
+}
+
+group ISLVector {
+	[rename=build]
+	isl_vec* isl_vec_alloc(isl_ctx* ctx, unsigned size);
+
+	[rename=getContext]
+	isl_ctx* isl_vec_get_ctx(keep isl_vec* vec);
+
+	[rename=copy]
+	isl_vec* isl_vec_copy(keep isl_vec* vec);
+	[rename=free]
+	void isl_vec_free(take isl_vec* vec);
+
+	[rename=getSize]
+	int isl_vec_size(keep isl_vec* vec);
+
+	[rename=getElementVal]
+	isl_val* isl_vec_get_element_val(keep isl_vec* vec, int pos);
+
+	[rename=setElement]
+	isl_vec* isl_vec_set_element_si(take isl_vec* vec, int pos, int v);
+	[rename=setElement]
+	isl_vec* isl_vec_set_element_val(take isl_vec* vec, int pos, take isl_val* v);
+
+}
+
+group ISLDataflowAnalysis {
+	[static rename=compute]
+	struct isl_dataflow_analysis* isl_array_dataflow_analysis(take isl_union_map* sink, take isl_union_map* must_source, take isl_union_map* may_source, take isl_union_map* identity_schedule);
+
+	[rename=free]
+	void isl_dataflow_analysis_free(take struct isl_dataflow_analysis *dfa);
+	
+	[static rename=_computeADA]
+	isl_union_map* compute_ADA(take isl_union_set* domains, take isl_union_map* writes, take isl_union_map* reads, take isl_union_map* idSchedule, boolean memoryBased);
+	[static rename=_computeADA]
+	isl_union_map* compute_ADA_custom(take isl_union_set* domains, take isl_union_map* writes, take isl_union_map* reads, take isl_union_map* idSchedule, boolean RAW, boolean WAW, boolean WAR);
+	[static rename=_computeADA]
+	isl_union_map* compute_ADA_custom_rar(take isl_union_set* domains, take isl_union_map* writes, take isl_union_map* reads, take isl_union_map* idSchedule, boolean RAW, boolean WAW, boolean WAR, boolean RAR);
+}
+
+/*****************************************************************************
+ * 
+ * 				Scheduling
+ * 
+ ******************************************************************************/
+group ISLSchedule {
+	[rename=free]
+	void isl_schedule_free(take isl_schedule *sched);
+	[rename=getMap]
+	isl_union_map* isl_schedule_get_map(keep isl_schedule* sched);
+
+	//module
+	[static rename=compute]
+	isl_schedule* isl_compute_schedule(isl_ctx* ctx, take isl_union_set* domain, take isl_union_map* validity, take isl_union_map* proximity,
+	// options
+	int max_coefficient, int max_constant_term, int fuse, int maximize_band_depth, int outer_coincidence, int split_scaled, int algorithm, int separate_components);
+
+	[static rename=_toString]
+	string isl_schedule_to_string(keep isl_schedule* s, int format);
+
+}
+
+/*****************************************************************************
+ * 
+ * 				Vertices
+ * 
+ ******************************************************************************/
+group ISLVertices {
+	[rename=getContext]
+	isl_ctx* isl_vertices_get_ctx(keep isl_vertices* vertices);
+
+	[rename=free]
+	void isl_vertices_free(take isl_vertices* vertices);
+
+	[rename=getNbVertices]
+	int isl_vertices_get_n_vertices(keep isl_vertices* vertices);
+
+	//module
+	[rename=getNbVertex]
+	int isl_vertices_numberof_vertex(keep isl_vertices* vertices);
+	[rename=getVertexAt]
+	isl_vertex* isl_vertices_get_vertex_at(keep isl_vertices* vertices, int pos);
+	[rename=getNbCell]
+	int isl_vertices_numberof_cell(keep isl_vertices* vertices);
+	[rename=getCellAt]
+	isl_cell* isl_vertices_get_cell_at(keep isl_vertices* vertices, int pos);
+}
+
+group ISLCell {
+	[rename=getContext]
+	isl_ctx* isl_cell_get_ctx(keep isl_cell* cell);
+
+	[rename=getDomain]
+	isl_basic_set* isl_cell_get_domain(keep isl_cell* cell);
+
+	[rename=free]
+	void isl_cell_free(take isl_cell* cell);
+
+	[rename=getNbVertices]
+	int isl_cell_numberof_vertex(keep isl_cell* cell);
+
+	//module
+	[rename=getVertexAt]
+	isl_vertex* isl_cell_get_vertex_at(keep isl_cell* cell, int pos);
+
+}
+
+group ISLVertex {
+	[rename=getContext]
+	isl_ctx* isl_vertex_get_ctx(keep isl_vertex* vertex);
+	[rename=getID]
+	int isl_vertex_get_id(keep isl_vertex* vertex);
+
+	[rename=free]
+	void isl_vertex_free(take isl_vertex* vertex);
+
+	[rename=getDomain]
+	isl_basic_set* isl_vertex_get_domain(keep isl_vertex* vertex);
+	[rename=getExpr]
+	isl_multi_aff* isl_vertex_get_expr(keep isl_vertex* vertex);
+}
+
+/*********************************************
+ * 
+ *  code generation
+ *  * 
+ ************************************************************/
+
+//#include <isl/ast_build.h>
+group ISLASTBuild {	
+	[static rename=buildFromContext]
+	struct isl_ast_build* isl_ast_build_from_context(take isl_set* set);
+
+	[rename=getContext]
+	isl_ctx* isl_ast_build_get_ctx(keep struct isl_ast_build* build);
+	[rename=copy]
+	struct isl_ast_build* isl_ast_build_copy(keep struct isl_ast_build* build);
+	[rename=free]
+	void isl_ast_build_free(take struct isl_ast_build* build);
+
+	[rename=setOptions]
+	struct isl_ast_build* isl_ast_build_set_options(take struct isl_ast_build* control, take isl_union_map* opts);
+	[rename=getSchedule]
+	isl_union_map* isl_ast_build_get_schedule(keep struct isl_ast_build* build);
+	[rename=getScheduleSpace]
+	isl_space* isl_ast_build_get_schedule_space(keep struct isl_ast_build* build);
+	[rename=restrict]
+	struct isl_ast_build* isl_ast_build_restrict(take struct isl_ast_build* build, take isl_set* set);
+	[rename=unroll]
+	struct isl_ast_build* isl_ast_build_set_iterators(take struct isl_ast_build* control, take isl_id_list* iterators);
+
+	[static rename=setExploitNestedBounds]
+	int isl_options_set_ast_build_exploit_nested_bounds(isl_ctx* ctx, int val);
+	[static rename=getExploitNestedBounds]
+	int isl_options_get_ast_build_exploit_nested_bounds(isl_ctx* ctx);
+
+	[static rename=setAtomicUpperBound]
+	int isl_options_set_ast_build_atomic_upper_bound(isl_ctx* ctx, int val);
+	[static rename=getAtomicUpperBound]
+	int isl_options_get_ast_build_atomic_upper_bound(isl_ctx* ctx);
+
+//	[static rename=setDetectMinMax] removed for compatibility with 0.15
+//	int isl_options_set_ast_build_detect_min_max(isl_ctx *ctx, int val);
+//	[static rename=getDetectMinMax] removed for compatibility with 0.15
+//	int isl_options_get_ast_build_detect_min_max(isl_ctx *ctx);
+
+	[static rename=setSeparationBounds]
+	int isl_options_set_ast_build_separation_bounds(isl_ctx* ctx, int val);
+	[static rename=getSeparationBounds]
+	int isl_options_get_ast_build_separation_bounds(isl_ctx* ctx);
+	
+	[rename=generate]
+	struct isl_ast_node* isl_ast_build_node_from_schedule_map(keep struct isl_ast_build *build, take isl_union_map *schedule);
+	[rename=generate]
+	struct isl_ast_node* isl_ast_build_node_from_schedule(keep struct isl_ast_build *build, take isl_schedule *schedule);
+
+	[rename=generateWithExpansionNodes]
+	struct isl_ast_node* isl_ast_build_node_from_schedule_map_EX(keep struct isl_ast_build *build, take isl_union_map *schedule, string exName);
+	[rename=generateWithExpansionNodes]
+	struct isl_ast_node* isl_ast_build_node_from_schedule_EX(keep struct isl_ast_build *build, take isl_schedule *schedule, string exName);
+	
+}
+
+//struct isl_ast_build *isl_ast_build_set_create_leaf(struct isl_ast_build *control,struct isl_ast_node *(*fn)(struct isl_ast_build *build,void *user), void *user);
+//
+//struct isl_ast_node *isl_ast_node_alloc_user(struct isl_ast_expr *expr);
+//
+//struct isl_ast_build *isl_ast_build_set_at_each_domain(struct isl_ast_build *build,struct isl_ast_node *(*fn)(struct isl_ast_node *node,struct isl_ast_build *build,void *user), void *user);
+//
+//struct isl_ast_build *isl_ast_build_set_before_each_for(struct isl_ast_build *build,struct isl_id *(*fn)(struct isl_ast_build *build, void *user), void *user);
+//
+//struct isl_ast_build *isl_ast_build_set_after_each_for(struct isl_ast_build *build,struct isl_ast_node *(*fn)(struct isl_ast_node *node,struct isl_ast_build *build,void *user), void *user);
+group ISLASTNode {
+	//TODO this should be removed
+	[static rename=buildFromSchedule]
+	struct isl_ast_node* isl_ast_build_ast_from_schedule(keep struct isl_ast_build* build, take isl_union_map* schedule);
+
+	[rename=getContext]
+	isl_ctx* isl_ast_node_get_ctx(keep struct isl_ast_node* node);
+
+	[rename=copy]
+	struct isl_ast_node* isl_ast_node_copy(keep struct isl_ast_node* node);
+	[rename=free]
+	void isl_ast_node_free(take struct isl_ast_node* node);
+
+	[rename=getType]
+	enum isl_ast_node_type isl_ast_node_get_type(keep struct isl_ast_node* node);
+	
+	[rename=setAnnotation]
+    struct isl_ast_node *isl_ast_node_set_annotation(struct isl_ast_node *node, isl_id *annotation);
+	[rename=getAnnotation]
+    isl_id *isl_ast_node_get_annotation(struct isl_ast_node *node);
+
+	//module
+	[static rename=_toString]
+	string isl_ast_node_to_string(struct isl_ast_node* node);
+}
+
+group ISLASTForNode {
+	[rename=getIterator]
+	struct isl_ast_expr* isl_ast_node_for_get_iterator(keep struct isl_ast_node* node);
+	[rename=getInit]
+	struct isl_ast_expr* isl_ast_node_for_get_init(keep struct isl_ast_node* node);
+	[rename=getCond]
+	struct isl_ast_expr* isl_ast_node_for_get_cond(keep struct isl_ast_node* node);
+	[rename=getInc]
+	struct isl_ast_expr* isl_ast_node_for_get_inc(keep struct isl_ast_node* node);
+	[rename=getBody]
+	struct isl_ast_node* isl_ast_node_for_get_body(keep struct isl_ast_node* node);
+	//	An isl_ast_for is considered degenerate if it is known to execute exactly once.
+	[rename=isDegenerate]
+	boolean isl_ast_node_for_is_degenerate(keep struct isl_ast_node* node);
+
+	//module
+	[instanceOf]
+	boolean isl_ast_node_is_for(keep struct isl_ast_node* node);
+}
+
+group ISLASTIfNode {
+	[rename=getCond]
+	struct isl_ast_expr* isl_ast_node_if_get_cond(keep struct isl_ast_node* node);
+	[rename=getThen]
+	struct isl_ast_node* isl_ast_node_if_get_then(keep struct isl_ast_node* node);
+	[rename=hasElse]
+	int isl_ast_node_if_has_else(keep struct isl_ast_node* node);
+	[rename=getElse]
+	struct isl_ast_node* isl_ast_node_if_get_else(keep struct isl_ast_node* node);
+
+	//module
+	[instanceOf]
+	boolean isl_ast_node_is_if(keep struct isl_ast_node* node);
+
+}
+
+group ISLASTBlockNode {
+	[rename=getChildren]
+	struct isl_ast_node_list* isl_ast_node_block_get_children(keep struct isl_ast_node* node);
+
+	//module
+	[instanceOf]
+	boolean isl_ast_node_is_block(keep struct isl_ast_node* node);
+}
+
+group ISLASTUserNode {
+	[rename=getExpression]
+	struct isl_ast_expr* isl_ast_node_user_get_expr(keep struct isl_ast_node* node);
+
+	//module
+	[instanceOf]
+	boolean isl_ast_node_is_user(keep struct isl_ast_node* node);
+}
+
+group ISLASTUnscannedNode {
+	[rename=getSchedule]
+	isl_union_map* isl_ast_node_user_get_schedule(keep struct isl_ast_node* node);
+	
+	[instanceOf]
+	boolean isl_ast_node_is_unscanned(keep struct isl_ast_node* node);
+}
+
+group ISLASTNodeList {
+	[rename=getNumberOfChildren]
+	int isl_ast_node_list_n_ast_node(keep struct isl_ast_node_list* list);
+	[rename=getChildrenAt]
+	struct isl_ast_node* isl_ast_node_list_get_ast_node(keep struct isl_ast_node_list* list, int index);
+}
+
+group ISLASTExpression {
+	[rename=getContext]
+	isl_ctx* isl_ast_expr_get_ctx(keep struct isl_ast_expr* expr);
+
+	//module
+	[static rename=_toString]
+	string isl_ast_expr_to_string(keep struct isl_ast_expr* expr);
+	[rename=getType]
+	enum isl_ast_expr_type isl_ast_expr_get_type(keep struct isl_ast_expr* expr);
+}
+
+group ISLASTIdentifier {
+	[rename=getID]
+	isl_id* isl_ast_expr_get_id(keep struct isl_ast_expr* expr);
+
+	//module
+	[instanceOf]
+	boolean isl_ast_expr_is_id(keep struct isl_ast_expr* expr);
+}
+
+group ISLASTLiteral {
+	[rename=getValueAsVal]
+	isl_val* isl_ast_expr_get_val(keep struct isl_ast_expr* expr);
+
+	//module
+	[instanceOf]
+	boolean isl_ast_expr_is_literal(keep struct isl_ast_expr* expr);
+}
+
+group ISLASTOperation {
+	[rename=getOpType]
+	enum isl_ast_op_type isl_ast_expr_get_op_type(keep struct isl_ast_expr* expr);
+	[rename=getNbArgs]
+	int isl_ast_expr_get_op_n_arg(keep struct isl_ast_expr* expr);
+	[rename=getArgument]
+	struct isl_ast_expr* isl_ast_expr_get_op_arg(keep struct isl_ast_expr* expr, int pos);
+
+	//module
+	[instanceOf]
+	boolean isl_ast_expr_is_operation(keep struct isl_ast_expr* expr);
+}
+
+group ISLValList {
+	[static rename=build]
+	isl_val_list* isl_val_list_alloc(isl_ctx* ctx, int n);
+
+	[rename=getContext]
+	isl_ctx* isl_val_list_get_ctx(keep isl_val_list* list);
+
+	[rename=copy]
+	isl_val_list* isl_val_list_copy(keep isl_val_list* list);
+	[rename=free]
+	void isl_val_list_free(take isl_val_list* list);
+
+	[rename=getNbVals]
+	int isl_val_list_n_val(keep isl_val_list* list);
+	[rename=get]
+	isl_val* isl_val_list_get_val(keep isl_val_list* list, int index);
+	[rename=set]
+	isl_val_list* isl_val_list_set_val(take isl_val_list* list, int index, take isl_val* v);
+
+	[rename=insert]
+	isl_val_list* isl_val_list_insert(take isl_val_list* list, unsigned pos, take isl_val* el);
+	[rename=add]
+	isl_val_list* isl_val_list_add(take isl_val_list* list, take isl_val* el);
+	[rename=drop]
+	isl_val_list* isl_val_list_drop(take isl_val_list* list, unsigned first, unsigned n);
+	[rename=concat]
+	isl_val_list* isl_val_list_concat(take isl_val_list* list1, take isl_val_list* list2);
+
+	//module
+	[static rename=_toString]
+	string isl_val_list_to_string(keep isl_val_list* vlist, int format);
+}
+
+group ISLIdentifierList {
+	[static rename=build]
+	isl_id_list* isl_id_list_alloc(isl_ctx* ctx, int n);
+
+	[rename=getContext]
+	isl_ctx* isl_id_list_get_ctx(keep isl_id_list* list);
+
+	[rename=copy]
+	isl_id_list* isl_id_list_copy(keep isl_id_list* list);
+	[rename=free]
+	void isl_id_list_free(take isl_id_list* list);
+
+	[rename=getNbIdentifiers]
+	int isl_id_list_n_id(keep isl_id_list* list);
+	[rename=get]
+	isl_id* isl_id_list_get_id(keep isl_id_list* list, int index);
+	[rename=set]
+	isl_id_list* isl_id_list_set_id(take isl_id_list* list, int index, take isl_id* id);
+
+	[rename=insert]
+	isl_id_list* isl_id_list_insert(take isl_id_list* list, unsigned pos, take isl_id* el);
+	[rename=add]
+	isl_id_list* isl_id_list_add(take isl_id_list* list, take isl_id* el);
+	[rename=drop]
+	isl_id_list* isl_id_list_drop(take isl_id_list* list, unsigned first, unsigned n);
+	[rename=concat]
+	isl_id_list* isl_id_list_concat(take isl_id_list* list1, take isl_id_list* list2);
+
+	//module
+	[static rename=_toString]
+	string isl_id_list_to_string(keep isl_id_list* idlist, int format);
+}
+
+group ISLSetList {
+	[static rename=build]
+	isl_set_list* isl_set_list_alloc(isl_ctx* ctx, int n);
+
+	[rename=getContext]
+	isl_ctx* isl_set_list_get_ctx(keep isl_set_list* list);
+
+	[rename=copy]
+	isl_set_list* isl_set_list_copy(keep isl_set_list* list);
+	[rename=free]
+	void isl_set_list_free(take isl_set_list* list);
+
+	[rename=getNbSets]
+	int isl_set_list_n_set(keep isl_set_list* list);
+	[rename=get]
+	isl_set* isl_set_list_get_set(keep isl_set_list* list, int index);
+	[rename=set]
+	isl_set_list* isl_set_list_set_set(take isl_set_list* list, int index, take isl_set* set);
+
+	[rename=insert]
+	isl_set_list* isl_set_list_insert(take isl_set_list* list, unsigned pos, take isl_set* el);
+	[rename=add]
+	isl_set_list* isl_set_list_add(take isl_set_list* list, take isl_set* el);
+	[rename=drop]
+	isl_set_list* isl_set_list_drop(take isl_set_list* list, unsigned first, unsigned n);
+	[rename=concat]
+	isl_set_list* isl_set_list_concat(take isl_set_list* list1, take isl_set_list* list2);
+
+	//module
+	[static rename=_toString]
+	string isl_set_list_to_string(keep isl_set_list* setlist, int format);
+
+}
+
+group ISLBasicSetList {
+	[static rename=build]
+	isl_basic_set_list* isl_basic_set_list_alloc(isl_ctx* ctx, int n);
+
+	[rename=getContext]
+	isl_ctx* isl_basic_set_list_get_ctx(keep isl_basic_set_list* list);
+
+	[rename=copy]
+	isl_basic_set_list* isl_basic_set_list_copy(keep isl_basic_set_list* list);
+	[rename=free]
+	void isl_basic_set_list_free(take isl_basic_set_list* list);
+
+	[rename=getNbBasicSets]
+	int isl_basic_set_list_n_basic_set(keep isl_basic_set_list* list);
+	[rename=get]
+	isl_basic_set* isl_basic_set_list_get_basic_set(keep isl_basic_set_list* list, int index);
+	[rename=set]
+	isl_basic_set_list* isl_basic_set_list_set_basic_set(take isl_basic_set_list* list, int index, take isl_basic_set* bset);
+
+	[rename=insert]
+	isl_basic_set_list* isl_basic_set_list_insert(take isl_basic_set_list* list, unsigned pos, take isl_basic_set* el);
+	[rename=add]
+	isl_basic_set_list* isl_basic_set_list_add(take isl_basic_set_list* list, take isl_basic_set* el);
+	[rename=drop]
+	isl_basic_set_list* isl_basic_set_list_drop(take isl_basic_set_list* list, unsigned first, unsigned n);
+	[rename=concat]
+	isl_basic_set_list* isl_basic_set_list_concat(take isl_basic_set_list* list1, take isl_basic_set_list* list2);
+
+	//module
+	[static rename=_toString]
+	string isl_basic_set_list_to_string(keep isl_basic_set_list* bsetlist, int format);
+}
+
+group ISLConstraintList {
+	[static rename=build]
+	isl_constraint_list* isl_constraint_list_alloc(isl_ctx* ctx, int n);
+
+	[rename=getContext]
+	isl_ctx* isl_constraint_list_get_ctx(keep isl_constraint_list* list);
+
+	[rename=copy]
+	isl_constraint_list* isl_constraint_list_copy(keep isl_constraint_list* list);
+	[rename=free]
+	void isl_constraint_list_free(take isl_constraint_list* list);
+
+	[rename=getNbConstraints]
+	int isl_constraint_list_n_constraint(keep isl_constraint_list* list);
+	[rename=get]
+	isl_constraint* isl_constraint_list_get_constraint(keep isl_constraint_list* list, int index);
+	[rename=set]
+	isl_constraint_list* isl_constraint_list_set_constraint(take isl_constraint_list* list, int index, take isl_constraint* constraint);
+
+	[rename=insert]
+	isl_constraint_list* isl_constraint_list_insert(take isl_constraint_list* list, unsigned pos, take isl_constraint* el);
+	[rename=add]
+	isl_constraint_list* isl_constraint_list_add(take isl_constraint_list* list, take isl_constraint* el);
+	[rename=drop]
+	isl_constraint_list* isl_constraint_list_drop(take isl_constraint_list* list, unsigned first, unsigned n);
+	[rename=concat]
+	isl_constraint_list* isl_constraint_list_concat(take isl_constraint_list* list1, take isl_constraint_list* list2);
+
+	//module
+	[static rename=_toString]
+	string isl_constraint_list_to_string(keep isl_constraint_list* constraintlist, int format);
+}
+
+group ISLQPolynomialPiece {
+	[rename=free]
+	void isl_qpolynomial_piece_free(take struct isl_qpolynomial_piece* piece);
+}
+
+group ISLQPolynomialFoldPiece {
+	[rename=free]
+	void isl_qpolynomial_fold_piece_free(take struct isl_qpolynomial_fold_piece* piece);
+}
+
+group ISLPWMultiAffPiece {
+	[rename=free]
+	void isl_pw_multi_aff_piece_free(take struct isl_pw_multi_aff_piece* piece);
+}
+
+//removed for compatibility with 0.15
+/*
+group ISLFixedBox {
+    [rename=getContext]
+    isl_ctx *isl_fixed_box_get_ctx(keep isl_fixed_box *box);
+    [rename=getSpace]
+    isl_space *isl_fixed_box_get_space(keep isl_fixed_box *box);
+    [rename=copy]
+    isl_fixed_box *isl_fixed_box_copy(keep isl_fixed_box *box);
+    [rename=free]
+    void isl_fixed_box_free(take isl_fixed_box *box);
+    
+	[rename=isValid]
+	boolean isl_fixed_box_is_valid(keep isl_fixed_box *box);
+	[rename=getOffset]
+    isl_multi_aff *isl_fixed_box_get_offset(keep isl_fixed_box *box);
+    [rename=getSize]
+    isl_multi_val *isl_fixed_box_get_size(keep isl_fixed_box *box);
+}*/
+//removed for compatibility with 0.15
+/*group ISLStrideInfo {
+    [rename=getContext]
+    isl_ctx *isl_stride_info_get_ctx(keep isl_stride_info *si);
+    
+    [rename=getStride]
+	isl_val *isl_stride_info_get_stride(keep isl_stride_info *si);
+	
+	[rename=getOffset]
+	isl_aff *isl_stride_info_get_offset(keep isl_stride_info *si);
+	
+	[rename=copy]
+    isl_stride_info *isl_stride_info_copy(keep isl_stride_info *si);
+    
+    [rename=free]
+	void isl_stride_info_free(take isl_stride_info *si);
+}*/

@@ -1,0 +1,36 @@
+affine vector_product {N| N>0}	// Product between 2 vector of size N
+input
+	long A {i | 0<=i<N };
+	long B {i | 0<=i<N };
+output
+	long Res;
+local
+	long temp {i | 0<=i<N};
+let
+	temp[i] = case
+		{i|i==0}   : A[0] * B[0];
+		{i |0<i<N} : temp[i-1] + A[i]*B[i]; 
+	esac;
+	Res[] = temp[N-1];
+.
+
+affine mat_vect_product {N,M| N>0 && M>0}	// Product between a matrix of size N*M and a vector of size M
+input
+	long mat {i,k | 0<=i<N && 0<=k<M};
+	long vect {k | 0<=k<M};
+output
+	long res {i | 0<=i<N};
+let
+	use {iP|0<=iP<N} vector_product[M] (mat,(p,j->j)@vect) returns (res);
+.
+
+affine mat_product {N,M,K | N>0 && M>0 && K>0}	// Product between a N*K matrix and a K*M matrix
+input
+	long A {i,k | 0<=i<N && 0<=k<K};
+	long B {k,j | 0<=k<K && 0<=j<M};
+output
+	long C {i,j | 0<=i<N && 0<=j<M};
+let
+	use {jP|0<=jP<M} mat_vect_product[N,K] ((p,i,j->i,j)@A,(p,j->j,p)@B) returns (C);
+.	// Because the extension domain correspond to the first dimension, we need to transpose
+	//		the result of the use equation to get the true C.

@@ -1,0 +1,37 @@
+affine SPDInverse {n | n>1} // Size Parameter
+	// Invert a Symmetric Positive Definite Matrix, A.  Here are the steps.
+	// Factorize A local Cholesly Factorization as A = LDL^t where
+	// L is (unit) lower triangular, L^t is its transpose and D is diagonal
+	// Next, find LInv, the inverse of L.
+	// Then A^-1 is (LDL^t)^-1 = (LInv^t)*(D^-1)*(LInv)
+
+input   float A {i,j| 0<=(i,j)<n};
+output float AInv {i,j| 0<=(i,j)<n};
+local
+	    float L, LInv {i,j| 0<=(i,j)<n};
+	    float D {i|0<=i<n};
+let
+  	D[i] = 
+  		case
+  		{|i==0}: A[i,i];
+  		{|i> 0}: A[i,i] - SUM([k], {|k<i}:L[i,k]*D[k]*L[i,k]);
+  		esac;
+  	L[i,j] = 
+  		case
+  		{|i<j}:		0;
+  		{|i==j}:	1;
+  		{|i>j==0}:	A[i,j]/D[j];
+  		{|i>j>0}:	(A[i,j] - SUM([k], {|k<j}:L[i,k]*D[k]*L[j,k])) / D[j];
+  		esac;
+  	LInv[i,j] = 
+  		case
+  		{|i<j}:		0;
+  		{|i==j}:	1;
+  		{|i>j}:		- SUM([k], {|j<=k<i}:L[i,k]*LInv[k,j]);
+  		esac;
+  	AInv[i,j] = 
+  		case
+  		{|i<j}:		AInv[j,i];
+  		{|i>=j}:	SUM([k], {|i<=k<n}:LInv[k,i]*LInv[k,j]/D[k]);
+  		esac;
+.

@@ -1,0 +1,20 @@
+affine MSS {N | N > 1}
+input
+	int a {i | 0 <= i <= N};
+output
+	int mss;
+local 
+	int mtss {i | 0 <= i <= N};
+	int mss_tmp {i | 0 <= i <= N};
+let
+	mtss[i] = case
+			{| i == 0}: a[0];
+			{| i > 0}: max(a[i], mtss[i-1] + a[i]);
+			esac;
+			
+	mss_tmp[i] = case
+			{| i == 0}: mtss[0];
+			{| i > 0}: max(mss_tmp[i-1], mtss[i]);
+			esac;
+	mss = mss_tmp[N];
+.

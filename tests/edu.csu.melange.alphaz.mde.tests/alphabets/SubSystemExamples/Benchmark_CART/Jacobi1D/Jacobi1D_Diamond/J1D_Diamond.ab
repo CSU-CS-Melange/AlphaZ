@@ -1,0 +1,16 @@
+affine Jacobi1Dskewed {N,T|N-2>=0 && T-2>=0}
+input
+	double A {i|i>=0 && -i+N-1>=0};
+output
+	double B {i|i>=0 && -i+N-1>=0};
+local
+	double temp {i,t|-i+t>=0 && 2i-t>=0 && -2i+t+N-1>=0 && i-t+T>=0};
+let
+	temp[i,t] = case
+		{| t==i } : A[2i-t];
+		{| t==2i && i>=1 } : temp[i-1,t-2];
+		{| t==2i-N+1 && i>=N } : temp[i-1,t-2];
+		{| t>=i+1 && 2i>=t+1 } : (temp[i-2,t-3] + temp[i-1,t-2] + temp[i,t-1])*0.333333;
+	esac;
+	B[i] = temp[i+T,i+2T];
+.

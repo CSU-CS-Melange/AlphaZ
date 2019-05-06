@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: PRDG scheduling
+Bundle-SymbolicName: org.polymodel.prdg.scheduling;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: INRIA/IRISA - CAIRN
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.polymodel.prdg.scheduling,
+ org.polymodel.prdg.scheduling.farkas,
+ org.polymodel.prdg.scheduling.feautrier,
+ org.polymodel.prdg.scheduling.impl,
+ org.polymodel.prdg.scheduling.internal,
+ org.polymodel.prdg.scheduling.modules,
+ org.polymodel.prdg.scheduling.multidim,
+ org.polymodel.prdg.scheduling.multidim.impl,
+ org.polymodel.prdg.scheduling.multidim.util,
+ org.polymodel.prdg.scheduling.notifications,
+ org.polymodel.prdg.scheduling.observers,
+ org.polymodel.prdg.scheduling.plutoisl,
+ org.polymodel.prdg.scheduling.pouchet,
+ org.polymodel.prdg.scheduling.structured,
+ org.polymodel.prdg.scheduling.structured.impl,
+ org.polymodel.prdg.scheduling.structured.util,
+ org.polymodel.prdg.scheduling.util
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.polymodel.algebra;visibility:=reexport,
+ org.polymodel;visibility:=reexport,
+ org.polymodel.prdg;visibility:=reexport,
+ org.polymodel.isl;bundle-version="1.0.0";visibility:=reexport,
+ org.polymodel.prdg.adapter;bundle-version="1.0.0",
+ fr.irisa.cairn.tools;bundle-version="1.0.0",
+ edu.csu.melange.jnimap.isl;bundle-version="1.8.1"
+Bundle-ActivationPolicy: lazy

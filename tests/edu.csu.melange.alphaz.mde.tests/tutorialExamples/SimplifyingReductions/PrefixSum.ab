@@ -1,0 +1,8 @@
+affine PrefixSum {N|N>0}
+input
+	float A {i|0<=i<N};
+output
+	float X {i|0<=i<N};
+let
+	X[i] = reduce(+, [j], {|0<=j<=i}: A[j]);
+.

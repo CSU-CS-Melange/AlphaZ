@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polymodel.scop/src" modelPluginID="org.polymodel.scop"
+    modelName="Scop" importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0"
+    copyrightFields="false" usedGenPackages="../../org.polymodel.algebra/model/algebra.genmodel#//algebra"
+    operationReflection="true">
+  <foreignModel>scop.visitor.ecore</foreignModel>
+  <genPackages prefix="Scop" basePackage="org.polymodel" disposableProviderFactory="true"
+      ecorePackage="scop.visitor.ecore#/">
+    <genClasses image="false" ecoreClass="scop.visitor.ecore#//AbstractScopNode">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//AbstractScopNode/scopAnnotations"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//AbstractScopNode/getSurroundingIterators"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//AbstractScopNode/getSurroundingScopFors"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//AbstractScopNode/simplify"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//AbstractScopNode/getLoopDepth"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//AbstractScopNode/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//AbstractScopNode/accept/visitor"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//AbstractScopNode/getSurroundingScopFor"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//AbstractScopNode/getDerivedConstraints"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="scop.visitor.ecore#//IScopAnnotation">
+      <genOperations ecoreOperation="scop.visitor.ecore#//IScopAnnotation/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//IScopAnnotation/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="scop.visitor.ecore#//ScopRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopRoot/statements"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopRoot/simplify"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopRoot/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopRoot/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="scop.visitor.ecore#//ScopFor">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopFor/iterator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopFor/LB"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopFor/UB"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopFor/stride"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopFor/body"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopFor/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopFor/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="scop.visitor.ecore#//ScopBlock">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopBlock/statements"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopBlock/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopBlock/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="scop.visitor.ecore#//ScopGuard">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopGuard/constraintSystems"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopGuard/thenBody"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopGuard/elseBody"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopGuard/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopGuard/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="scop.visitor.ecore#//ScopStatementMacro">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopStatementMacro/macroParams"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//ScopStatementMacro/name"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopStatementMacro/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopStatementMacro/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="scop.visitor.ecore#//ScopAssignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopAssignment/LHS"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scop.visitor.ecore#//ScopAssignment/RHS"/>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopAssignment/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopAssignment/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="scop.visitor.ecore#//AbstractScopStatement">
+      <genOperations ecoreOperation="scop.visitor.ecore#//AbstractScopStatement/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//AbstractScopStatement/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="scop.visitor.ecore#//ScopVisitor">
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/defaultIn">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/defaultIn/node"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/defaultOut">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/defaultOut/node"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitAbstractScopNode">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitAbstractScopNode/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inAbstractScopNode">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inAbstractScopNode/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outAbstractScopNode">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outAbstractScopNode/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitIScopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitIScopAnnotation/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inIScopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inIScopAnnotation/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outIScopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outIScopAnnotation/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitScopRoot">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitScopRoot/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inScopRoot">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inScopRoot/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outScopRoot">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outScopRoot/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitScopFor">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitScopFor/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inScopFor">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inScopFor/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outScopFor">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outScopFor/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitScopBlock">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitScopBlock/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inScopBlock">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inScopBlock/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outScopBlock">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outScopBlock/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitScopGuard">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitScopGuard/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inScopGuard">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inScopGuard/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outScopGuard">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outScopGuard/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitScopStatementMacro">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitScopStatementMacro/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inScopStatementMacro">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inScopStatementMacro/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outScopStatementMacro">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outScopStatementMacro/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitScopAssignment">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitScopAssignment/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inScopAssignment">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inScopAssignment/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outScopAssignment">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outScopAssignment/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitAbstractScopStatement">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitAbstractScopStatement/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inAbstractScopStatement">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inAbstractScopStatement/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outAbstractScopStatement">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outAbstractScopStatement/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitParallelLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitParallelLoopAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inParallelLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inParallelLoopAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outParallelLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outParallelLoopAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitDescriptionAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitDescriptionAnnotation/d"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inDescriptionAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inDescriptionAnnotation/d"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outDescriptionAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outDescriptionAnnotation/d"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitTileLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitTileLoopAnnotation/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inTileLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inTileLoopAnnotation/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outTileLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outTileLoopAnnotation/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitParallelBlockAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitParallelBlockAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inParallelBlockAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inParallelBlockAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outParallelBlockAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outParallelBlockAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitPolyhedralDomainAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitPolyhedralDomainAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inPolyhedralDomainAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inPolyhedralDomainAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outPolyhedralDomainAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outPolyhedralDomainAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/visitBarrierAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/visitBarrierAnnotation/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/inBarrierAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/inBarrierAnnotation/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitor/outBarrierAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitor/outBarrierAnnotation/b"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="scop.visitor.ecore#//ScopVisitable">
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopVisitable/accept">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopVisitable/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="scop.visitor.ecore#//ScopDepthFirstVisitor">
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/defaultIn">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/defaultIn/node"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/defaultOut">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/defaultOut/node"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitAbstractScopNode">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitAbstractScopNode/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inAbstractScopNode">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inAbstractScopNode/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outAbstractScopNode">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outAbstractScopNode/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitIScopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitIScopAnnotation/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inIScopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inIScopAnnotation/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outIScopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outIScopAnnotation/i"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopRoot">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopRoot/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopRoot">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopRoot/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopRoot">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopRoot/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopFor">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopFor/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopFor">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopFor/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopFor">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopFor/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopBlock">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopBlock/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopBlock">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopBlock/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopBlock">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopBlock/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopGuard">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopGuard/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopGuard">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopGuard/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopGuard">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopGuard/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopStatementMacro">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopStatementMacro/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopStatementMacro">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopStatementMacro/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopStatementMacro">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopStatementMacro/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopAssignment">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitScopAssignment/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopAssignment">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inScopAssignment/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopAssignment">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outScopAssignment/s"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitAbstractScopStatement">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitAbstractScopStatement/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inAbstractScopStatement">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inAbstractScopStatement/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outAbstractScopStatement">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outAbstractScopStatement/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitParallelLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitParallelLoopAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inParallelLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inParallelLoopAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outParallelLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outParallelLoopAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitDescriptionAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitDescriptionAnnotation/d"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inDescriptionAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inDescriptionAnnotation/d"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outDescriptionAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outDescriptionAnnotation/d"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitTileLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitTileLoopAnnotation/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inTileLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inTileLoopAnnotation/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outTileLoopAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outTileLoopAnnotation/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitParallelBlockAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitParallelBlockAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inParallelBlockAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inParallelBlockAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outParallelBlockAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outParallelBlockAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitPolyhedralDomainAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitPolyhedralDomainAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inPolyhedralDomainAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inPolyhedralDomainAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outPolyhedralDomainAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outPolyhedralDomainAnnotation/p"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/visitBarrierAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/visitBarrierAnnotation/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/inBarrierAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/inBarrierAnnotation/b"/>
+      </genOperations>
+      <genOperations ecoreOperation="scop.visitor.ecore#//ScopDepthFirstVisitor/outBarrierAnnotation">
+        <genParameters ecoreParameter="scop.visitor.ecore#//ScopDepthFirstVisitor/outBarrierAnnotation/b"/>
+      </genOperations>
+    </genClasses>
+    <nestedGenPackages prefix="Annotation" basePackage="org.polymodel.scop" disposableProviderFactory="true"
+        ecorePackage="scop.visitor.ecore#//annotation">
+      <genClasses ecoreClass="scop.visitor.ecore#//annotation/ParallelLoopAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//annotation/ParallelLoopAnnotation/privates"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//annotation/ParallelLoopAnnotation/schedule"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//annotation/ParallelLoopAnnotation/chunksize"/>
+        <genOperations ecoreOperation="scop.visitor.ecore#//annotation/ParallelLoopAnnotation/accept">
+          <genParameters ecoreParameter="scop.visitor.ecore#//annotation/ParallelLoopAnnotation/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="scop.visitor.ecore#//annotation/DescriptionAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//annotation/DescriptionAnnotation/description"/>
+        <genOperations ecoreOperation="scop.visitor.ecore#//annotation/DescriptionAnnotation/accept">
+          <genParameters ecoreParameter="scop.visitor.ecore#//annotation/DescriptionAnnotation/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="scop.visitor.ecore#//annotation/TileLoopAnnotation">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference scop.visitor.ecore#//annotation/TileLoopAnnotation/tileIndex"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference scop.visitor.ecore#//annotation/TileLoopAnnotation/tileSize"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference scop.visitor.ecore#//annotation/TileLoopAnnotation/offset"/>
+        <genOperations ecoreOperation="scop.visitor.ecore#//annotation/TileLoopAnnotation/accept">
+          <genParameters ecoreParameter="scop.visitor.ecore#//annotation/TileLoopAnnotation/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="scop.visitor.ecore#//annotation/ParallelBlockAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//annotation/ParallelBlockAnnotation/privates"/>
+        <genOperations ecoreOperation="scop.visitor.ecore#//annotation/ParallelBlockAnnotation/accept">
+          <genParameters ecoreParameter="scop.visitor.ecore#//annotation/ParallelBlockAnnotation/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="scop.visitor.ecore#//annotation/PolyhedralDomainAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//annotation/PolyhedralDomainAnnotation/domain"/>
+        <genOperations ecoreOperation="scop.visitor.ecore#//annotation/PolyhedralDomainAnnotation/accept">
+          <genParameters ecoreParameter="scop.visitor.ecore#//annotation/PolyhedralDomainAnnotation/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="scop.visitor.ecore#//annotation/BarrierAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//annotation/BarrierAnnotation/before"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//annotation/BarrierAnnotation/type"/>
+        <genOperations ecoreOperation="scop.visitor.ecore#//annotation/BarrierAnnotation/accept">
+          <genParameters ecoreParameter="scop.visitor.ecore#//annotation/BarrierAnnotation/accept/visitor"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="scop.visitor.ecore#//annotation/VectorizationAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scop.visitor.ecore#//annotation/VectorizationAnnotation/ivdep"/>
+      </genClasses>
+      <genClasses ecoreClass="scop.visitor.ecore#//annotation/SingleAnnotation"/>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

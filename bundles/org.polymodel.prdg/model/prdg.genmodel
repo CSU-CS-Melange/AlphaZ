@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polymodel.prdg/src" modelPluginID="org.polymodel.prdg"
+    modelName="Prdg" importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0"
+    copyrightFields="false" usedGenPackages="../../org.polymodel.algebra/model/algebra.genmodel#//algebra ../../org.polymodel/model/polymodel.genmodel#//polymodel"
+    operationReflection="true">
+  <foreignModel>prdg.ecore</foreignModel>
+  <genPackages prefix="Prdg" basePackage="org.polymodel" disposableProviderFactory="true"
+      ecorePackage="prdg.ecore#/">
+    <genClasses ecoreClass="prdg.ecore#//PRDGNode">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference prdg.ecore#//PRDGNode/prdg"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDGNode/domain"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.ecore#//PRDGNode/name"/>
+      <genOperations ecoreOperation="prdg.ecore#//PRDGNode/getDestinations"/>
+      <genOperations ecoreOperation="prdg.ecore#//PRDGNode/getSources"/>
+    </genClasses>
+    <genClasses ecoreClass="prdg.ecore#//PRDGEdge">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDGEdge/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDGEdge/destination"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDGEdge/domain"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDGEdge/function"/>
+      <genOperations ecoreOperation="prdg.ecore#//PRDGEdge/toEdgeRelation">
+        <genParameters ecoreParameter="prdg.ecore#//PRDGEdge/toEdgeRelation/manager"/>
+        <genTypeParameters ecoreTypeParameter="prdg.ecore#//PRDGEdge/toEdgeRelation/T"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="prdg.ecore#//PRDG">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDG/nodes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDG/edges"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDG/hedges"/>
+      <genOperations ecoreOperation="prdg.ecore#//PRDG/getNode">
+        <genParameters ecoreParameter="prdg.ecore#//PRDG/getNode/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="prdg.ecore#//EdgeFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.ecore#//EdgeFunction/mapping"/>
+    </genClasses>
+    <genClasses ecoreClass="prdg.ecore#//ProjectionFunction"/>
+    <genClasses ecoreClass="prdg.ecore#//DependenceFunction">
+      <genOperations ecoreOperation="prdg.ecore#//DependenceFunction/isUniform"/>
+    </genClasses>
+    <genClasses ecoreClass="prdg.ecore#//PRDGSubSystemHyperEdge">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDGSubSystemHyperEdge/sources"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDGSubSystemHyperEdge/destinations"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDGSubSystemHyperEdge/extDom"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.ecore#//PRDGSubSystemHyperEdge/params"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

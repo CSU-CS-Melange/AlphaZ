@@ -1,0 +1,12 @@
+affine mss {N |N>1}
+input  
+	int A {i|0<=i<N};          
+output
+	int C {|N>=1};
+local
+    // local an accumulator locally
+	int temp_C {i,j|0<=i<=j<N};	
+let
+	temp_C[i,j] = reduce(+, [k], {|i<=k<=j}: A[k]);
+	C = reduce(max, (i,j->), temp_C[i,j]);
+.

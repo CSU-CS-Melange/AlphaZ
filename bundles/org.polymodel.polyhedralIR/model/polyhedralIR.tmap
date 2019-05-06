@@ -1,0 +1,58 @@
+TomMapping polyhedralIR;
+prefix "org.polymodel";
+import "platform:/resource/org.polymodel.polyhedralIR/model/polyhedralIR.visitor.ecore";
+	
+	
+	terminals {
+		define {
+			Program : polyhedralIR.Program, 
+			System : polyhedralIR.AffineSystem,
+			AffineFunction : polyhedralIR.AffineFunction,
+			Domain : polyhedralIR.Domain,
+			ParameterDomain : polyhedralIR.ParameterDomain,
+			Expression : polyhedralIR.Expression,
+			exprList : polyhedralIR.Expression[],
+			UseEquation : polyhedralIR.UseEquation,
+			StandardEquation : polyhedralIR.StandardEquation,
+			VariableDeclaration : polyhedralIR.VariableDeclaration,
+			VariableIdentifier : polyhedralIR.VariableIdentifier,
+			ExternalFunctionDeclaration : polyhedralIR.ExternalFunctionDeclaration,
+			extFuncDeclList : polyhedralIR.ExternalFunctionDeclaration[]
+		}
+	}
+	
+	operators {
+		op program::polyhedralIR.Program(systems,externalFunctionDeclarations);
+		op system::polyhedralIR.AffineSystem(name, parameters, inputs, outputs, locals, equations, useEquations);
+		
+		op varDecl::polyhedralIR.VariableDeclaration(varID, domain);
+		op var::polyhedralIR.expression.VariableExpression(varDecl);
+		
+		op eq::polyhedralIR.StandardEquation(variable, expression);
+		op ueq::polyhedralIR.UseEquation(extensionDomain,parameters, subSystem, inputs, outputs,label);
+		
+		op boolConst::polyhedralIR.expression.BooleanExpression(value);
+		op intConst::polyhedralIR.expression.IntegerExpression(value);
+		op realConst::polyhedralIR.expression.RealExpression(value);
+		op reduce::polyhedralIR.expression.ReduceExpression(OP, projection, expr);
+		op caseExpr::polyhedralIR.expression.CaseExpression(exprs);
+		op ifExpr::polyhedralIR.expression.IfExpression(cond, then, else);
+		op restrictExpr::polyhedralIR.expression.RestrictExpression(restrictDomain, expr);
+		op depExpr::polyhedralIR.expression.DependenceExpression(dep, expr);
+		op indexExpr::polyhedralIR.expression.IndexExpression(function);
+		
+		op binOp::polyhedralIR.expression.BinaryExpression(operator, lexp, rexp);
+		op binAdd::polyhedralIR.expression.BinaryExpression(operator=ADD, lexp, rexp);
+		op binSub::polyhedralIR.expression.BinaryExpression(operator=SUB, lexp, rexp);
+		op binMul::polyhedralIR.expression.BinaryExpression(operator=MUL, lexp, rexp);
+		op binEq::polyhedralIR.expression.BinaryExpression(operator=EQ, lexp, rexp);
+		
+		op unaryOp::polyhedralIR.expression.UnaryExpression(operator, expr);
+		op unaryMinus::polyhedralIR.expression.UnaryExpression(operator=SUB, expr);
+		
+		op multOp::polyhedralIR.expression.MultiArgExpression(operator, exprs);
+		op externalCall::polyhedralIR.expression.ExternalFunctionCall(operator, exprs, exFunc);
+		
+		op val::polyhedralIR.expression.IndexExpression(function);
+
+	}

@@ -1,0 +1,73 @@
+affine matrix_product {Pb,Qb,Rb,Pl,Ql,Rl,b|Rl==0 && Ql==0 && Pl==0 && Pb>=1 && Qb>=1 && Rb>=1 && b>=2}
+input
+float A_bl {iBl,kBl,iLoc,kLoc|Rl==0 && Ql==0 && Pl==0 && iBl>=0 && iLoc>=0 && kLoc>=0 && b>=iLoc+1 && b>=kLoc+1 && b>=2 && Pb>=1 && Qb>=1 && Rb>=1 && Pb>=iBl+1 && kBl>=0 && Qb>=kBl+1};
+float B_bl {kBl,jBl,kLoc,jLoc|Rl==0 && Ql==0 && Pl==0 && kBl>=0 && kLoc>=0 && jLoc>=0 && b>=kLoc+1 && b>=jLoc+1 && b>=2 && Pb>=1 && Qb>=1 && Rb>=1 && Qb>=kBl+1 && jBl>=0 && Rb>=jBl+1};
+output
+float C_bl {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==1 && kBl==Qb && Rl==0 && Ql==0 && Pl==0 && Pb>=1 && Qb>=1 && Rb>=1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1};
+local
+float temp_C_bl {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==b-1 && kBl==0 && Rl==0 && Ql==0 && Pl==0 && Qb>=1 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1} || {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && kBl>=1 && Qb>=kBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+float temp_C_bl_0 {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==b-1 && kBl==0 && Rl==0 && Ql==0 && Pl==0 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && Rb>=1 && Qb>=1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Pb>=1};
+float C_bl_1 {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==1 && kBl==Qb && Rl==0 && Ql==0 && Pl==0 && Pb>=1 && Qb>=1 && Rb>=1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1};
+float temp_C_bl_2 {iBl,jBl,kBl,iLoc,jLoc,kLoc|kLoc==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && iBl>=0 && Pb>=iBl+1 && jBl>=0 && Rb>=jBl+1 && kBl>=1 && Qb>=kBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Qb>=1 && Rb>=1 && Pb>=1};
+let
+C_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc] = case
+{|kBl==Qb && Pb>=1 && Rb>=1 && Qb>=1 && Rb>=jBl+1 && iBl>=0 && jBl>=0 && Pb>=iBl+1} : C_bl_1;
+esac;
+temp_C_bl[iBl,jBl,kBl,iLoc,jLoc,kLoc] = case
+{|kBl==0 && Pb>=1 && Rb>=1 && Qb>=1 && iBl>=0 && Pb>=iBl+1 && Rb>=jBl+1 && jBl>=0} : temp_C_bl_0;
+{|Pb>=1 && Rb>=1 && Qb>=1 && kBl>=1 && iBl>=0 && Qb>=kBl+1 && Rb>=jBl+1 && jBl>=0 && Pb>=iBl+1} : temp_C_bl_2;
+esac;
+use {iBl,jBl,kBl|kBl==0 && Pb>=1 && Rb>=1 && Qb>=1 && iBl>=0 && Pb>=iBl+1 && Rb>=jBl+1 && jBl>=0 && Rl==0 && Ql==0 && Pl==0 && b>=2} matrix_product_temp_C_bl_Tile_0[Pl,Ql,Rl,b] ((iBl,jBl,kBl,iLoc,kLoc->iBl,kBl,iLoc,kLoc)@A_bl,(iBl,jBl,kBl,kLoc,jLoc->kBl,jBl,kLoc,jLoc)@B_bl) returns (temp_C_bl_0);
+use {iBl,jBl,kBl|kBl==Qb && Pb>=1 && Rb>=1 && Qb>=1 && Rb>=jBl+1 && iBl>=0 && jBl>=0 && Pb>=iBl+1 && Rl==0 && Ql==0 && Pl==0 && b>=2} matrix_product_temp_C_bl_Tile_1[Pl,Ql,Rl,b] ((iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,kBl-1,iLoc,jLoc,kLoc)@temp_C_bl,(iBl,jBl,kBl,iLoc,kLoc->iBl,kBl-1,iLoc,kLoc)@A_bl,(iBl,jBl,kBl,kLoc,jLoc->kBl-1,jBl,kLoc,jLoc)@B_bl) returns (C_bl_1);
+use {iBl,jBl,kBl|Pb>=1 && Rb>=1 && Qb>=1 && kBl>=1 && iBl>=0 && Qb>=kBl+1 && Rb>=jBl+1 && jBl>=0 && Pb>=iBl+1 && Rl==0 && Ql==0 && Pl==0 && b>=2} matrix_product_temp_C_bl_Tile_2[Pl,Ql,Rl,b] ((iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,kBl-1,iLoc,jLoc,kLoc)@temp_C_bl,(iBl,jBl,kBl,iLoc,kLoc->iBl,kBl-1,iLoc,kLoc)@A_bl,(iBl,jBl,kBl,kLoc,jLoc->kBl-1,jBl,kLoc,jLoc)@B_bl,(iBl,jBl,kBl,iLoc,kLoc->iBl,kBl,iLoc,kLoc)@A_bl,(iBl,jBl,kBl,kLoc,jLoc->kBl,jBl,kLoc,jLoc)@B_bl) returns (temp_C_bl_2);
+.
+affine matrix_product_temp_C_bl_Tile_0 {Pl,Ql,Rl,b|Rl==0 && Ql==0 && Pl==0 && b>=2}
+input
+float A_bl_0 {i2,i3|Rl==0 && Ql==0 && Pl==0 && i3>=0 && b>=i2+1 && b>=i3+2 && i2>=0 && b>=2};
+float B_bl_1 {i2,i3|Rl==0 && Ql==0 && Pl==0 && i3>=0 && b>=i2+2 && b>=i3+1 && i2>=0 && b>=2};
+output
+float temp_C_bl_out {iLoc,jLoc,kLoc|kLoc==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+local
+float temp_C_bl_loc {iLoc,jLoc,kLoc|Rl==0 && Ql==0 && Pl==0 && b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && kLoc>=0 && b>=kLoc+2};
+let
+temp_C_bl_loc[iLoc,jLoc,kLoc] = case
+{|Rl==0 && Ql==0 && Pl==0 && b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && kLoc>=1 && b>=kLoc+1} : (temp_C_bl_loc[iLoc,jLoc,kLoc-1] + (A_bl_0[iLoc,kLoc-1] * B_bl_1[kLoc-1,jLoc]));
+{|kLoc==0 && Rl==0 && Ql==0 && Pl==0 && iLoc>=0 && jLoc>=0 && b>=2 && b>=iLoc+1 && b>=jLoc+1} : 0;
+esac;
+temp_C_bl_out[iLoc,jLoc,kLoc] = {|Rl==0 && Ql==0 && Pl==0 && b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && kLoc>=1 && b>=kLoc+1} : (temp_C_bl_loc[iLoc,jLoc,kLoc-1] + (A_bl_0[iLoc,kLoc-1] * B_bl_1[kLoc-1,jLoc]));
+.
+affine matrix_product_temp_C_bl_Tile_1 {Pl,Ql,Rl,b|Rl==0 && Ql==0 && Pl==0 && b>=2}
+input
+float temp_C_bl_0 {i3,i4,i5|i5==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && i3>=0 && b>=i3+1 && i4>=0 && b>=i4+1};
+float A_bl_1 {i2,i3|i3==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && b>=i2+1 && i2>=0};
+float B_bl_2 {i2,i3|i2==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && b>=i3+1 && i3>=0};
+output
+local
+float temp_C_bl_loc {iLoc,jLoc,kLoc|kLoc==0 && Rl==0 && Ql==0 && Pl==0 && b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+float C_bl_loc {iLoc,jLoc,kLoc|kLoc==1 && Rl==0 && Ql==0 && Pl==0 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && b>=2};
+let
+temp_C_bl_loc[iLoc,jLoc,kLoc] = case
+{|kLoc==0 && Rl==0 && Ql==0 && Pl==0 && iLoc>=0 && jLoc>=0 && b>=2 && b>=iLoc+1 && b>=jLoc+1} : (temp_C_bl_0[iLoc,jLoc,b+kLoc-1] + (A_bl_1[iLoc,b+kLoc-1] * B_bl_2[b+kLoc-1,jLoc]));
+esac;
+C_bl_loc[iLoc,jLoc,kLoc] = case
+{|kLoc==1 && Rl==0 && Ql==0 && Pl==0 && iLoc>=0 && jLoc>=0 && b>=2 && b>=iLoc+1 && b>=jLoc+1} : temp_C_bl_loc[iLoc,jLoc,kLoc-1];
+esac;
+.
+affine matrix_product_temp_C_bl_Tile_2 {Pl,Ql,Rl,b|Rl==0 && Ql==0 && Pl==0 && b>=2}
+input
+float temp_C_bl_0 {i3,i4,i5|i5==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && i3>=0 && b>=i3+1 && i4>=0 && b>=i4+1};
+float A_bl_1 {i2,i3|i3==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && b>=i2+1 && i2>=0};
+float B_bl_2 {i2,i3|i2==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && b>=i3+1 && i3>=0};
+float A_bl_3 {i2,i3|Rl==0 && Ql==0 && Pl==0 && b>=i3+2 && i3>=0 && i2>=0 && b>=i2+1 && b>=2};
+float B_bl_4 {i2,i3|Rl==0 && Ql==0 && Pl==0 && b>=i3+1 && i3>=0 && i2>=0 && b>=i2+2 && b>=2};
+output
+float temp_C_bl_out {iLoc,jLoc,kLoc|kLoc==b-1 && Rl==0 && Ql==0 && Pl==0 && b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+local
+float temp_C_bl_loc {iLoc,jLoc,kLoc|Rl==0 && Ql==0 && Pl==0 && b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && kLoc>=0 && b>=kLoc+2};
+let
+temp_C_bl_loc[iLoc,jLoc,kLoc] = case
+{|kLoc==0 && Rl==0 && Ql==0 && Pl==0 && iLoc>=0 && jLoc>=0 && b>=2 && b>=iLoc+1 && b>=jLoc+1} : (temp_C_bl_0[iLoc,jLoc,kLoc+b-1] + (A_bl_1[iLoc,kLoc+b-1] * B_bl_2[kLoc+b-1,jLoc]));
+{|Rl==0 && Ql==0 && Pl==0 && b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && kLoc>=1 && b>=kLoc+1} : (temp_C_bl_loc[iLoc,jLoc,kLoc-1] + (A_bl_3[iLoc,kLoc-1] * B_bl_4[kLoc-1,jLoc]));
+esac;
+temp_C_bl_out[iLoc,jLoc,kLoc] = {|Rl==0 && Ql==0 && Pl==0 && b>=2 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && kLoc>=1 && b>=kLoc+1} : (temp_C_bl_loc[iLoc,jLoc,kLoc-1] + (A_bl_3[iLoc,kLoc-1] * B_bl_4[kLoc-1,jLoc]));
+.

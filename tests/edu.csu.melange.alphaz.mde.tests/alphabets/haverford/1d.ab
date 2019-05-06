@@ -1,0 +1,16 @@
+affine OneD {T,N | (T,N)>4}
+input
+   float Initial {i | 0<=i<=N-1};
+output
+   float Final {t,i | 0<=i<=N-1 && t==T-1};
+local
+   float Intermediate {t,i | 0<=i<=N-1 && 0<=t<T-1};
+let
+   Intermediate[t,i] = case
+      {| t==0} : Initial[i];
+      {| t>0 && i==0} : (Intermediate[t-1,i] + Intermediate[t-1,i+1]) / 2.0;
+      {| t>0 && i==N-1} : (Intermediate[t-1,i] + Intermediate[t-1,i-1]) / 2.0;
+      {| t>0 && 0<i<N-1} : (Intermediate[t-1,i] + (Intermediate[t-1,i-1]) + Intermediate[t-1,i+1]) / 3.0;
+   esac;
+   Final[t,i] = Intermediate[t,i];
+.

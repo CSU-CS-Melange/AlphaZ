@@ -1,0 +1,28 @@
+compilationUnit PrdgAdapter
+import "platform:/resource/org.polymodel.prdg/model/prdg.ecore";
+adaptedBasePackage "org.polymodel";
+adapterPackages "org.polymodel.prdg.adapter";
+targetProject "org.polymodel.prdg.adapter";
+
+// graph adapter mapping
+GraphAdapter adapt PRDG {
+	directed <= true;
+	initialize {
+		adapted.nodes.foreach {
+			e | nodeBuilder (e)
+		};
+		adapted.edges.foreach {
+			e | edgeBuilder (e)
+		};
+	}
+}
+NodeAdapter adapt PRDGNode {
+	inports <= OnePortPerEdge;
+	outports <= OnlyOnePort;
+}
+PortAdapter {
+}
+EdgeAdapter adapt PRDGEdge {
+	source <= adapted.^source;
+	sink <= adapted.destination;
+}

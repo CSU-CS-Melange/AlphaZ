@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="dataflow" nsURI="org.polymlodel.dataflow" nsPrefix="dataflow">
+  <eClassifiers xsi:type="ecore:EClass" name="ADAInput" abstract="true" interface="true">
+    <eOperations name="getDimensionsManager" lowerBound="1" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//DimensionsManager"/>
+    <eOperations name="getStatementByID" lowerBound="1" eType="#//ADAStatement">
+      <eParameters name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eOperations>
+    <eOperations name="isResolved" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="adaStatements" upperBound="-1"
+        eType="#//ADAStatement" eOpposite="#//ADAStatement/parentADAInput"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ADAStatement" abstract="true" interface="true">
+    <eOperations name="getDomain" lowerBound="1" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"/>
+    <eOperations name="getIDSchedule" lowerBound="1" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Function"/>
+    <eOperations name="isResolved" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="writes" upperBound="-1"
+        eType="#//WriteAccess" eOpposite="#//WriteAccess/parentADAStatement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reads" upperBound="-1"
+        eType="#//ReadAccess" eOpposite="#//ReadAccess/parentADAStatement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentADAInput" lowerBound="1"
+        eType="#//ADAInput" eOpposite="#//ADAInput/adaStatements"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Access" abstract="true" interface="true">
+    <eOperations name="getAccessId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="getParentADAStatement" lowerBound="1" eType="#//ADAStatement"/>
+    <eOperations name="isResolved" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="index" upperBound="-1"
+        eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReadAccess" abstract="true" interface="true"
+      eSuperTypes="#//Access">
+    <eOperations name="getAllWriteCandidates" upperBound="-1" eType="#//WriteAccess"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentADAStatement" lowerBound="1"
+        eType="#//ADAStatement" eOpposite="#//ADAStatement/reads"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lastWrite" eType="#//ADASolution"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WriteAccess" abstract="true" interface="true"
+      eSuperTypes="#//Access">
+    <eOperations name="getAllReadCandidates" upperBound="-1" eType="#//ReadAccess"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentADAStatement" lowerBound="1"
+        eType="#//ADAStatement" eOpposite="#//ADAStatement/writes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ADASolution">
+    <eOperations name="isBottom" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resolvedAccesses" lowerBound="1"
+        upperBound="-1" eType="#//ResolvedAccess" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResolvedAccess">
+    <eOperations name="isBottom" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="validityDomain" lowerBound="1"
+        eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iterationVector" upperBound="-1"
+        eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="access" eType="#//Access"/>
+  </eClassifiers>
+</ecore:EPackage>

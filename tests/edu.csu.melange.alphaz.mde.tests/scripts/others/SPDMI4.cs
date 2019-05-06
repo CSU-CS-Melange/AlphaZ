@@ -1,0 +1,54 @@
+prog = ReadAlphabets("../../alphabets/others/SPDMI4.ab");
+system = "SPDMI4";
+outDir = system;
+CheckProgram(prog);
+Split(prog,system,"L","LDiag","{i,j|i==j}");
+
+#AShow(prog);
+setSpaceTimeMap(prog, system,"reduceSubs1","(i,j,k->i,j,k,3k-1)");
+setDimensionType(prog,system,"reduceSubs1",0,"P");
+setDimensionType(prog,system,"reduceSubs1",1,"P");
+setDimensionType(prog,system,"reduceSubs1",2,"O");
+setDimensionType(prog,system,"reduceSubs1",3,"S");
+setSpaceTimeMap(prog, system,"reduceSubs2","(i,j,k->i,j,k,3k-1)");
+setDimensionType(prog,system,"reduceSubs2",0,"P");
+setDimensionType(prog,system,"reduceSubs2",1,"P");
+setDimensionType(prog,system,"reduceSubs2",2,"O");
+setDimensionType(prog,system,"reduceSubs2",3,"S");
+setSpaceTimeMap(prog, system,"reduceSubs3","(i,j,k->i,j,k,3k-1)");
+setDimensionType(prog,system,"reduceSubs3",0,"P");
+setDimensionType(prog,system,"reduceSubs3",1,"P");
+setDimensionType(prog,system,"reduceSubs3",2,"O");
+setDimensionType(prog,system,"reduceSubs3",3,"S");
+setSpaceTimeMap(prog, system,"reduceSubs4","(i,j,k->i,j,k,3k-1)");
+setDimensionType(prog,system,"reduceSubs4",0,"P");
+setDimensionType(prog,system,"reduceSubs4",1,"P");
+setDimensionType(prog,system,"reduceSubs4",2,"O");
+setDimensionType(prog,system,"reduceSubs4",3,"S");
+
+setSpaceTimeMap(prog, system,"L","(i,j->i,j,j,3j-2)");
+setDimensionType(prog,system,"L",0,"P");
+setDimensionType(prog,system,"L",1,"P");
+setDimensionType(prog,system,"L",2,"O");
+setDimensionType(prog,system,"L",3,"S");
+setSpaceTimeMap(prog, system,"LDiag","(i,j->i,j,j,3i-3)");
+setDimensionType(prog,system,"LDiag",0,"P");
+setDimensionType(prog,system,"LDiag",1,"P");
+setDimensionType(prog,system,"LDiag",2,"O");
+setDimensionType(prog,system,"LDiag",3,"S");
+setSpaceTimeMap(prog, system,"LInverse","(i,j->i,j,i,3i-2)");
+setDimensionType(prog,system,"LInverse",0,"P");
+setDimensionType(prog,system,"LInverse",1,"P");
+setDimensionType(prog,system,"LInverse",2,"O");
+setDimensionType(prog,system,"LInverse",3,"S");
+setSpaceTimeMap(prog, system,"AInverse","(i,j->i,j,0,3N)");
+setDimensionType(prog,system,"AInverse",0,"P");
+setDimensionType(prog,system,"AInverse",1,"P");
+setDimensionType(prog,system,"AInverse",2,"S");
+setDimensionType(prog,system,"AInverse",3,"S");
+
+VerifyTargetMapping(prog, system , "MAX" );
+
+generateScheduledCode(prog, system, outDir);
+generateWrapper(prog, system, outDir);
+generateMakefile(prog, system, outDir);

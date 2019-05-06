@@ -1,0 +1,8 @@
+affine mssNoTemp {N|N>1}
+input
+	int A {i|0<=i<N};
+output
+	int C;
+let
+	C[] = reduce(max, [i,j], {|0<=i<=j<N} : reduce(+, [k], {|i<=k<=j} : A[k]));	
+.

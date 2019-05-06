@@ -1,0 +1,14 @@
+affine LexiScan {N, M | (N, M) > 1}
+input
+	double A {i | 0 <= i <= N && 0 <= j <= M};
+	double B {i | 0 <= i <= N && 0 <= j <= M};
+	double C {i | 0 <= i <= M && 0 <= j <= M}; 
+output
+	double X {i | 0 <= i <= N && 0 <= j <= M};
+let
+	X[i,j] =case
+			{| i == 0 && j == 0}: A[0,0];
+			{| j == 0 && 1 <= i <= N}: A[i,j]*X[i-1, M] + B[i,j];
+			{| 1 <= j <= M && 0 <= i <= M}: C[i, j]*X[i,j-1] + B[i,j];
+		esac;
+.

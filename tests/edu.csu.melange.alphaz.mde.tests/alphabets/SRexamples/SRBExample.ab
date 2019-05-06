@@ -1,0 +1,10 @@
+//Split Reduction Body
+affine SRBEx {N|N>0}
+input
+	int A {i,j|0<=(i,j)<N};
+	int B {i,j|0<=(i,j)<N};
+output
+	int C {i,j|0<=(i,j)<N};
+let
+	C[i,j] = reduce(+, [k], A[i,k] * B[k,j]);
+.

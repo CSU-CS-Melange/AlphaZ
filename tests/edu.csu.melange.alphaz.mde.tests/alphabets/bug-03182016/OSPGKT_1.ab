@@ -1,0 +1,15 @@
+int mymin(int,int);
+affine OSPGKT {N|N>=1}
+input
+int A {i|i>=0 && N>=i};
+output
+int C {i,j|N>=j && i>=1 && j>=i};
+local
+int NR_C {i,j|N>=j && i>=1 && j>=i+1};
+let
+C[i,j] = case
+{|j==i} : 0;
+{|j>=i+1} : NR_C;
+esac;
+NR_C[i,j] = reduce(min, (i,j,k->i,j), {|j>=i+2k} : ((C[i,j-k-1] + C[j-k,j]) + ((A[i-1] * A[j-k-1]) * A[j])));
+.

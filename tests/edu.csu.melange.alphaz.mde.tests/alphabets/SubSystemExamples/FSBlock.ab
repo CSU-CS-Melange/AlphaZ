@@ -1,0 +1,45 @@
+affine FSBlock {N, B | (N,B) >1}
+given
+	float LL {ii, jj, i, j | 0<=jj<ii<N && 0<= (i,j)<B};
+	float DD {ii, i, j | 0<=ii<N && 0<=j<=i < B};
+	float BB {ii, i | 0<=ii<N && 0<=i<B};
+returns
+	float XX {ii, i | 0<=ii<N && 0<=i<B};
+using
+	float AccVec {ii, jj, i | 0<=jj<ii<N && 0<=i<B};
+	float AccSum {ii, i | 0< ii<N && 0<=i<B};
+	float sum {ii,i | 0<= ii<N && 0<=i<B};
+through
+   use {ii, jj | 0<=jj<ii<N} blockMVM[B] (LL, (ii,jj,j-> jj,j)@XX) returns (AccVec);
+   use {ii | 0<=ii<N} diagSolve[B] (DD, BB-sum) returns (XX);
+   sum[ii,i] = case
+   				{|ii==0}: 0;
+   				{|ii > 0}: AccSum[ii,i];
+   				esac;
+   AccSum = reduce(+, (ii,jj,i -> ii,i), AccVec);
+.
+
+
+affine blockMVM {B| B>0}
+given
+	float A {i, j | 0<= (i,j)<B};
+	float x {i | 0<=i<B};
+returns
+	float y  {i | 0<=i<B};
+through
+   y[i] = reduce(+, [j], A[i,j]*x[j]);
+.
+
+affine diagSolve {B | B>0}
+given
+	float L {i, j | 0<=j<=i<B};
+	float b {i  | 0<=i< B};
+returns
+	float X {i | 0<=i<B};
+using
+through
+	X[i] = case
+	 {|i==0} :b[i]/L[i,i];	
+	 {|i>0} : (b[i] - reduce(+, [j], {|j<i}:L[i,j]*X[j])) / L[i,i];	
+	esac;
+.

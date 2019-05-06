@@ -1,0 +1,47 @@
+affine SPDInverse_Normalized {n | n>=2}
+input
+   float A {i,j | j>=0 && i>=0 && n-i>=1 && n-j>=1};
+output
+   float AInv {i,j | j>=0 && i>=0 && n-i>=1 && n-j>=1};
+local 
+   float L {i,j | j>=0 && i>=0 && n-i>=1 && n-j>=1};
+   float LInv {i,j | j>=0 && i>=0 && n-i>=1 && n-j>=1};
+   float D {i | i>=0 && n-i>=1};
+   float AlphaZTempRed_1_D {i | i>=1 && n-i>=1};
+   float AlphaZTempRed_2_L {i,j | j>=1 && i-j>=1 && n-i>=1 && n-j>=1};
+   float AlphaZTempRed_3_LInv {i,j | j>=0 && i-j>=1 && n-i>=1};
+   float AlphaZTempRed_4_AInv {i,j | j>=0 && i-j>=0 && n-i>=1 && n-j>=1};
+let
+
+D[i] = case
+   { | i==0} : A[i,i];
+   { | i>=1} : (A[i,i]-AlphaZTempRed_1_D[i]);
+esac;
+
+L[i,j] = case
+   { | -i+j>=1} : 0;
+   { | i-j==0} : 1;
+   { | j==0 && i>=1} : (A[i,j]/D[j]);
+   { | j>=1 && i-j>=1} : ((A[i,j]-AlphaZTempRed_2_L[i,j])/D[j]);
+esac;
+
+LInv[i,j] = case
+   { | -i+j>=1} : 0;
+   { | i-j==0} : 1;
+   { | i-j>=1} : -(AlphaZTempRed_3_LInv[i,j]);
+esac;
+
+AInv[i,j] = case
+   { | -i+j>=1} : AInv[j,i];
+   { | i-j>=0} : AlphaZTempRed_4_AInv[i,j];
+esac;
+
+AlphaZTempRed_1_D[i] = reduce(+, [j], { | i-j>=1} : ((L[i,j]*D[j])*L[i,j]) );
+
+AlphaZTempRed_2_L[i,j] = reduce(+, [k], { | j-k>=1} : ((L[i,k]*D[k])*L[j,k]) );
+
+AlphaZTempRed_3_LInv[i,j] = reduce(+, [k], { | -j+k>=0 && i-k>=1} : (L[i,k]*LInv[k,j]) );
+
+AlphaZTempRed_4_AInv[i,j] = reduce(+, [k], { | -i+k>=0 && n-k>=1} : ((LInv[k,i]*LInv[k,j])/D[k]) );
+
+.

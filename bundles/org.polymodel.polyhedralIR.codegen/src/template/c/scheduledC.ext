@@ -1,0 +1,7 @@
+import polyIRCG;
+import polyIRCG::C;
+import polyhedralIR;
+	
+//Expression pretty printer
+String printExpressionForScheduledC(Expression expression, Boolean mainFuntion):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.ExpressionPrinterForScheduledC.print(org.polymodel.polyhedralIR.Expression, java.lang.Boolean);

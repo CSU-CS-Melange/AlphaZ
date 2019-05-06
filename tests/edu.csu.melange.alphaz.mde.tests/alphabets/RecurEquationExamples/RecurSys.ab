@@ -1,0 +1,18 @@
+affine RecurSystem {N | N > 1}
+input
+	int A {i | 0 <= i < N};
+	int B {i | 0 <= i < N};
+output
+	int X {i | 0 <= i < N};
+	int Y {i | 0 <= i < N};
+let
+	X[i] = case
+			{| i == 0}: A[i];
+			{| i > 0}: X[i-1] + Y[i-1] + A[i];
+		   esac;
+	
+	Y[i] = case
+			{| i == 0}: B[i];
+			{| i > 0}: X[i-1] + Y[i-1] + B[i];
+			esac;
+.

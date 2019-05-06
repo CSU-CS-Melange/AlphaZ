@@ -1,0 +1,12 @@
+affine simple {N|N>0}
+	input
+		int A;
+	output
+		int X {i|0<=i<N};
+	local
+		int T {i|0==i};
+	let
+		T[i] = A;
+		
+		X[i] = T[0];
+.

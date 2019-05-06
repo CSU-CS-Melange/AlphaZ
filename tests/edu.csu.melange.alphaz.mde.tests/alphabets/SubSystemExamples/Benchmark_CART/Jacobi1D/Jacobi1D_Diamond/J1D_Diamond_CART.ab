@@ -1,0 +1,62 @@
+affine Jacobi1Dskewed {Nb,Tb,Nl,Tl,b|Tl==0 && Nl==0 && Nb-1>=0 && b-3>=0 && Tb>=0}
+input
+	double A_bl {iBl,iLoc|iBl>=0 && iLoc>=0 && -iLoc+b-1>=0 && -iBl+Nb-1>=0};
+output
+	double B_bl {iBl,iLoc|iBl>=0 && iLoc>=0 && -iLoc+b-1>=0 && -iBl+Nb-1>=0};
+local
+	double temp_bl {iBl,tBl,iLoc,tLoc|-iBl+tBl-1>=0 && iLoc>=0 && tLoc>=0 && -iLoc+b-1>=0 && -tLoc+b-1>=0 && 2iBl-tBl-1>=0 && -2iBl+tBl+Nb-2>=0 && iBl-tBl+Tb-1>=0}
+				|| {iBl,tBl,iLoc,tLoc|-2iBl+tBl+Nb==0 && iBl-Nb>=0 && iLoc>=0 && -2iLoc+tLoc-1>=0 && -iBl+Nb+Tb-1>=0 && -tLoc+b-1>=0 && Nb-1>=0}
+				|| {iBl,tBl,iLoc,tLoc|-2iBl+tBl==0 && Nb-1==0 && iBl-1>=0 && -2iLoc+tLoc+b-1>=0 && tLoc>=0 && -iBl+Tb-1>=0 && -tLoc+b-1>=0 && 2iLoc-tLoc>=0}
+				|| {iBl,tBl,iLoc,tLoc|tBl==0 && iBl==0 && -iLoc+tLoc>=0 && 2iLoc-tLoc>=0 && Tb-1>=0 && -tLoc+b-1>=0}
+				|| {iBl,tBl,iLoc,tLoc|-iBl+tBl-Tb==0 && Tb-1>=0 && -iBl+Nb+Tb-2>=0 && tLoc>=0 && -iLoc+b-1>=0 && iLoc-tLoc>=0 && iBl-Tb>=0}
+				|| {iBl,tBl,iLoc,tLoc|-2iBl+tBl-1==0 && iBl>=0 && tLoc>=0 && -iLoc+b-1>=0 && -iBl+Tb-1>=0 && 2iLoc-tLoc-b>=0}
+				|| {iBl,tBl,iLoc,tLoc|tBl-Nb-2Tb+1==0 && iBl-Nb-Tb+1==0 && Tb-1>=0 && tLoc>=0 && -2iLoc+tLoc+b-1>=0 && iLoc-tLoc>=0}
+				|| {iBl,tBl,iLoc,tLoc|-2iBl+tBl==0 && iBl-1>=0 && -iBl+Tb-1>=0 && tLoc>=0 && -iLoc+b-1>=0 && -tLoc+b-1>=0 && 2iLoc-tLoc>=0 && Nb-2>=0}
+				|| {iBl,tBl,iLoc,tLoc|-iLoc+tLoc==0 && -iBl+tBl==0 && Tb==0 && -iBl+Nb-1>=0 && iLoc>=0 && iBl>=0 && -iLoc+b-1>=0}
+				|| {iBl,tBl,iLoc,tLoc|-iBl+tBl==0 && -iLoc+tLoc>=0 && iLoc>=0 && -iBl+Nb-1>=0 && Tb-1>=0 && -tLoc+b-1>=0 && iBl-1>=0}
+				|| {iBl,tBl,iLoc,tLoc|-2iBl+tBl+Nb-1==0 && iBl-Nb>=0 && iLoc>=0 && tLoc>=0 && -iBl+Nb+Tb-2>=0 && -tLoc+b-1>=0 && Nb-2>=0 && -2iLoc+tLoc+b-1>=0};
+let
+temp_bl[iBl,tBl,iLoc,tLoc] = case
+	{|-iLoc+tLoc==0 && -iBl+tBl==0} : A_bl[2iBl-tBl,2iLoc-tLoc];
+	{|-2iLoc+tLoc==0 && -2iBl+tBl==0 && iLoc-1>=0 && -2iLoc+b-1>=0 && iBl-1>=0 && Nb-1>=0}
+		|| {|-2iLoc+tLoc+b==0 && -2iBl+tBl-1==0 && 2iLoc-b-2>=0 && iBl>=0 && iLoc-1>=0}
+		|| {|-2iLoc+tLoc==0 && tBl==0 && iBl==0 && iLoc-1>=0 && -2iLoc+b-1>=0} : temp_bl[iBl,tBl,iLoc-1,tLoc-2];
+	{|-2iLoc+tLoc+b==0 && -2iBl+tBl-1==0 && 2iLoc-b>=0 && iBl>=0 && iLoc-1>=0 && -2iLoc+b+1>=0} : temp_bl[iBl,tBl-1,iLoc-1,b+tLoc-2];
+	{|tLoc==0 && iLoc==0 && -2iBl+tBl==0 && iBl-1>=0} : temp_bl[iBl-1,tBl-1,b+iLoc-1,b+tLoc-2];
+	{|-2iLoc+tLoc+b-1==0 && -2iBl+tBl+Nb-1==0 && 2iLoc-b-1>=0 && iBl-Nb>=0 && iLoc-1>=0}
+		|| {|-2iLoc+tLoc-1==0 && -2iBl+tBl+Nb==0 && iLoc-1>=0 && -2iLoc+b-2>=0 && iBl-Nb>=0 && Nb-1>=0} : temp_bl[iBl,tBl,iLoc-1,tLoc-2];
+	{|tLoc-1==0 && iLoc==0 && -2iBl+tBl+Nb==0 && iBl-Nb>=0} : temp_bl[iBl-1,tBl-1,b+iLoc-1,b+tLoc-2];
+	{|-2iLoc+tLoc+b-1==0 && -2iBl+tBl+Nb-1==0 && 2iLoc-b+1>=0 && iBl-Nb>=0 && iLoc-1>=0 && -2iLoc+b>=0} : temp_bl[iBl,tBl-1,iLoc-1,b+tLoc-2];
+	{|tLoc-2==0 && iLoc-1==0 && -iBl+tBl-1>=0 && 2iBl-tBl-1>=0 && Nb-1>=0}
+		|| {|tLoc-2==0 && iLoc-1==0 && -iBl+tBl==0 && iBl-1>=0} : (((temp_bl[iBl-1,tBl-1,b+iLoc-2,b+tLoc-3] + temp_bl[iBl,tBl,iLoc-1,tLoc-2]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+	{|tLoc-1==0 && iLoc==0 && -iBl+tBl-1>=0 && 2iBl-tBl-1>=0 && Nb-1>=0}
+		|| {|tLoc-1==0 && iLoc==0 && -iBl+tBl==0 && iBl-1>=0} : (((temp_bl[iBl-1,tBl-1,b+iLoc-2,b+tLoc-3] + temp_bl[iBl-1,tBl-1,b+iLoc-1,b+tLoc-2]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+	{|tLoc==0 && iLoc==0 && -iBl+tBl-1>=0 && 2iBl-tBl-1>=0 && Nb-1>=0} : (((temp_bl[iBl-1,tBl-1,b+iLoc-2,b+tLoc-3] + temp_bl[iBl-1,tBl-1,b+iLoc-1,b+tLoc-2]) + temp_bl[iBl,tBl-1,iLoc,b+tLoc-1]) * 0.333333);
+	{|tLoc-2==0 && iLoc==0 && -iBl+tBl-1>=0 && 2iBl-tBl-1>=0 && Nb-1>=0}
+		|| {|tLoc-2==0 && iLoc==0 && -iBl+tBl==0 && iBl-1>=0} : (((temp_bl[iBl-1,tBl-1,b+iLoc-2,b+tLoc-3] + temp_bl[iBl-1,tBl,b+iLoc-1,tLoc-2]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+	{|tLoc-1==0 && iLoc-1==0 && -2iBl+tBl==0 && iBl-1>=0 && Nb-1>=0}
+		|| {|tLoc-1==0 && iLoc-1==0 && -iBl+tBl-1>=0 && 2iBl-tBl-1>=0 && Nb-1>=0} : (((temp_bl[iBl-1,tBl-1,b+iLoc-2,b+tLoc-3] + temp_bl[iBl,tBl-1,iLoc-1,b+tLoc-2]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+	{|tLoc==0 && iLoc-1==0 && -2iBl+tBl==0 && iBl-1>=0 && Nb-1>=0}
+		|| {|tLoc==0 && iLoc-1==0 && -iBl+tBl-1>=0 && 2iBl-tBl-1>=0 && Nb-1>=0} : (((temp_bl[iBl-1,tBl-1,b+iLoc-2,b+tLoc-3] + temp_bl[iBl,tBl-1,iLoc-1,b+tLoc-2]) + temp_bl[iBl,tBl-1,iLoc,b+tLoc-1]) * 0.333333);
+	{|-2iBl+tBl==0 && iBl-1>=0 && tLoc-3>=0 && 2iLoc-tLoc-1>=0 && iLoc-2>=0}
+		|| {|tBl==0 && iBl==0 && -iLoc+tLoc-1>=0 && 2iLoc-tLoc-1>=0 && iLoc-2>=0 && tLoc-3>=0}
+		|| {|-iBl+tBl-1>=0 && iLoc-2>=0 && tLoc-3>=0 && 2iBl-tBl-1>=0}
+		|| {|-iBl+tBl==0 && -iLoc+tLoc-1>=0 && iLoc-2>=0 && iBl-1>=0 && tLoc-3>=0}
+		|| {|-2iBl+tBl-1==0 && iBl>=0 && 2iLoc-tLoc-b-1>=0 && tLoc-3>=0 && iLoc-2>=0} : (((temp_bl[iBl,tBl,iLoc-2,tLoc-3] + temp_bl[iBl,tBl,iLoc-1,tLoc-2]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+	{|iLoc-1==0 && -iBl+tBl-1>=0 && tLoc-3>=0 && 2iBl-tBl-1>=0}
+		|| {|iLoc-1==0 && -iBl+tBl==0 && tLoc-3>=0 && iBl-1>=0} : (((temp_bl[iBl-1,tBl,b+iLoc-2,tLoc-3] + temp_bl[iBl,tBl,iLoc-1,tLoc-2]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+	{|iLoc==0 && -iBl+tBl-1>=0 && tLoc-3>=0 && 2iBl-tBl-1>=0}
+		|| {|iLoc==0 && -iBl+tBl==0 && tLoc-3>=0 && iBl-1>=0} : (((temp_bl[iBl-1,tBl,b+iLoc-2,tLoc-3] + temp_bl[iBl-1,tBl,b+iLoc-1,tLoc-2]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+	{|tLoc-2==0 && -2iBl+tBl==0 && iBl-1>=0 && iLoc-2>=0}
+		|| {|tLoc-2==0 && -iBl+tBl-1>=0 && iLoc-2>=0 && 2iBl-tBl-1>=0}
+		|| {|tLoc-2==0 && -2iBl+tBl-1==0 && iBl>=0 && 2iLoc--iLoc+b-1>=0 && iLoc-2>=0} : (((temp_bl[iBl,tBl-1,iLoc-2,b+tLoc-3] + temp_bl[iBl,tBl,iLoc-1,tLoc-2]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+	{|tLoc-1==0 && -2iBl+tBl==0 && iBl-1>=0 && iLoc-2>=0}
+		|| {|tLoc-1==0 && -iBl+tBl-1>=0 && iLoc-2>=0 && 2iBl-tBl-1>=0}
+		|| {|tLoc-1==0 && -2iBl+tBl-1==0 && iBl>=0 && 2iLoc-b-2>=0 && iLoc-2>=0} : (((temp_bl[iBl,tBl-1,iLoc-2,b+tLoc-3] + temp_bl[iBl,tBl-1,iLoc-1,b+tLoc-2]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+	{|tLoc==0 && -2iBl+tBl==0 && iBl-1>=0 && iLoc-2>=0}
+		|| {|tLoc==0 && -iBl+tBl-1>=0 && iLoc-2>=0 && 2iBl-tBl-1>=0}
+		|| {|tLoc==0 && -2iBl+tBl-1==0 && iBl>=0 && 2iLoc-b-1>=0 && iLoc-2>=0} : (((temp_bl[iBl,tBl-1,iLoc-2,b+tLoc-3] + temp_bl[iBl,tBl-1,iLoc-1,b+tLoc-2]) + temp_bl[iBl,tBl-1,iLoc,b+tLoc-1]) * 0.333333);
+esac;
+
+B_bl[iBl,iLoc] = temp_bl[Tb+iBl,2Tb+iBl,Tl+iLoc,2Tl+iLoc];
+.

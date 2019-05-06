@@ -1,0 +1,17 @@
+affine diagonal {N|N>0}
+	local
+		int A {i,j|0<=i<=j<N};
+	let
+		A[i,j] = case
+					{|i==j}: 0;
+					{|0==i<j} : A[i,i];
+					{|0<i<j} : A[i-1,i];
+				esac;
+.
+
+affine diagonal2 {N|N>0}
+	local
+		int A {i,j|0<=(i,j)<N};
+	let
+		A[i,j] = A[i,i];
+.

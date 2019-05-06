@@ -1,0 +1,60 @@
+double sqrt(double);
+affine cholesky_withReduce {Nb,Nl,b|Nl==0 && Nb>=1 && b>=3}
+input
+	double A_bl {iBl,jBl,iLoc,jLoc|Nl==0 && iBl>=0 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3 && Nb>=iBl+1 && jBl>=0 && Nb>=jBl+1 && Nb>=1};
+output
+	double L_bl {iBl,jBl,iLoc,jLoc|jBl==iBl && Nl==0 && b>=3 && iBl>=0 && Nb>=iBl+1 && b>=iLoc+1 && jLoc>=0 && iLoc>=jLoc}
+			|| {iBl,jBl,iLoc,jLoc|Nl==0 && b>=3 && Nb>=iBl+1 && jBl>=0 && iBl>=jBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+local
+	double _TempRed0 {iBl,jBl,kBl,iLoc,jLoc|jLoc==iLoc && kBl==iBl && jBl==iBl && Nl==0 && b>=3 && iBl>=0 && Nb>=iBl+1 && b>=iLoc+1 && iLoc>=1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|jLoc==iLoc && jBl==iBl && Nl==0 && b>=3 && Nb>=iBl+1 && kBl>=0 && iBl>=kBl+1 && iLoc>=0 && b>=iLoc+1};
+	double _TempRed1 {iBl,jBl,kBl,iLoc,jLoc|jBl==iBl && Nl==0 && b>=3 && Nb>=iBl+1 && kBl>=0 && iBl>=kBl+1 && b>=iLoc+1 && jLoc>=0 && iLoc>=jLoc+1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|kBl==jBl && Nl==0 && b>=3 && Nb>=iBl+1 && jBl>=0 && iBl>=jBl+1 && iLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && jLoc>=1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|kBl==iBl && jBl==iBl && Nl==0 && iBl>=0 && Nb>=iBl+1 && b>=iLoc+1 && iLoc>=jLoc+1 && jLoc>=1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|Nl==0 && b>=3 && Nb>=iBl+1 && iBl>=jBl+1 && kBl>=0 && jBl>=kBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+let
+L_bl[iBl,jBl,iLoc,jLoc] = case
+	{|jBl==0 && iBl==0 && Nb>=1} : case
+		{|jLoc==0 && iLoc==0 && Nl==0 && b>=3} : sqrt(A_bl[iBl,jBl,iLoc,jLoc]);
+		{|jLoc==0 && Nl==0 && iLoc>=1 && b>=3 && b>=iLoc+1} : (A_bl[iBl,jBl,iLoc,jLoc] / L_bl[jBl,jBl,jLoc,jLoc]);
+		{|jLoc==iLoc && Nl==0 && b>=3 && iLoc>=1 && b>=iLoc+1} : sqrt((A_bl[jBl,jBl,jLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed0)));
+		{|Nl==0 && iLoc>=jLoc+1 && iLoc>=0 && jLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && b>=3} : ((A_bl[iBl,jBl,iLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed1)) / L_bl[jBl,jBl,jLoc,jLoc]);
+	esac;
+	
+	{|jBl==0 && iBl>=1 && Nb>=1 && Nb>=iBl+1} : case
+		{|jLoc==0 && Nl==0 && iLoc>=0 && b>=3 && b>=iLoc+1} : (A_bl[iBl,jBl,iLoc,jLoc] / L_bl[jBl,jBl,jLoc,jLoc]);
+		{|Nl==0 && iLoc>=0 && jLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && b>=3} : ((A_bl[iBl,jBl,iLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed1)) / L_bl[jBl,jBl,jLoc,jLoc]);
+	esac;
+
+	{|jBl==iBl && Nb>=1 && Nb>=iBl+1 && iBl>=1} : case
+		{|jLoc==iLoc && Nl==0 && b>=3 && iLoc>=0 && b>=iLoc+1} : sqrt((A_bl[jBl,jBl,jLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed0)));
+		{|Nl==0 && iLoc>=jLoc+1 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3} : ((A_bl[iBl,jBl,iLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed1)) / L_bl[jBl,jBl,jLoc,jLoc]);
+	esac;
+
+	{|iBl>=jBl+1 && jBl>=1 && Nb>=1 && Nb>=iBl+1 && iBl>=0 && Nb>=jBl+1} : case
+		{|Nl==0 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3} : ((A_bl[iBl,jBl,iLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed1)) / L_bl[jBl,jBl,jLoc,jLoc]);
+	esac;
+esac;
+
+
+_TempRed0[iBl,jBl,kBl,iLoc,jLoc] = case
+	{|kBl==jBl && jBl>=0 && Nb>=1} : reduce(+, (iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,kBl,iLoc,jLoc), case
+			{|Nl==0 && iLoc>=0 && jLoc>=0 && kLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=kLoc+1 && b>=3 && jLoc>=kLoc+1} : (L_bl[jBl,kBl,jLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]);
+		esac);
+	{|kBl>=0 && jBl>=kBl+1 && Nb>=1} : reduce(+, (iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,kBl,iLoc,jLoc), case
+			{|Nl==0 && iLoc>=0 && jLoc>=0 && kLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=kLoc+1 && b>=3} : (L_bl[jBl,kBl,jLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]);
+		esac);
+esac;
+
+
+_TempRed1[iBl,jBl,kBl,iLoc,jLoc] = case
+	{|kBl==jBl && jBl>=0 && Nb>=1} : reduce(+, (iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,kBl,iLoc,jLoc), case
+			{|Nl==0 && iLoc>=0 && jLoc>=0 && kLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=kLoc+1 && b>=3 && jLoc>=kLoc+1} : (L_bl[iBl,kBl,iLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]);
+		esac);
+	{|kBl>=0 && jBl>=kBl+1 && Nb>=1} : reduce(+, (iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,kBl,iLoc,jLoc), case
+			{|Nl==0 && iLoc>=0 && jLoc>=0 && kLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=kLoc+1 && b>=3} : (L_bl[iBl,kBl,iLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]);
+		esac);
+esac;
+.
+
+

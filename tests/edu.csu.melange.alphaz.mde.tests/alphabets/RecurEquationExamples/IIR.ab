@@ -1,0 +1,23 @@
+affine IIR {N,T|(N,T)>1}
+	input 
+		float x {n|0<=n<T};
+		float a {k|0<=k<=3};
+		float b {k|1<=k<=3};
+	output
+		float y {n|0<=n<T};
+		float z {n|0<=n<T};
+	let
+		y[n] = case
+			{|n==0} : a[0]*x[n];
+			{|n==1} : a[0]*x[n] + a[1]*x[n-1];
+			{|n==2} : a[0]*x[n] + a[1]*x[n-1] + a[2]*x[n-2];
+			{|n>2}  : a[n]*x[n] + a[1]*x[n-1] + a[2]*x[n-2] + a[3]*x[n-3];
+		esac;
+		
+		z[n] = case
+			{|n==0} : y[n];
+			{|n==1} : b[1] * z[n-1] + y[n];
+			{|n==2} : b[1] * z[n-1] + b[2] * z[n-2] + y[n];
+			{|n>2 } : b[1] * z[n-1] + b[2] * z[n-2] + b[3] * z[n-3] + y[n];
+		esac;
+.

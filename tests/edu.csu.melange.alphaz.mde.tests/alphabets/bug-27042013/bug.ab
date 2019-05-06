@@ -1,0 +1,18 @@
+affine FS {N|N>0}
+ given
+  float L {i,j|0<=j<i<N};
+  float b {i|0<=i<N}; 
+ returns
+  float x {i|0<=i<N}; 
+ using
+  float Acc {i,j|0<=j<=i<N};
+ through
+  Acc[i,j] =
+   case
+   {|i==0}: b[i];
+   {|i==j>0}: b[i] - Acc[i,j-1];
+   {|i>j==0} : L[i,j]*Acc[j,j];
+   {|i>j>0} : Acc[i,j-1] + L[i,j]*Acc[j,j];
+      esac; 
+   x[i] = Acc[i,i];
+ .

@@ -1,0 +1,52 @@
+affine knapsack {|}
+   input int W { k | 1<=k<=10 };
+         unsigned int P { k | 1<=k<=10 };
+   output int f;
+   local
+      int F  {j,k | j<=15 && 0<=k<=10 };
+      int Pp  {j,k | 1<=j<=15 && 1<=k<=10 };
+      int FF  {j,k | 1<=j<=15 && 1<=k<=10 };
+      int FFF {j,k,l | j<=15 && 1<=k<=10 && l<=15 };
+      int Ref {j,k,l | j<=15 && 1<=k<=10 && l<=15 };
+      int Index {j,k,l | j<=15 && 1<=k<=10 && l<=15 };
+      int S {j,k,l | j<=15 && 1<=k<=10 && l<=15 };
+   let
+      Pp = (j,k->k)@P; // diffusion de P selon l'axe des j
+
+      // La manip suivante a pour but de construire la variable FF
+      // telle que FF(j,k) = F(j-Wk,k)
+
+      // Calcul de j-Wk
+      Ref = case
+               {j,k,l | l==15}: (j,k,l->)@15 + (j,k,l->k)@W;
+               {j,k,l | l<15}: (j,k,l->j,k,l+1)@Ref - (j,k,l->)@1;
+            esac;
+
+      Index = case
+                 {j,k,l | j==15}: (j,k,l->)@15;
+                 {j,k,l | j<15}: (j,k,l->j+1,k,l)@Index - (j,k,l->)@1;
+              esac;
+
+      // Selection
+      S = (if (Index == Ref)
+            then (j,k,l->l,k)@F  // Transposition: l,k et non j,k
+            else (j,k,l->)@0);
+
+      FFF = case
+               {j,k,l | l==15}: (j,k,l->)@0;
+               {j,k,l | l<15}: S + (j,k,l->j,k,l+1)@FFF;
+            esac;
+
+      FF = (j,k->j,k,-999999)@FFF; // Ca s'appelle une limite
+      F = case
+             {j,k | j<0 && 1<=k<=10}: (j,k->)@(-9999999);
+             {j,k | k==0 && j<=15}: ( j,k -> )@0;
+             {j,k | j==0 && 1<=k<=10}: ( j,k -> )@0;
+             {j,k | 1<=j<=15 && 1<=k<=10}: 
+                if ( (j,k -> j,k-1)@F >  (Pp + FF) ) // c'est un MAX
+                then (j,k -> j,k-1)@F
+                else Pp + FF;
+          esac;
+
+      f = (->15,10)@F;
+.

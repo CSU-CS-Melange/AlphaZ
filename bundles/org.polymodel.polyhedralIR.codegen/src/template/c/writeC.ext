@@ -1,0 +1,17 @@
+import polyIRCG;
+import polyIRCG::C;
+import polyhedralIR;
+
+//Generates malloc for all flag variables in a function
+String generateFlagAllocationStatements(Function func):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.WriteC.generateFlagAllocationStatements(
+		org.polymodel.polyhedralIR.polyIRCG.Function);
+		
+//Generates free for all flags in a function
+String generateFlagFreeStatements(Function func):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.WriteC.generateFlagFreeStatements(
+		org.polymodel.polyhedralIR.polyIRCG.Function);
+		
+//Expression pretty printer
+String printExpressionForWriteC(Expression expression):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.ExpressionPrinterForWriteC.print(org.polymodel.polyhedralIR.Expression);

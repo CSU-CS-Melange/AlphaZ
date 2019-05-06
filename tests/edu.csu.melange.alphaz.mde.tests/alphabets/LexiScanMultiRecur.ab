@@ -1,0 +1,18 @@
+//computation are the following
+//X_{i,j} = A_{i,j}*X_{i, j-1} + B_{i,j}*X_{i, j-2} + C_{i,j}
+affine LexiScan {N, M| (N, M) > 1}
+input
+   double A {i, j | 0 <= i <= N && 0 <= j <= M};
+   double B {i, j | 0 <= i <= N && 0 <= j <= M};
+   double C {i, j | 0 <= i <= N && 0 <= j <= M};
+output
+   double X {i, j | 0 <= i <= N && 0 <= j <= M};
+let
+	X[i,j] = case
+			{| i == 0 && j == 0}: A[i,j];
+			{| i == 0 && j == 1}: A[i,j];
+			{| j > 1}: A[i,j]*X[i, j-1] + B[i,j]*X[i,j-2] + C[i,j];
+			{| i > 0 && j == 0}: A[i,j]*X[i-1, M] + B[i,j]*X[i-1, M-1] + C[i,j];
+			{| i > 0 && j == 1}: A[i,j]*X[i, j-1] + B[i,j]*X[i-1, M] + C[i,j];
+			esac;
+.

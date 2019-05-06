@@ -1,0 +1,31 @@
+affine Forward_substitution_blocked { M,B | M>0 && B>0 }
+input
+	float L { alpha,beta, ii,jj | 0<=beta<alpha<M && 0<=(ii,jj)<B } || { alpha,beta, ii,jj | 0<=alpha==beta<M && 0<=jj<=ii<B };
+	float b { alpha, ii | 0<=alpha<M && 0<=ii<B};
+output
+	float x { alpha, ii | 0<=alpha<M && 0<=ii<B };
+let
+	x[alpha,ii] =
+	case
+		{alpha,ii | alpha==0 && ii==0}: b[alpha, ii] / L[alpha,alpha, ii,ii];
+		{alpha,ii | alpha>0} || {alpha,ii | alpha==0 && ii>0} :	1 / L[alpha,alpha,ii,ii] * (
+			b[alpha,ii] - reduce(+, (alpha,gamma, ii,kk -> alpha,ii), {alpha,gamma, ii,kk | 0<=gamma<alpha && 0<=kk<B} || {alpha,gamma, ii,kk | 0<=gamma==alpha && 0<=kk<ii}: L[alpha,gamma, ii,kk] * x[gamma, kk])
+			);
+	esac;
+.
+
+/* ORIGINAL COMPUTATION
+affine Forward_substitution{ N | N>0 }
+input
+	float L { i,j | 0<=j<i<N };
+	float b { i | 0<=i<N };
+output
+	float x { i | 0<=i<N };
+let
+	x[i] =
+	case
+		{i | i==0}: b[i] / L[i,i];
+		{i | i>0} : 1 / L[i,i] * (  b[i] - reduce(+, (i,k->i), {i,k | 0<=k<i}: L[i,k] * x[k])  );
+	esac
+.
+*/

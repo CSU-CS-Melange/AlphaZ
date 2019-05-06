@@ -1,0 +1,61 @@
+affine ReductionOSP {Nb,Nl,b|Nl==0 && Nb>=1 && b>=3}
+input
+	int P_bl {iBl,iLoc|iLoc==0 && iBl==Nb && Nl==0 && Nb>=1 && b>=3}
+		|| {iBl,iLoc|Nl==0 && b>=3 && iBl>=0 && Nb>=iBl+1 && iLoc>=0 && b>=iLoc+1};
+output
+	int FTable_bl {iBl,jBl,iLoc,jLoc|jBl==iBl && Nl==0 && b>=3 && iBl>=1 && Nb>=iBl+1 && iLoc>=0 && jLoc>=iLoc && b>=jLoc+1}
+		|| {iBl,jBl,iLoc,jLoc|jBl==0 && iBl==0 && Nl==0 && Nb>=1 && b>=3 && iLoc>=1 && jLoc>=iLoc && b>=jLoc+1}
+		|| {iBl,jBl,iLoc,jLoc|jLoc==0 && jBl==Nb && Nl==0 && b>=3 && iBl>=0 && Nb>=iBl+1 && iLoc>=0 && iBl+iLoc>=1 && b>=iLoc+1}
+		|| {iBl,jBl,iLoc,jLoc|jLoc==0 && iLoc==0 && jBl==Nb && iBl==Nb && Nl==0 && Nb>=1 && b>=3}
+		|| {iBl,jBl,iLoc,jLoc|Nl==0 && b>=3 && iBl>=0 && jBl>=iBl+1 && Nb>=jBl+1 && iLoc>=0 && iBl+iLoc>=1 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+local
+	int _TempRed0 {iBl,jBl,kBl,iLoc,jLoc|Nl==0 && b>=3 && iBl>=0 && Nb>=jBl+1 && kBl>=iBl+1 && jBl>=kBl+1 && iLoc>=0 && iBl+iLoc>=1 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|kBl==iBl && Nl==0 && b>=3 && iBl>=1 && jBl>=iBl+1 && Nb>=jBl+1 && iLoc>=0 && jLoc>=0 && b>=jLoc+1 && b>=iLoc+1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|kBl==jBl && Nl==0 && b>=3 && iBl>=0 && jBl>=iBl+1 && Nb>=jBl+1 && iLoc>=0 && iBl+iLoc>=1 && b>=iLoc+1 && b>=jLoc+1 && jLoc>=1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|kBl==iBl && jBl==iBl && Nl==0 && b>=3 && iBl>=1 && Nb>=iBl+1 && iLoc>=0 && b>=jLoc+1 && jLoc>=iLoc+1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|kBl==0 && iBl==0 && Nl==0 && b>=3 && jBl>=1 && Nb>=jBl+1 && iLoc>=1 && jLoc>=0 && b>=jLoc+1 && b>=iLoc+1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|jLoc==0 && jBl==Nb && Nl==0 && b>=3 && iBl>=0 && kBl>=iBl+1 && Nb>=kBl+1 && iLoc>=0 && iBl+iLoc>=1 && b>=iLoc+1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|kBl==0 && jBl==0 && iBl==0 && Nl==0 && Nb>=1 && iLoc>=1 && b>=jLoc+1 && jLoc>=iLoc+1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|jLoc==0 && kBl==0 && jBl==Nb && iBl==0 && Nl==0 && Nb>=1 && b>=3 && iLoc>=1 && b>=iLoc+1}
+		|| {iBl,jBl,kBl,iLoc,jLoc|jLoc==0 && kBl==iBl && jBl==Nb && Nl==0 && b>=3 && iBl>=1 && Nb>=iBl+1 && iLoc>=0 && b>=iLoc+1};
+let
+FTable_bl[iBl,jBl,iLoc,jLoc] = case
+	{|jBl==0 && iBl==0 && Nb>=1} : case
+		{|jLoc==iLoc && Nl==0 && b>=3 && iLoc>=1 && b>=iLoc+1} : 0;
+		{|Nl==0 && jLoc>=iLoc+1 && iLoc>=1 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3} : reduce(min, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed0);
+	esac;
+	{|jBl==Nb && iBl==Nb && Nb>=1} : case
+		{|jLoc==0 && iLoc==0 && Nl==0 && b>=3} : 0;
+	esac;
+	{|jBl==iBl && Nb>=1 && iBl>=1 && Nb>=iBl+1} : case
+		{|jLoc==iLoc && Nl==0 && b>=3 && iLoc>=0 && b>=iLoc+1} : 0;
+		{|Nl==0 && jLoc>=iLoc+1 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3} : reduce(min, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed0);
+	esac;
+	{|jBl==Nb && iBl==0 && Nb>=1} : case
+		{|jLoc==0 && Nl==0 && iLoc>=1 && b>=3 && b>=iLoc+1} : reduce(min, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed0);
+	esac;
+	{|iBl==0 && jBl>=1 && Nb>=1 && Nb>=jBl+1} : case
+		{|Nl==0 && iLoc>=1 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3} : reduce(min, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed0);
+	esac;
+	{|jBl==Nb && Nb>=iBl+1 && Nb>=1 && iBl>=1} : case
+		{|jLoc==0 && Nl==0 && iLoc>=0 && b>=3 && b>=iLoc+1} : reduce(min, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed0);
+	esac;
+	{|jBl>=iBl+1 && Nb>=1 && iBl>=1 && Nb>=jBl+1} : case
+		{|Nl==0 && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3} : reduce(min, (iBl,jBl,kBl,iLoc,jLoc->iBl,jBl,iLoc,jLoc), _TempRed0);
+	esac;
+esac;
+
+
+_TempRed0[iBl,jBl,kBl,iLoc,jLoc] = case
+	{|Nb>=1} : reduce(min, (iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,kBl,iLoc,jLoc), case
+		{|iLoc==0 && Nl==0 && b>=jLoc+1 && kLoc>=0 && b>=3 && b>=kLoc+2 && jLoc>=0} :
+			((FTable_bl[iBl,kBl,iLoc,kLoc] + FTable_bl[kBl,jBl,kLoc+1,jLoc]) + ((P_bl[iBl-1,b+iLoc-1] * P_bl[kBl,kLoc]) * P_bl[jBl,jLoc]));
+		{|Nl==0 && iLoc>=1 && kLoc>=0 && b>=iLoc+1 && b>=kLoc+2 && b>=3 && jLoc>=0 && b>=jLoc+1} :
+			((FTable_bl[iBl,kBl,iLoc,kLoc] + FTable_bl[kBl,jBl,kLoc+1,jLoc]) + ((P_bl[iBl,iLoc-1] * P_bl[kBl,kLoc]) * P_bl[jBl,jLoc]));
+		{|kLoc==b-1 && iLoc==0 && Nl==0 && b>=jLoc+1 && b>=3 && jLoc>=0} :
+			((FTable_bl[iBl,kBl,iLoc,kLoc] + FTable_bl[kBl+1,jBl,-b+kLoc+1,jLoc]) + ((P_bl[iBl-1,b+iLoc-1] * P_bl[kBl,kLoc]) * P_bl[jBl,jLoc]));
+		{|kLoc==b-1 && Nl==0 && iLoc>=1 && b>=3 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1} :
+			((FTable_bl[iBl,kBl,iLoc,kLoc] + FTable_bl[kBl+1,jBl,-b+kLoc+1,jLoc]) + ((P_bl[iBl,iLoc-1] * P_bl[kBl,kLoc]) * P_bl[jBl,jLoc]));
+	esac);
+esac;
+.

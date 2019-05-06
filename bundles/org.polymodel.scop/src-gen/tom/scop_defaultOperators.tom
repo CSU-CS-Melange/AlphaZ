@@ -1,0 +1,74 @@
+// Default operators
+
+%op ScopRoot ScopRoot(statements : nodes ) {
+	/*PROTECTED REGION ID(tom_operator_ScopRoot) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ScopRoot}
+	get_slot(statements,t) {enforce(((ScopRoot)$t).getStatements())}
+	make(statements){org.polymodel.scop.internal.ScopTomFactory.ScopRoot($statements)}
+	/*PROTECTED REGION END*/
+}
+
+%op node ScopFor(iterator : V , LB : E , UB : E , stride : E , body : node ) {
+	/*PROTECTED REGION ID(tom_operator_ScopFor) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ScopFor}
+	get_slot(iterator,t) {((ScopFor)$t).getIterator()}
+	get_slot(LB,t) {((ScopFor)$t).getLB()}
+	get_slot(UB,t) {((ScopFor)$t).getUB()}
+	get_slot(stride,t) {((ScopFor)$t).getStride()}
+	get_slot(body,t) {((ScopFor)$t).getBody()}
+	make(iterator, LB, UB, stride, body){org.polymodel.scop.internal.ScopTomFactory.ScopFor($iterator, $LB, $UB, $stride, $body)}
+	/*PROTECTED REGION END*/
+}
+
+%op node ScopBlock(statements : nodes ) {
+	/*PROTECTED REGION ID(tom_operator_ScopBlock) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ScopBlock}
+	get_slot(statements,t) {enforce(((ScopBlock)$t).getStatements())}
+	make(statements){org.polymodel.scop.internal.ScopTomFactory.ScopBlock($statements)}
+	/*PROTECTED REGION END*/
+}
+
+%op node ScopGuard(constraintSystems : ICSList , thenBody : node , elseBody : node ) {
+	/*PROTECTED REGION ID(tom_operator_ScopGuard) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ScopGuard}
+	get_slot(constraintSystems,t) {enforce(((ScopGuard)$t).getConstraintSystems())}
+	get_slot(thenBody,t) {((ScopGuard)$t).getThenBody()}
+	get_slot(elseBody,t) {((ScopGuard)$t).getElseBody()}
+	make(constraintSystems, thenBody, elseBody){org.polymodel.scop.internal.ScopTomFactory.ScopGuard($constraintSystems, $thenBody, $elseBody)}
+	/*PROTECTED REGION END*/
+}
+
+%op node ScopStatementMacro(name : String ,macroParams : EL ) {
+	/*PROTECTED REGION ID(tom_operator_ScopStatementMacro) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ScopStatementMacro}
+	get_slot(name,t) {((ScopStatementMacro)$t).getName()}
+	get_slot(macroParams,t) {enforce(((ScopStatementMacro)$t).getMacroParams())}
+	make(name, macroParams){org.polymodel.scop.internal.ScopTomFactory.ScopStatementMacro($name, $macroParams)}
+	/*PROTECTED REGION END*/
+}
+
+%op node ScopAssignment(LHS : V , RHS : E ) {
+	/*PROTECTED REGION ID(tom_operator_ScopAssignment) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ScopAssignment}
+	get_slot(LHS,t) {((ScopAssignment)$t).getLHS()}
+	get_slot(RHS,t) {((ScopAssignment)$t).getRHS()}
+	make(LHS, RHS){org.polymodel.scop.internal.ScopTomFactory.ScopAssignment($LHS, $RHS)}
+	/*PROTECTED REGION END*/
+}
+
+%op node ScopUnscannedDomain(name : String , schedule : JNIISLUnionMap ,macroParams : EL ) {
+	/*PROTECTED REGION ID(tom_operator_ScopUnscannedDomain) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ScopUnscannedDomain}
+	get_slot(name,t) {((ScopUnscannedDomain)$t).getName()}
+	get_slot(schedule,t) {((ScopUnscannedDomain)$t).getSchedule()}
+	get_slot(macroParams,t) {enforce(((ScopUnscannedDomain)$t).getMacroParams())}
+	make(name, schedule, macroParams){org.polymodel.scop.internal.ScopTomFactory.ScopUnscannedDomain($name, $schedule, $macroParams)}
+	/*PROTECTED REGION END*/
+}

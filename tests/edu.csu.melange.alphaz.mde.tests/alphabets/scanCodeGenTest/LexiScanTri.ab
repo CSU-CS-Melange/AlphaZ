@@ -1,0 +1,13 @@
+affine LexiScanTri {N | N > 1}
+input
+	double A {i | 0 <= i <= N && 0 <= j <= i};
+	double B {i | 0 <= i <= N && 0 <= j <= i};
+output
+	double X {i | 0 <= i <= N && 0 <= j <= i};
+let
+	X[i,j] =case
+			{| i == 0 && j == 0}: A[0,0];
+			{| j == 0 && 1 <= i <= N}: A[i,j]*X[i-1, i-1] + B[i,j];
+			{| 1 <= j <= i && 1 <= i <= N}: A[i, j]*X[i,j-1] + B[i,j];
+		esac;
+.

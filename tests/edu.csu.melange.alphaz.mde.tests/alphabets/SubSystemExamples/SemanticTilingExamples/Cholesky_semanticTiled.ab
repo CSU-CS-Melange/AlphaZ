@@ -1,0 +1,60 @@
+float sqrt(float);		// External function
+
+affine Cholesky_semanticTiled {M,B| M>=B>2}
+input
+	float Ab { alpha,beta, ii,jj | 0<=(alpha,beta)<M && 0<=(ii,jj)<B };
+output
+	float Lb { alpha,beta, ii,jj | 0<=beta<alpha<M && 0<=(ii,jj)<B } || { alpha,beta, ii,jj | 0<=alpha==beta<M && 0<=jj<=ii<B };
+local
+	float Lb0 {alpha,beta, ii,jj | alpha==beta==0 && 0<=jj<=ii<B };
+	float Lb1 {alpha,beta, ii,jj | 0<alpha==beta<M && 0<=jj<=ii<B };
+	float Lb2 {alpha,beta, ii,jj | 0==beta<alpha<M && 0<=(ii,jj)<B };
+	float Lb3 {alpha,beta, ii,jj | 0<beta<alpha<M && 0<=(ii,jj)<B};
+let
+	Lb = case
+		{alpha,beta,ii,jj | alpha==beta==0} : Lb0;
+		{alpha,beta,ii,jj | alpha==beta>0 } : Lb1;
+		{alpha,beta,ii,jj | alpha> beta==0} : Lb2;
+		{alpha,beta,ii,jj | alpha> beta> 0} : Lb3; 
+	esac;
+	
+	use {alpha,beta|alpha==beta==0} Cholesky_scal[B] (Ab) returns (Lb0);
+	use {alpha,beta|M>alpha==beta> 0} Cholesky_scal[B] (
+			Ab - reduce(+,(alpha,beta,gamma,ii,jj,kk->alpha,beta,ii,jj), {alpha,beta,gamma,ii,jj,kk| 0<=gamma<beta && 0<=kk<B-1}:
+																			Lb[beta,gamma,jj,kk]*Lb[alpha,gamma,ii,kk] )
+		) returns (Lb1);
+	use {alpha,beta|M>alpha>beta==0} transMultInvAB[B] ((alpha,beta,ii,jj->beta,beta,ii,jj)@Lb, Ab) returns (Lb2);
+	use {alpha,beta|M>alpha>beta> 0} transMultInvAB[B] ((alpha,beta,ii,jj->beta,beta,ii,jj)@Lb,
+		Ab - reduce(+,(alpha,beta,gamma,ii,jj,kk->alpha,beta,ii,jj), {alpha,beta,gamma,ii,jj,kk| 0<=gamma<beta && 0<=kk<B-1}:
+																			Lb[beta,gamma,jj,kk]*Lb[alpha,gamma,ii,kk] )
+	) returns (Lb3);
+.
+
+// Cholesky - scalar version
+affine Cholesky_scal {N | N>2}
+input
+	float A {i,j | 0<=i,j<N};
+output
+	float L {i,j | 0<=j<=i<N};
+let
+	L[i,j] = case
+			{i,j|i==j==0} : sqrt(A[i,j]);
+			{i,j|i> j==0} : A[i,j] / L[j,j];
+			{i,j|i==j> 0} : sqrt(A[i,j] - reduce(+, (i,j,k->i,j), {i,j,k| 0<=k<j}: L[j,k]*L[i,k]) );
+			{i,j|i> j> 0} : (A[i,j] - reduce(+, (i,j,k->i,j), {i,j,k| 0<=k<j}: L[j,k]*L[i,k]) )/L[j,j];
+		esac;
+.
+
+// Compute "[A^{-1}*B]^T", A being lower triangular
+affine transMultInvAB {N | N>2}
+input
+	float A {i,j | 0<=j<=i<N};
+	float B {i,j | 0<=(i,j)<N};
+output
+	float C {i,j | 0<=(i,j)<N};
+let
+	C[i,j] = case
+		{i,j | j==0} : B[j,i]/A[j,j];
+		{i,j | N>j>0}: (B[j,i] - reduce(+, (i,j,k->i,j), {i,j,k|0<=k<j}:A[j,k]*C[i,k]) ) / A[j,j];
+	esac;
+.

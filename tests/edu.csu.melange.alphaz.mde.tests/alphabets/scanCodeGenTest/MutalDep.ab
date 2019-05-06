@@ -1,0 +1,21 @@
+affine MutalDep {N | N > 1}
+input
+	double A {i | 0 <= i <= N};
+	double B {i | 0 <= i <= N};
+	double a1 {|};
+	double a2 {|};
+	double a3 {|};
+	double a4 {|};
+output
+	double X {i | 0 <= i <= N};
+	double Y {i | 0 <= i <= N};
+let
+	X[i] = case
+			{| i == 0}: A[0];
+			{| 0 < i <= N}: a1*X[i-1] + a2*Y[i-1] + A[i];
+			esac;
+	Y[i] = case
+			{| i == 0}: B[0];
+			{| 0 < i <= N}: a3*X[i-1] + a4*Y[i-1] + B[i];
+			esac;
+.

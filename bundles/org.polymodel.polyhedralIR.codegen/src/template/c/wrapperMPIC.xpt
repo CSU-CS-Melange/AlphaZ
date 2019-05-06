@@ -1,0 +1,7 @@
+«IMPORT polyIRCG»
+«IMPORT polyIRCG::C»
+«IMPORT polyIRCG::C::wrapper»
+«IMPORT polyhedralIR»
+«IMPORT polymodel»
+«IMPORT integerLinearAlgebra»
+«EXTENSION template::c::genericC»

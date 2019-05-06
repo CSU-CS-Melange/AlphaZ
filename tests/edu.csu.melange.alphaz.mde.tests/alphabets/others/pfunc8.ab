@@ -1,0 +1,86 @@
+double exp(double);
+affine pfunc8 {N|N>1}
+input
+	double G_hairpin  {i,j    | 1 <= (i,j) <= N};
+	double G_interior {i,d,e,j| 1 <= (i,d,e,j) <= N};
+	double R;
+	double T;
+	double alpha1;
+	double alpha2;
+	double alpha3;
+	double betam1;
+output
+	double Q  {i,j    | 1 <= (i,j) <= N};
+local
+	double RT;
+	double Qb {i,j    | 1 <= (i,j) <= N};
+	double Qm {i,j    | 1 <= (i,j) <= N};
+	double Qp {i,j    | 1 <= (i,j) <= N};
+	double Qz {i,j    | 1 <= (i,j) <= N};
+	double Qg {i,d,e,j| 1 <= (i,d,e,j) <= N};
+	double G_recursion_beta {i,j| 1 <= (i,j) <= N};
+	double G_recursion {i,j| 1 <= (i,j) <= N};
+let
+	RT = R * T;
+	G_recursion_beta[i,j] = alpha1 + betam1 + 3*alpha2 + alpha3*([i] - [j] - 1);
+	G_recursion[i,j] = alpha1 + 2*alpha2 + alpha3*([i] - [j] - 1);
+
+	Qb[i,j] = exp(-G_hairpin[i,j]/RT)
+		+ case
+			{|i < j-5} :
+			reduce(+,(i,d,e,j->i,j), {|i+1 <= d <= j-5 && d+4 <= e <= j-1} : 
+				exp(-G_interior[i,d,e,j]/RT)*Qb[d,e]
+				+ Qm[i+1,d-1]*Qb[d,e]*exp(-G_recursion[j,e]/RT));
+			{|i >= j-5} : 0;
+		esac
+		+ case
+			{|i < j-9} :  
+				reduce(+,(i,d,e,j->i,j), {|i+1 <= d <= j-9 && d+8 <= e <= j-1} :
+					exp(-(G_recursion_beta[j,e] + alpha3*([d]-[i]-1))/RT)*Qp[d,e]
+					+ Qm[i+1,d-1]*Qp[d,e]*exp(-G_recursion_beta[j,e]/RT));
+			{|i >= j-9} : 0;
+		esac;
+
+	Qg[i,d,e,j] = 0
+		+ case
+			{|i+2 <= d <= j-6 && d+4 <= e <= j-2} :
+				reduce(+, (i,d,e,j,c,f->i,d,e,j), {|i+1 <= c <= d-1 && e+1 <= f <= j-1} :
+					exp(-G_interior[i,c,f,j]/RT)*Qg[c,d,e,f]);
+			{|i+2 > d} : 0; {|d > j-6} : 0; {|d+4 > e} : 0; {|e > j-2} : 0;
+		esac 
+		+ case
+			{|i+1 <= d <= j-5 && d+4 <= e <= j-1} : exp(-G_interior[i,d,e,j]/RT);
+			{|d < i+1} : 0;
+			{|d > j-5} : 0;
+			{|e > d+4} : 0;
+			{|e > j-1} : 0;
+		esac
+		+ case
+			{|i+6 <= d <= j-5 && d+4 <= e <= j-1} : Qm[i+1,d-1]*exp(-G_recursion[j,e]/RT);
+			{|d < i+6} : 0;
+			{|d > j-5} : 0;
+			{|e > d+4} : 0;
+			{|e > j-1} : 0;
+		esac
+		+ case
+			{|i+1 <= d <= j-10 && d+4 <= e <= j-6} : exp(-G_recursion[d,i]/RT)*Qm[e+1,j-1];
+			{|d < i+1 } : 0;
+			{|d > j-10} : 0;
+			{|e > d+4 } : 0;
+			{|e > j-6 } : 0;
+		esac
+		+ case
+			{|i+6 <= d <= j-10 && d+4 <= e <= j-6} : Qm[i+1,d-1]*exp(-(alpha1+2*alpha2)/RT)*Qm[e+1,j-1];
+			{|d < i+6 } : 0;
+			{|d > j-10} : 0;
+			{|e > d+4 } : 0;
+			{|e > j-6 } : 0;
+		esac
+		+ reduce(+, (i,d,e,j,c,f->i,d,e,j), {|i+7 <= d <= j-6 && d+4 <= e <= j-2 && i+6 <= c <= d-1 && e+1 <= f <= j-1} : 
+			Qm[i+1,c-1]*Qg[c,d,e,f]*exp(-G_recursion[j,f]/RT))
+		+ reduce(+, (i,d,e,j,c,f->i,d,e,j), {|i+2 <= d <= j-11 && d+4 <= e <= j-7 && i+1 <= c <= d-1 && e+1 <= f <= j-6} :
+			exp(-G_recursion[c,i]/RT)*Qg[c,d,e,f]*Qm[f+1,j-1])
+		+ reduce(+, (i,d,e,j,c,f->i,d,e,j), {|i+7 <= d <= j-11 && d+4 <= e <= j-7 && i+6 <= c <= d-1 && e+1 <= f <= j-6} :
+			Qm[i+1,c-1]*exp(-(alpha1+2*alpha2)/RT)*Qg[c,d,e,f]*Qm[f+1,j-1])
+		;
+.

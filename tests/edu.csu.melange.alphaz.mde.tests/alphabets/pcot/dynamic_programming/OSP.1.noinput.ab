@@ -1,0 +1,16 @@
+affine OSP {N| N>=1 }
+	input
+	output
+		int C {i,j| N>=j && i>=1 && j>=i } ;
+	local
+		int Cacc {i,j,k| j>=k+1 && i>=1 && N>=j && k>=i } ;
+	let
+		C[i,j] = case
+			{ | j==i } : 0 ;
+			{ | j>=i+1 } : Cacc[i,j,j-1] ;
+		esac;
+		Cacc[i,j,k] = case
+			{| k>i}  : Cacc[i,j,k-1] min (Cacc[i,k,k-1] + C[k+1,j] + [i]*[j]*[k]) ; //TODO add &7
+			{| k==i} : C[i,k] + C[k+1,j] + [i]*[j]*[k] ; //TODO add &7
+		esac;
+.

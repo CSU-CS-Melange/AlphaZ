@@ -1,0 +1,24 @@
+affine Jacobi1D {Nb,Tb,Nl,Tl,b|Tl==0 && Nl==0 && Nb>=1 && Tb>=1 && b>=3}
+input
+double A_bl {iBl,iLoc|Tl==0 && Nl==0 && iBl>=0 && iLoc>=0 && b>=iLoc+1 && b>=3 && Nb>=1 && Tb>=1 && Nb>=iBl+1};
+output
+double B_bl {iBl,iLoc|Tl==0 && Nl==0 && iBl>=0 && iLoc>=0 && b>=iLoc+1 && b>=3 && Nb>=1 && Tb>=1 && Nb>=iBl+1};
+local
+double temp_bl {iBl,tBl,iLoc,tLoc|tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=0 && Tb>=iBl+1 && b>=iLoc+1 && tLoc>=0 && iLoc>=tLoc} || {iBl,tBl,iLoc,tLoc|Nb+tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=Nb && Nb+Tb>=iBl+1 && iLoc>=0 && tLoc>=iLoc+1 && b>=tLoc+1} || {iBl,tBl,iLoc,tLoc|tLoc==0 && tBl==Tb && Tl==0 && Nl==0 && Tb>=1 && b>=3 && iBl>=Tb && Nb+Tb>=iBl+1 && iLoc>=0 && b>=iLoc+1} || {iBl,tBl,iLoc,tLoc|Tl==0 && Nl==0 && b>=3 && tBl>=0 && iBl>=tBl+1 && Tb>=tBl+1 && Nb+tBl>=iBl+1 && iLoc>=0 && b>=iLoc+1 && tLoc>=0 && b>=tLoc+1};
+let
+temp_bl[iBl,tBl,iLoc,tLoc] = case
+{|tLoc==0 && tBl==0 && Tl==0 && Nl==0 && Nb>=1 && iLoc>=0 && b>=iLoc+1 && b>=3 && Tb>=1 && iBl>=0 && Nb>=iBl+1} : A_bl[iBl-tBl,iLoc-tLoc];
+{|tLoc==0 && iLoc==0 && tBl==Tb && iBl==Tb && Tl==0 && Nl==0 && Nb>=1 && Tb>=1 && b>=3} || {|tLoc==0 && iLoc==0 && tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=1 && Tb>=iBl+1} : temp_bl[iBl-1,tBl-1,b+iLoc-1,b+tLoc-1];
+{|tLoc==iLoc && tBl==0 && iBl==0 && Tl==0 && Nl==0 && Nb>=1 && Tb>=1 && b>=3 && iLoc>=1 && b>=iLoc+1} || {|tLoc==iLoc && tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=1 && Tb>=iBl+1 && iLoc>=1 && b>=iLoc+1} : temp_bl[iBl,tBl,iLoc-1,tLoc-1];
+{|tLoc==0 && iLoc==b-1 && Nb+tBl==iBl+1 && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=Nb && Nb+Tb>=iBl+1} : temp_bl[iBl,tBl-1,iLoc-1,b+tLoc-1];
+{|tLoc==1 && iLoc==0 && Nb+tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=Nb && Nb+Tb>=iBl+1} : temp_bl[iBl-1,tBl,b+iLoc-1,tLoc-1];
+{|tLoc==iLoc+1 && Nb+tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=Nb && Nb+Tb>=iBl+1 && iLoc>=1 && b>=iLoc+2} : temp_bl[iBl,tBl,iLoc-1,tLoc-1];
+{|iLoc==1 && Tl==0 && Nl==0 && b>=3 && tBl>=0 && iBl>=tBl+1 && Tb>=tBl+1 && Nb+tBl>=iBl+1 && Nb+b+tBl+tLoc>=iBl+4 && b>=tLoc+1 && tLoc>=1 && tBl+tLoc>=1} || {|iLoc==1 && Nb+tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && iBl>=Nb && Nb+Tb>=iBl+1 && b>=3 && tLoc>=3 && b>=tLoc+1} : (((temp_bl[iBl-1,tBl,b+iLoc-2,tLoc-1] + temp_bl[iBl,tBl,iLoc-1,tLoc-1]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+{|iLoc==0 && Tl==0 && Nl==0 && b>=3 && tBl>=0 && iBl>=tBl+1 && Tb>=tBl+1 && Nb+tBl>=iBl+1 && Nb+b+tBl+tLoc>=iBl+3 && b>=tLoc+1 && tLoc>=1 && tBl+tLoc>=1} || {|iLoc==0 && Nb+tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && iBl>=Nb && Nb+Tb>=iBl+1 && b>=3 && tLoc>=2 && b>=tLoc+1} : (((temp_bl[iBl-1,tBl,b+iLoc-2,tLoc-1] + temp_bl[iBl-1,tBl,b+iLoc-1,tLoc-1]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+{|tLoc==0 && iLoc==0 && Tl==0 && Nl==0 && b>=3 && tBl>=1 && iBl>=tBl+1 && Tb>=tBl+1 && Nb+tBl>=iBl+1 && Nb+b+tBl>=iBl+3} || {|tLoc==0 && iLoc==0 && tBl==Tb && Tl==0 && Nl==0 && Tb>=1 && b>=3 && iBl>=Tb+1 && Nb+Tb>=iBl+1 && Nb+Tb+b>=iBl+3} : (((temp_bl[iBl-1,tBl-1,b+iLoc-2,b+tLoc-1] + temp_bl[iBl-1,tBl-1,b+iLoc-1,b+tLoc-1]) + temp_bl[iBl,tBl-1,iLoc,b+tLoc-1]) * 0.333333);
+{|tLoc==0 && iLoc==1 && Tl==0 && Nl==0 && b>=3 && tBl>=1 && iBl>=tBl+1 && Tb>=tBl+1 && Nb+tBl>=iBl+1 && Nb+b+tBl>=iBl+4} || {|tLoc==0 && iLoc==1 && tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=1 && Tb>=iBl+1 && Nb+b>=4} || {|tLoc==0 && iLoc==1 && tBl==Tb && Tl==0 && Nl==0 && Tb>=1 && b>=3 && iBl>=Tb && Nb+Tb>=iBl+1 && Nb+Tb+b>=iBl+4} : (((temp_bl[iBl-1,tBl-1,b+iLoc-2,b+tLoc-1] + temp_bl[iBl,tBl-1,iLoc-1,b+tLoc-1]) + temp_bl[iBl,tBl-1,iLoc,b+tLoc-1]) * 0.333333);
+{|Tl==0 && Nl==0 && b>=3 && tBl>=0 && iBl>=tBl+1 && Tb>=tBl+1 && Nb+tBl>=iBl+1 && iLoc>=2 && b>=iLoc+1 && tLoc>=1 && tBl+tLoc>=1 && b>=tLoc+1 && Nb+b+tBl+tLoc>=iBl+iLoc+3} || {|Nb+tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && iBl>=Nb && Nb+Tb>=iBl+1 && iLoc>=2 && tLoc>=iLoc+2 && b>=tLoc+1 && b>=3 && tLoc>=1 && b>=iLoc+1} || {|tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=1 && Tb>=iBl+1 && b>=iLoc+1 && tLoc>=1 && iLoc>=tLoc+1 && Nb+b+tLoc>=iLoc+3 && iLoc>=2 && b>=tLoc+1} || {|tBl==0 && iBl==0 && Tl==0 && Nl==0 && Nb>=1 && Tb>=1 && b>=iLoc+1 && tLoc>=1 && iLoc>=tLoc+1 && iLoc>=2 && b>=3 && b>=tLoc+1} : (((temp_bl[iBl,tBl,iLoc-2,tLoc-1] + temp_bl[iBl,tBl,iLoc-1,tLoc-1]) + temp_bl[iBl,tBl,iLoc,tLoc-1]) * 0.333333);
+{|tLoc==0 && Tl==0 && Nl==0 && b>=3 && tBl>=1 && iBl>=tBl+1 && Tb>=tBl+1 && Nb+tBl>=iBl+1 && iLoc>=2 && b>=iLoc+1 && Nb+b+tBl>=iBl+iLoc+3} || {|tLoc==0 && tBl==iBl && Tl==0 && Nl==0 && Nb>=1 && b>=3 && iBl>=1 && Tb>=iBl+1 && b>=iLoc+1 && Nb+b>=iLoc+3 && iLoc>=2} || {|tLoc==0 && tBl==Tb && Tl==0 && Nl==0 && Tb>=1 && b>=3 && iBl>=Tb && Nb+Tb>=iBl+1 && iBl+iLoc>=Tb+1 && iLoc>=2 && b>=iLoc+1 && Nb+Tb+b>=iBl+iLoc+3} : (((temp_bl[iBl,tBl-1,iLoc-2,b+tLoc-1] + temp_bl[iBl,tBl-1,iLoc-1,b+tLoc-1]) + temp_bl[iBl,tBl-1,iLoc,b+tLoc-1]) * 0.333333);
+esac;
+B_bl[iBl,iLoc] = temp_bl[Tb+iBl,Tb,Tl+iLoc,Tl];
+.

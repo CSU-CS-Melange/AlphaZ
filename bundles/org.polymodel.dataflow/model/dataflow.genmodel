@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polymodel.dataflow/src" modelPluginID="org.polymodel.dataflow"
+    modelName="Dataflow" importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0"
+    copyrightFields="false" usedGenPackages="../../org.polymodel.algebra/model/algebra.genmodel#//algebra ../../org.polymodel/model/polymodel.genmodel#//polymodel"
+    operationReflection="true">
+  <foreignModel>dataflow.ecore</foreignModel>
+  <genPackages prefix="Dataflow" basePackage="org.polymodel" disposableProviderFactory="true"
+      ecorePackage="dataflow.ecore#/">
+    <genClasses image="false" ecoreClass="dataflow.ecore#//ADAInput">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataflow.ecore#//ADAInput/adaStatements"/>
+      <genOperations ecoreOperation="dataflow.ecore#//ADAInput/getDimensionsManager"/>
+      <genOperations ecoreOperation="dataflow.ecore#//ADAInput/getStatementByID">
+        <genParameters ecoreParameter="dataflow.ecore#//ADAInput/getStatementByID/id"/>
+      </genOperations>
+      <genOperations ecoreOperation="dataflow.ecore#//ADAInput/isResolved"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="dataflow.ecore#//ADAStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dataflow.ecore#//ADAStatement/id"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataflow.ecore#//ADAStatement/writes"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataflow.ecore#//ADAStatement/reads"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataflow.ecore#//ADAStatement/parentADAInput"/>
+      <genOperations ecoreOperation="dataflow.ecore#//ADAStatement/getDomain"/>
+      <genOperations ecoreOperation="dataflow.ecore#//ADAStatement/getIDSchedule"/>
+      <genOperations ecoreOperation="dataflow.ecore#//ADAStatement/isResolved"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="dataflow.ecore#//Access">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataflow.ecore#//Access/index"/>
+      <genOperations ecoreOperation="dataflow.ecore#//Access/getAccessId"/>
+      <genOperations ecoreOperation="dataflow.ecore#//Access/getParentADAStatement"/>
+      <genOperations ecoreOperation="dataflow.ecore#//Access/isResolved"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="dataflow.ecore#//ReadAccess">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataflow.ecore#//ReadAccess/parentADAStatement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataflow.ecore#//ReadAccess/lastWrite"/>
+      <genOperations ecoreOperation="dataflow.ecore#//ReadAccess/getAllWriteCandidates"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="dataflow.ecore#//WriteAccess">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataflow.ecore#//WriteAccess/parentADAStatement"/>
+      <genOperations ecoreOperation="dataflow.ecore#//WriteAccess/getAllReadCandidates"/>
+    </genClasses>
+    <genClasses ecoreClass="dataflow.ecore#//ADASolution">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataflow.ecore#//ADASolution/resolvedAccesses"/>
+      <genOperations ecoreOperation="dataflow.ecore#//ADASolution/isBottom"/>
+    </genClasses>
+    <genClasses ecoreClass="dataflow.ecore#//ResolvedAccess">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataflow.ecore#//ResolvedAccess/validityDomain"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dataflow.ecore#//ResolvedAccess/iterationVector"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dataflow.ecore#//ResolvedAccess/access"/>
+      <genOperations ecoreOperation="dataflow.ecore#//ResolvedAccess/isBottom"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,415 @@
+«IMPORT polyIRCG»
+«IMPORT polyIRCG::C»
+«IMPORT polyhedralIR»
+«IMPORT polymodel»
+«IMPORT integerLinearAlgebra»
+«EXTENSION template::c::genericC»
+
+«REM»
+This file contains generic expansion rules for C code generation.
+Code generator specific behaviors should be written in separate xpt file as pointcuts.
+
+==Basic Structure of the generated code==
+
+(external function headers in a seprate file)
+
+Preamble for the full code (commonIncludes, commonMacroDefs)
+
+FOREACH CodeUnit in CompilationUnit
+	Preamble for a CodeUnit (globalVariableDeclaration, localFunctionDeclaration, memoryMacroDefs)
+   
+	FOREACH Function in a CodeUnit
+		print FunctionSignature for the Function (rule : functionSignature FOR Function)
+		FOREACH Body in a Function
+			call body expansion rule
+   
+	Postamble for a CodeUnit (memoryMacroUndefs)
+
+Postamble for the full code (commonMacroUndefs)
+
+«ENDREM»
+
+«REM»External Function header«ENDREM»
+«DEFINE externalFunctionHeader FOR Program»
+«IF externalFunctionDeclarations.size > 0»
+«FILE "EXTERNAL_FUNCTION_HEADER_NAME".getCGConstant()»
+//External functions
+«PROTECT CSTART "/***" CEND "***/" ID "external_functions"»
+«FOREACH externalFunctionDeclarations AS exDecl»
+«exDecl.output» «exDecl.name»(«FOREACH exDecl.inputs AS exIn SEPARATOR ","»«exIn»«ENDFOREACH»);
+«ENDFOREACH»
+«ENDPROTECT»
+«ENDFILE»
+«ENDIF»
+«ENDDEFINE»
+«REM»Include«ENDREM»
+«DEFINE externalFunctionInclude FOR Program»
+«IF externalFunctionDeclarations.size > 0»
+#include "«"EXTERNAL_FUNCTION_HEADER_NAME".getCGConstant()»"
+«ENDIF»
+«ENDDEFINE»
+
+«REM»Call the generic template when specialized expansion rule is unavailable.«ENDREM»
+«DEFINE body FOR Body»«EXPAND template::generic::body FOR this»«ENDDEFINE»
+«DEFINE statement FOR Statement»«EXPAND template::generic::statement FOR this»«ENDDEFINE»
+
+«REM»Compilation Unit : entry point for Xpand«ENDREM»
+«DEFINE generate (String filename) FOR CompilationUnit»
+«EXPAND externalFunctionHeader FOR program»
+«FILE filename»
+//Preamble
+«EXPAND commonIncludes FOR this»
+«EXPAND commonMacroDefs FOR this»
+ 
+«REM»Generate code separately for independent code units«ENDREM»
+«EXPAND codeunit FOREACH units SEPARATOR '\n'-»
+
+//Postamble
+«EXPAND commonMacroUndefs FOR this»
+«ENDFILE»
+«ENDDEFINE»
+
+«REM»Main body for a code unit (=an AffineSytem)«ENDREM»
+«DEFINE codeunit FOR CodeUnit»
+
+«EXPAND compileTimeParameterDefs FOREACH this.compileTimeParameters»
+
+«EXPAND globalVariableDeclaration FOR this»
+
+«EXPAND localFunctionDeclaration FOR this»
+
+«EXPAND memoryMacroDefs FOR this»
+
+//Function bodies
+«EXPAND function FOREACH functions SEPARATOR '\n'»
+
+«EXPAND memoryMacroUndefs FOR this»
+
+«EXPAND compileTimeParameterUndefs FOREACH this.compileTimeParameters»
+
+«ENDDEFINE»
+
+«DEFINE compileTimeParameterDefs FOR CompileTimeParameter»
+#define «this.name» «this.defaultValue»
+«ENDDEFINE»
+«DEFINE compileTimeParameterUndefs FOR CompileTimeParameter»
+#undef «this.name»
+«ENDDEFINE»
+
+«REM»Function Body«ENDREM»
+«DEFINE function FOR Function»
+«EXPAND functionSignature FOR this»{
+	«EXPAND body FOREACH bodies»
+}
+«ENDDEFINE»
+
+
+«REM»
+
+
+
+Rules defined above was for the general flow 
+
+Below are rules for generating detailed components of the code
+
+
+
+«ENDREM»
+
+«REM»Include headers«ENDREM»
+«DEFINE commonIncludes FOR CompilationUnit»
+// This file is generated from test alphabets program by code generator in alphaz
+// To compile this code, use -lm option for math library.
+
+// Includes
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+#include <limits.h>
+#include <float.h>
+«EXPAND externalFunctionInclude FOR program»
+«ENDDEFINE»
+
+«REM»Macros that are used by generated code«ENDREM»
+«DEFINE commonMacroDefs FOR CompilationUnit»
+// Common Macros
+#define MAX(x,y)    ((x)>(y) ? (x) : (y))
+#define max(x,y)    ((x)>(y) ? (x) : (y))
+#define MIN(x,y)    ((x)>(y) ? (y) : (x))
+#define min(x,y)    ((x)>(y) ? (y) : (x))
+#define CEILD(n,d)  (int)ceil(((double)(n))/((double)(d)))
+#define ceild(n,d)  (int)ceil(((double)(n))/((double)(d)))
+#define FLOORD(n,d) (int)floor(((double)(n))/((double)(d)))
+#define floord(n,d) (int)floor(((double)(n))/((double)(d)))
+#define CDIV(x,y)    CEILD((x),(y))
+#define div(x,y)    CDIV((x),(y))
+#define FDIV(x,y)    FLOORD((x),(y))
+#define LB_SHIFT(b,s)  ((int)ceild(b,s) * s)
+#define MOD(i,j)   ((i)%(j))
+«ENDDEFINE»
+
+«DEFINE commonMacroUndefs FOR CompilationUnit»
+#undef MAX
+#undef max
+#undef MIN
+#undef min
+#undef CEILD
+#undef ceild
+#undef FLOORD
+#undef floord
+#undef CDIV
+#undef FDIV
+#undef LB_SHIFT
+#undef MOD
+«ENDDEFINE»
+
+«REM»Global Vars«ENDREM»
+«DEFINE globalVariableDeclaration FOR CodeUnit»
+«IF variables.exists(e|e.global)»//Global Variables«ENDIF»
+«FOREACH variables AS var»
+«IF var.global»
+	«IF var.domain.getNIndices() > 0»static «((CVariable)var).getPointerType()» «var.name»;
+	«ELSE»static «((CVariable)var).getTypeString()» «var.name»;
+	«ENDIF»
+«ENDIF»«ENDFOREACH»
+«ENDDEFINE»
+
+«REM»Local Functions«ENDREM»
+«DEFINE localFunctionDeclaration FOR CodeUnit»
+«IF functions.exists(e|!e.entryPoint)»//Local Function Declarations«ENDIF»
+«FOREACH functions AS f»
+	«IF !f.entryPoint»«EXPAND prototype FOR f.signature»;
+	«ENDIF»«ENDFOREACH»
+«ENDDEFINE»
+
+
+«REM»Function Declarations«ENDREM»
+«DEFINE functionSignature FOR Function»
+«REM»Expand the full signature, but treat global inputs and outputs specially so that they get prefix to their name«ENDREM»
+«EXPAND fullSignature(inputs.union(outputs).select(e|e.global)) FOR signature»«
+ENDDEFINE»
+
+«REM»When expanding function signature, adds a prefix to all global variables coming in,
+ since they will be copied to a global variable«ENDREM»
+«DEFINE fullSignature(Collection[Variable] globals) FOR FunctionSignature
+»«returnType» «name»(«
+	FOREACH parameters AS param SEPARATOR ','»«param.asParameterType()» «
+		IF globals.exists(e|e.name.matches(param.getName()))»«"TEMP_LOCAL_PREFIX".getCGConstant()»«
+		ENDIF»«param.getName()»«
+	ENDFOREACH»)«ENDDEFINE»
+
+«DEFINE prototype FOR FunctionSignature
+»«returnType» «name»(«FOREACH parameters AS param SEPARATOR ','»«param.asParameterType()»«ENDFOREACH»)«ENDDEFINE»
+
+
+«REM»
+
+
+
+Below are rules for generating Body
+
+
+
+«ENDREM»
+
+«REM»parameter checking«ENDREM»
+«DEFINE body FOR ParameterCheck»«EXPAND parameterCheck FOR parameterDomain»«ENDDEFINE»
+«DEFINE parameterCheck FOR ParameterDomain»
+// Parameter checking
+if (!(«EXPAND printConstraints FOR this»)) {
+	printf("The value of parameters are not valid.\n");
+	exit(-1);
+}«ENDDEFINE»
+
+«REM»Loop generation«ENDREM»
+«DEFINE body FOR CLoop»
+«REM»Define statements and loop indices first«ENDREM»
+«EXPAND statementDefine FOREACH statements SEPARATOR '\n'»
+«REM»generate loop«ENDREM»
+{
+//Domain
+«FOREACH statements AS stmt»//«stmt.domain»
+«ENDFOREACH»
+
+	«generateLoopNest()»
+}
+«REM»Undefine statements«ENDREM»
+«EXPAND statementUnDefine FOREACH statements SEPARATOR '\n'»
+«ENDDEFINE»
+
+«REM»tiled code needs tiled indices in addition to the regular loop indices«ENDREM»
+«DEFINE body FOR TiledCLoop»
+«REM»Define statements and loop indices first«ENDREM»
+«EXPAND statementDefine FOREACH statements SEPARATOR '\n'»
+{
+	«generateLoopNest()»
+}
+«REM»Undefine statements«ENDREM»
+«EXPAND statementUnDefine FOREACH statements SEPARATOR '\n'»
+«ENDDEFINE»
+
+
+«REM»
+Scans a non-polyhedral domain of MemoryDomain
+The only statement you can put with this loop generator is the statement execute 
+as the inner most statement.
+
+It is not too easy to generate more complex loop, and this is mainly used by
+the wrapper generating inputs or printing outputs.
+«ENDREM»
+«DEFINE scanMemoryDomain(String statement) FOR MemoryDomain»
+
+	«REM»Create Loop«ENDREM»
+	«FOREACH getIndices() AS i ITERATOR it»
+		«LET getBounds(it.counter0) AS lbub»
+		for («i»=«lbub.get(0)»; «i» <= «lbub.get(1)»; «i»++) {
+		«ENDLET»
+	«ENDFOREACH»
+	
+	«REM»Statement to execute«ENDREM»
+	«statement»;
+	
+	«REM»Close the loop«ENDREM»
+	«FOREACH getIndices() AS i»
+		}
+	«ENDFOREACH»
+«ENDDEFINE»
+
+«REM»Pretty printing and generation of statement macros«ENDREM»
+«DEFINE statementDefine FOR EquationAsStatement»
+#define «name»(«accessFunction.getMacroIndices()») «EXPAND writeAccess FOR this» = «EXPAND print(this.variable.codeunit, this.containerLoop.function) FOR rhs»;«ENDDEFINE»
+	
+«DEFINE writeAccess FOR EquationAsStatement»«
+IF variable.domain.getNIndices() > 0»«variable.name»(«
+	FOREACH accessFunction.getExpressions() AS expr SEPARATOR ','
+		»«expr»«
+	ENDFOREACH»)«
+ELSE»«IF containerLoop.function.locals.contains(variable)»«variable.name»«ELSE»*«variable.name»«ENDIF»«ENDIF»«ENDDEFINE»
+	
+
+«REM»Definition of statement for BasicStatement simply uses the given string as statement to execute«ENDREM»
+«DEFINE statementDefine FOR BasicStatement»
+#define «name»(«domain.getIndices().getMacroIndices()») «statement»
+«ENDDEFINE»
+«REM»Undefine of statements are common «ENDREM»
+«DEFINE statementUnDefine FOR Statement»#undef «name»«ENDDEFINE»
+
+«REM»To suppress errors in editors«ENDREM»
+«DEFINE statementDefine FOR Statement»«ENDDEFINE»
+	
+«REM»Expression Pretty Printing«ENDREM»
+«DEFINE print(CodeUnit cu, Function function) FOR Expression»«ENDDEFINE»
+
+
+«REM»
+
+Memory related rules 
+
+«ENDREM»
+
+«REM»
+Variable Initialization copies input to global variables if the value is flagged as global
+Then allocates memory to all local variables for this function.
+«ENDREM»
+«DEFINE body FOR VariableInitialization»
+	«REM»First, handle input/output global variables«ENDREM»
+	«IF inputs.union(outputs).exists(e|e.global)»
+		//Copy to global
+		«FOREACH inputs.union(outputs) AS var»«REM»de-reference pointer if scalar«ENDREM»
+			«IF var.global»«var.name» = «IF var.domain.getNIndices() == 0»*«ENDIF»«"TEMP_LOCAL_PREFIX".getCGConstant()»«var.name»;«ENDIF»
+		«ENDFOREACH»
+	«ENDIF»
+	«REM»Then, allocate memory«ENDREM»
+	«LET locals.getVariableWithMaxDim() AS maxDim»
+	«REM»Create loop indices for malloc when generating non-flattened memory«ENDREM»
+	«IF maxDim.domain.getNIndices() > 0 && locals.exists(e|!e.flattened)»
+	//Loop indices for malloc
+	int «FOREACH maxDim.domain.getIndices() AS i ITERATOR it SEPARATOR ', '
+			»«"MALLOC_LOOP_INDEX".getCGConstant()+it.counter1»«ENDFOREACH»;
+	«ENDIF»
+	«ENDLET»
+	«REM»Call mallo rule for each local variable«ENDREM»
+	«EXPAND malloc FOREACH locals»
+«ENDDEFINE»
+	
+«REM»Malloc is a call to CodeGenTemplateForC for now«ENDREM»
+«DEFINE malloc FOR Variable»«((CVariable)this).generateMallocStatement()»«ENDDEFINE»
+«REM»«ENDREM»
+«DEFINE body FOR VariableFinalization»
+«REM»First, handle scalar output global variables«ENDREM»
+«IF outputs.exists(e|e.global && e.domain.getNIndices() == 0)»
+	//Copy back
+	«FOREACH outputs.select(e|e.global && e.domain.getNIndices() == 0) AS var»
+			*«"TEMP_LOCAL_PREFIX".getCGConstant()»«var.name» = «var.name»;
+	«ENDFOREACH»
+«ENDIF»
+//Memory Free
+«EXPAND mfree FOREACH locals»«ENDDEFINE»
+«REM»Mfree is a call to CodeGenTemplateForC for now«ENDREM»
+«DEFINE mfree FOR Variable»«generateMfreeStatement()»«ENDDEFINE»
+
+
+«REM»Memory Macros«ENDREM»
+«DEFINE memoryMacroDefs FOR CodeUnit»
+//Memory Macros
+«EXPAND memoryMacroDefs FOREACH variables»
+«ENDDEFINE»
+«DEFINE memoryMacroUndefs FOR CodeUnit»
+«FOREACH variables AS var»
+«IF var.domain.getNIndices() > 0»#undef «var.name»«ENDIF»
+«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE memoryMacroDefs FOR Variable»
+«REM»
+	Scalars do not have a macro
+«ENDREM»
+«IF domain.getNIndices() > 0»
+«REM»
+	Flattened to 1D array
+	Need to compute location in 1D array
+«ENDREM»
+«IF flattened»
+	#define «name»(«getMacroIndices()») «name»«EXPAND arrayIndexing1D FOR this»
+«REM»In multi-dimensional case, simply use [] to access arrays«ENDREM»
+«ELSE»
+	#define «name»(«getMacroIndices()») «name»«EXPAND arrayIndexingMD FOR this»
+«ENDIF»
+«ENDIF»
+«ENDDEFINE»
+
+
+«REM»rule for generating array accesses in non-flattened case«ENDREM»
+«DEFINE arrayIndexingMD FOR Variable»«
+	IF domain.getNIndices()>0»[«FOREACH domain.getIndices() AS i ITERATOR it SEPARATOR ']['»«indexingExpression(it.counter0)»«ENDFOREACH»]«
+	ELSE»«REM»scalar case«ENDREM»«
+	ENDIF»«ENDDEFINE»
+
+«REM»rule for generating array accesses in flattened case«ENDREM»
+«DEFINE arrayIndexing1D FOR Variable»«
+	IF domain.getNIndices() > 0»[«accessExpression.getFlattenedIndexingExpression()»]«
+	ELSE»«REM»scalar case«ENDREM»«ENDIF»
+«ENDDEFINE»
+«REM»
+The above getArrayIndexing1D extension can be replaced by the following Xpand rule.
+Xtend is used so that IntExpression is constructed instead of String,
+ allowing for simplification of the expression.
+The following rule is left as comment as it may be easier for understanding the generation step.
+ 
+«FOREACH domain.getIndices() AS i ITERATOR it SEPARATOR '+'»
+	(«i»*«domain.getVolumeExpression(zeroAligned, it.counter1)»)
+«ENDFOREACH»
+«ENDREM»
+
+
+«REM»«ENDREM»
+«DEFINE printConstraints FOR Domain»«EXPAND printConstraints FOR PMdomain»«ENDDEFINE»
+«DEFINE printConstraints FOR PolyhedralDomain»«
+FOREACH polyhedra AS poly SEPARATOR ' || '»«EXPAND printConstraints FOR poly»«
+ENDFOREACH»«ENDDEFINE»
+«DEFINE printConstraints FOR IntLinearConstraintSystem
+»(«IF linearConstraints.size > 0»«
+		FOREACH linearConstraints AS lc SEPARATOR ' && '»«lc.toString(OUTPUT_FORMAT::C)»«ENDFOREACH
+	»«ELSE»1«ENDIF»)«
+ENDDEFINE»

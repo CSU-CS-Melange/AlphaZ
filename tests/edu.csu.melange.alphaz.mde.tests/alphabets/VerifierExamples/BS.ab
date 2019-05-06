@@ -1,0 +1,55 @@
+affine BS_reduce {N|N>1}
+input
+	float U {i,j| 0<=i<=j<N};
+	float b {i|0<=i<N};
+output
+	int x {i|0<=i<N};
+local
+
+let
+	x[i]= case
+		{|i==N-1} : b[i]/U[i,i];
+		{|i<N-1} : (b[i] - reduce(+, (i,k->i), {|i<k}: U[i,k]*x[k])/U[i,i]);
+		esac;
+.
+
+
+
+affine BS_normalized {N|N-2>= 0}
+input
+	float U {i,j|-i+j>= 0 && i>= 0 && N-j-1>= 0};
+	float b {i|N-i-1>= 0 && i>= 0};
+output
+	int x {i|N-i-1>= 0 && i>= 0};
+local
+	float NR_x {i|N-i-2>= 0 && i>= 0};
+let
+	x[i] = 
+		case
+			{|-N+i+1== 0} : (b[i] / U[i,i]);
+			{|N-i-2>= 0} : (b[i] - (NR_x / U[i,i]));
+		esac;
+		
+	NR_x[i] = reduce(+, (i,k->i), {|-i+k-1>= 0} : (U[i,k] * x[k]));
+.
+
+
+
+affine BS_serialized {N|N>1}
+input
+	float U {i,j| 0<=i<=j<N};
+	float b {i|0<=i<N};
+output
+	int x {i|0<=i<N};
+local
+	int Acc {i,j| 0<=i<j<N};
+let
+	x[i]= case
+		{|i==N-1} : b[i]/U[i,i];
+		{|i<N-1} : (b[i] - Acc[i,N-1])/U[i,i];
+		esac;
+	Acc[i,j] = case
+		{|j==i+1} : U[i,j]*x[j];
+		{|j>i+1} : Acc[i,j-1] +  U[i,j]*x[j];
+		esac;
+.

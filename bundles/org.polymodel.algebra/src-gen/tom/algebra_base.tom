@@ -1,0 +1,35 @@
+/* PROTECTED REGION ID(module_base_user) ENABLED START */
+// Protected user region
+/* PROTECTED REGION END */
+
+
+%op V var(name : String) {
+	/*PROTECTED REGION ID(tom_operator_with_param_var) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.Variable}
+	get_slot(name,t) {((org.polymodel.algebra.Variable)$t).getName()}
+	make(_name) {org.polymodel.algebra.internal.AlgebraTomFactory.createVar($_name)}
+	/*PROTECTED REGION END*/
+}
+
+%op E composite(operator : org_polymodel_algebra_CompositeOperator, left : E, right : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_composite) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.CompositeIntExpression}
+	get_slot(operator,t) {((org.polymodel.algebra.CompositeIntExpression)$t).getOperator()}
+	get_slot(left,t) {((org.polymodel.algebra.CompositeIntExpression)$t).getLeft()}
+	get_slot(right,t) {((org.polymodel.algebra.CompositeIntExpression)$t).getRight()}
+	make(_operator,_left,_right) {org.polymodel.algebra.internal.AlgebraTomFactory.createComposite($_operator, $_left, $_right)}
+	/*PROTECTED REGION END*/
+}
+
+%op E select(condition : ICSL, then : E, else : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_select) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.SelectExpression}
+	get_slot(condition,t) {enforce(((org.polymodel.algebra.SelectExpression)$t).getCondition())}
+	get_slot(then,t) {((org.polymodel.algebra.SelectExpression)$t).getThen()}
+	get_slot(else,t) {((org.polymodel.algebra.SelectExpression)$t).getElse()}
+	make(_condition,_then,_else) {org.polymodel.algebra.internal.AlgebraTomFactory.createSelect($_condition, $_then, $_else)}
+	/*PROTECTED REGION END*/
+}

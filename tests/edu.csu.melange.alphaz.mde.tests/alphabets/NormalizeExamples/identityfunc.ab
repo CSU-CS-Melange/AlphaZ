@@ -1,0 +1,8 @@
+affine IdentityFunc {N | N > 1}
+input
+	int A {i | 0 <= i < N};
+output
+	int B {i | 0 <= i < N};
+let
+	A[i] = B[i];
+.

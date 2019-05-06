@@ -1,0 +1,27 @@
+/*
+ * PCOT benchmark : Forward Substitution
+ * 
+ * This is serial version of Forward Substitution.
+ */ 
+ 
+ affine FS { N | N > 1 }
+ 
+	input
+		double L { i,j | 0 <= j < i < N } ;
+		double b { i | 0 <= i < N } ;
+	output
+		double X { i | 0 <= i < N } ;
+	local
+		double Temp_X { i,j | 0 <= j < i < N } ;
+		
+	let
+		X[i]  = case
+					{ | i == 0 } : b[i] ;
+					{ | i > 0 } : (b[i] - Temp_X[i,i-1]) ;
+				esac;
+		
+		Temp_X[i,j]  = 	case
+							{ | j == 0 } : L[i,j] * X[j] ;
+							{ | j > 0 } : Temp_X[i,j-1] + L[i,j] * X[j] ;
+						esac;
+.

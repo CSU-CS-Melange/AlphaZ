@@ -1,0 +1,321 @@
+«IMPORT polyIRCG»
+«IMPORT polyIRCG::C»
+«IMPORT polyIRCG::C::scan»
+«IMPORT polyhedralIR»
+«EXTENSION template::c::genericC»
+«EXTENSION template::c::scheduledC»
+
+«AROUND template::c::genericC::commonMacroDefs FOR CompilationUnit»
+«targetDef.proceed()»
+//Newton Raphson Macros
+#define MAX_ITER 100
+#define eps 1e-10
+«ENDAROUND»
+
+«AROUND template::c::genericC::commonIncludes FOR CompilationUnit»
+«targetDef.proceed()»
+#include <omp.h>
+«ENDAROUND»
+
+«AROUND template::c::genericC::function FOR Function»
+«EXPAND template::c::scanC::function FOR this»
+«ENDAROUND»
+
+«DEFINE function FOR Function»
+«EXPAND template::c::genericC::functionSignature FOR this»{
+	«EXPAND template::c::genericC::body FOREACH bodies»
+}
+«ENDDEFINE»
+
+
+«DEFINE function FOR OriginDomainVolume»
+«EXPAND template::c::genericC::functionSignature FOR this»{
+	int volume = 0;
+	
+	//volume function(Modify by hand)
+	volume =  100;
+	
+	return volume;
+}
+«ENDDEFINE»
+
+«DEFINE function FOR VolumeFunction»
+«EXPAND template::c::genericC::functionSignature FOR this»{
+	int volume = 0;
+	
+	//volume function(Modify by hand)
+	volume = «unknown.getName()»*«unknown.getName()» + 10;
+	
+	return volume;
+}
+«ENDDEFINE»
+
+«DEFINE function FOR VolumeFunctionDerivative»
+«EXPAND template::c::genericC::functionSignature FOR this»{
+	int volume = 0;
+	
+	//derivative of the volume function(Modify by hand)
+	volume = 2*«unknown.getName()»;
+	
+	return volume;
+}
+«ENDDEFINE»
+
+«DEFINE function FOR BoundComputation»
+«EXPAND template::c::genericC::functionSignature FOR this»{
+	double fx, df, dx;
+	double xn = 0.0;
+	
+	
+	//find the init value
+	«LET volumeFunction.unknown.getName() AS i»
+	double «i»;
+	«ENDLET»
+	«REM»
+	int i;
+	for(i = «lb.getName()»; i < «ub.getName()»; i++){
+		«i» = (double)i;
+		double val = «volumeFunction.name»(«FOREACH volumeFunction.signature.parameters AS par SEPARATOR ','»«par.getName()»«ENDFOREACH») - «ConstantTerm.getName()»;
+		
+		if(val == 0.0){
+			return «i»;//find root
+		}
+
+        if(val > 0.0){
+        	xn = (double)(2*«i»-1)/2.0;
+        	break;
+        	}
+	}
+	«ENDLET»
+	
+	#ifdef DEBUG
+		printf("the initial root is %.5f:", xn);
+	#endif
+   
+    x = xn;
+     «ENDREM»
+     
+    x = «initialValue.getName()»;
+    double val = «volumeFunction.name»(«FOREACH volumeFunction.signature.parameters AS par SEPARATOR ','»«par.getName()»«ENDFOREACH») - «ConstantTerm.getName()»;
+    if(val == 0.0){
+    	return x;
+    }
+    
+    //compute the root
+    int iter;
+    for(iter = 0; iter < MAX_ITER; iter++){
+    	fx = «volumeFunction.name»(«FOREACH volumeFunction.signature.parameters AS par SEPARATOR ','»«par.getName()»«ENDFOREACH») -  «ConstantTerm.getName()»;
+    	df = «volumeFunctionDerivative.name»(«FOREACH volumeFunctionDerivative.signature.parameters AS par SEPARATOR ','»«par.getName()»«ENDFOREACH»);
+   		
+   		dx = -fx/df;
+        x += dx;
+        
+        #ifdef DEBUG
+        	printf("root at iter %d: %.5f\n", iter, x);
+        #endif
+   		
+   		if(fabs(dx)<eps){
+            #ifdef DEBUG
+            printf("found root %.5f after %d attempts\n", x, iter);
+            #endif
+            break;
+        }
+    }
+    
+    return (int)(x + 0.5);
+    
+}
+«ENDDEFINE»
+
+«AROUND template::generic::body FOR Body»
+«EXPAND template::c::scanC::body FOR this»
+«ENDAROUND»
+
+«DEFINE body FOR Body»
+«EXPAND template::c::genericC::body FOR this»
+«ENDDEFINE»
+
+«DEFINE body FOR ScanBody»
+«REM»
+//Get the number of threads
+int «nthreadVariableName»;
+#pragma omp parallel
+{
+	#pragma omp single
+	{
+		«nthreadVariableName» = omp_get_num_threads();
+	}
+}
+
+//Compute the starting and ending point for each thread
+double blocksize;
+double «boundComputationFunction.ConstantTerm.getName()»;
+int «volumeFunction.unknown.getName()»;
+
+//array saves the result
+int *index = (int *)malloc((nthreads+1)*sizeof(int));
+
+//compute the blocksize
+blocksize = (double)«originDomainVolume.name»(«FOREACH originDomainVolume.signature.parameters AS par SEPARATOR ','»«par.getName()»«ENDFOREACH»);
+blocksize = blocksize/(double)(nthreads+1);
+
+int «boundComputationFunction.lb.getName()» = «domain.getBounds(0).get(0)»;
+int «boundComputationFunction.ub.getName()» = «domain.getBounds(0).get(1)»;
+
+constantTerm = blocksize;
+int i;
+for(i = 0; i <= nthreads; i++){
+	«volumeFunction.unknown.getName()» = «boundComputationFunction.name»(«FOREACH boundComputationFunction.signature.parameters AS par SEPARATOR ','»«par.getName()»«ENDFOREACH»);
+	index[i] = «volumeFunction.unknown.getName()»;
+	«boundComputationFunction.ConstantTerm.getName()» = «volumeFunction.name»(«FOREACH volumeFunction.signature.parameters AS par SEPARATOR ','»«par.getName()»«ENDFOREACH») + blocksize;
+}
+«ENDREM»
+
+//Get the number of threads
+int «nthreadVariableName»;
+#pragma omp parallel
+{
+	#pragma omp single
+	{
+		«nthreadVariableName» = omp_get_num_threads();
+	}
+}
+
+//declare memory for global variables used in the middle phrase
+«FOREACH localScanReductionVariables AS var»
+	«EXPAND template::c::genericC::malloc FOR var»
+«ENDFOREACH»
+
+//index array to save the results
+int *index = (int *)malloc((«nthreadVariableName»)*sizeof(int));
+
+//PUT THE INITIAL VALUE BACK
+«EXPAND template::c::genericC::body FOR scanReductionBody.initValueCopy»
+
+#pragma omp parallel
+{
+	//GET THE THREAD NUMBER
+	int «threadNumVariableName» = omp_get_thread_num();
+	
+	//COMPUTE THE INDEX VALUE OF EACH THREAD
+	double blocksize;
+	double «boundComputationFunction.ConstantTerm.getName()»;
+	int «volumeFunction.unknown.getName()»;
+	
+	//compute the blocksize
+	blocksize = (double)«originDomainVolume.name»(«FOREACH originDomainVolume.signature.parameters AS par SEPARATOR ','»«par.getName()»«ENDFOREACH»);
+	blocksize = blocksize/(double)(«nthreadVariableName»+1);
+	
+	int «boundComputationFunction.lb.getName()» = «domain.getBounds(0).get(0)»;
+	int «boundComputationFunction.ub.getName()» = «domain.getBounds(0).get(1)»;
+	int «boundComputationFunction.initialValue.getName()» = («boundComputationFunction.ub.getName()» - «boundComputationFunction.lb.getName()»)/(«nthreadVariableName»+1)*(«threadNumVariableName»+1);
+	
+	constantTerm = blocksize*(«threadNumVariableName»+1);
+	index[«threadNumVariableName»] = «boundComputationFunction.name»(«FOREACH boundComputationFunction.signature.parameters AS par SEPARATOR ','»«par.getName()»«ENDFOREACH»);
+	#pragma omp barrier
+	int «beginVariableName», «endVariableName»;
+	
+	//Compute the initialization vector
+	«FOREACH scanReductionBody.initTempVariables AS var»
+		«EXPAND template::c::genericC::malloc FOR var»
+	«ENDFOREACH»
+	
+	//initialize the inidices	
+	if(«threadNumVariableName» == 0){
+		«beginVariableName» = «boundComputationFunction.lb.getName()»;
+	}else{
+		«beginVariableName» = index[«threadNumVariableName» - 1];
+	}
+	
+	«REM»
+	if(«threadNumVariableName» == «nthreadVariableName» - 1){
+		«endVariableName» = «boundComputationFunction.ub.getName()» + 1;
+	}else{
+		«endVariableName» = index[«threadNumVariableName»];
+	}
+	«ENDREM»
+	«endVariableName» = index[«threadNumVariableName»];
+	
+	if(«threadNumVariableName»==0){
+		//INITIALIZE THE INITIALIZATION VALUE
+		«EXPAND template::c::genericC::body FOR scanReductionBody.assignmentLoop»
+		
+		//CALL THE SCAN FUNCTION
+		«localScanFunction.name»(«FOREACH localScanFunction.signature.parameters AS  par SEPARATOR ','»«par.asParameter()»«ENDFOREACH»);
+		
+		//GET THE NEW INITIALIZATION VALUE
+		«EXPAND template::c::genericC::body FOR scanReductionBody.initValueUpdate»
+	}else{
+		«FOREACH localReductionVariables AS var»
+			«EXPAND template::c::genericC::malloc FOR var»
+		«ENDFOREACH»
+	
+		//CALL THE REDUCTION FUNCTION
+		«localReductionFunction.name»(«FOREACH localReductionFunction.signature.parameters AS  par SEPARATOR ','»«par.asParameter()»«ENDFOREACH»);
+		
+		//THE REDUCTION SCAN PHASE
+		«EXPAND template::c::genericC::body FOR scanReductionBody.preProcessLoop»
+	}
+	
+	
+	«REM»
+	«FOREACH localReductionVariables AS var»
+		«EXPAND template::c::genericC::malloc FOR var»
+	«ENDFOREACH»
+	
+	//CALL THE REDUCTION FUNCTION
+	«localReductionFunction.name»(«FOREACH localReductionFunction.signature.parameters AS  par SEPARATOR ','»«par.asParameter()»«ENDFOREACH»);«ENDREM»
+	«REM»
+	//THE REDUCTION SCAN PHASE
+	«EXPAND template::c::genericC::body FOR scanReductionBody.preProcessLoop»
+	«ENDREM»
+	
+	#pragma omp barrier
+	#pragma omp single
+	{
+		«FOREACH scanReductionBody.matrixTempVariables AS var»
+			«EXPAND template::c::genericC::malloc FOR var»
+		«ENDFOREACH»
+		
+		«EXPAND template::c::genericC::body FOR scanReductionBody.scanLoop»
+		
+		«FOREACH scanReductionBody.matrixTempVariables AS var»
+			«EXPAND template::c::genericC::mfree FOR var»
+		«ENDFOREACH»
+	}
+	
+	#pragma omp barrier
+	«REM»
+	//Compute the initialization vector
+	«FOREACH scanReductionBody.initTempVariables AS var»
+		«EXPAND template::c::genericC::malloc FOR var»
+	«ENDFOREACH»	
+	«ENDREM»
+	
+	//get the new index value
+	«beginVariableName» = index[«threadNumVariableName»];
+	«endVariableName» = index[«threadNumVariableName»+1];
+	if(«threadNumVariableName»== «nthreadVariableName» - 1){
+		«endVariableName» = «boundComputationFunction.ub.getName()» + 1;
+	}
+	
+	if(«threadNumVariableName»==0){
+		«EXPAND template::c::genericC::body FOR scanReductionBody.assignmentLoop»
+	}else{
+		«EXPAND template::c::genericC::body FOR scanReductionBody.postProcessLoop»
+	}
+	
+	//CALL THE SCAN FUNCTION
+	«localScanFunction.name»(«FOREACH localScanFunction.signature.parameters AS  par SEPARATOR ','»«par.asParameter()»«ENDFOREACH»);
+	
+	«FOREACH localReductionVariables AS var»
+		«EXPAND template::c::genericC::mfree FOR var»
+	«ENDFOREACH»
+}
+
+//free the variables
+«FOREACH localScanReductionVariables AS var»
+	«EXPAND template::c::genericC::mfree FOR var»
+«ENDFOREACH»
+
+«ENDDEFINE»

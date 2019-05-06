@@ -1,0 +1,11 @@
+affine MulDimRecur {N | N > 1}
+input
+	int A {i, j| 0 <= i < N && 0 <= j < N};
+output
+	int C {i, j| 0 <= i < N && 0 <= j < N};
+let
+	C[i, j] = case
+			{|j == 0}: A[i, 0];
+			{|j > 0}: C[i, j-1] + A[i,j];
+			esac;
+.

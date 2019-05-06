@@ -1,0 +1,37 @@
+/**/
+affine heat_2d {TSTEPS,N,M | TSTEPS > 2 && N > 3 && M > 3}
+input 
+output
+	double B {t,i,j|t == TSTEPS && 0<=i<N && 0<=j<M};
+local 
+	double temp_B {t,i,j|0<=i<N && 0<=j<M && 0<=t<TSTEPS};
+let
+	temp_B[t,i,j] = case
+						{|t == 0} : 2.0*[i];
+						{|t > 0 && 1<=i<N-1 && 1<=j<M-1}  : 0.125*(temp_B[t-1,i+1,j] + temp_B[t-1,i-1,j]-2*temp_B[t-1,i,j]) + 
+											0.125*(temp_B[t-1,i,j+1] + temp_B[t-1,i,j-1] -2*temp_B[t-1,i,j]) + temp_B[t-1,i,j];
+						{|t > 0 && 0==i } || {|t > 0 && 0==j } || {|t > 0 && i==N-1 } || {|t > 0 && j==M-1 } : 0;  
+					esac; 
+
+	B[t, i,j] = temp_B[t-1,i,j]; 
+.
+/**/
+/*
+//for writeC verify code
+affine heat_2d {TSTEPS,N,M | TSTEPS > 2 && N > 3 && M > 3}
+input 
+output
+	double B {i,j| 0<=i<N && 0<=j<M};
+local 
+	double temp_B {t,i,j|0<=i<N && 0<=j<M && 0<=t<TSTEPS};
+let
+	temp_B[t,i,j] = case
+						{|t == 0} : 2.0*[i];
+						{|t > 0 && 1<=i<N-1 && 1<=j<M-1}  : 0.125*(temp_B[t-1,i+1,j] + temp_B[t-1,i-1,j]-2*temp_B[t-1,i,j]) + 
+											0.125*(temp_B[t-1,i,j+1] + temp_B[t-1,i,j-1] -2*temp_B[t-1,i,j]) + temp_B[t-1,i,j];
+						{|t > 0 && 0==i } || {|t > 0 && 0==j } || {|t > 0 && i==N-1 } || {|t > 0 && j==M-1 } : temp_B[t-1,i,j];  
+					esac; 
+
+	B[i,j] = temp_B[TSTEPS-1,i,j]; 
+.
+*/

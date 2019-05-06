@@ -1,0 +1,10 @@
+affine TestReduction {N| N>1}
+input
+output
+	float C {i|0<=i<N};
+let
+C[i] = case
+	{|i==0} : 1;
+	{|i>0} : reduce(+,[k], {|0<=k<i}:C[k]);
+esac;
+.

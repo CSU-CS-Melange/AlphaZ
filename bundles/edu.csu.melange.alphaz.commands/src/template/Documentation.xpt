@@ -1,0 +1,92 @@
+«IMPORT commandIF»
+«EXTENSION template::Documentation»
+«REM»Root node for initial alphaz stuff«ENDREM»
+«DEFINE PDFroot FOR Category»
+«LET "commandRef" AS pdfName»
+«REM»skip alphaz and MDE category and start from the third-level«ENDREM»
+«FILE pdfName+".tex"»
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{AlphaZ: Command Reference}
+\maketitle
+
+\tableofcontents
+
+\section{AlphaZ Commands}
+This document provides the list of commands currently implemented in AlphaZ.
+The document is generated from a model specification of the commands located in {\tt edu.csu.melange.alphaz.commands} plug-in.
+The implementation of commands described in this document can be found under {\tt edu.csu.melange.alphaz.mde/src-gen},
+and the script extension for compiler scripts are under {\tt edu.csu.melange.alphaz.commands.scripts.mde/src-gen}.
+
+The commands uses the following conventions:
+\begin{itemize}
+\item There is a single main implementation for each command. In this reference, all variations for convenience is listed, but it all calls the first method in each list in the end.
+Some specialized overloadings may change the data type. For example, String representation of affine functions may be parsed before passing along.
+\item boolean values are denoted as integers. true is equivalent to != 0.
+\item Some commands optionaly take a list of variables as inputs, indicated by the argument name {\tt varList}.
+Multiple variables may be passsed as a comma delimited list, to apply the same command to all variables.
+\item {\tt nodeID} is a unique ID given to each node in the AST, and can be seen using {\tt PrintAST} command.
+The uniqueID is a multi-dimensional vector denoting the path from the root to the node where the values indicate that the $x$-th branch is taken.
+{\tt nodeID} is used to specify a particular expression to apply the transformation, when there is no clear way to specify the target expression otherwise. 
+\end{itemize}
+
+«FOREACH this.subcategories.get(0).subcategories.select(e|!e.name.matches("Utility")) AS cat SEPARATOR '\n'»«EXPAND category("section") FOR cat-»«ENDFOREACH-»
+
+\end{document}
+«ENDFILE»
+
+«EXPAND makefile(pdfName) FOR this»
+«ENDLET»
+«ENDDEFINE»
+
+«DEFINE category(String section) FOR Category»
+\«section»{«name»}
+«description.latexString()»
+«FOREACH commands.select(e|e.isExposedToUser()) AS command SEPARATOR '\n'»«EXPAND command("sub"+section) FOR command»«ENDFOREACH»
+«FOREACH subcategories AS cat SEPARATOR '\n'»«EXPAND category("sub"+section) FOR cat-»«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE command(String section) FOR Command»
+\«section»{«this.getLatexName()»}
+«description.latexString()»
+\begin{itemize}
+\item «EXPAND commandDecl FOR this»
+«EXPAND overloadDecl FOREACH overloads»
+\end{itemize}
+«ENDDEFINE»
+
+«DEFINE commandDecl FOR Command
+»{\tt «getOutput()» «this.getLatexName()»()}
+«ENDDEFINE»
+«DEFINE commandDecl FOR BasicCommand
+»{\tt «getOutput()» «this.getLatexName()»(«FOREACH inputs AS input SEPARATOR ', '»«input.type» «input.name»«ENDFOREACH»)}
+«ENDDEFINE»
+«DEFINE commandDecl FOR Overloading
+»{\tt «getOutput()» «this.getLatexName()»(«FOREACH overLoadedInputs AS input SEPARATOR ', '»«input.type» «input.name»«ENDFOREACH»)}
+«ENDDEFINE»
+«DEFINE commandDecl FOR SpecializedOverloading
+»{\tt «getOutput()» «this.getLatexName()»(«FOREACH overLoadedInputs.union(additionalInputs) AS input SEPARATOR ', '»«input.type» «input.name»«ENDFOREACH»)}
+«ENDDEFINE»
+
+«DEFINE overloadDecl FOR Overloading»
+\item «EXPAND commandDecl FOR this»
+«EXPAND overloadDecl FOREACH overloads»
+«ENDDEFINE»
+
+«DEFINE makefile(String pdfName) FOR Category»
+«FILE "Makefile"»
+«pdfName»: «pdfName».tex
+	pdflatex $@
+	pdflatex $@
+
+clean:
+	rm -f «pdfName».aux «pdfName».bbl «pdfName».log «pdfName».blg «pdfName».toc
+
+plunge: clean
+	rm «pdfName».pdf
+«ENDFILE»
+«ENDDEFINE»

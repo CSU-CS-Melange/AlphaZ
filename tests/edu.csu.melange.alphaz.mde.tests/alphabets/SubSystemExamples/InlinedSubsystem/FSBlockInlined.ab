@@ -1,0 +1,26 @@
+affine FSBlock {N,B|N>=2 && B>=2}
+input
+	float LL {ii,jj,i,j|jj>=0 && ii>=jj+1 && N>=ii+1 && i>=0 && B>=i+1 && j>=0 && B>=j+1 && N>=2 && B>=2};
+	float DD {ii,i,j|ii>=0 && N>=ii+1 && j>=0 && i>=j && B>=i+1 && N>=2 && B>=2};
+	float BB {ii,i|ii>=0 && N>=ii+1 && i>=0 && B>=i+1 && N>=2 && B>=2};
+output
+	float XX {ii,i|ii>=0 && N>=ii+1 && i>=0 && B>=i+1 && N>=2 && B>=2};
+local
+	float AccVec {ii,jj,i|jj>=0 && ii>=jj+1 && N>=ii+1 && i>=0 && B>=i+1 && N>=2 && B>=2};
+	float AccSum {ii,jj,i|jj>=0 && ii>=jj+1 && N>=ii+1 && i>=0 && B>=i+1 && N>=2 && B>=2};
+	float sum {ii,i|ii>=0 && N>=ii+1 && i>=0 && B>=i+1 && N>=2 && B>=2};
+let
+	sum = case
+			{ii,i|ii==0 && N>=2 && B>=2} : (ii,i->)@0;
+			{ii,i|N>=2 && B>=2 && ii>=1} : (ii,i->ii,ii-1,i)@AccSum;
+		esac;
+	AccSum = case
+				{ii,jj,i|jj==0 && N>=2 && B>=2} : AccVec;
+				{ii,jj,i|N>=2 && B>=2 && jj>=1} : ((ii,jj,i->ii,jj-1,i)@AccSum + AccVec);
+			esac;
+	AccVec = reduce(+, (ii,jj,i,j->ii,jj,i), (LL * (ii,jj,i,j->jj,j)@XX));
+	XX = case
+			{ii,i|i==0 && ii>=0 && N>=ii+1 && N>=2 && B>=2} : ((BB - sum) / (ii,i->ii,i,i)@DD);
+			{ii,i|ii>=0 && N>=ii+1 && N>=2 && B>=2 && i>=1} : (((BB - sum) - reduce(+, (ii,i,j->ii,i), {ii,i,j|ii>=0 && N>=ii+1 && N>=2 && B>=2 && i>=j+1} : (DD * (ii,i,j->ii,j)@XX))) / (ii,i->ii,i,i)@DD);
+		esac;
+.	

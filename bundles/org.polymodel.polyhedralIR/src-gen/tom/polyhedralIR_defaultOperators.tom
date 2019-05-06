@@ -1,0 +1,43 @@
+// Default operators
+
+%op ExternalFunctionDeclaration ExternalFunctionDeclaration(name : String ) {
+	/*PROTECTED REGION ID(tom_operator_ExternalFunctionDeclaration) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ExternalFunctionDeclaration}
+	get_slot(name,t) {((ExternalFunctionDeclaration)$t).getName()}
+	make(name){org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.ExternalFunctionDeclaration($name)}
+	/*PROTECTED REGION END*/
+}
+
+%op VariableIdentifier VariableIdentifier(name : String ) {
+	/*PROTECTED REGION ID(tom_operator_VariableIdentifier) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof VariableIdentifier}
+	get_slot(name,t) {((VariableIdentifier)$t).getName()}
+	make(name){org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.VariableIdentifier($name)}
+	/*PROTECTED REGION END*/
+}
+
+%op Domain Domain() {
+	/*PROTECTED REGION ID(tom_operator_Domain) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof Domain}
+	make(){org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.Domain()}
+	/*PROTECTED REGION END*/
+}
+
+%op ParameterDomain ParameterDomain() {
+	/*PROTECTED REGION ID(tom_operator_ParameterDomain) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof ParameterDomain}
+	make(){org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.ParameterDomain()}
+	/*PROTECTED REGION END*/
+}
+
+%op AffineFunction AffineFunction() {
+	/*PROTECTED REGION ID(tom_operator_AffineFunction) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof AffineFunction}
+	make(){org.polymodel.polyhedralIR.internal.PolyhedralIRTomFactory.AffineFunction()}
+	/*PROTECTED REGION END*/
+}

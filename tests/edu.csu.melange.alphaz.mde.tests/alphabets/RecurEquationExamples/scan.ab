@@ -1,0 +1,12 @@
+affine Scan {N | N > 1}
+input
+	int a {i | 0 <= i <= N};
+	int c {i | 0 <= i <= N};
+output
+	int x {i | 0 <= i <= N};
+let
+	x = case
+		 {|i == 0}: a[0];
+		 {|i > 0}: max(x[i-1], a[i]);
+		esac;
+.

@@ -1,0 +1,1787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="alphabets" nsURI="http://www.Alphabets.xtext" nsPrefix="alphabets">
+  <eClassifiers xsi:type="ecore:EClass" name="AProgram" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAProgram(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="externalFunctions" upperBound="-1"
+        eType="#//AExternalFunctionDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="systems" upperBound="-1"
+        eType="#//AAffineSystem" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AExternalFunctionDeclaration" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAExternalFunctionDeclaration(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="output" eType="#//AType"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//AExternalFunctionIdentifier"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//AType" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AExternalFunctionIdentifier" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAExternalFunctionIdentifier(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AAffineSystem" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAAffineSystem(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" eType="#//ADomain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputDeclarations" upperBound="-1"
+        eType="#//AInputDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputDeclarations" upperBound="-1"
+        eType="#//AOutputDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="localvarDeclarations" upperBound="-1"
+        eType="#//ALocalDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="whileDeclaration" eType="#//AWhileDeclaration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="equations" upperBound="-1"
+        eType="#//AEquation" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AVariableDeclaration" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAVariableDeclaration(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//AType"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="identifierList" eType="#//AIdentifierList"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//ADomain"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AOutputDeclaration" eSuperTypes="#//AVariableDeclaration #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAOutputDeclaration(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AInputDeclaration" eSuperTypes="#//AVariableDeclaration #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAInputDeclaration(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ALocalDeclaration" eSuperTypes="#//AVariableDeclaration #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitALocalDeclaration(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AWhileDeclaration" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAWhileDeclaration(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="timeDomain" eType="#//ADomain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cond" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AIdentifierList" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAIdentifierList(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifiers" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ADomain" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitADomain(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="polyhedra" upperBound="-1"
+        eType="#//APolyhedron" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="APolyhedron" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAPolyhedron(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="indexes" eType="#//AIndexList"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constraints" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AEquation" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAEquation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AStandardEquation" eSuperTypes="#//AEquation #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAStandardEquation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="var" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="indexes" eType="#//AIndexList"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AUseEquation" eSuperTypes="#//AEquation #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAUseEquation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extDom" eType="#//ADomain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameSubSys" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="param" eType="#//AIndexAffineExpressionList"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="#//AAlphabetsExpression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" eType="#//AIdentifierList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AAlphabetsExpression" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAAlphabetsExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ANotExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitANotExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ANegateExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitANegateExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ACaseExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitACaseExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exprs" upperBound="-1"
+        eType="#//AAlphabetsExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ADependenceExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitADependenceExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="func" eType="#//AFunction"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ADependenceInArrayNotation" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitADependenceInArrayNotation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="var" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dep" eType="#//AIndexAffineExpressionList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AIfExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAIfExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cond" eType="#//AAlphabetsExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//AAlphabetsExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="else" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AIndexExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAIndexExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="func" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="indexes" eType="#//AIndexList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AReduceExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAReduceExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projection" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ARestrictExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitARestrictExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="#//ADomain"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AVariableExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAVariableExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="var" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AConstantExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAConstantExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ABooleanExpression" eSuperTypes="#//AConstantExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitABooleanExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AIntegerExpression" eSuperTypes="#//AConstantExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAIntegerExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ARealExpression" eSuperTypes="#//AConstantExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitARealExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AMultiArgExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAMultiArgExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exprs" upperBound="-1"
+        eType="#//AAlphabetsExpression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AMultiArgArithmeticExpression" eSuperTypes="#//AMultiArgExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAMultiArgArithmeticExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AMultiArgLogicalExpression" eSuperTypes="#//AMultiArgExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAMultiArgLogicalExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AExternalFunctionCall" eSuperTypes="#//AMultiArgExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAExternalFunctionCall(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="func" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AIndexList" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAIndexList(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ids" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AIndexAffineExpressionList" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAIndexAffineExpressionList(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exprs" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AFunction" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAFunction(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="indexes" eType="#//AIndexList"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="func" eType="#//AIndexAffineExpressionList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AFunctionInArrayNotation" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAFunctionInArrayNotation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newIds" eType="#//AIndexAffineExpressionList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AType" eSuperTypes="#//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAType(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsigned" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AOrExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAOrExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//AAlphabetsExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AAndExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAAndExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//AAlphabetsExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ARelationalExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitARelationalExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//AAlphabetsExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AAdditiveExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAAdditiveExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//AAlphabetsExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AModuloExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAModuloExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//AAlphabetsExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AMultiplicativeExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAMultiplicativeExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//AAlphabetsExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AMinMaxExpression" eSuperTypes="#//AAlphabetsExpression #//AlphabetsVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAMinMaxExpression(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//AAlphabetsExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//AAlphabetsExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AlphabetsVisitor" abstract="true" interface="true">
+    <eOperations name="defaultIn">
+      <eParameters name="node" eType="#//AlphabetsVisitable"/>
+    </eOperations>
+    <eOperations name="defaultOut">
+      <eParameters name="node" eType="#//AlphabetsVisitable"/>
+    </eOperations>
+    <eOperations name="visitAProgram">
+      <eParameters name="a" eType="#//AProgram"/>
+    </eOperations>
+    <eOperations name="inAProgram">
+      <eParameters name="a" eType="#//AProgram"/>
+    </eOperations>
+    <eOperations name="outAProgram">
+      <eParameters name="a" eType="#//AProgram"/>
+    </eOperations>
+    <eOperations name="visitAExternalFunctionDeclaration">
+      <eParameters name="a" eType="#//AExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="inAExternalFunctionDeclaration">
+      <eParameters name="a" eType="#//AExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="outAExternalFunctionDeclaration">
+      <eParameters name="a" eType="#//AExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAExternalFunctionIdentifier">
+      <eParameters name="a" eType="#//AExternalFunctionIdentifier"/>
+    </eOperations>
+    <eOperations name="inAExternalFunctionIdentifier">
+      <eParameters name="a" eType="#//AExternalFunctionIdentifier"/>
+    </eOperations>
+    <eOperations name="outAExternalFunctionIdentifier">
+      <eParameters name="a" eType="#//AExternalFunctionIdentifier"/>
+    </eOperations>
+    <eOperations name="visitAAffineSystem">
+      <eParameters name="a" eType="#//AAffineSystem"/>
+    </eOperations>
+    <eOperations name="inAAffineSystem">
+      <eParameters name="a" eType="#//AAffineSystem"/>
+    </eOperations>
+    <eOperations name="outAAffineSystem">
+      <eParameters name="a" eType="#//AAffineSystem"/>
+    </eOperations>
+    <eOperations name="visitAVariableDeclaration">
+      <eParameters name="a" eType="#//AVariableDeclaration"/>
+    </eOperations>
+    <eOperations name="inAVariableDeclaration">
+      <eParameters name="a" eType="#//AVariableDeclaration"/>
+    </eOperations>
+    <eOperations name="outAVariableDeclaration">
+      <eParameters name="a" eType="#//AVariableDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAOutputDeclaration">
+      <eParameters name="a" eType="#//AOutputDeclaration"/>
+    </eOperations>
+    <eOperations name="inAOutputDeclaration">
+      <eParameters name="a" eType="#//AOutputDeclaration"/>
+    </eOperations>
+    <eOperations name="outAOutputDeclaration">
+      <eParameters name="a" eType="#//AOutputDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAInputDeclaration">
+      <eParameters name="a" eType="#//AInputDeclaration"/>
+    </eOperations>
+    <eOperations name="inAInputDeclaration">
+      <eParameters name="a" eType="#//AInputDeclaration"/>
+    </eOperations>
+    <eOperations name="outAInputDeclaration">
+      <eParameters name="a" eType="#//AInputDeclaration"/>
+    </eOperations>
+    <eOperations name="visitALocalDeclaration">
+      <eParameters name="a" eType="#//ALocalDeclaration"/>
+    </eOperations>
+    <eOperations name="inALocalDeclaration">
+      <eParameters name="a" eType="#//ALocalDeclaration"/>
+    </eOperations>
+    <eOperations name="outALocalDeclaration">
+      <eParameters name="a" eType="#//ALocalDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAWhileDeclaration">
+      <eParameters name="a" eType="#//AWhileDeclaration"/>
+    </eOperations>
+    <eOperations name="inAWhileDeclaration">
+      <eParameters name="a" eType="#//AWhileDeclaration"/>
+    </eOperations>
+    <eOperations name="outAWhileDeclaration">
+      <eParameters name="a" eType="#//AWhileDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAIdentifierList">
+      <eParameters name="a" eType="#//AIdentifierList"/>
+    </eOperations>
+    <eOperations name="inAIdentifierList">
+      <eParameters name="a" eType="#//AIdentifierList"/>
+    </eOperations>
+    <eOperations name="outAIdentifierList">
+      <eParameters name="a" eType="#//AIdentifierList"/>
+    </eOperations>
+    <eOperations name="visitADomain">
+      <eParameters name="a" eType="#//ADomain"/>
+    </eOperations>
+    <eOperations name="inADomain">
+      <eParameters name="a" eType="#//ADomain"/>
+    </eOperations>
+    <eOperations name="outADomain">
+      <eParameters name="a" eType="#//ADomain"/>
+    </eOperations>
+    <eOperations name="visitAPolyhedron">
+      <eParameters name="a" eType="#//APolyhedron"/>
+    </eOperations>
+    <eOperations name="inAPolyhedron">
+      <eParameters name="a" eType="#//APolyhedron"/>
+    </eOperations>
+    <eOperations name="outAPolyhedron">
+      <eParameters name="a" eType="#//APolyhedron"/>
+    </eOperations>
+    <eOperations name="visitAEquation">
+      <eParameters name="a" eType="#//AEquation"/>
+    </eOperations>
+    <eOperations name="inAEquation">
+      <eParameters name="a" eType="#//AEquation"/>
+    </eOperations>
+    <eOperations name="outAEquation">
+      <eParameters name="a" eType="#//AEquation"/>
+    </eOperations>
+    <eOperations name="visitAStandardEquation">
+      <eParameters name="a" eType="#//AStandardEquation"/>
+    </eOperations>
+    <eOperations name="inAStandardEquation">
+      <eParameters name="a" eType="#//AStandardEquation"/>
+    </eOperations>
+    <eOperations name="outAStandardEquation">
+      <eParameters name="a" eType="#//AStandardEquation"/>
+    </eOperations>
+    <eOperations name="visitAUseEquation">
+      <eParameters name="a" eType="#//AUseEquation"/>
+    </eOperations>
+    <eOperations name="inAUseEquation">
+      <eParameters name="a" eType="#//AUseEquation"/>
+    </eOperations>
+    <eOperations name="outAUseEquation">
+      <eParameters name="a" eType="#//AUseEquation"/>
+    </eOperations>
+    <eOperations name="visitAAlphabetsExpression">
+      <eParameters name="a" eType="#//AAlphabetsExpression"/>
+    </eOperations>
+    <eOperations name="inAAlphabetsExpression">
+      <eParameters name="a" eType="#//AAlphabetsExpression"/>
+    </eOperations>
+    <eOperations name="outAAlphabetsExpression">
+      <eParameters name="a" eType="#//AAlphabetsExpression"/>
+    </eOperations>
+    <eOperations name="visitANotExpression">
+      <eParameters name="a" eType="#//ANotExpression"/>
+    </eOperations>
+    <eOperations name="inANotExpression">
+      <eParameters name="a" eType="#//ANotExpression"/>
+    </eOperations>
+    <eOperations name="outANotExpression">
+      <eParameters name="a" eType="#//ANotExpression"/>
+    </eOperations>
+    <eOperations name="visitANegateExpression">
+      <eParameters name="a" eType="#//ANegateExpression"/>
+    </eOperations>
+    <eOperations name="inANegateExpression">
+      <eParameters name="a" eType="#//ANegateExpression"/>
+    </eOperations>
+    <eOperations name="outANegateExpression">
+      <eParameters name="a" eType="#//ANegateExpression"/>
+    </eOperations>
+    <eOperations name="visitACaseExpression">
+      <eParameters name="a" eType="#//ACaseExpression"/>
+    </eOperations>
+    <eOperations name="inACaseExpression">
+      <eParameters name="a" eType="#//ACaseExpression"/>
+    </eOperations>
+    <eOperations name="outACaseExpression">
+      <eParameters name="a" eType="#//ACaseExpression"/>
+    </eOperations>
+    <eOperations name="visitADependenceExpression">
+      <eParameters name="a" eType="#//ADependenceExpression"/>
+    </eOperations>
+    <eOperations name="inADependenceExpression">
+      <eParameters name="a" eType="#//ADependenceExpression"/>
+    </eOperations>
+    <eOperations name="outADependenceExpression">
+      <eParameters name="a" eType="#//ADependenceExpression"/>
+    </eOperations>
+    <eOperations name="visitADependenceInArrayNotation">
+      <eParameters name="a" eType="#//ADependenceInArrayNotation"/>
+    </eOperations>
+    <eOperations name="inADependenceInArrayNotation">
+      <eParameters name="a" eType="#//ADependenceInArrayNotation"/>
+    </eOperations>
+    <eOperations name="outADependenceInArrayNotation">
+      <eParameters name="a" eType="#//ADependenceInArrayNotation"/>
+    </eOperations>
+    <eOperations name="visitAIfExpression">
+      <eParameters name="a" eType="#//AIfExpression"/>
+    </eOperations>
+    <eOperations name="inAIfExpression">
+      <eParameters name="a" eType="#//AIfExpression"/>
+    </eOperations>
+    <eOperations name="outAIfExpression">
+      <eParameters name="a" eType="#//AIfExpression"/>
+    </eOperations>
+    <eOperations name="visitAIndexExpression">
+      <eParameters name="a" eType="#//AIndexExpression"/>
+    </eOperations>
+    <eOperations name="inAIndexExpression">
+      <eParameters name="a" eType="#//AIndexExpression"/>
+    </eOperations>
+    <eOperations name="outAIndexExpression">
+      <eParameters name="a" eType="#//AIndexExpression"/>
+    </eOperations>
+    <eOperations name="visitAReduceExpression">
+      <eParameters name="a" eType="#//AReduceExpression"/>
+    </eOperations>
+    <eOperations name="inAReduceExpression">
+      <eParameters name="a" eType="#//AReduceExpression"/>
+    </eOperations>
+    <eOperations name="outAReduceExpression">
+      <eParameters name="a" eType="#//AReduceExpression"/>
+    </eOperations>
+    <eOperations name="visitARestrictExpression">
+      <eParameters name="a" eType="#//ARestrictExpression"/>
+    </eOperations>
+    <eOperations name="inARestrictExpression">
+      <eParameters name="a" eType="#//ARestrictExpression"/>
+    </eOperations>
+    <eOperations name="outARestrictExpression">
+      <eParameters name="a" eType="#//ARestrictExpression"/>
+    </eOperations>
+    <eOperations name="visitAVariableExpression">
+      <eParameters name="a" eType="#//AVariableExpression"/>
+    </eOperations>
+    <eOperations name="inAVariableExpression">
+      <eParameters name="a" eType="#//AVariableExpression"/>
+    </eOperations>
+    <eOperations name="outAVariableExpression">
+      <eParameters name="a" eType="#//AVariableExpression"/>
+    </eOperations>
+    <eOperations name="visitAConstantExpression">
+      <eParameters name="a" eType="#//AConstantExpression"/>
+    </eOperations>
+    <eOperations name="inAConstantExpression">
+      <eParameters name="a" eType="#//AConstantExpression"/>
+    </eOperations>
+    <eOperations name="outAConstantExpression">
+      <eParameters name="a" eType="#//AConstantExpression"/>
+    </eOperations>
+    <eOperations name="visitABooleanExpression">
+      <eParameters name="a" eType="#//ABooleanExpression"/>
+    </eOperations>
+    <eOperations name="inABooleanExpression">
+      <eParameters name="a" eType="#//ABooleanExpression"/>
+    </eOperations>
+    <eOperations name="outABooleanExpression">
+      <eParameters name="a" eType="#//ABooleanExpression"/>
+    </eOperations>
+    <eOperations name="visitAIntegerExpression">
+      <eParameters name="a" eType="#//AIntegerExpression"/>
+    </eOperations>
+    <eOperations name="inAIntegerExpression">
+      <eParameters name="a" eType="#//AIntegerExpression"/>
+    </eOperations>
+    <eOperations name="outAIntegerExpression">
+      <eParameters name="a" eType="#//AIntegerExpression"/>
+    </eOperations>
+    <eOperations name="visitARealExpression">
+      <eParameters name="a" eType="#//ARealExpression"/>
+    </eOperations>
+    <eOperations name="inARealExpression">
+      <eParameters name="a" eType="#//ARealExpression"/>
+    </eOperations>
+    <eOperations name="outARealExpression">
+      <eParameters name="a" eType="#//ARealExpression"/>
+    </eOperations>
+    <eOperations name="visitAMultiArgExpression">
+      <eParameters name="a" eType="#//AMultiArgExpression"/>
+    </eOperations>
+    <eOperations name="inAMultiArgExpression">
+      <eParameters name="a" eType="#//AMultiArgExpression"/>
+    </eOperations>
+    <eOperations name="outAMultiArgExpression">
+      <eParameters name="a" eType="#//AMultiArgExpression"/>
+    </eOperations>
+    <eOperations name="visitAMultiArgArithmeticExpression">
+      <eParameters name="a" eType="#//AMultiArgArithmeticExpression"/>
+    </eOperations>
+    <eOperations name="inAMultiArgArithmeticExpression">
+      <eParameters name="a" eType="#//AMultiArgArithmeticExpression"/>
+    </eOperations>
+    <eOperations name="outAMultiArgArithmeticExpression">
+      <eParameters name="a" eType="#//AMultiArgArithmeticExpression"/>
+    </eOperations>
+    <eOperations name="visitAMultiArgLogicalExpression">
+      <eParameters name="a" eType="#//AMultiArgLogicalExpression"/>
+    </eOperations>
+    <eOperations name="inAMultiArgLogicalExpression">
+      <eParameters name="a" eType="#//AMultiArgLogicalExpression"/>
+    </eOperations>
+    <eOperations name="outAMultiArgLogicalExpression">
+      <eParameters name="a" eType="#//AMultiArgLogicalExpression"/>
+    </eOperations>
+    <eOperations name="visitAExternalFunctionCall">
+      <eParameters name="a" eType="#//AExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="inAExternalFunctionCall">
+      <eParameters name="a" eType="#//AExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="outAExternalFunctionCall">
+      <eParameters name="a" eType="#//AExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="visitAIndexList">
+      <eParameters name="a" eType="#//AIndexList"/>
+    </eOperations>
+    <eOperations name="inAIndexList">
+      <eParameters name="a" eType="#//AIndexList"/>
+    </eOperations>
+    <eOperations name="outAIndexList">
+      <eParameters name="a" eType="#//AIndexList"/>
+    </eOperations>
+    <eOperations name="visitAIndexAffineExpressionList">
+      <eParameters name="a" eType="#//AIndexAffineExpressionList"/>
+    </eOperations>
+    <eOperations name="inAIndexAffineExpressionList">
+      <eParameters name="a" eType="#//AIndexAffineExpressionList"/>
+    </eOperations>
+    <eOperations name="outAIndexAffineExpressionList">
+      <eParameters name="a" eType="#//AIndexAffineExpressionList"/>
+    </eOperations>
+    <eOperations name="visitAFunction">
+      <eParameters name="a" eType="#//AFunction"/>
+    </eOperations>
+    <eOperations name="inAFunction">
+      <eParameters name="a" eType="#//AFunction"/>
+    </eOperations>
+    <eOperations name="outAFunction">
+      <eParameters name="a" eType="#//AFunction"/>
+    </eOperations>
+    <eOperations name="visitAFunctionInArrayNotation">
+      <eParameters name="a" eType="#//AFunctionInArrayNotation"/>
+    </eOperations>
+    <eOperations name="inAFunctionInArrayNotation">
+      <eParameters name="a" eType="#//AFunctionInArrayNotation"/>
+    </eOperations>
+    <eOperations name="outAFunctionInArrayNotation">
+      <eParameters name="a" eType="#//AFunctionInArrayNotation"/>
+    </eOperations>
+    <eOperations name="visitAType">
+      <eParameters name="a" eType="#//AType"/>
+    </eOperations>
+    <eOperations name="inAType">
+      <eParameters name="a" eType="#//AType"/>
+    </eOperations>
+    <eOperations name="outAType">
+      <eParameters name="a" eType="#//AType"/>
+    </eOperations>
+    <eOperations name="visitAOrExpression">
+      <eParameters name="a" eType="#//AOrExpression"/>
+    </eOperations>
+    <eOperations name="inAOrExpression">
+      <eParameters name="a" eType="#//AOrExpression"/>
+    </eOperations>
+    <eOperations name="outAOrExpression">
+      <eParameters name="a" eType="#//AOrExpression"/>
+    </eOperations>
+    <eOperations name="visitAAndExpression">
+      <eParameters name="a" eType="#//AAndExpression"/>
+    </eOperations>
+    <eOperations name="inAAndExpression">
+      <eParameters name="a" eType="#//AAndExpression"/>
+    </eOperations>
+    <eOperations name="outAAndExpression">
+      <eParameters name="a" eType="#//AAndExpression"/>
+    </eOperations>
+    <eOperations name="visitARelationalExpression">
+      <eParameters name="a" eType="#//ARelationalExpression"/>
+    </eOperations>
+    <eOperations name="inARelationalExpression">
+      <eParameters name="a" eType="#//ARelationalExpression"/>
+    </eOperations>
+    <eOperations name="outARelationalExpression">
+      <eParameters name="a" eType="#//ARelationalExpression"/>
+    </eOperations>
+    <eOperations name="visitAAdditiveExpression">
+      <eParameters name="a" eType="#//AAdditiveExpression"/>
+    </eOperations>
+    <eOperations name="inAAdditiveExpression">
+      <eParameters name="a" eType="#//AAdditiveExpression"/>
+    </eOperations>
+    <eOperations name="outAAdditiveExpression">
+      <eParameters name="a" eType="#//AAdditiveExpression"/>
+    </eOperations>
+    <eOperations name="visitAModuloExpression">
+      <eParameters name="a" eType="#//AModuloExpression"/>
+    </eOperations>
+    <eOperations name="inAModuloExpression">
+      <eParameters name="a" eType="#//AModuloExpression"/>
+    </eOperations>
+    <eOperations name="outAModuloExpression">
+      <eParameters name="a" eType="#//AModuloExpression"/>
+    </eOperations>
+    <eOperations name="visitAMultiplicativeExpression">
+      <eParameters name="a" eType="#//AMultiplicativeExpression"/>
+    </eOperations>
+    <eOperations name="inAMultiplicativeExpression">
+      <eParameters name="a" eType="#//AMultiplicativeExpression"/>
+    </eOperations>
+    <eOperations name="outAMultiplicativeExpression">
+      <eParameters name="a" eType="#//AMultiplicativeExpression"/>
+    </eOperations>
+    <eOperations name="visitAMinMaxExpression">
+      <eParameters name="a" eType="#//AMinMaxExpression"/>
+    </eOperations>
+    <eOperations name="inAMinMaxExpression">
+      <eParameters name="a" eType="#//AMinMaxExpression"/>
+    </eOperations>
+    <eOperations name="outAMinMaxExpression">
+      <eParameters name="a" eType="#//AMinMaxExpression"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AlphabetsVisitable" abstract="true"
+      interface="true">
+    <eOperations name="accept">
+      <eParameters name="visitor" eType="#//AlphabetsVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AlphabetsDepthFirstVisitor" eSuperTypes="#//AlphabetsVisitor">
+    <eOperations name="defaultIn">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value=""/>
+      </eAnnotations>
+      <eParameters name="node" eType="#//AlphabetsVisitable"/>
+    </eOperations>
+    <eOperations name="defaultOut">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value=""/>
+      </eAnnotations>
+      <eParameters name="node" eType="#//AlphabetsVisitable"/>
+    </eOperations>
+    <eOperations name="visitAProgram">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAProgram(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAProgram(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AProgram"/>
+    </eOperations>
+    <eOperations name="inAProgram">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AProgram"/>
+    </eOperations>
+    <eOperations name="outAProgram">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AProgram"/>
+    </eOperations>
+    <eOperations name="visitAExternalFunctionDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAExternalFunctionDeclaration(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAExternalFunctionDeclaration(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="inAExternalFunctionDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="outAExternalFunctionDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AExternalFunctionDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAExternalFunctionIdentifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAExternalFunctionIdentifier(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAExternalFunctionIdentifier(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AExternalFunctionIdentifier"/>
+    </eOperations>
+    <eOperations name="inAExternalFunctionIdentifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AExternalFunctionIdentifier"/>
+    </eOperations>
+    <eOperations name="outAExternalFunctionIdentifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AExternalFunctionIdentifier"/>
+    </eOperations>
+    <eOperations name="visitAAffineSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAAffineSystem(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAAffineSystem(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAffineSystem"/>
+    </eOperations>
+    <eOperations name="inAAffineSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAffineSystem"/>
+    </eOperations>
+    <eOperations name="outAAffineSystem">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAffineSystem"/>
+    </eOperations>
+    <eOperations name="visitAVariableDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAVariableDeclaration(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAVariableDeclaration(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AVariableDeclaration"/>
+    </eOperations>
+    <eOperations name="inAVariableDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AVariableDeclaration"/>
+    </eOperations>
+    <eOperations name="outAVariableDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AVariableDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAOutputDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAOutputDeclaration(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAOutputDeclaration(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AOutputDeclaration"/>
+    </eOperations>
+    <eOperations name="inAOutputDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AOutputDeclaration"/>
+    </eOperations>
+    <eOperations name="outAOutputDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AOutputDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAInputDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAInputDeclaration(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAInputDeclaration(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AInputDeclaration"/>
+    </eOperations>
+    <eOperations name="inAInputDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AInputDeclaration"/>
+    </eOperations>
+    <eOperations name="outAInputDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AInputDeclaration"/>
+    </eOperations>
+    <eOperations name="visitALocalDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inALocalDeclaration(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outALocalDeclaration(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ALocalDeclaration"/>
+    </eOperations>
+    <eOperations name="inALocalDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ALocalDeclaration"/>
+    </eOperations>
+    <eOperations name="outALocalDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ALocalDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAWhileDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAWhileDeclaration(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAWhileDeclaration(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AWhileDeclaration"/>
+    </eOperations>
+    <eOperations name="inAWhileDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AWhileDeclaration"/>
+    </eOperations>
+    <eOperations name="outAWhileDeclaration">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AWhileDeclaration"/>
+    </eOperations>
+    <eOperations name="visitAIdentifierList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAIdentifierList(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAIdentifierList(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIdentifierList"/>
+    </eOperations>
+    <eOperations name="inAIdentifierList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIdentifierList"/>
+    </eOperations>
+    <eOperations name="outAIdentifierList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIdentifierList"/>
+    </eOperations>
+    <eOperations name="visitADomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inADomain(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outADomain(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ADomain"/>
+    </eOperations>
+    <eOperations name="inADomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ADomain"/>
+    </eOperations>
+    <eOperations name="outADomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ADomain"/>
+    </eOperations>
+    <eOperations name="visitAPolyhedron">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAPolyhedron(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAPolyhedron(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//APolyhedron"/>
+    </eOperations>
+    <eOperations name="inAPolyhedron">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//APolyhedron"/>
+    </eOperations>
+    <eOperations name="outAPolyhedron">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//APolyhedron"/>
+    </eOperations>
+    <eOperations name="visitAEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAEquation(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAEquation(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AEquation"/>
+    </eOperations>
+    <eOperations name="inAEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AEquation"/>
+    </eOperations>
+    <eOperations name="outAEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AEquation"/>
+    </eOperations>
+    <eOperations name="visitAStandardEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAStandardEquation(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAStandardEquation(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AStandardEquation"/>
+    </eOperations>
+    <eOperations name="inAStandardEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AStandardEquation"/>
+    </eOperations>
+    <eOperations name="outAStandardEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AStandardEquation"/>
+    </eOperations>
+    <eOperations name="visitAUseEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAUseEquation(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAUseEquation(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AUseEquation"/>
+    </eOperations>
+    <eOperations name="inAUseEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AUseEquation"/>
+    </eOperations>
+    <eOperations name="outAUseEquation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AUseEquation"/>
+    </eOperations>
+    <eOperations name="visitAAlphabetsExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAAlphabetsExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAAlphabetsExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAlphabetsExpression"/>
+    </eOperations>
+    <eOperations name="inAAlphabetsExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAlphabetsExpression"/>
+    </eOperations>
+    <eOperations name="outAAlphabetsExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAlphabetsExpression"/>
+    </eOperations>
+    <eOperations name="visitANotExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inANotExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outANotExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ANotExpression"/>
+    </eOperations>
+    <eOperations name="inANotExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ANotExpression"/>
+    </eOperations>
+    <eOperations name="outANotExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ANotExpression"/>
+    </eOperations>
+    <eOperations name="visitANegateExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inANegateExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outANegateExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ANegateExpression"/>
+    </eOperations>
+    <eOperations name="inANegateExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ANegateExpression"/>
+    </eOperations>
+    <eOperations name="outANegateExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ANegateExpression"/>
+    </eOperations>
+    <eOperations name="visitACaseExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inACaseExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outACaseExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ACaseExpression"/>
+    </eOperations>
+    <eOperations name="inACaseExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ACaseExpression"/>
+    </eOperations>
+    <eOperations name="outACaseExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ACaseExpression"/>
+    </eOperations>
+    <eOperations name="visitADependenceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inADependenceExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outADependenceExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ADependenceExpression"/>
+    </eOperations>
+    <eOperations name="inADependenceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ADependenceExpression"/>
+    </eOperations>
+    <eOperations name="outADependenceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ADependenceExpression"/>
+    </eOperations>
+    <eOperations name="visitADependenceInArrayNotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inADependenceInArrayNotation(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outADependenceInArrayNotation(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ADependenceInArrayNotation"/>
+    </eOperations>
+    <eOperations name="inADependenceInArrayNotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ADependenceInArrayNotation"/>
+    </eOperations>
+    <eOperations name="outADependenceInArrayNotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ADependenceInArrayNotation"/>
+    </eOperations>
+    <eOperations name="visitAIfExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAIfExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAIfExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIfExpression"/>
+    </eOperations>
+    <eOperations name="inAIfExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIfExpression"/>
+    </eOperations>
+    <eOperations name="outAIfExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIfExpression"/>
+    </eOperations>
+    <eOperations name="visitAIndexExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAIndexExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAIndexExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIndexExpression"/>
+    </eOperations>
+    <eOperations name="inAIndexExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIndexExpression"/>
+    </eOperations>
+    <eOperations name="outAIndexExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIndexExpression"/>
+    </eOperations>
+    <eOperations name="visitAReduceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAReduceExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAReduceExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AReduceExpression"/>
+    </eOperations>
+    <eOperations name="inAReduceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AReduceExpression"/>
+    </eOperations>
+    <eOperations name="outAReduceExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AReduceExpression"/>
+    </eOperations>
+    <eOperations name="visitARestrictExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inARestrictExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outARestrictExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ARestrictExpression"/>
+    </eOperations>
+    <eOperations name="inARestrictExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ARestrictExpression"/>
+    </eOperations>
+    <eOperations name="outARestrictExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ARestrictExpression"/>
+    </eOperations>
+    <eOperations name="visitAVariableExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAVariableExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAVariableExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AVariableExpression"/>
+    </eOperations>
+    <eOperations name="inAVariableExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AVariableExpression"/>
+    </eOperations>
+    <eOperations name="outAVariableExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AVariableExpression"/>
+    </eOperations>
+    <eOperations name="visitAConstantExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAConstantExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAConstantExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AConstantExpression"/>
+    </eOperations>
+    <eOperations name="inAConstantExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AConstantExpression"/>
+    </eOperations>
+    <eOperations name="outAConstantExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AConstantExpression"/>
+    </eOperations>
+    <eOperations name="visitABooleanExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inABooleanExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outABooleanExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ABooleanExpression"/>
+    </eOperations>
+    <eOperations name="inABooleanExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ABooleanExpression"/>
+    </eOperations>
+    <eOperations name="outABooleanExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ABooleanExpression"/>
+    </eOperations>
+    <eOperations name="visitAIntegerExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAIntegerExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAIntegerExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIntegerExpression"/>
+    </eOperations>
+    <eOperations name="inAIntegerExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIntegerExpression"/>
+    </eOperations>
+    <eOperations name="outAIntegerExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIntegerExpression"/>
+    </eOperations>
+    <eOperations name="visitARealExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inARealExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outARealExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ARealExpression"/>
+    </eOperations>
+    <eOperations name="inARealExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ARealExpression"/>
+    </eOperations>
+    <eOperations name="outARealExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ARealExpression"/>
+    </eOperations>
+    <eOperations name="visitAMultiArgExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAMultiArgExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAMultiArgExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiArgExpression"/>
+    </eOperations>
+    <eOperations name="inAMultiArgExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiArgExpression"/>
+    </eOperations>
+    <eOperations name="outAMultiArgExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiArgExpression"/>
+    </eOperations>
+    <eOperations name="visitAMultiArgArithmeticExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAMultiArgArithmeticExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAMultiArgArithmeticExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiArgArithmeticExpression"/>
+    </eOperations>
+    <eOperations name="inAMultiArgArithmeticExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiArgArithmeticExpression"/>
+    </eOperations>
+    <eOperations name="outAMultiArgArithmeticExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiArgArithmeticExpression"/>
+    </eOperations>
+    <eOperations name="visitAMultiArgLogicalExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAMultiArgLogicalExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAMultiArgLogicalExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiArgLogicalExpression"/>
+    </eOperations>
+    <eOperations name="inAMultiArgLogicalExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiArgLogicalExpression"/>
+    </eOperations>
+    <eOperations name="outAMultiArgLogicalExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiArgLogicalExpression"/>
+    </eOperations>
+    <eOperations name="visitAExternalFunctionCall">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAExternalFunctionCall(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAExternalFunctionCall(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="inAExternalFunctionCall">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="outAExternalFunctionCall">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AExternalFunctionCall"/>
+    </eOperations>
+    <eOperations name="visitAIndexList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAIndexList(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAIndexList(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIndexList"/>
+    </eOperations>
+    <eOperations name="inAIndexList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIndexList"/>
+    </eOperations>
+    <eOperations name="outAIndexList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIndexList"/>
+    </eOperations>
+    <eOperations name="visitAIndexAffineExpressionList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAIndexAffineExpressionList(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAIndexAffineExpressionList(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIndexAffineExpressionList"/>
+    </eOperations>
+    <eOperations name="inAIndexAffineExpressionList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIndexAffineExpressionList"/>
+    </eOperations>
+    <eOperations name="outAIndexAffineExpressionList">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AIndexAffineExpressionList"/>
+    </eOperations>
+    <eOperations name="visitAFunction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAFunction(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAFunction(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AFunction"/>
+    </eOperations>
+    <eOperations name="inAFunction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AFunction"/>
+    </eOperations>
+    <eOperations name="outAFunction">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AFunction"/>
+    </eOperations>
+    <eOperations name="visitAFunctionInArrayNotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAFunctionInArrayNotation(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAFunctionInArrayNotation(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AFunctionInArrayNotation"/>
+    </eOperations>
+    <eOperations name="inAFunctionInArrayNotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AFunctionInArrayNotation"/>
+    </eOperations>
+    <eOperations name="outAFunctionInArrayNotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AFunctionInArrayNotation"/>
+    </eOperations>
+    <eOperations name="visitAType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAType(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAType(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AType"/>
+    </eOperations>
+    <eOperations name="inAType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AType"/>
+    </eOperations>
+    <eOperations name="outAType">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AType"/>
+    </eOperations>
+    <eOperations name="visitAOrExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAOrExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAOrExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AOrExpression"/>
+    </eOperations>
+    <eOperations name="inAOrExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AOrExpression"/>
+    </eOperations>
+    <eOperations name="outAOrExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AOrExpression"/>
+    </eOperations>
+    <eOperations name="visitAAndExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAAndExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAAndExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAndExpression"/>
+    </eOperations>
+    <eOperations name="inAAndExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAndExpression"/>
+    </eOperations>
+    <eOperations name="outAAndExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAndExpression"/>
+    </eOperations>
+    <eOperations name="visitARelationalExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inARelationalExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outARelationalExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ARelationalExpression"/>
+    </eOperations>
+    <eOperations name="inARelationalExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ARelationalExpression"/>
+    </eOperations>
+    <eOperations name="outARelationalExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//ARelationalExpression"/>
+    </eOperations>
+    <eOperations name="visitAAdditiveExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAAdditiveExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAAdditiveExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAdditiveExpression"/>
+    </eOperations>
+    <eOperations name="inAAdditiveExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAdditiveExpression"/>
+    </eOperations>
+    <eOperations name="outAAdditiveExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AAdditiveExpression"/>
+    </eOperations>
+    <eOperations name="visitAModuloExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAModuloExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAModuloExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AModuloExpression"/>
+    </eOperations>
+    <eOperations name="inAModuloExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AModuloExpression"/>
+    </eOperations>
+    <eOperations name="outAModuloExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AModuloExpression"/>
+    </eOperations>
+    <eOperations name="visitAMultiplicativeExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAMultiplicativeExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAMultiplicativeExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiplicativeExpression"/>
+    </eOperations>
+    <eOperations name="inAMultiplicativeExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiplicativeExpression"/>
+    </eOperations>
+    <eOperations name="outAMultiplicativeExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMultiplicativeExpression"/>
+    </eOperations>
+    <eOperations name="visitAMinMaxExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAMinMaxExpression(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof AlphabetsVisitable) ((AlphabetsVisitable)obj).accept(this);&#xA;outAMinMaxExpression(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMinMaxExpression"/>
+    </eOperations>
+    <eOperations name="inAMinMaxExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMinMaxExpression"/>
+    </eOperations>
+    <eOperations name="outAMinMaxExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AMinMaxExpression"/>
+    </eOperations>
+  </eClassifiers>
+</ecore:EPackage>

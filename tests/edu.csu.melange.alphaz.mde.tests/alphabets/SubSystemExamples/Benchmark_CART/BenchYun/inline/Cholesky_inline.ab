@@ -1,0 +1,31 @@
+double sqrt(double);
+affine cholesky_withReduce {Nb,Nl,b|Nb>=1 && Nl>=0 && b>=Nl+1 && b>=3}
+input
+	double A_bl {iBl,jBl,iLoc,jLoc|jBl==Nb && b>=3 && iBl>=0 && Nb>=iBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Nl>=jLoc+1}
+		|| {iBl,jBl,iLoc,jLoc|iBl==Nb && b>=3 && jBl>=0 && Nb>=jBl+1 && iLoc>=0 && b>=iLoc+1 && Nl>=iLoc+1 && jLoc>=0 && b>=jLoc+1}
+		|| {iBl,jBl,iLoc,jLoc|jBl==Nb && iBl==Nb && Nb>=1 && b>=3 && iLoc>=0 && b>=iLoc+1 && Nl>=iLoc+1 && jLoc>=0 && b>=jLoc+1 && Nl>=jLoc+1}
+		|| {iBl,jBl,iLoc,jLoc|b>=3 && iBl>=0 && Nb>=iBl+1 && jBl>=0 && Nb>=jBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+output
+	double L_bl {iBl,jBl,iLoc,jLoc|jBl==iBl && b>=3 && iBl>=0 && Nb>=iBl+1 && b>=iLoc+1 && jLoc>=0 && iLoc>=jLoc}
+		|| {iBl,jBl,iLoc,jLoc|iBl==Nb && b>=3 && jBl>=0 && Nb>=jBl+1 && iLoc>=0 && b>=iLoc+1 && Nl>=iLoc+1 && jLoc>=0 && b>=jLoc+1}
+		|| {iBl,jBl,iLoc,jLoc|jBl==Nb && iBl==Nb && Nb>=1 && b>=3 && b>=iLoc+1 && Nl>=iLoc+1 && jLoc>=0 && iLoc>=jLoc}
+		|| {iBl,jBl,iLoc,jLoc|b>=3 && Nb>=iBl+1 && jBl>=0 && iBl>=jBl+1 && iLoc>=0 && b>=iLoc+1 && jLoc>=0 && b>=jLoc+1};
+local
+let
+L_bl[iBl,jBl,iLoc,jLoc] = case
+	{|jLoc==0 && iLoc==0 && jBl==0 && iBl==0 && Nb>=1 && b>=3} : sqrt(A_bl[iBl,jBl,iLoc,jLoc]);
+	{|jLoc==0 && jBl==0 && Nb>=1 && b>=3 && iLoc>=0 && b>=iLoc+1 && iBl>=0 && iBl+iLoc>=1} : (A_bl[iBl,jBl,iLoc,jLoc] / L_bl[jBl,jBl,jLoc,jLoc]);
+	{|jLoc==iLoc && jBl==iBl && Nb>=1 && b>=3 && iLoc>=0 && b>=iLoc+1} : sqrt((A_bl[jBl,jBl,jLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,iLoc,jLoc),
+		{|kBl==jBl && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3 && b>=kLoc+1 && kLoc>=0 && Nb>=1 && jLoc>=kLoc+1 && jBl>=0}
+			|| {|iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3 && b>=kLoc+1 && kLoc>=0 && Nb>=1 && jBl>=kBl+1 && kBl>=0} :
+				(L_bl[jBl,kBl,jLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]))
+		));
+	{|jBl==iBl && Nb>=1 && b>=3 && iBl>=1 && b>=iLoc+1 && jLoc>=0 && iLoc>=jLoc+1}
+		|| {|Nb>=1 && b>=3 && iBl>=jBl+1 && iLoc>=0 && jBl+jLoc>=1 && jLoc>=0 && b>=jLoc+1 && b>=iLoc+1 && jBl>=0}
+		|| {|jBl==0 && iBl==0 && Nb>=1 && b>=iLoc+1 && jLoc>=1 && iLoc>=jLoc+1} : ((A_bl[iBl,jBl,iLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,iLoc,jLoc),
+			{|kBl==jBl && iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3 && b>=kLoc+1 && kLoc>=0 && Nb>=1 && jLoc>=kLoc+1 && jBl>=0}
+				|| {|iLoc>=0 && jLoc>=0 && b>=iLoc+1 && b>=jLoc+1 && b>=3 && b>=kLoc+1 && kLoc>=0 && Nb>=1 && jBl>=kBl+1 && kBl>=0} :
+					(L_bl[iBl,kBl,iLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc])
+			)) / L_bl[jBl,jBl,jLoc,jLoc]);
+esac;
+.

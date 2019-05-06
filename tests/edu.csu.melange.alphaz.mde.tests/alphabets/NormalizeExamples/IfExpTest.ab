@@ -1,0 +1,17 @@
+affine IfExpr {N | N > 1}
+input
+	int A {i | 0 <= i < N};
+	int B {i | 0 <= i < N};
+	int a {i | 0 <= i < 2N};
+	int b {i | 0 <= i < 2N};
+output
+	int C {i | 0 <= i < 2N};
+	int D {i, j| 0 <= i < N && 0 <= j < N};
+let
+	D[i, j] = (i, j -> j, i)@(if A[i] < 10 then A[i] else B[i]);
+	C[i] = if a[i] < 10 then (case
+								{| 0 <= i < N}: a[i];
+								{| N <= i < 2N}: a[i] - 5;
+								esac
+							)else b[i];
+.

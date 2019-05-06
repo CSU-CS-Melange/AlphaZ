@@ -1,0 +1,1132 @@
+cc -m32 -fPIC -I/usr/lib/jvm/java-6-sun-1.6.0.14/include -I/usr/lib/jvm/java-6-sun-1.6.0.14/include/linux -I./ -I../ -I/usr/local/include/isl/ -I../   -O3 -static-libgcc -Wl,-Bstatic -lc -c -o ISLNative.o ../ISLNative.c
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1stream_1new_1str’:
+../ISLNative.c:88: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:117: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:119: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1stream_1free’:
+../ISLNative.c:135: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1options_1new_1with_1defaults’:
+../ISLNative.c:180: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:182: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1n_1in’:
+../ISLNative.c:198: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:219: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1n_1out’:
+../ISLNative.c:235: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:256: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1n_1param’:
+../ISLNative.c:272: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:293: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1dim’:
+../ISLNative.c:309: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:335: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1basic_1map_1get_1dim’:
+../ISLNative.c:351: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:370: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:372: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1get_1dim’:
+../ISLNative.c:388: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:407: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:409: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1read_1from_1str’:
+../ISLNative.c:425: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:459: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:461: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1sum’:
+../ISLNative.c:477: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:486: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:507: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:509: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1neg’:
+../ISLNative.c:525: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:544: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:546: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1partial_1lexmax’:
+../ISLNative.c:562: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:571: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:580: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:603: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:605: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1partial_1lexmin’:
+../ISLNative.c:621: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:630: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:639: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:662: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:664: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1is_1bijective’:
+../ISLNative.c:680: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1lexmin’:
+../ISLNative.c:717: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:736: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:738: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1lexmax’:
+../ISLNative.c:754: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:773: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:775: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1copy_1basic_1map’:
+../ISLNative.c:791: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:810: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:812: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1drop_1basic_1map’:
+../ISLNative.c:828: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:837: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:858: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:860: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1alloc’:
+../ISLNative.c:876: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:920: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:922: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1universe’:
+../ISLNative.c:938: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:957: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:959: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1empty’:
+../ISLNative.c:975: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:994: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:996: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1empty_1like’:
+../ISLNative.c:1012: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1031: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1033: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1dup’:
+../ISLNative.c:1049: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1068: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1070: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1add_1basic_1map’:
+../ISLNative.c:1086: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1095: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1116: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1118: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1power’:
+../ISLNative.c:1134: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1147: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1167: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1169: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1transitive_1closure’:
+../ISLNative.c:1185: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1195: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1213: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1215: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1identity’:
+../ISLNative.c:1231: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1250: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1252: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1lex_1lt’:
+../ISLNative.c:1268: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1287: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1289: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1lex_1le’:
+../ISLNative.c:1305: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1324: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1326: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1lex_1gt’:
+../ISLNative.c:1342: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1361: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1363: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1lex_1ge’:
+../ISLNative.c:1379: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1398: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1400: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1free’:
+../ISLNative.c:1416: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1identity_1like’:
+../ISLNative.c:1453: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1472: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1474: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1finalize’:
+../ISLNative.c:1490: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1509: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1511: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1copy’:
+../ISLNative.c:1527: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1546: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1548: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1extend’:
+../ISLNative.c:1564: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1598: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1600: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1reverse’:
+../ISLNative.c:1616: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1635: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1637: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1union’:
+../ISLNative.c:1653: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1662: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1683: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1685: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1union_1disjoint’:
+../ISLNative.c:1701: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1710: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1731: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1733: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1intersect_1domain’:
+../ISLNative.c:1749: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1758: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1779: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1781: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1intersect_1range’:
+../ISLNative.c:1797: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1806: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1827: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1829: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1apply_1domain’:
+../ISLNative.c:1845: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1854: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1875: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1877: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1apply_1range’:
+../ISLNative.c:1893: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1902: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1923: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1925: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1product’:
+../ISLNative.c:1941: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1950: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1971: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:1973: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1intersect’:
+../ISLNative.c:1989: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:1998: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2019: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2021: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1subtract’:
+../ISLNative.c:2037: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2046: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2067: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2069: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1fix_1input_1si’:
+../ISLNative.c:2085: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2114: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2116: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1fix_1si’:
+../ISLNative.c:2132: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2166: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2168: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1lower_1bound_1si’:
+../ISLNative.c:2184: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2218: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2220: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1deltas’:
+../ISLNative.c:2236: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2255: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2257: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1detect_1equalities’:
+../ISLNative.c:2273: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2292: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2294: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1affine_1hull’:
+../ISLNative.c:2310: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2329: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2331: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1convex_1hull’:
+../ISLNative.c:2347: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2366: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2368: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1add’:
+../ISLNative.c:2384: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2413: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2415: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1move_1dims’:
+../ISLNative.c:2431: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2475: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2477: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1project_1out’:
+../ISLNative.c:2493: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2527: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2529: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1remove’:
+../ISLNative.c:2545: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2579: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2581: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1remove_1inputs’:
+../ISLNative.c:2597: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2626: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2628: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1domain’:
+../ISLNative.c:2644: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2663: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2665: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1range’:
+../ISLNative.c:2681: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2700: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2702: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1from_1domain’:
+../ISLNative.c:2718: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2737: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2739: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1from_1range’:
+../ISLNative.c:2755: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2774: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2776: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1from_1domain_1and_1range’:
+../ISLNative.c:2792: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2801: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2822: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2824: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1from_1set’:
+../ISLNative.c:2840: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2849: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2870: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2872: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1from_1map’:
+../ISLNative.c:2888: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2907: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2909: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1sample’:
+../ISLNative.c:2925: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:2944: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:2946: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1fast_1is_1empty’:
+../ISLNative.c:2962: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1fast_1is_1universe’:
+../ISLNative.c:2999: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1is_1empty’:
+../ISLNative.c:3036: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1is_1subset’:
+../ISLNative.c:3073: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3082: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1is_1strict_1subset’:
+../ISLNative.c:3121: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3130: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1is_1equal’:
+../ISLNative.c:3169: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3178: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1make_1disjoint’:
+../ISLNative.c:3217: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3236: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3238: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1compute_1divs’:
+../ISLNative.c:3254: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3273: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3275: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1align_1divs’:
+../ISLNative.c:3291: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3310: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3312: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1coalesce’:
+../ISLNative.c:3328: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3347: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3349: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1fast_1is_1equal’:
+../ISLNative.c:3365: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3374: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1lifting’:
+../ISLNative.c:3413: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3432: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3434: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1n_1dim’:
+../ISLNative.c:3450: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3471: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1n_1param’:
+../ISLNative.c:3487: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3508: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1dim’:
+../ISLNative.c:3524: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3550: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1read_1from_1str’:
+../ISLNative.c:3566: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3600: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3602: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1basic_1set_1get_1dim’:
+../ISLNative.c:3618: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3637: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3639: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1get_1dim’:
+../ISLNative.c:3655: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3674: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3676: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1printer_1print_1basic_1set’:
+../ISLNative.c:3692: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3701: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3722: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3724: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1printer_1print_1set’:
+../ISLNative.c:3740: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3749: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3770: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3772: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1printer_1print_1basic_1map’:
+../ISLNative.c:3788: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3797: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3818: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3820: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1printer_1print_1map’:
+../ISLNative.c:3836: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3845: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3866: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3868: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1fix_1si’:
+../ISLNative.c:3884: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3918: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3920: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1lower_1bound_1si’:
+../ISLNative.c:3936: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3970: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:3972: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1from_1underlying_1set’:
+../ISLNative.c:3988: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:3997: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4018: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4020: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1to_1underlying_1set’:
+../ISLNative.c:4036: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4055: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4057: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1partial_1lexmin’:
+../ISLNative.c:4073: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4082: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4091: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4114: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4116: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1partial_1lexmax’:
+../ISLNative.c:4132: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4141: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4150: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4173: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4175: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1lexmin’:
+../ISLNative.c:4191: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4210: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4212: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1lexmax’:
+../ISLNative.c:4228: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4247: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4249: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1follows_1at’:
+../ISLNative.c:4265: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4274: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1alloc’:
+../ISLNative.c:4318: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4357: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4359: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1extend’:
+../ISLNative.c:4375: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4404: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4406: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1empty’:
+../ISLNative.c:4422: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4441: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4443: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1empty_1like’:
+../ISLNative.c:4459: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4478: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4480: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1universe’:
+../ISLNative.c:4496: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4515: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4517: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1universe_1like’:
+../ISLNative.c:4533: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4552: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4554: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1add_1basic_1set’:
+../ISLNative.c:4570: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4579: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4600: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4602: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1finalize’:
+../ISLNative.c:4618: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4637: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4639: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1copy’:
+../ISLNative.c:4655: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4674: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4676: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1free’:
+../ISLNative.c:4692: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1dup’:
+../ISLNative.c:4729: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4748: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4750: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1sample’:
+../ISLNative.c:4766: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4785: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4787: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1sample_1point’:
+../ISLNative.c:4803: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4822: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4824: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1detect_1equalities’:
+../ISLNative.c:4840: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4859: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4861: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1affine_1hull’:
+../ISLNative.c:4877: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4896: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4898: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1convex_1hull’:
+../ISLNative.c:4914: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4933: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4935: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1simple_1hull’:
+../ISLNative.c:4951: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:4970: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:4972: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1bounded_1simple_1hull’:
+../ISLNative.c:4988: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5007: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5009: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1union_1disjoint’:
+../ISLNative.c:5025: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5034: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5055: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5057: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1union’:
+../ISLNative.c:5073: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5082: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5103: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5105: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1product’:
+../ISLNative.c:5121: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5130: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5151: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5153: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1intersect’:
+../ISLNative.c:5169: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5178: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5199: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5201: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1subtract’:
+../ISLNative.c:5217: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5226: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5247: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5249: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1complement’:
+../ISLNative.c:5265: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5284: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5286: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1apply’:
+../ISLNative.c:5302: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5311: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5332: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5334: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1fix_1dim_1si’:
+../ISLNative.c:5350: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5379: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5381: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1add’:
+../ISLNative.c:5397: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5426: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5428: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1move_1dims’:
+../ISLNative.c:5444: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5488: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5490: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1project_1out’:
+../ISLNative.c:5506: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5540: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5542: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1eliminate_1dims’:
+../ISLNative.c:5558: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5587: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5589: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1remove’:
+../ISLNative.c:5605: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5639: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5641: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1remove_1dims’:
+../ISLNative.c:5657: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5686: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5688: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1remove_1divs’:
+../ISLNative.c:5704: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5723: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5725: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1swap_1vars’:
+../ISLNative.c:5741: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5765: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:5767: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1fast_1is_1empty’:
+../ISLNative.c:5783: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1fast_1is_1universe’:
+../ISLNative.c:5820: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1is_1empty’:
+../ISLNative.c:5857: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1is_1subset’:
+../ISLNative.c:5894: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5903: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1is_1strict_1subset’:
+../ISLNative.c:5942: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5951: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1is_1equal’:
+../ISLNative.c:5990: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:5999: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1make_1disjoint’:
+../ISLNative.c:6038: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6057: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6059: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1align_1divs’:
+../ISLNative.c:6075: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6094: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6096: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1gist’:
+../ISLNative.c:6112: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6121: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6130: attention : passing argument 2 of ‘isl_set_gist’ from incompatible pointer type
+../ISLNative.c:6142: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6144: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1coalesce’:
+../ISLNative.c:6160: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6179: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6181: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1fast_1is_1equal’:
+../ISLNative.c:6197: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6206: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1fast_1is_1disjoint’:
+../ISLNative.c:6245: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6254: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1get_1hash’:
+../ISLNative.c:6293: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6314: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1dim_1is_1unique’:
+../ISLNative.c:6330: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1from_1point’:
+../ISLNative.c:6372: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6391: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6393: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1box_1from_1points’:
+../ISLNative.c:6409: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6418: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6439: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6441: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1lift’:
+../ISLNative.c:6457: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6476: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6478: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1size’:
+../ISLNative.c:6494: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1compute_1divs’:
+../ISLNative.c:6531: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6550: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6552: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1alloc’:
+../ISLNative.c:6568: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6597: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6599: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1dup’:
+../ISLNative.c:6615: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6634: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6636: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1extend’:
+../ISLNative.c:6652: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6681: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6683: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1identity’:
+../ISLNative.c:6699: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6723: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6725: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1copy’:
+../ISLNative.c:6741: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6760: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6762: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1cow’:
+../ISLNative.c:6778: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6797: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6799: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1free’:
+../ISLNative.c:6815: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1swap_1cols’:
+../ISLNative.c:6852: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6881: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6883: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1swap_1rows’:
+../ISLNative.c:6899: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6928: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6930: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1vec_1product’:
+../ISLNative.c:6946: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6955: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:6976: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:6978: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1vec_1mat_1product’:
+../ISLNative.c:6994: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7003: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7024: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7026: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1vec_1inverse_1product’:
+../ISLNative.c:7042: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7051: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7072: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7074: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1aff_1direct_1sum’:
+../ISLNative.c:7090: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7099: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7120: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7122: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1left_1hermite’:
+../ISLNative.c:7138: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7150: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7159: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7184: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7186: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1lin_1to_1aff’:
+../ISLNative.c:7202: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7221: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7223: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1inverse_1product’:
+../ISLNative.c:7239: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7248: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7269: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7271: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1product’:
+../ISLNative.c:7287: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7296: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7317: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7319: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1transpose’:
+../ISLNative.c:7335: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7354: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7356: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1right_1inverse’:
+../ISLNative.c:7372: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7391: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7393: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1right_1kernel’:
+../ISLNative.c:7409: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7428: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7430: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1drop_1cols’:
+../ISLNative.c:7446: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7475: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7477: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1drop_1rows’:
+../ISLNative.c:7493: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7522: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7524: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1insert_1cols’:
+../ISLNative.c:7540: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7569: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7571: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1col_1mul’:
+../ISLNative.c:7587: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7606: attention : passing argument 3 of ‘isl_mat_col_mul’ makes pointer from integer without a cast
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1col_1submul’:
+../ISLNative.c:7639: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7658: attention : passing argument 3 of ‘isl_mat_col_submul’ makes pointer from integer without a cast
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1unimodular_1complete’:
+../ISLNative.c:7691: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7715: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7717: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1from_1row_1vec’:
+../ISLNative.c:7733: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7752: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7754: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1concat’:
+../ISLNative.c:7770: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7779: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7800: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7802: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1vec_1concat’:
+../ISLNative.c:7818: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7827: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7848: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7850: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1mat_1is_1equal’:
+../ISLNative.c:7866: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7875: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1ctx_1options’:
+../ISLNative.c:7914: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:7933: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7935: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1ctx_1alloc’:
+../ISLNative.c:7959: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:7961: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1ctx_1ref’:
+../ISLNative.c:7977: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1ctx_1deref’:
+../ISLNative.c:8014: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1ctx_1free’:
+../ISLNative.c:8051: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1alloc’:
+../ISLNative.c:8088: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8122: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8124: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1set_1alloc’:
+../ISLNative.c:8140: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8169: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8171: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1copy’:
+../ISLNative.c:8187: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8206: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8208: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1cow’:
+../ISLNative.c:8224: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8243: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8245: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1free’:
+../ISLNative.c:8261: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1set_1name’:
+../ISLNative.c:8298: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8337: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8339: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1get_1name’:
+../ISLNative.c:8355: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1extend’:
+../ISLNative.c:8403: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8437: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8439: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1equal’:
+../ISLNative.c:8455: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8464: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1match’:
+../ISLNative.c:8503: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8515: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1compatible’:
+../ISLNative.c:8561: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8570: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1size’:
+../ISLNative.c:8609: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8635: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1total’:
+../ISLNative.c:8651: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8672: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1add’:
+../ISLNative.c:8688: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8717: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8719: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1join’:
+../ISLNative.c:8735: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8744: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8765: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8767: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1product’:
+../ISLNative.c:8783: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8792: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8813: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8815: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1map’:
+../ISLNative.c:8831: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8850: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8852: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1reverse’:
+../ISLNative.c:8868: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8887: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8889: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1drop’:
+../ISLNative.c:8905: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8939: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8941: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1drop_1inputs’:
+../ISLNative.c:8957: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:8986: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:8988: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1drop_1outputs’:
+../ISLNative.c:9004: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9033: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9035: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1domain’:
+../ISLNative.c:9051: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9070: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9072: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1range’:
+../ISLNative.c:9088: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9107: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9109: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1dim_1underlying’:
+../ISLNative.c:9125: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9149: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9151: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1printer_1set_1output_1format’:
+../ISLNative.c:9167: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9191: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9193: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1get_1basic_1map_1at’:
+../ISLNative.c:9209: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9233: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9235: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1numberof_1basic_1map’:
+../ISLNative.c:9251: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1get_1basic_1set_1at’:
+../ISLNative.c:9288: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9312: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9314: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1numberof_1basic_1set’:
+../ISLNative.c:9330: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1next’:
+../ISLNative.c:9367: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9386: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9388: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1has_1next’:
+../ISLNative.c:9404: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1is_1equal’:
+../ISLNative.c:9441: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9450: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1dim’:
+../ISLNative.c:9489: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1get_1constant_1as_1si’:
+../ISLNative.c:9531: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9552: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1get_1coefficient_1as_1si’:
+../ISLNative.c:9568: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9599: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1get_1number_1of_1coefficient’:
+../ISLNative.c:9615: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1get_1number_1of_1coefficient_1for_1dim’:
+../ISLNative.c:9652: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1get_1line_1at’:
+../ISLNative.c:9694: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9718: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9720: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1to_1string’:
+../ISLNative.c:9736: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1div_1get_1denominator_1as_1si’:
+../ISLNative.c:9774: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9795: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1div’:
+../ISLNative.c:9811: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9835: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9837: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1is_1equality’:
+../ISLNative.c:9853: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1card’:
+../ISLNative.c:9890: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9909: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9911: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1card’:
+../ISLNative.c:9927: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9946: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:9948: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1qpolynomial_1to_1string’:
+../ISLNative.c:9964: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:9973: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1pw_1qpolynomial_1to_1string’:
+../ISLNative.c:10018: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10027: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1qpolynomial_1number_1of_1terms’:
+../ISLNative.c:10072: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1qpolynomial_1term_1at’:
+../ISLNative.c:10109: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10133: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:10135: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1pw_1qpolynomial_1number_1of_1pieces’:
+../ISLNative.c:10151: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1pw_1qpolynomial_1qpol_1at’:
+../ISLNative.c:10188: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10212: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:10214: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1pw_1qpolynomial_1set_1at’:
+../ISLNative.c:10230: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10254: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:10256: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1term_1get_1n’:
+../ISLNative.c:10272: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1term_1get_1d’:
+../ISLNative.c:10309: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1term_1get_1exp’:
+../ISLNative.c:10346: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1term_1get_1div’:
+../ISLNative.c:10393: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10417: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:10419: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1basic_1set_1to_1string’:
+../ISLNative.c:10435: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10444: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10456: attention : passing argument 2 of ‘isl_basic_set_to_string’ from incompatible pointer type
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1set_1to_1string’:
+../ISLNative.c:10489: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10498: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1basic_1map_1to_1string’:
+../ISLNative.c:10543: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10552: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10564: attention : passing argument 2 of ‘isl_basic_map_to_string’ from incompatible pointer type
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1map_1to_1string’:
+../ISLNative.c:10597: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10606: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1qpolynomial_1is_1cst’:
+../ISLNative.c:10651: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10660: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10669: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1basic_1map_1first_1constraint’:
+../ISLNative.c:10710: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10729: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:10731: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1basic_1set_1first_1constraint’:
+../ISLNative.c:10747: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10766: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:10768: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1basic_1set_1get_1numberof_1constraints’:
+../ISLNative.c:10784: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10805: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1basic_1set_1get_1constraint_1at’:
+../ISLNative.c:10821: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10845: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:10847: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1get_1name_1at’:
+../ISLNative.c:10863: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1get_1constant’:
+../ISLNative.c:10911: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10920: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1constraint_1get_1coefficient’:
+../ISLNative.c:10959: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c:10974: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1int_1to_1string’:
+../ISLNative.c:11017: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_isl_1int_1to_1int’:
+../ISLNative.c:11055: attention : transtypage vers un pointeur depuis un entier de taille différente
+../ISLNative.c: In function ‘Java_fr_irisa_cairn_jnimap_isl_jni_ISLNative_new_1int’:
+../ISLNative.c:11100: attention : transtypage d'un pointeur vers un entier de taille différente
+../ISLNative.c:11102: attention : transtypage d'un pointeur vers un entier de taille différente
+cd ../ ; gcc  -I/usr/local/include/isl/ -I../  -o  ISLUser.o -c -I./ ISLUser.c 
+ISLUser.c: In function ‘isl_basic_set_get_constraint_at’:
+ISLUser.c:122: attention : return makes pointer from integer without a cast
+ISLUser.c:128: attention : return makes pointer from integer without a cast
+ISLUser.c: In function ‘isl_constraint_get_name_at’:
+ISLUser.c:158: attention : return discards qualifiers from pointer target type
+ISLUser.c: In function ‘isl_qpolynomial_term_at’:
+ISLUser.c:236: attention : format ‘%d’ expects type ‘int’, but argument 2 has type ‘struct isl_term *’
+cc -m32 -fPIC -I/usr/lib/jvm/java-6-sun-1.6.0.14/include -I/usr/lib/jvm/java-6-sun-1.6.0.14/include/linux -I./ -I../ -I/usr/local/include/isl/ -I../   -O3 -static-libgcc -Wl,-Bstatic -lc   -c -o ../ISLUser_tostring.o ../ISLUser_tostring.c
+../ISLUser_tostring.c: In function ‘isl_set_to_string’:
+../ISLUser_tostring.c:84: attention : noms de paramètres (sans type) dans la déclaration de fonction
+mkdir -p ../../lib/
+cc -m32 -fPIC -I/usr/lib/jvm/java-6-sun-1.6.0.14/include -I/usr/lib/jvm/java-6-sun-1.6.0.14/include/linux -I./ -I../ -I/usr/local/include/isl/ -I../   -O3 -static-libgcc -Wl,-Bstatic -lc -o ../../lib/linux-32-libjniisl.so -shared ISLNative.o ../ISLUser.o ../ISLUser_tostring.o -L/usr/local/lib/ -static-libgcc -Wl,-Bstatic  -lbarvinok -lisl -lisl-polylib -lpolylibgmp -lntl -lstdc++ -lpiplibMP -lgmp -lm     
+cd ../../ && \
+		mkdir -p ./jar/ && \
+		javadoc fr.irisa.cairn.jnimap.isl.jni -sourcepath ./src-gen/ -d ./jar/javadoc/ && \
+		cp ./lib/*.so ./jar && \
+		cd ./jar/ && \
+			mkdir -p ./lib/ && \
+			mv *.so ./lib/ && \
+			echo "Main-Class: Export-Package: fr.irisa.cairn.jnimap.isl.jni" > MANIFEST.MF && \
+			jar cvmf MANIFEST.MF fr.irisa.cairn.jnimap.isl.jar  -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLInt.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLFold.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLDimType.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLPrinter.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLContext.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLStream.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLBasicMap.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLMap.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLSet.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLMatrix.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLVector.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLDim.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLBasicSet.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLOptions.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLPoint.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLConstraint.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLDiv.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLQPolynomial.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLPWQPolynomial.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/JNIISLTerm.class -C ../bin/ fr/irisa/cairn/jnimap/isl/jni/ISLNative.class   javadoc -C ./lib/ . && \
+		cd ../ && \
+		mv ./jar/fr.irisa.cairn.jnimap.isl.jar  ./fr.irisa.cairn.jnimap.isl.jar  && \
+		rm -rf ./jar/
+Creating destination directory: "./jar/javadoc/"
+Loading source files for package fr.irisa.cairn.jnimap.isl.jni...
+Constructing Javadoc information...
+Standard Doclet version 1.6.0_0
+Building tree for all the packages and classes...
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//ISLException.html...
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//ISLNative.html...
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLBasicMap.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLBasicMap.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLBasicSet.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLBasicSet.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLConstraint.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLConstraint.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLContext.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLContext.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLDim.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLDim.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLDimType.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLDimType.java:17: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLDiv.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLDiv.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLFold.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLFold.java:17: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLInt.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLInt.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLMap.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLMap.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLMatrix.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLMatrix.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLOptions.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLOptions.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLPoint.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLPoint.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLPrinter.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLPrinter.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLPWQPolynomial.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLPWQPolynomial.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLQPolynomial.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLQPolynomial.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLSet.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLSet.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLStream.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLStream.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLTerm.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLTerm.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIISLVector.html...
+/home/sderrien/workspace-helios/fr.irisa.cairn.jnimap.isl/./src-gen/fr/irisa/cairn/jnimap/isl/jni/JNIISLVector.java:20: warning - @generated is an unknown tag.
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIObject.html...
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIPtrInt.html...
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIPtrJNIISLMatrix.html...
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//JNIPtrJNIISLSet.html...
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//package-frame.html...
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//package-summary.html...
+Generating ./jar/javadoc/fr/irisa/cairn/jnimap/isl/jni//package-tree.html...
+Generating ./jar/javadoc/constant-values.html...
+Generating ./jar/javadoc/serialized-form.html...
+Building index for all the packages and classes...
+Generating ./jar/javadoc/overview-tree.html...
+Generating ./jar/javadoc/index-all.html...
+Generating ./jar/javadoc/deprecated-list.html...
+Building index for all classes...
+Generating ./jar/javadoc/allclasses-frame.html...
+Generating ./jar/javadoc/allclasses-noframe.html...
+Generating ./jar/javadoc/index.html...
+Generating ./jar/javadoc/help-doc.html...
+Generating ./jar/javadoc/stylesheet.css...
+20 warnings
+manifest ajouté
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLInt.class (entrée = 1891) (sortie = 915) (51% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLFold.class (entrée = 977) (sortie = 521) (46% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLDimType.class (entrée = 1142) (sortie = 592) (48% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLPrinter.class (entrée = 2962) (sortie = 1077) (63% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLContext.class (entrée = 2063) (sortie = 924) (55% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLStream.class (entrée = 1840) (sortie = 848) (53% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLBasicMap.class (entrée = 2103) (sortie = 926) (55% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLMap.class (entrée = 14343) (sortie = 4377) (69% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLSet.class (entrée = 13261) (sortie = 4137) (68% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLMatrix.class (entrée = 6246) (sortie = 2179) (65% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLVector.class (entrée = 1950) (sortie = 876) (55% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLDim.class (entrée = 5656) (sortie = 2089) (63% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLBasicSet.class (entrée = 2744) (sortie = 1116) (59% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLOptions.class (entrée = 1458) (sortie = 727) (50% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLPoint.class (entrée = 1285) (sortie = 655) (49% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLConstraint.class (entrée = 4504) (sortie = 1615) (64% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLDiv.class (entrée = 1479) (sortie = 748) (49% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLQPolynomial.class (entrée = 2278) (sortie = 995) (56% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLPWQPolynomial.class (entrée = 3083) (sortie = 1193) (61% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/JNIISLTerm.class (entrée = 2145) (sortie = 969) (54% compressés)
+ajout : fr/irisa/cairn/jnimap/isl/jni/ISLNative.class (entrée = 10333) (sortie = 3936) (61% compressés)
+ajout : javadoc/ (entrée = 0) (sortie = 0) (0% stocké)
+ajout : javadoc/index.html (entrée = 1322) (sortie = 675) (48% compressés)
+ajout : javadoc/help-doc.html (entrée = 8616) (sortie = 2530) (70% compressés)
+ajout : javadoc/resources/ (entrée = 0) (sortie = 0) (0% stocké)
+ajout : javadoc/resources/inherit.gif (entrée = 57) (sortie = 57) (0% compressés)
+ajout : javadoc/stylesheet.css (entrée = 1391) (sortie = 428) (69% compressés)
+ajout : javadoc/package-list (entrée = 30) (sortie = 29) (3% compressés)
+ajout : javadoc/constant-values.html (entrée = 4860) (sortie = 1142) (76% compressés)
+ajout : javadoc/allclasses-frame.html (entrée = 4429) (sortie = 744) (83% compressés)
+ajout : javadoc/overview-tree.html (entrée = 9641) (sortie = 1553) (83% compressés)
+ajout : javadoc/deprecated-list.html (entrée = 4796) (sortie = 1144) (76% compressés)
+ajout : javadoc/fr/ (entrée = 0) (sortie = 0) (0% stocké)
+ajout : javadoc/fr/irisa/ (entrée = 0) (sortie = 0) (0% stocké)
+ajout : javadoc/fr/irisa/cairn/ (entrée = 0) (sortie = 0) (0% stocké)
+ajout : javadoc/fr/irisa/cairn/jnimap/ (entrée = 0) (sortie = 0) (0% stocké)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/ (entrée = 0) (sortie = 0) (0% stocké)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/ (entrée = 0) (sortie = 0) (0% stocké)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLSet.html (entrée = 84820) (sortie = 6687) (92% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/package-summary.html (entrée = 12210) (sortie = 1565) (87% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLInt.html (entrée = 12628) (sortie = 2163) (82% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIObject.html (entrée = 12556) (sortie = 2118) (83% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIPtrJNIISLMatrix.html (entrée = 10289) (sortie = 1943) (81% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLConstraint.html (entrée = 25367) (sortie = 2936) (88% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLPoint.html (entrée = 11505) (sortie = 2069) (82% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLStream.html (entrée = 13142) (sortie = 2224) (83% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLPrinter.html (entrée = 17592) (sortie = 2409) (86% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/package-tree.html (entrée = 10379) (sortie = 1540) (85% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLDiv.html (entrée = 12095) (sortie = 2141) (82% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLQPolynomial.html (entrée = 14791) (sortie = 2359) (84% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLBasicSet.html (entrée = 16662) (sortie = 2478) (85% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLDimType.html (entrée = 15141) (sortie = 2197) (85% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLVector.html (entrée = 13651) (sortie = 2229) (83% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIPtrJNIISLSet.html (entrée = 9988) (sortie = 1937) (80% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/ISLNative.html (entrée = 180193) (sortie = 12239) (93% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLOptions.html (entrée = 12017) (sortie = 2098) (82% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLPWQPolynomial.html (entrée = 17606) (sortie = 2517) (85% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLMap.html (entrée = 96162) (sortie = 7158) (92% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLBasicMap.html (entrée = 14099) (sortie = 2297) (83% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/package-frame.html (entrée = 4038) (sortie = 788) (80% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLTerm.html (entrée = 14485) (sortie = 2308) (84% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLFold.html (entrée = 12756) (sortie = 2107) (83% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLMatrix.html (entrée = 40627) (sortie = 4203) (89% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIPtrInt.html (entrée = 10160) (sortie = 1939) (80% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLDim.html (entrée = 35071) (sortie = 3409) (90% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/ISLException.html (entrée = 9394) (sortie = 1927) (79% compressés)
+ajout : javadoc/fr/irisa/cairn/jnimap/isl/jni/JNIISLContext.html (entrée = 14711) (sortie = 2310) (84% compressés)
+ajout : javadoc/index-all.html (entrée = 210045) (sortie = 11919) (94% compressés)
+ajout : javadoc/allclasses-noframe.html (entrée = 3909) (sortie = 727) (81% compressés)
+ajout : javadoc/serialized-form.html (entrée = 5556) (sortie = 1288) (76% compressés)
+ajout : linux-32-libjniisl.so (entrée = 6108169) (sortie = 2302235) (62% compressés)

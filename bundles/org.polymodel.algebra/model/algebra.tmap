@@ -1,0 +1,109 @@
+TomMapping algebra;
+prefix "org.polymodel";
+fullyQualified;
+import "platform:/resource/org.polymodel.algebra/model/algebra.ecore";
+
+/*
+
+%include {algebra_affine_ops.tom}
+%include {algebra_reductions_ops.tom}
+%include {algebra_quasiaffine_ops.tom}
+%include {algebra_polynomial_ops.tom}
+%include {algebra_domains_ops.tom}
+
+*/ 
+
+terminals {
+	define { 
+		ICS :  algebra.IntConstraintSystem,
+		ICSL : algebra.IntConstraintSystem [],
+		E : algebra.IntExpression , 
+		EL : algebra.IntExpression [] , 
+		V : algebra.Variable ,
+		vars : algebra.Variable[] , 
+		T : algebra.IntTerm ,
+		terms : algebra.IntTerm [] , 
+		C : algebra.IntConstraint , 
+		CL : algebra.IntConstraint [],
+		pterm : algebra.polynomials.PolynomialTerm,
+		pterms : algebra.polynomials.PolynomialTerm [],
+		pvar : algebra.polynomials.PolynomialVariable,
+		pvars : algebra.polynomials.PolynomialVariable []
+	} 
+}
+	 
+module base {
+	operators {
+		op var :: algebra.Variable(name);
+		op composite :: algebra.CompositeIntExpression(operator,left,right);
+		op select :: algebra.SelectExpression(condition,then,else);
+	}
+}   
+
+module affine {
+	operators {
+		op affine :: algebra.affine.AffineExpression ( terms );
+		op term :: algebra.affine.AffineTerm ( coef , variable ); 
+		op constant :: algebra.affine.AffineTerm ( variable = "null" , coef );
+	}
+}  
+
+module quasiaffine {
+	operators {
+		//Quasi-affine
+		op qaffine :: algebra.quasiAffine.QuasiAffineExpression(terms);
+		op qterm :: algebra.quasiAffine.SimpleQuasiAffineTerm ( expression , ignore coef , ignore operator );
+		op mul :: algebra.quasiAffine.SimpleQuasiAffineTerm ( expression , coef , operator = MUL );
+		op mod :: algebra.quasiAffine.SimpleQuasiAffineTerm ( expression , coef , operator = MOD );
+		op ceil :: algebra.quasiAffine.SimpleQuasiAffineTerm ( expression , coef , operator = CEIL );
+		op floor :: algebra.quasiAffine.SimpleQuasiAffineTerm ( expression , coef , operator = FLOOR );
+		op div :: algebra.quasiAffine.SimpleQuasiAffineTerm ( expression , coef , operator = DIV );
+	
+		op nqterm :: algebra.quasiAffine.NestedQuasiAffineTerm ( expression , ignore coef , ignore operator );
+		op nmul :: algebra.quasiAffine.NestedQuasiAffineTerm ( expression , coef , operator = MUL );
+		op nmod :: algebra.quasiAffine.NestedQuasiAffineTerm ( expression , coef , operator = MOD );
+		op nceil :: algebra.quasiAffine.NestedQuasiAffineTerm ( expression , coef , operator = CEIL );
+		op nfloor :: algebra.quasiAffine.NestedQuasiAffineTerm ( expression , coef , operator = FLOOR );
+		op ndiv :: algebra.quasiAffine.NestedQuasiAffineTerm ( expression , coef , operator = DIV );
+	}
+}  
+	
+
+module reductions {
+	operators {
+		//Reductions
+		op reduction:: algebra.reductions.ReductionExpression ( expressions , operator);
+		op prod :: algebra.reductions.ReductionExpression ( expressions , operator = PROD );
+		op sum :: algebra.reductions.ReductionExpression ( expressions , operator = SUM );
+		op max :: algebra.reductions.ReductionExpression ( expressions , operator = MAX );
+		op min :: algebra.reductions.ReductionExpression( expressions , operator = MIN );
+	}
+}  
+module polynomial {
+	operators {
+		//Polynomials
+		op polynomial :: algebra.polynomials.PolynomialExpression(terms);
+		op pterm :: algebra.polynomials.PolynomialTerm (numerator, denominator, variables);
+//		op pterm :: algebra.polynomials.PolynomialTerm (numerator = "1", variables, denominator = "1");
+		op pvar  :: algebra.polynomials.PolynomialVariable(variable, exponent);
+	}
+}
+
+module domains {
+	operators {
+	 
+		//Constraints
+		op contraint :: algebra.IntConstraint (lhs,comparisonOperator,rhs);
+		op eq :: algebra.IntConstraint ( lhs , rhs , comparisonOperator = EQ );
+		op ne :: algebra.IntConstraint ( lhs , rhs , comparisonOperator = NE );
+		op ge :: algebra.IntConstraint ( lhs , rhs , comparisonOperator = GE );
+		op le :: algebra.IntConstraint ( lhs , rhs , comparisonOperator = LE );
+		op gt :: algebra.IntConstraint ( lhs , rhs , comparisonOperator = GT );
+		op lt :: algebra.IntConstraint ( lhs , rhs , comparisonOperator = LT );
+		
+		op system :: algebra.IntConstraintSystem (constraints);  
+	}
+}
+
+
+

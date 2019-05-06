@@ -1,0 +1,20 @@
+affine Jacobi2DSkewed {N,M,T|N-2>=0 && M-2>=0 && T>=0}
+input
+	double A {i,j|-i+N-1>=0 && i>=0 && -j+M-1>=0 && j>=0};
+output
+	double B {i,j|-i+N-1>=0 && i>=0 && -j+M-1>=0 && j>=0};
+local
+	double temp {i,j,t|t>=0 && j-t>=0 && i-t>=0 && -i+t+N-1>=0 && -j+t+M-1>=0 && -t+T>=0};
+let
+temp[i,j,t] = case
+	{|t==0} : A[i-t,j-t];
+	{|-i+t==0 && i-1>=0} : temp[i-1,j-1,t-1];
+	{|-i+t+N-1==0 && i-N>=0} : temp[i-1,j-1,t-1];
+	{|-j+t==0 && i-j-1>=0 && j-1>=0 && -i+j+N-2>=0} : temp[i-1,j-1,t-1];
+	{|-j+t+M-1==0 && -i+j+N-M-1>=0 && i-j+M-2>=0 && j-M>=0} : temp[i-1,j-1,t-1];
+	{|t-1>=0 && j-t-1>=0 && i-t-1>=0 && -i+t+N-2>=0 && -j+t+M-2>=0} : (temp[i-2,j-2,t-1] + temp[i-1,j-2,t-1] + temp[i,j-2,t-1]
+																	+ temp[i-2,j-1,t-1] + temp[i-1,j-1,t-1] + temp[i,j-1,t-1]
+																	+ temp[i-2,j,t-1] + temp[i-1,j,t-1] + temp[i,j,t-1]) * 0.1111111111;
+	esac;
+B[i,j] = temp[i+T,j+T,T];
+.

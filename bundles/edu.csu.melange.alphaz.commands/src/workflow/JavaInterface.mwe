@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<workflow>
+	<!--<property name="model" value="edu.csu.melange.alphaz.commands/src/model/alphazCommands.commandif" />-->
+	<property name="MDEmodel" value="edu.csu.melange.alphaz.commands/src/model/alphazMDECommands.commandif" />
+	<!--<property name="src-gen" value="../edu.csu.melange.alphaz/src-gen" />-->
+	<property name="MDEsrc-gen" value="../edu.csu.melange.alphaz.mde/src-gen" />
+ 
+	<!-- set up EMF for standalone execution -->
+	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" >
+		<platformUri value=".."/>
+	</bean>
+ 
+	<!-- load model and store it in slot 'model' -->
+	<!--<component class="org.eclipse.emf.mwe.utils.Reader">
+		<uri value="platform:/resource/${model}" />
+		<modelSlot value="model" />
+	</component>-->
+ 
+	<!-- load model for MDE and store it in slot 'MDEmodel' -->
+	<component class="org.eclipse.emf.mwe.utils.Reader">
+		<uri value="platform:/resource/${MDEmodel}" />
+		<modelSlot value="MDEmodel" />
+	</component>
+ 
+	<!-- clean -->
+	<!-- <component class="org.eclipse.emf.mwe.utils.DirectoryCleaner" directory="${src-gen}"/> -->
+ 
+	<!--  generate code for alphaz -->
+	<!--<component class="org.eclipse.xpand2.Generator">
+		<metaModel class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<metaModelPackage value="commandIF.CommandIFPackage"/>
+		</metaModel>
+		<expand
+			value="template::JavaInterface::root FOR model" />
+		<outlet path="${src-gen}" />
+   <prSrcPaths value="${src-gen}"/>
+   <prDefaultExcludes value="true"/>
+	</component>-->
+	
+	<!--  generate code for alphaz.mde -->
+	<component class="org.eclipse.xpand2.Generator">
+		<metaModel class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<!-- specify metamodel -->
+			<metaModelPackage value="commandIF.CommandIFPackage"/>
+		</metaModel>
+		<expand
+			value="template::JavaInterface::root FOR MDEmodel" />
+		<outlet path="${MDEsrc-gen}" />
+		   <!-- protected regions configuration -->
+   <prSrcPaths value="${MDEsrc-gen}"/>
+   <prDefaultExcludes value="true"/>
+	</component>
+	
+
+	
+	
+</workflow>
+

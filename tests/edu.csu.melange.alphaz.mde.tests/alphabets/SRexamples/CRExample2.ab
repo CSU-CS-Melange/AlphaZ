@@ -1,0 +1,11 @@
+affine CREx6 {N | N > 2}
+input int X {i,j|1 <= i <= 3N && 1<=j<=3N};
+      int Y {i,j|1 <= i <= 3N && 1<=j<=3N};
+      int Z {i,j|1 <= i <= 3N && 1<=j<=3N};
+output int R {i|1<=i<=3N};
+let
+    R[i] = reduce(+, [j], case  {|1 <= i <= N && 1 <= j < N} : X[i,j];
+    							{|N <= i <= 2N && j >= N && j < 2N} : Y[i,j];
+    							{|2N <= i <= 3N && j >= 2N} : Z[i,j];
+    					    esac);
+.

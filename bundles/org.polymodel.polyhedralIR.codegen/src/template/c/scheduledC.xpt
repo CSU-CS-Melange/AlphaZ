@@ -1,0 +1,31 @@
+«IMPORT polyIRCG»
+«IMPORT polyIRCG::C»
+«IMPORT polyhedralIR»
+«EXTENSION template::c::genericC»
+«EXTENSION template::c::scheduledC»
+
+
+«AROUND template::c::genericC::commonMacroDefs FOR CompilationUnit»
+«targetDef.proceed()»
+// Reduction Operators
+#define RADD(x,y)    ((x)+=(y))
+#define RMUL(x,y)    ((x)*=(y))
+#define RMAX(x,y)    ((x)=MAX((x),(y)))
+#define RMIN(x,y)    ((x)=MIN((x),(y)))
+«ENDAROUND»
+
+«AROUND template::c::genericC::commonMacroUndefs FOR CompilationUnit»
+«targetDef.proceed()»
+#undef RADD
+#undef RMUL
+#undef RMAX
+#undef RMIN
+«ENDAROUND»
+
+«AROUND template::c::genericC::commonIncludes FOR CompilationUnit»
+«targetDef.proceed()»
+#include<omp.h>
+«ENDAROUND»
+
+«REM»Override expression pretty printing«ENDREM»
+«AROUND template::c::genericC::print(CodeUnit cu, Function function) FOR Expression»«this.printExpressionForScheduledC(function.entryPoint)»«ENDAROUND»

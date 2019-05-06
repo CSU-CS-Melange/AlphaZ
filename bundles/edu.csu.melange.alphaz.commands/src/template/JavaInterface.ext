@@ -1,0 +1,22 @@
+import commandIF;
+extension template::Common reexport;
+
+//Returns the package name of a given Category
+String getPackage(Category this):
+	getPackageHelper((Category)this.eContainer).toLowerCase();
+
+//Helper method of getPackage not intended to be used on its own
+String getPackageHelper(Category this):
+	if (this.eContainer != null) then getPackageHelper((Category)this.eContainer)+"."+this.name else this.name;
+
+//Returns the output file path of a given Category
+String getOutputFile(Category this):
+	getPackageHelper((Category)this.eContainer).replaceAll("\\.", "\\/").toLowerCase()+"/"+this.name.toFirstUpper()+".java";
+
+//Returns the identifier that is unique for each command
+getProtectID(BasicCommand this):
+	getCategory().getPackage()+"."+getCategory().name.toLowerCase()+"."+this.name;//"Command"+this.eContainer.eContents.indexOf(this)+"_"+this.name;
+
+//Returns identifier of the overloading
+getProtectID(Overloading this):
+	getCategory().getPackage()+"."+getCategory().name.toLowerCase()+"."+this.getName() + "_" + ((Command)this.eContainer).overloads.indexOf(this);

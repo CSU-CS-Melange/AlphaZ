@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scheduling"
+    nsURI="org.polymodel.prdg.scheduling" nsPrefix="scheduling">
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduledStatement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statement" lowerBound="1"
+        eType="ecore:EClass ../../org.polymodel.prdg/model/prdg.ecore#//PRDGNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schedule" upperBound="-1"
+        eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SchedulePrototype" abstract="true">
+    <eOperations name="distribute" upperBound="-1" eType="#//ScheduleTerm"/>
+    <eOperations name="getConstantTerm" eType="#//ScheduleTerm"/>
+    <eOperations name="apply" upperBound="-1" eType="#//ScheduleTerm">
+      <eParameters name="mapping" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Function"/>
+    </eOperations>
+    <eOperations name="getDomain" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"/>
+    <eOperations name="getScheduleIndices" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="terms" upperBound="-1"
+        eType="#//ScheduleTerm" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="coeficients" upperBound="-1"
+        eType="#//ScheduleCoefficient" containment="true" eOpposite="#//ScheduleCoefficient/owner"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleTerm">
+    <eOperations name="isConstant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="distribute" upperBound="-1" eType="#//ScheduleTerm"/>
+    <eOperations name="apply" eType="#//ScheduleTerm">
+      <eParameters name="mapping" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Function"/>
+    </eOperations>
+    <eOperations name="negate" eType="#//ScheduleTerm"/>
+    <eOperations name="simplify"/>
+    <eOperations name="isNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="var" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exp" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//affine/AffineExpression"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dependency" abstract="true">
+    <eOperations name="getTerms" upperBound="-1" eType="#//ScheduleTerm">
+      <eParameters name="constantPart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eOperations>
+    <eOperations name="getCoefficientsContext" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntConstraint"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//SchedulePrototype"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+        eType="#//SchedulePrototype"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StatementSchedulePrototype" eSuperTypes="#//SchedulePrototype">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statement" lowerBound="1"
+        eType="ecore:EClass ../../org.polymodel.prdg/model/prdg.ecore#//PRDGNode"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EdgeDependency" eSuperTypes="#//Dependency">
+    <eOperations name="isUniform" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="edge" lowerBound="1" eType="ecore:EClass ../../org.polymodel.prdg/model/prdg.ecore#//PRDGEdge"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleCoefficient" eSuperTypes="../../org.polymodel.algebra/model/algebra.ecore#//Variable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="#//SchedulePrototype"
+        eOpposite="#//SchedulePrototype/coeficients"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eSubpackages name="structured" nsURI="org.polymodel.prdg.scheduling.structured"
+      nsPrefix="structured">
+    <eClassifiers xsi:type="ecore:EClass" name="Channel">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="edges" upperBound="-1"
+          eType="ecore:EClass ../../org.polymodel.prdg/model/prdg.ecore#//PRDGEdge"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+          eType="#//structured/OutputPort" containment="true" eOpposite="#//structured/OutputPort/channel"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="destination" lowerBound="1"
+          eType="#//structured/InputPort" containment="true" eOpposite="#//structured/InputPort/channel"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="schedule" lowerBound="1"
+          eType="#//structured/ChannelSchedulePrototype" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptDimension" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Process">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+          eType="#//structured/InputPort"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+          eType="#//structured/OutputPort"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="internalNodes" upperBound="-1"
+          eType="ecore:EClass ../../org.polymodel.prdg/model/prdg.ecore#//PRDGNode"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="constraints" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ProcessNetwork">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="processes" lowerBound="1"
+          upperBound="-1" eType="#//structured/Process" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="channels" upperBound="-1"
+          eType="#//structured/Channel" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="prdg" eType="ecore:EClass ../../org.polymodel.prdg/model/prdg.ecore#//PRDG"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DataPort" abstract="true">
+      <eOperations name="getChannel" eType="#//structured/Channel"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="InputPort" eSuperTypes="#//structured/DataPort">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="channel" eType="#//structured/Channel"
+          changeable="false" eOpposite="#//structured/Channel/destination"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="OutputPort" eSuperTypes="#//structured/DataPort">
+      <eOperations name="getSourceNode" eType="ecore:EClass ../../org.polymodel.prdg/model/prdg.ecore#//PRDGNode"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="channel" eType="#//structured/Channel"
+          changeable="false" eOpposite="#//structured/Channel/source"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ChannelSchedulePrototype" eSuperTypes="#//SchedulePrototype">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="channel" eType="#//structured/Channel"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ChannelDependency" abstract="true"
+        eSuperTypes="#//Dependency">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="channel" lowerBound="1"
+          eType="#//structured/Channel"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ChannelReadDependency" eSuperTypes="#//structured/ChannelDependency">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="edge" lowerBound="1"
+          eType="ecore:EClass ../../org.polymodel.prdg/model/prdg.ecore#//PRDGEdge"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ChannelWriteDependency" eSuperTypes="#//structured/ChannelDependency"/>
+    <eClassifiers xsi:type="ecore:EClass" name="MemoryDependency" abstract="true"
+        eSuperTypes="#//structured/ChannelDependency">
+      <eOperations name="getChannel" eType="#//structured/BoundedChannel"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LinearMemoryReadDependency" eSuperTypes="#//structured/ChannelLinearReadDependency #//structured/MemoryDependency"/>
+    <eClassifiers xsi:type="ecore:EClass" name="LinearMemoryWriteDependency" eSuperTypes="#//structured/ChannelLinearWriteDependency #//structured/MemoryDependency"/>
+    <eClassifiers xsi:type="ecore:EClass" name="BoundedChannel" eSuperTypes="#//structured/Channel">
+      <eOperations name="getBoundingCoefficient" eType="#//structured/BoundingCoefficient">
+        <eParameters name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="dimension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="maximalChannelSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="sizeVariable" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="boundingCoefficients"
+          upperBound="-1" eType="#//structured/BoundingCoefficient" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LinearMemoryAllocationDependency"
+        eSuperTypes="#//structured/ChannelLinearReadDependency #//structured/MemoryDependency"/>
+    <eClassifiers xsi:type="ecore:EClass" name="MemoryReadDependency" eSuperTypes="#//structured/ChannelReadDependency #//structured/MemoryDependency">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimensionSizes" unique="false"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MemoryWriteDependency" eSuperTypes="#//structured/ChannelWriteDependency #//structured/MemoryDependency"/>
+    <eClassifiers xsi:type="ecore:EClass" name="MemoryAllocationDependency" eSuperTypes="#//structured/ChannelReadDependency #//structured/MemoryDependency"/>
+    <eClassifiers xsi:type="ecore:EClass" name="MemoryDeallocationDependency" eSuperTypes="#//structured/MemoryDependency">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimensionSizes" unique="false"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LinearDependency">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="subscript" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ChannelLinearReadDependency" eSuperTypes="#//structured/ChannelReadDependency #//structured/LinearDependency"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ChannelLinearWriteDependency" eSuperTypes="#//structured/ChannelWriteDependency #//structured/LinearDependency"/>
+    <eClassifiers xsi:type="ecore:EClass" name="CompositeDependency" eSuperTypes="#//Dependency">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
+          eType="#//Dependency" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependencyDomain" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MultidimDeallocationDependency" eSuperTypes="#//multidim/MultidimDependency">
+      <eOperations name="getDomain" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"/>
+      <eOperations name="getChannel" eType="#//structured/BoundedChannel"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimensionSizes" unique="false"
+          upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MultidimMemoryReadDependencyComponent"
+        eSuperTypes="#//structured/MemoryReadDependency">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="BoundingCoefficient" eSuperTypes="../../org.polymodel.algebra/model/algebra.ecore#//Variable">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="LinearMemoryDeallocationDependency"
+        eSuperTypes="#//structured/MemoryDependency #//structured/LinearDependency"/>
+  </eSubpackages>
+  <eSubpackages name="multidim" nsURI="org.polymodel.prdg.scheduling.structured.multidim"
+      nsPrefix="multidim">
+    <eClassifiers xsi:type="ecore:EClass" name="NullifiableDependency" eSuperTypes="#//Dependency">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="dimension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="previousDimensionsDependencies"
+          upperBound="-1" eType="#//multidim/NullifiableDependency"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="satisfactionVariable"
+          eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependency" eType="#//Dependency"
+          containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="K" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MultidimDependency" eSuperTypes="#//multidim/IObservable">
+      <eOperations name="computeConstraints" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//Domain"/>
+      <eOperations name="getAllScheduleCoefficients" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      <eOperations name="getAllSatisfactionVariables" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      <eOperations name="getAllSourceCoefficients" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      <eOperations name="getAllReferenceCoefficients" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
+          eType="#//multidim/NullifiableDependency" containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MultidimSchedulePrototype">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="prototypes" upperBound="-1"
+          eType="#//SchedulePrototype" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="scalars" upperBound="-1"
+          eType="#//multidim/ScalarSchedulePrototype" containment="true"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+          eType="#//SchedulePrototype"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ScalarSchedulePrototype" abstract="true"
+        interface="true" eSuperTypes="#//SchedulePrototype"/>
+    <eClassifiers xsi:type="ecore:EClass" name="StatementScalarSchedulePrototype"
+        eSuperTypes="#//StatementSchedulePrototype #//multidim/ScalarSchedulePrototype"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ChannelScalarSchedulePrototype" eSuperTypes="#//structured/ChannelSchedulePrototype #//multidim/ScalarSchedulePrototype"/>
+    <eClassifiers xsi:type="ecore:EClass" name="IObservable" instanceClassName="fr.irisa.cairn.graph.observer.IObservable"
+        abstract="true" interface="true"/>
+  </eSubpackages>
+</ecore:EPackage>

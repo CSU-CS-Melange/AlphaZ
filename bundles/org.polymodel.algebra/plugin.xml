@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://polymodel/algebra"
+            class="org.polymodel.algebra.AlgebraPackage"
+            genModel="model/algebra.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://polymodel/algebra/affine"
+            class="org.polymodel.algebra.affine.AffinePackage"
+            genModel="model/algebra.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://polymodel/algebra/quasiAffine"
+            class="org.polymodel.algebra.quasiAffine.QuasiAffinePackage"
+            genModel="model/algebra.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://polymodel/algebra/polynomials"
+            class="org.polymodel.algebra.polynomials.PolynomialsPackage"
+            genModel="model/algebra.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://polymodel/algebra/reductions"
+            class="org.polymodel.algebra.reductions.ReductionsPackage"
+            genModel="model/algebra.genmodel"/>
+   </extension>
+
+</plugin>

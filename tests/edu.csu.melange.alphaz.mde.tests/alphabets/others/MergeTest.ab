@@ -1,0 +1,26 @@
+affine MergeTest {N| N>1}
+input
+	long inA {i | 0<=i<N};
+output
+	long outA {i,j| 0<=i,j<N};
+	long outB {i,j| 0<=i,j<N};
+local
+	long loc1 {i,j|0<=i<j<N};
+	long loc2 {i,j|0<=j<=i<N};
+let
+	loc1 = (i,j->i+j)@inA;
+	loc2 = (i,j->i-j)@inA;
+	
+	outA = case
+		{i,j|i==0 && j==0}: loc2 + 4;
+		{i,j|i==0 && j>0} : loc1;
+		{i,j|i>0} : 1;
+		esac;
+	
+	outB = case
+		{i,j|j==0} : loc2;
+		{i,j|j>0} : 0;
+		esac;
+.
+
+// Merge test: loc1 with loc2

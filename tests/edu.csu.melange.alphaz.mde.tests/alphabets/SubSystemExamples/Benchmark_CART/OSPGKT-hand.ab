@@ -1,0 +1,71 @@
+affine OSPGKT_hand {N| N>1}
+input
+	int A {i | 0<=i<=2N};
+output
+	int C  {i,j,k | 1<=i<=j<=2N && k==j-i};
+local // No local variables
+	int Cacc {i,j,k | 1<=i<j<=2N && 0<=2k<=j-i};
+let
+   C[i,j,k] = case
+	{| i==j && k==j-i}: 0;
+	{| i<j && k==j-i}: Cacc[i,j,0];	
+//	reduce(min, [k], {i,j,k|2k<=j-i}:
+//		min (C[i,i+k]+ C[i+k+1,j] + A[i-1]*A[i+k]*A[j],
+//		C[i,j-k-1]+ C[j-k,j] + A[i-1]*A[j-k-1]*A[j]));
+	esac;
+	Cacc[i,j,k] = case
+	{| 2k+2>j-i}: min (C[i,i+k,k]+ C[i+k+1,j,j-i-k-1] + A[i-1]*A[i+k]*A[j],
+		C[i,j-k-1,j-k-i-1]+ C[j-k,j,k] + A[i-1]*A[j-k-1]*A[j]);
+	{| 2k+2<=j-i}: min (Cacc[i,j,k+1],
+		C[i,i+k,k]+ C[i+k+1,j,j-i-k-1] + A[i-1]*A[i+k]*A[j],
+		C[i,j-k-1,j-i-k-1]+ C[j-k,j,k] + A[i-1]*A[j-k-1]*A[j]);
+	esac;
+.
+
+/*affine OSPGKT_hand {N| N>1}
+input
+	int A {i | 0<=i<=2N};
+output
+	int C  {i,j,k | 1<=i<=j<=2N && k==0};
+local // No local variables
+	int Cacc {i,j,k | 1<=i<j<=2N && 0<=2k<=j-i};
+let
+   C[i,j,k] = case
+	{| i==j && k==0}: 0;
+	{| i<j && k==0}: Cacc[i,j,0];	
+//	reduce(min, [k], {i,j,k|2k<=j-i}:
+//		min (C[i,i+k]+ C[i+k+1,j] + A[i-1]*A[i+k]*A[j],
+//		C[i,j-k-1]+ C[j-k,j] + A[i-1]*A[j-k-1]*A[j]));
+	esac;
+	Cacc[i,j,k] = case
+	{| 2k+2>j-i}: min (C[i,i+k,0]+ C[i+k+1,j,0] + A[i-1]*A[i+k]*A[j],
+		C[i,j-k-1,0]+ C[j-k,j,0] + A[i-1]*A[j-k-1]*A[j]);
+	{| 2k+2<=j-i}: min (Cacc[i,j,k+1],
+		C[i,i+k,0]+ C[i+k+1,j,0] + A[i-1]*A[i+k]*A[j],
+		C[i,j-k-1,0]+ C[j-k,j,0] + A[i-1]*A[j-k-1]*A[j]);
+	esac;
+.*/
+
+/*affine OSPGKT_hand {N| N>1}
+input
+	int A {i | 0<=i<=2N};
+output
+	int C  {i,j | 1<=i<=j<=2N};
+local // No local variables
+	int Cacc {i,j,k | 1<=i<j<=2N && 0<=2k<=j-i};
+let
+   C[i,j] = case
+	{| i==j}: 0;
+	{| i<j}: Cacc[i,j,0];	
+//	reduce(min, [k], {i,j,k|2k<=j-i}:
+//		min (C[i,i+k]+ C[i+k+1,j] + A[i-1]*A[i+k]*A[j],
+//		C[i,j-k-1]+ C[j-k,j] + A[i-1]*A[j-k-1]*A[j]));
+	esac;
+	Cacc[i,j,k] = case
+	{| 2k+2>j-i}: min (C[i,i+k]+ C[i+k+1,j] + A[i-1]*A[i+k]*A[j],
+		C[i,j-k-1]+ C[j-k,j] + A[i-1]*A[j-k-1]*A[j]);
+	{| 2k+2<=j-i}: min (Cacc[i,j,k+1],
+		C[i,i+k]+ C[i+k+1,j] + A[i-1]*A[i+k]*A[j],
+		C[i,j-k-1]+ C[j-k,j] + A[i-1]*A[j-k-1]*A[j]);
+	esac;
+.*/

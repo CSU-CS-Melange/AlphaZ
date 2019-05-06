@@ -1,0 +1,12 @@
+«IMPORT polyIRCG»
+
+«REM»
+This file contains generic expansion rules for platform independent cases.
+Basically it expands the basic rules defined for Body, and Statement.
+«ENDREM»
+
+«DEFINE body FOR Body»«ENDDEFINE»
+«DEFINE statement FOR Statement»«ENDDEFINE»
+
+«DEFINE body FOR BasicBody»«string»«ENDDEFINE»
+«DEFINE statement FOR BasicStatement»«statement»«ENDDEFINE»

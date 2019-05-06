@@ -1,0 +1,17 @@
+affine MutalDep {N| N>1 }
+	input
+		int a {i|0<=i<=N };
+		int b {i|0<=i<=N };
+	output
+		int x {i|0<=i<=N };
+		int y {i|0<=i<=N };
+	let
+		x[i] = case
+			{|i==0 } : a[0];
+			{|1<=i<=N } : x[i-1] + y[i-1] + a[i];
+		esac;
+		y[i] = case
+			{|i==0 } : b[i];
+			{|1<=i<=N } : y[i-1] + x[i] + b[i];
+		esac;
+.

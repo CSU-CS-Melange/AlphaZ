@@ -1,0 +1,16 @@
+affine triangular_imageN2 {N| 0 < N}
+input
+ float A {i, j | 0 <= (i,j) && i+j < N};
+output
+ float X {i | 0 <= i < N};
+local
+ float B {i, j | 0 <= (i,j) && i+j < N};
+let
+  B[i, j] = case
+		{| i == 0 && j == 0}: A[i, j];
+		{| i == 0 && j > 0}: max(B[i, j-1], A[i, j]);
+		{| i > 0 && j == 0}: max(B[i-1, j], A[i, j]);
+		{| i > 0 && j > 0}: max(max(B[i, j-1], B[i, j-1]), A[i, j]);		
+       	    esac;		
+  X[i] = B[i, N-i-1];
+.		      

@@ -1,0 +1,67 @@
+«IMPORT polyIRCG»
+«IMPORT polyIRCG::C»
+«IMPORT polyIRCG::C::distributed»
+«IMPORT polyhedralIR»
+«EXTENSION template::c::genericC»
+«EXTENSION template::c::scheduledC»
+«EXTENSION template::c::mpiC»
+
+
+«AROUND template::c::genericC::commonIncludes FOR CompilationUnit»
+«targetDef.proceed()»
+#include "mpi.h"
+«ENDAROUND»
+
+«REM»Override expression pretty printing«ENDREM»
+«AROUND template::c::genericC::print(CodeUnit cu, Function function) FOR Expression»«this.printExpressionForScheduledC(function.entryPoint)»«ENDAROUND»
+
+«AROUND template::c::genericC::body FOR TiledCLoop»
+//specify the number of threads
+omp_set_num_threads(«getPCountName()»);
+
+«LET this.function.codeunit.functions.selectFirst(e|e.name.matches(getCopyInFunctionName())).signature AS copyIn»
+«LET this.function.codeunit.functions.selectFirst(e|e.name.matches(getCopyOutFunctionName())).signature AS copyOut»
+#define «copyIn.name»() «copyIn.name»(«FOREACH copyIn.parameters AS fp SEPARATOR ','»«fp.asParameter()»«ENDFOREACH»);
+#define «copyOut.name»() «copyOut.name»(«FOREACH copyOut.parameters AS fp SEPARATOR ','»«fp.asParameter()»«ENDFOREACH»);
+
+//main loop
+«targetDef.proceed()»
+
+#undef «copyIn.name»
+#undef «copyOut.name»
+«ENDLET»
+«ENDLET»
+«ENDAROUND»
+
+
+«REM»Function Declarations
+Call customized expansion to remove local parameters only for the entry point function
+«ENDREM»
+«AROUND template::c::genericC::functionSignature FOR Function»
+«IF this.entryPoint»
+«EXPAND fullSignature(inputs.union(outputs).select(e|e.global)) FOR signature»
+«ELSE»
+«EXPAND template::c::genericC::fullSignature(inputs.union(outputs).select(e|e.global)) FOR signature»
+«ENDIF»
+«ENDAROUND»
+
+«REM»Override fullSignature rule so that time and pid are excluded«ENDREM»
+«DEFINE fullSignature(Collection[Variable] globals) FOR FunctionSignature
+»«returnType» «name»(«
+	FOREACH parameters AS param SEPARATOR ','»«param.asParameterType()» «
+		IF globals.exists(e|e.name.matches(param.getName()))»«"TEMP_LOCAL_PREFIX".getCGConstant()»«
+		ENDIF»«param.getName()»«
+ENDFOREACH»)«ENDDEFINE»
+
+«REM»computes number of tiles per processors and others«ENDREM»
+«DEFINE body FOR PartitioningComputation»
+//partitioning computation
+«this.partitionedTile.getPartitioningComputation()»
+«ENDDEFINE»
+
+«REM»extra rules to make the above work
+overrides the most generic rule of body so that the rule body is expanded again with the rules defined in this file visible.
+«ENDREM»
+«AROUND template::generic::body FOR Body»«EXPAND body FOR this»«ENDAROUND»
+«DEFINE body FOR Body»«ENDDEFINE»
+«DEFINE body FOR BasicBody»«string»«ENDDEFINE»

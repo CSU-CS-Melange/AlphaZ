@@ -1,0 +1,12 @@
+affine PrefixSum {N|N-1>= 0}
+input
+float A {i|N-i-1>= 0 && i>= 0};
+output
+float X {i|N-i-1>= 0 && i>= 0};
+local
+let
+X[i] = case
+{|i== 0} : A[0];
+{|i-1>= 0} : (A + X[i-1]);
+esac;
+.

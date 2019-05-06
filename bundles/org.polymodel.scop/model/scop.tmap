@@ -1,0 +1,38 @@
+TomMapping scop;
+prefix "org.polymodel";
+import "platform:/resource/org.polymodel.algebra/model/algebra.tmap";
+import "platform:/resource/org.polymodel.algebra/model/algebra.ecore";
+import "platform:/resource/org.polymodel.scop/model/scop.visitor.ecore";
+
+custom algebra {
+	package "org.polymodel";
+}
+
+terminals {
+	define {
+		nodes : scop.AbstractScopNode [],
+		node  : scop.AbstractScopNode,
+		ScopRoot :scop.ScopRoot
+	}
+	use {
+		algebra.E, algebra.EL, algebra.V, algebra.vars, algebra.ICS
+	}
+}
+module nodes {
+	operators { 
+		op root :: scop.ScopRoot ( statements );
+		//	
+		op loop :: scop.ScopFor ( iterator , LB , UB , stride , body );
+		op block :: scop.ScopBlock ( statements );
+		//	
+		op guard :: scop.ScopGuard ( constraintSystems , thenBody , elseBody );
+		//	
+		op stmtMacro :: scop.ScopStatementMacro ( name , macroParams );
+		//	
+		op unscanned :: scop.ScopUnscannedDomain ( name , macroParams, schedule );
+		//	
+		op assignment :: scop.ScopAssignment ( LHS , RHS );
+	}
+	
+}
+

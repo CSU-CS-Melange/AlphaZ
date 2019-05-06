@@ -1,0 +1,19 @@
+// "temp" skewed by the function (i,j,t -> i+t, j+t, t)
+affine stencil2D_5points {N,M,T|N>=2 && M>=2 && T>=0}
+input
+	double A {i,j|N>=i+1 && i>=0 && M>=j+1 && j>=0};
+output
+	double B {i,j|N>=i+1 && i>=0 && M>=j+1 && j>=0};
+local
+	double temp {i,j,t|t>=0 && j>=t && i>=t && t+N>=i+1 && t+M>=j+1 && T>=t};
+let
+temp[i,j,t] = case
+	{|t==0} : A[i-t,j-t];
+	{|t==i && i>=1} : temp[i-1,j-1,t-1];
+	{|t+N==i+1 && i>=N} : temp[i-1,j-1,t-1];
+	{|t==j && i>=j+1 && j>=1 && j+N>=i+2} : temp[i-1,j-1,t-1];
+	{|t+M==j+1 && j+N>=i+M+1 && i+M>=j+2 && j>=M} : temp[i-1,j-1,t-1];
+	{|t>=1 && j>=t+1 && i>=t+1 && t+N>=i+2 && t+M>=j+2} : ((temp[i-1,j-2,t-1] + temp[i-2,j-1,t-1] + temp[i-1,j-1,t-1] + temp[i,j-1,t-1] + temp[i-1,j,t-1]) / 5);
+esac;
+B[i,j] = temp[i+T,j+T,T];
+.

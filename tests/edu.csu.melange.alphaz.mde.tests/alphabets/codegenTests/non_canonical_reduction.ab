@@ -1,0 +1,32 @@
+affine non_canonical_reduction {N|N>10}
+input
+output
+int body1,body2;
+bool valid;
+local
+bool theorem;
+//int body1,body2 {i,j|0<=i<j<N};
+//bool theorem {i,j|0<=i<j<N};
+//WORKING
+//int body1,body2 {i,j|N-j>= 0 && -i+j-10>= 0 && i-1>= 0};
+//bool theorem {i,j|N-j>= 0 && -i+j-10>= 0 && i-1>= 0};
+let
+
+body1 = reduce(min, (ip,jp->), {ip,jp| 0<=ip<=jp<=N} : [ip-jp]);
+body2 = reduce(min, (ip,jp->), {ip,jp| 0<=ip<=jp<=N} : [ip-jp]);
+
+//body1[i,j] = reduce(min, (i,j,ip,jp->i,j), {i,j,ip,jp| i<=ip<jp<=j} : [ip-i+j-jp-2]);
+//body2[i,j] = reduce(min, (i,j,ip,jp->i,j), {i,j,ip,jp| i<=ip<jp<=j} : [ip-i+j-jp-2]);
+
+//WORKING
+//body1[i,j] = reduce(min, (i,j,ip,jp->i,j), {i,j,ip,jp| -ip+jp-4>= 0 && N+i-j-ip+jp+2>= 0 && -i+ip-2>= 0 && j-jp-4>= 0 && N-jp>= 0 && jp-2>= 0 && ip-1>= 0 && N-ip>= 0 && -i+j-10>= 0} : [ip-i+j-jp-2]);
+//body2[i,j] = reduce(min, (i,j,ip,jp->i,j), {i,j,ip,jp| -ip+jp-4>= 0 && N+i-j-ip+jp+2>= 0 && -i+ip-2>= 0 && j-jp-4>= 0 && N-jp>= 0 && jp-2>= 0 && ip-1>= 0 && N-ip>= 0 && -i+j-10>= 0} : [ip-i+j-jp-2]);
+
+//ORIG
+//body1[i,j] = reduce(min, (i,j,ip,jp->i,j), {|MAXLOOP+i-j-ip+jp+2>= 0 && -i+ip-2>= 0 && -ip+jp-4>= 0 && j-jp-4>= 0} : (((Ebi_sizePenalty([ip-i+j-jp-2]) + Ebi_stacking([jp],[ip])) + Ebi_asymmetry([ip-i-1],[j-jp-1])) + Qprime[ip,jp]));
+//body2[i,j] = reduce(min, (i,j,ip,jp->i,j), {|MAXLOOP+i-j-ip+jp+2>= 0 && -i+ip-2>= 0 && -ip+jp-4>= 0 && j-jp-4>= 0} : (((Ebi_sizePenalty([ip-i+j-jp-2]) + Ebi_stacking([jp],[ip])) + Ebi_asymmetry([ip-i-1],[j-jp-1])) + Qprime[ip,jp]));
+//theorem = body1[i,j] == body2[i,j];
+//valid = reduce(and, [i,j], theorem);
+theorem = body1 == body2;
+valid = theorem;
+.

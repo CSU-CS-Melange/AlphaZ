@@ -1,0 +1,9 @@
+affine SRExample2 {N|N>0}
+input
+   int A,B{i,j|1<=(i,j)<= N};
+output
+   int Y {i|1<=i<=N};
+let
+   Y[i] = reduce(+,(i,j,k->i), {i,j,k|i>=(j,k)>=1} : A[i,j+k]*B[k,j]);
+
+.

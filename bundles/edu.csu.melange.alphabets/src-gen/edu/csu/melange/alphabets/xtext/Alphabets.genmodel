@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/edu.csu.melange.alphabets/src-gen" editDirectory="/edu.csu.melange.alphabets.edit/src"
+    editorDirectory="/edu.csu.melange.alphabets.editor/src" modelPluginID="edu.csu.melange.alphabets"
+    forceOverwrite="true" modelName="Alphabets" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    editPluginID="edu.csu.melange.alphabets.edit" editorPluginID="edu.csu.melange.alphabets.editor"
+    runtimeVersion="2.10">
+  <foreignModel>Alphabets.visitor.ecore</foreignModel>
+  <genPackages prefix="Alphabets" basePackage="edu.csu.melange.alphabets.xtext" disposableProviderFactory="true"
+      ecorePackage="Alphabets.visitor.ecore#/">
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AProgram">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AProgram/externalFunctions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AProgram/systems"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AProgram/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AProgram/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AExternalFunctionDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AExternalFunctionDeclaration/output"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AExternalFunctionDeclaration/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AExternalFunctionDeclaration/inputs"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AExternalFunctionDeclaration/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AExternalFunctionDeclaration/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AExternalFunctionIdentifier">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AExternalFunctionIdentifier/name"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AExternalFunctionIdentifier/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AExternalFunctionIdentifier/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AAffineSystem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AAffineSystem/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAffineSystem/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAffineSystem/inputDeclarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAffineSystem/outputDeclarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAffineSystem/localvarDeclarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAffineSystem/whileDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAffineSystem/equations"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AAffineSystem/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AAffineSystem/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AVariableDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AVariableDeclaration/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AVariableDeclaration/identifierList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AVariableDeclaration/domain"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AVariableDeclaration/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AVariableDeclaration/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AOutputDeclaration">
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AOutputDeclaration/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AOutputDeclaration/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AInputDeclaration">
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AInputDeclaration/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AInputDeclaration/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ALocalDeclaration">
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ALocalDeclaration/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ALocalDeclaration/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AWhileDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AWhileDeclaration/timeDomain"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AWhileDeclaration/cond"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AWhileDeclaration/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AWhileDeclaration/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AIdentifierList">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AIdentifierList/identifiers"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AIdentifierList/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AIdentifierList/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ADomain">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ADomain/polyhedra"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ADomain/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ADomain/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//APolyhedron">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//APolyhedron/indexes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//APolyhedron/constraints"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//APolyhedron/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//APolyhedron/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AEquation">
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AEquation/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AEquation/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AStandardEquation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AStandardEquation/var"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AStandardEquation/indexes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AStandardEquation/expr"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AStandardEquation/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AStandardEquation/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AUseEquation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AUseEquation/extDom"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AUseEquation/nameSubSys"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AUseEquation/param"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AUseEquation/inputs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AUseEquation/outputs"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AUseEquation/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AUseEquation/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AAlphabetsExpression">
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AAlphabetsExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AAlphabetsExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ANotExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//ANotExpression/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ANotExpression/expr"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ANotExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ANotExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ANegateExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//ANegateExpression/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ANegateExpression/expr"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ANegateExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ANegateExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ACaseExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ACaseExpression/exprs"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ACaseExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ACaseExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ADependenceExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ADependenceExpression/func"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ADependenceExpression/expr"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ADependenceExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ADependenceExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ADependenceInArrayNotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//ADependenceInArrayNotation/var"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ADependenceInArrayNotation/dep"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ADependenceInArrayNotation/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ADependenceInArrayNotation/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AIfExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AIfExpression/cond"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AIfExpression/then"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AIfExpression/else"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AIfExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AIfExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AIndexExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AIndexExpression/func"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AIndexExpression/indexes"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AIndexExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AIndexExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AReduceExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AReduceExpression/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AReduceExpression/projection"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AReduceExpression/expr"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AReduceExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AReduceExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ARestrictExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ARestrictExpression/domain"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ARestrictExpression/expr"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ARestrictExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ARestrictExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AVariableExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AVariableExpression/var"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AVariableExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AVariableExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AConstantExpression">
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AConstantExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AConstantExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ABooleanExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//ABooleanExpression/value"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ABooleanExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ABooleanExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AIntegerExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AIntegerExpression/value"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AIntegerExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AIntegerExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ARealExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//ARealExpression/value"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ARealExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ARealExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AMultiArgExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AMultiArgExpression/exprs"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AMultiArgExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AMultiArgExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AMultiArgArithmeticExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AMultiArgArithmeticExpression/op"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AMultiArgArithmeticExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AMultiArgArithmeticExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AMultiArgLogicalExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AMultiArgLogicalExpression/op"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AMultiArgLogicalExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AMultiArgLogicalExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AExternalFunctionCall">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AExternalFunctionCall/func"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AExternalFunctionCall/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AExternalFunctionCall/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AIndexList">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AIndexList/ids"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AIndexList/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AIndexList/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AIndexAffineExpressionList">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AIndexAffineExpressionList/exprs"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AIndexAffineExpressionList/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AIndexAffineExpressionList/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AFunction/indexes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AFunction/func"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AFunction/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AFunction/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AFunctionInArrayNotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AFunctionInArrayNotation/newIds"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AFunctionInArrayNotation/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AFunctionInArrayNotation/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AType/unsigned"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AType/type"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AType/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AType/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AOrExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AOrExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AOrExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AOrExpression/right"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AOrExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AOrExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AAndExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAndExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AAndExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAndExpression/right"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AAndExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AAndExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//ARelationalExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ARelationalExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//ARelationalExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//ARelationalExpression/right"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//ARelationalExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//ARelationalExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AAdditiveExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAdditiveExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AAdditiveExpression/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AAdditiveExpression/right"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AAdditiveExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AAdditiveExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AModuloExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AModuloExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AModuloExpression/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AModuloExpression/right"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AModuloExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AModuloExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AMultiplicativeExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AMultiplicativeExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AMultiplicativeExpression/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AMultiplicativeExpression/right"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AMultiplicativeExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AMultiplicativeExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AMinMaxExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AMinMaxExpression/left"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Alphabets.visitor.ecore#//AMinMaxExpression/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Alphabets.visitor.ecore#//AMinMaxExpression/right"/>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AMinMaxExpression/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AMinMaxExpression/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Alphabets.visitor.ecore#//AlphabetsVisitor">
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/defaultIn">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/defaultIn/node"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/defaultOut">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/defaultOut/node"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAProgram">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAProgram/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAProgram">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAProgram/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAProgram">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAProgram/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAExternalFunctionDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAExternalFunctionDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAExternalFunctionDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAExternalFunctionDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAExternalFunctionDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAExternalFunctionDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAExternalFunctionIdentifier">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAExternalFunctionIdentifier/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAExternalFunctionIdentifier">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAExternalFunctionIdentifier/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAExternalFunctionIdentifier">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAExternalFunctionIdentifier/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAAffineSystem">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAAffineSystem/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAAffineSystem">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAAffineSystem/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAAffineSystem">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAAffineSystem/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAVariableDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAVariableDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAVariableDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAVariableDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAVariableDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAVariableDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAOutputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAOutputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAOutputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAOutputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAOutputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAOutputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAInputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAInputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAInputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAInputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAInputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAInputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitALocalDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitALocalDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inALocalDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inALocalDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outALocalDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outALocalDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAWhileDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAWhileDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAWhileDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAWhileDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAWhileDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAWhileDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIdentifierList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIdentifierList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIdentifierList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIdentifierList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIdentifierList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIdentifierList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitADomain">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitADomain/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inADomain">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inADomain/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outADomain">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outADomain/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAPolyhedron">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAPolyhedron/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAPolyhedron">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAPolyhedron/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAPolyhedron">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAPolyhedron/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAStandardEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAStandardEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAStandardEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAStandardEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAStandardEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAStandardEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAUseEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAUseEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAUseEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAUseEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAUseEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAUseEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAAlphabetsExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAAlphabetsExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAAlphabetsExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAAlphabetsExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAAlphabetsExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAAlphabetsExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitANotExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitANotExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inANotExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inANotExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outANotExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outANotExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitANegateExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitANegateExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inANegateExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inANegateExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outANegateExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outANegateExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitACaseExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitACaseExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inACaseExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inACaseExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outACaseExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outACaseExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitADependenceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitADependenceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inADependenceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inADependenceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outADependenceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outADependenceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitADependenceInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitADependenceInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inADependenceInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inADependenceInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outADependenceInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outADependenceInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIfExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIfExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIfExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIfExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIfExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIfExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIndexExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIndexExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIndexExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIndexExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIndexExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIndexExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAReduceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAReduceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAReduceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAReduceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAReduceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAReduceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitARestrictExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitARestrictExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inARestrictExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inARestrictExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outARestrictExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outARestrictExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAVariableExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAVariableExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAVariableExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAVariableExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAVariableExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAVariableExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAConstantExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAConstantExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAConstantExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAConstantExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAConstantExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAConstantExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitABooleanExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitABooleanExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inABooleanExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inABooleanExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outABooleanExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outABooleanExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIntegerExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIntegerExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIntegerExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIntegerExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIntegerExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIntegerExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitARealExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitARealExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inARealExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inARealExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outARealExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outARealExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMultiArgExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMultiArgExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMultiArgExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMultiArgExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMultiArgExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMultiArgExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMultiArgArithmeticExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMultiArgArithmeticExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMultiArgArithmeticExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMultiArgArithmeticExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMultiArgArithmeticExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMultiArgArithmeticExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMultiArgLogicalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMultiArgLogicalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMultiArgLogicalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMultiArgLogicalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMultiArgLogicalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMultiArgLogicalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAExternalFunctionCall">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAExternalFunctionCall/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAExternalFunctionCall">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAExternalFunctionCall/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAExternalFunctionCall">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAExternalFunctionCall/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIndexList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIndexList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIndexList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIndexList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIndexList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIndexList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIndexAffineExpressionList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAIndexAffineExpressionList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIndexAffineExpressionList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAIndexAffineExpressionList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIndexAffineExpressionList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAIndexAffineExpressionList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAFunction">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAFunction/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAFunction">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAFunction/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAFunction">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAFunction/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAFunctionInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAFunctionInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAFunctionInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAFunctionInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAFunctionInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAFunctionInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAType">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAType/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAType">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAType/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAType">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAType/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAOrExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAOrExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAOrExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAOrExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAOrExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAOrExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAAndExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAAndExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAAndExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAAndExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAAndExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAAndExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitARelationalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitARelationalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inARelationalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inARelationalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outARelationalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outARelationalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAAdditiveExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAAdditiveExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAAdditiveExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAAdditiveExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAAdditiveExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAAdditiveExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAModuloExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAModuloExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAModuloExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAModuloExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAModuloExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAModuloExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMultiplicativeExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMultiplicativeExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMultiplicativeExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMultiplicativeExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMultiplicativeExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMultiplicativeExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMinMaxExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/visitAMinMaxExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMinMaxExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/inAMinMaxExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMinMaxExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitor/outAMinMaxExpression/a"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Alphabets.visitor.ecore#//AlphabetsVisitable">
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsVisitable/accept">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsVisitable/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor">
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/defaultIn">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/defaultIn/node"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/defaultOut">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/defaultOut/node"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAProgram">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAProgram/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAProgram">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAProgram/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAProgram">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAProgram/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAExternalFunctionDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAExternalFunctionDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAExternalFunctionDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAExternalFunctionDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAExternalFunctionDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAExternalFunctionDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAExternalFunctionIdentifier">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAExternalFunctionIdentifier/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAExternalFunctionIdentifier">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAExternalFunctionIdentifier/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAExternalFunctionIdentifier">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAExternalFunctionIdentifier/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAAffineSystem">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAAffineSystem/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAAffineSystem">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAAffineSystem/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAAffineSystem">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAAffineSystem/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAVariableDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAVariableDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAVariableDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAVariableDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAVariableDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAVariableDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAOutputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAOutputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAOutputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAOutputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAOutputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAOutputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAInputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAInputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAInputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAInputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAInputDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAInputDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitALocalDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitALocalDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inALocalDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inALocalDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outALocalDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outALocalDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAWhileDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAWhileDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAWhileDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAWhileDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAWhileDeclaration">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAWhileDeclaration/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIdentifierList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIdentifierList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIdentifierList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIdentifierList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIdentifierList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIdentifierList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitADomain">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitADomain/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inADomain">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inADomain/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outADomain">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outADomain/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAPolyhedron">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAPolyhedron/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAPolyhedron">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAPolyhedron/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAPolyhedron">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAPolyhedron/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAStandardEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAStandardEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAStandardEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAStandardEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAStandardEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAStandardEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAUseEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAUseEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAUseEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAUseEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAUseEquation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAUseEquation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAAlphabetsExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAAlphabetsExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAAlphabetsExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAAlphabetsExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAAlphabetsExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAAlphabetsExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitANotExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitANotExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inANotExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inANotExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outANotExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outANotExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitANegateExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitANegateExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inANegateExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inANegateExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outANegateExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outANegateExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitACaseExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitACaseExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inACaseExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inACaseExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outACaseExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outACaseExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitADependenceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitADependenceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inADependenceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inADependenceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outADependenceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outADependenceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitADependenceInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitADependenceInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inADependenceInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inADependenceInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outADependenceInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outADependenceInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIfExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIfExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIfExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIfExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIfExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIfExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIndexExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIndexExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIndexExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIndexExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIndexExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIndexExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAReduceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAReduceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAReduceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAReduceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAReduceExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAReduceExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitARestrictExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitARestrictExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inARestrictExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inARestrictExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outARestrictExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outARestrictExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAVariableExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAVariableExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAVariableExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAVariableExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAVariableExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAVariableExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAConstantExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAConstantExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAConstantExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAConstantExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAConstantExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAConstantExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitABooleanExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitABooleanExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inABooleanExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inABooleanExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outABooleanExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outABooleanExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIntegerExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIntegerExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIntegerExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIntegerExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIntegerExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIntegerExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitARealExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitARealExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inARealExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inARealExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outARealExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outARealExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMultiArgExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMultiArgExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMultiArgExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMultiArgExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMultiArgExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMultiArgExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMultiArgArithmeticExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMultiArgArithmeticExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMultiArgArithmeticExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMultiArgArithmeticExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMultiArgArithmeticExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMultiArgArithmeticExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMultiArgLogicalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMultiArgLogicalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMultiArgLogicalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMultiArgLogicalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMultiArgLogicalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMultiArgLogicalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAExternalFunctionCall">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAExternalFunctionCall/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAExternalFunctionCall">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAExternalFunctionCall/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAExternalFunctionCall">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAExternalFunctionCall/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIndexList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIndexList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIndexList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIndexList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIndexList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIndexList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIndexAffineExpressionList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAIndexAffineExpressionList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIndexAffineExpressionList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAIndexAffineExpressionList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIndexAffineExpressionList">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAIndexAffineExpressionList/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAFunction">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAFunction/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAFunction">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAFunction/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAFunction">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAFunction/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAFunctionInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAFunctionInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAFunctionInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAFunctionInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAFunctionInArrayNotation">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAFunctionInArrayNotation/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAType">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAType/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAType">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAType/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAType">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAType/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAOrExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAOrExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAOrExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAOrExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAOrExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAOrExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAAndExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAAndExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAAndExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAAndExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAAndExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAAndExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitARelationalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitARelationalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inARelationalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inARelationalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outARelationalExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outARelationalExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAAdditiveExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAAdditiveExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAAdditiveExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAAdditiveExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAAdditiveExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAAdditiveExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAModuloExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAModuloExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAModuloExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAModuloExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAModuloExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAModuloExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMultiplicativeExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMultiplicativeExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMultiplicativeExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMultiplicativeExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMultiplicativeExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMultiplicativeExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMinMaxExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/visitAMinMaxExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMinMaxExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/inAMinMaxExpression/a"/>
+      </genOperations>
+      <genOperations ecoreOperation="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMinMaxExpression">
+        <genParameters ecoreParameter="Alphabets.visitor.ecore#//AlphabetsDepthFirstVisitor/outAMinMaxExpression/a"/>
+      </genOperations>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

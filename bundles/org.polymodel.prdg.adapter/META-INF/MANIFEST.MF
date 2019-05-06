@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: PRDG IGraph Adapter
+Bundle-Vendor: INRIA / Colorado State University
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.polymodel.prdg.adapter; singleton:=true
+Bundle-Activator: org.polymodel.prdg.adapter.Activator
+Require-Bundle: fr.irisa.cairn.graph.guice;visibility:=reexport,
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.osgi.util,
+ org.polymodel.prdg;bundle-version="1.0.0";visibility:=reexport
+Export-Package: org.polymodel.prdg.adapter,
+ org.polymodel.prdg.adapter.model,
+ org.polymodel.prdg.adapter.modules,
+ org.polymodel.prdg.adapter.providers
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

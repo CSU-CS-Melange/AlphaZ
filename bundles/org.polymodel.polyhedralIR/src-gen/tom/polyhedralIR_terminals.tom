@@ -1,0 +1,302 @@
+// Primitive terminals (enum and data types)
+
+%typeterm SIGNED {
+	/*PROTECTED REGION ID(tom_terminal_SIGNED) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{SIGNED}
+	is_sort(t) 		{$t instanceof SIGNED}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm DATATYPE {
+	/*PROTECTED REGION ID(tom_terminal_DATATYPE) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{DATATYPE}
+	is_sort(t) 		{$t instanceof DATATYPE}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm OP {
+	/*PROTECTED REGION ID(tom_terminal_OP) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{OP}
+	is_sort(t) 		{$t instanceof OP}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm TILING_TYPE {
+	/*PROTECTED REGION ID(tom_terminal_TILING_TYPE) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{TILING_TYPE}
+	is_sort(t) 		{$t instanceof TILING_TYPE}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm TILE_SIZE_TYPE {
+	/*PROTECTED REGION ID(tom_terminal_TILE_SIZE_TYPE) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{TILE_SIZE_TYPE}
+	is_sort(t) 		{$t instanceof TILE_SIZE_TYPE}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm MEMORY_TYPE {
+	/*PROTECTED REGION ID(tom_terminal_MEMORY_TYPE) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{MEMORY_TYPE}
+	is_sort(t) 		{$t instanceof MEMORY_TYPE}
+	equals(l1,l2) 	{$l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+// Terminals
+
+%typeterm Program {
+	/*PROTECTED REGION ID(tom_terminal_Program) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{Program}
+	is_sort(t) 		{$t instanceof Program}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm System {
+	/*PROTECTED REGION ID(tom_terminal_System) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{AffineSystem}
+	is_sort(t) 		{$t instanceof AffineSystem}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm AffineFunction {
+	/*PROTECTED REGION ID(tom_terminal_AffineFunction) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{AffineFunction}
+	is_sort(t) 		{$t instanceof AffineFunction}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm Domain {
+	/*PROTECTED REGION ID(tom_terminal_Domain) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{Domain}
+	is_sort(t) 		{$t instanceof Domain}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm ParameterDomain {
+	/*PROTECTED REGION ID(tom_terminal_ParameterDomain) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{ParameterDomain}
+	is_sort(t) 		{$t instanceof ParameterDomain}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm Expression {
+	/*PROTECTED REGION ID(tom_terminal_Expression) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{Expression}
+	is_sort(t) 		{$t instanceof Expression}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm exprList{
+	/*PROTECTED REGION ID(tom_terminal_exprList) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<Expression> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<Expression>)$t).size() == 0 
+    	|| (((EList<Expression>)$t).size()>0 && ((EList<Expression>)$t).get(0) instanceof Expression))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray exprList exprList(Expression*) {
+	/*PROTECTED REGION ID(tom_terminal_exprList_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<Expression>)$t).size() == 0 
+ 		|| (((EList<Expression>)$t).size()>0 && ((EList<Expression>)$t).get(0) instanceof Expression))}
+    make_empty(n) { new BasicEList<Expression>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm UseEquation {
+	/*PROTECTED REGION ID(tom_terminal_UseEquation) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{UseEquation}
+	is_sort(t) 		{$t instanceof UseEquation}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm StandardEquation {
+	/*PROTECTED REGION ID(tom_terminal_StandardEquation) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{StandardEquation}
+	is_sort(t) 		{$t instanceof StandardEquation}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm VariableDeclaration {
+	/*PROTECTED REGION ID(tom_terminal_VariableDeclaration) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{VariableDeclaration}
+	is_sort(t) 		{$t instanceof VariableDeclaration}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm VariableIdentifier {
+	/*PROTECTED REGION ID(tom_terminal_VariableIdentifier) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{VariableIdentifier}
+	is_sort(t) 		{$t instanceof VariableIdentifier}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm ExternalFunctionDeclaration {
+	/*PROTECTED REGION ID(tom_terminal_ExternalFunctionDeclaration) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement 		{ExternalFunctionDeclaration}
+	is_sort(t) 		{$t instanceof ExternalFunctionDeclaration}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%typeterm extFuncDeclList{
+	/*PROTECTED REGION ID(tom_terminal_extFuncDeclList) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<ExternalFunctionDeclaration> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<ExternalFunctionDeclaration>)$t).size() == 0 
+    	|| (((EList<ExternalFunctionDeclaration>)$t).size()>0 && ((EList<ExternalFunctionDeclaration>)$t).get(0) instanceof ExternalFunctionDeclaration))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray extFuncDeclList extFuncDeclList(ExternalFunctionDeclaration*) {
+	/*PROTECTED REGION ID(tom_terminal_extFuncDeclList_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<ExternalFunctionDeclaration>)$t).size() == 0 
+ 		|| (((EList<ExternalFunctionDeclaration>)$t).size()>0 && ((EList<ExternalFunctionDeclaration>)$t).get(0) instanceof ExternalFunctionDeclaration))}
+    make_empty(n) { new BasicEList<ExternalFunctionDeclaration>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+// List Terminals
+
+%typeterm SystemList{
+	/*PROTECTED REGION ID(tom_terminal_SystemList) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<AffineSystem> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<AffineSystem>)$t).size() == 0 
+    	|| (((EList<AffineSystem>)$t).size()>0 && ((EList<AffineSystem>)$t).get(0) instanceof AffineSystem))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray SystemList SystemList(System*) {
+	/*PROTECTED REGION ID(tom_terminal_SystemList_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<AffineSystem>)$t).size() == 0 
+ 		|| (((EList<AffineSystem>)$t).size()>0 && ((EList<AffineSystem>)$t).get(0) instanceof AffineSystem))}
+    make_empty(n) { new BasicEList<AffineSystem>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm VariableDeclarationList{
+	/*PROTECTED REGION ID(tom_terminal_VariableDeclarationList) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<VariableDeclaration> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<VariableDeclaration>)$t).size() == 0 
+    	|| (((EList<VariableDeclaration>)$t).size()>0 && ((EList<VariableDeclaration>)$t).get(0) instanceof VariableDeclaration))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray VariableDeclarationList VariableDeclarationList(VariableDeclaration*) {
+	/*PROTECTED REGION ID(tom_terminal_VariableDeclarationList_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<VariableDeclaration>)$t).size() == 0 
+ 		|| (((EList<VariableDeclaration>)$t).size()>0 && ((EList<VariableDeclaration>)$t).get(0) instanceof VariableDeclaration))}
+    make_empty(n) { new BasicEList<VariableDeclaration>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm StandardEquationList{
+	/*PROTECTED REGION ID(tom_terminal_StandardEquationList) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<StandardEquation> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<StandardEquation>)$t).size() == 0 
+    	|| (((EList<StandardEquation>)$t).size()>0 && ((EList<StandardEquation>)$t).get(0) instanceof StandardEquation))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray StandardEquationList StandardEquationList(StandardEquation*) {
+	/*PROTECTED REGION ID(tom_terminal_StandardEquationList_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<StandardEquation>)$t).size() == 0 
+ 		|| (((EList<StandardEquation>)$t).size()>0 && ((EList<StandardEquation>)$t).get(0) instanceof StandardEquation))}
+    make_empty(n) { new BasicEList<StandardEquation>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}
+
+%typeterm UseEquationList{
+	/*PROTECTED REGION ID(tom_terminal_UseEquationList) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	implement { EList<UseEquation> }
+    is_sort(t) { $t instanceof EList<?> &&
+    	(((EList<UseEquation>)$t).size() == 0 
+    	|| (((EList<UseEquation>)$t).size()>0 && ((EList<UseEquation>)$t).get(0) instanceof UseEquation))}
+	equals(l1,l2) 	{($l1!=null && $l1.equals($l2)) || $l1==$l2}
+	/*PROTECTED REGION END*/
+}
+
+%oparray UseEquationList UseEquationList(UseEquation*) {
+	/*PROTECTED REGION ID(tom_terminal_UseEquationList_list) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+ 	is_fsym(t) { $t instanceof EList<?> &&
+ 		(((EList<UseEquation>)$t).size() == 0 
+ 		|| (((EList<UseEquation>)$t).size()>0 && ((EList<UseEquation>)$t).get(0) instanceof UseEquation))}
+    make_empty(n) { new BasicEList<UseEquation>($n) }
+    make_append(e,l) { append($e,$l) }
+    get_element(l,n) { $l.get($n) }
+    get_size(l)      { $l.size() }
+	/*PROTECTED REGION END*/
+}

@@ -1,0 +1,20 @@
+//========================================================//
+//
+// Optimal String Parenthesization Dynamic Programming
+//
+//========================================================//
+//
+
+affine ReductionOSP {N |2<= N}
+given 
+    int P {i | 0<=i<=N};
+returns
+    int FTable {i,j | 1<=i<=j<=N};
+using
+through
+    FTable[i,j] = case
+		{|i==j}: 0;
+    	{|i<j} : reduce(min, [k], FTable[i,k] + FTable[k+1,j] + P[i-1]*P[k]*P[j]);
+	esac;
+.
+

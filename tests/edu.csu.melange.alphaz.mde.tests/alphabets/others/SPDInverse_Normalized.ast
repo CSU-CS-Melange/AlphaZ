@@ -1,0 +1,224 @@
+
+- AProgram : 0x7f1584fdffa0
+     `- AAffineSystemDefDecl : 0x7f158500d480
+        `- SPDInverse_Normalized
+        |- AAffineSystemParameters : 0x7f1584fe2240
+        |  `- {n | n>=2}
+        |- AAffineSystemInputs : 0x7f1584fe5ba0
+        |  `- AAffineVarDecl : 0x7f1584fe5ae0
+        |     `- A
+        |     `- {n,i,j | j>=0 && i>=0 && n-i>=1 && n-j>=1 && n>=2}
+        |     `- AFloatType : 0x7f1584fe03d0
+        |- AAffineSystemOutputs : 0x7f1584fe75d0
+        |  `- AAffineVarDecl : 0x7f1584fe7510
+        |     `- AInv
+        |     `- {n,i,j | j>=0 && i>=0 && n-i>=1 && n-j>=1 && n>=2}
+        |     `- AFloatType : 0x7f1584fe5c90
+        |- AAffineSystemLocals : 0x7f1584ff49d0
+        |  |- AAffineVarDecl : 0x7f1584fe9780
+        |  |  `- L
+        |  |  `- {n,i,j | j>=0 && i>=0 && n-i>=1 && n-j>=1 && n>=2}
+        |  |  `- AFloatType : 0x7f1584fe76c0
+        |  |- AAffineVarDecl : 0x7f1584febb00
+        |  |  `- LInv
+        |  |  `- {n,i,j | j>=0 && i>=0 && n-i>=1 && n-j>=1 && n>=2}
+        |  |  `- AFloatType : 0x7f1584fe98c0
+        |  |- AAffineVarDecl : 0x7f1584fecd50
+        |  |  `- D
+        |  |  `- {n,i | i>=0 && n-i>=1 && n>=2}
+        |  |  `- AFloatType : 0x7f1584febc40
+        |  |- AAffineVarDecl : 0x7f1584fee0b0
+        |  |  `- AlphaZTempRed_1_D
+        |  |  `- {n,i | i>=1 && n-i>=1}
+        |  |  `- AFloatType : 0x7f1584feced0
+        |  |- AAffineVarDecl : 0x7f1584ff0690
+        |  |  `- AlphaZTempRed_2_L
+        |  |  `- {n,i,j | j>=1 && i-j>=1 && n-i>=1}
+        |  |  `- AFloatType : 0x7f1584fee290
+        |  |- AAffineVarDecl : 0x7f1584ff2270
+        |  |  `- AlphaZTempRed_3_LInv
+        |  |  `- {n,i,j | j>=0 && i-j>=1 && n-i>=1}
+        |  |  `- AFloatType : 0x7f1584ff0810
+        |  `- AAffineVarDecl : 0x7f1584ff4810
+        |     `- AlphaZTempRed_4_AInv
+        |     `- {n,i,j | j>=0 && i-j>=0 && n-i>=1 && n>=2}
+        |     `- AFloatType : 0x7f1584ff24f0
+        |- AStandardEquation : 0x7f1584ff72e0
+        |  `- D
+        |  `- ACaseExp : 0x7f1584ff7540
+        |     `- ARestrictExp : 0x7f1584ff5c20
+        |     |  |- {n,i | i==0 && n>=2}
+        |     |  `- ADepExp : 0x7f158500b100
+        |     |     `- AVariableExp : 0x7f1584ff54e0
+        |     |     |  `- A
+        |     |     `- (n,i->n,i,i)
+        |     `- ARestrictExp : 0x7f1584ff6550
+        |        |- {n,i | i>=1 && n>=2}
+        |        `- ASubExp : 0x7f1584ff73e0
+        |           |- ADepExp : 0x7f158500a690
+        |           |  `- AVariableExp : 0x7f1584ff6620
+        |           |  |  `- A
+        |           |  `- (n,i->n,i,i)
+        |           `- ADepExp : 0x7f1585007cf0
+        |              `- AVariableExp : 0x7f1584ff6e70
+        |              |  `- AlphaZTempRed_1_D
+        |              `- (n,i->n,i)
+        |- AStandardEquation : 0x7f1584ffd360
+        |  `- L
+        |  `- ACaseExp : 0x7f1584ffd6a0
+        |     `- ARestrictExp : 0x7f1584ff8400
+        |     |  |- {n,i,j | -i+j>=1 && n>=2}
+        |     |  `- ADepExp : 0x7f1584fe3a20
+        |     |     `- AIntegerExp : 0x7f1584fdfe00
+        |     |     |  `- 0
+        |     |     `- (n,i,j->n)
+        |     `- ARestrictExp : 0x7f1584ff8f40
+        |     |  |- {n,i,j | i-j==0 && n>=2}
+        |     |  `- ADepExp : 0x7f1584fe3fb0
+        |     |     `- AIntegerExp : 0x7f1584fe3f10
+        |     |     |  `- 1
+        |     |     `- (n,i,j->n)
+        |     `- ARestrictExp : 0x7f1584ffad30
+        |     |  |- {n,i,j | j==0 && i>=1 && n>=2}
+        |     |  `- ADivideExp : 0x7f1584ffac90
+        |     |     |- ADepExp : 0x7f1584fe41e0
+        |     |     |  `- AVariableExp : 0x7f1584ffa030
+        |     |     |  |  `- A
+        |     |     |  `- (n,i,j->n,i,j)
+        |     |     `- ADepExp : 0x7f1584fe4320
+        |     |        `- AVariableExp : 0x7f1584ffa770
+        |     |        |  `- D
+        |     |        `- (n,i,j->n,j)
+        |     `- ARestrictExp : 0x7f1584ffbf80
+        |        |- {n,i,j | j>=1 && i-j>=1 && n>=2}
+        |        `- ADivideExp : 0x7f1584ffd460
+        |           |- ASubExp : 0x7f1584ffcee0
+        |           |  |- ADepExp : 0x7f1584fe4500
+        |           |  |  `- AVariableExp : 0x7f1584ffbdc0
+        |           |  |  |  `- A
+        |           |  |  `- (n,i,j->n,i,j)
+        |           |  `- ADepExp : 0x7f158500d8a0
+        |           |     `- AVariableExp : 0x7f1584ffc6c0
+        |           |     |  `- AlphaZTempRed_2_L
+        |           |     `- (n,i,j->n,i,j)
+        |           `- ADepExp : 0x7f158500d9e0
+        |              `- AVariableExp : 0x7f1584ffcf80
+        |              |  `- D
+        |              `- (n,i,j->n,j)
+        |- AStandardEquation : 0x7f1585000230
+        |  `- LInv
+        |  `- ACaseExp : 0x7f15850003f0
+        |     `- ARestrictExp : 0x7f1584ffe4c0
+        |     |  |- {n,i,j | -i+j>=1 && n>=2}
+        |     |  `- ADepExp : 0x7f158500dd50
+        |     |     `- AIntegerExp : 0x7f158500dcb0
+        |     |     |  `- 0
+        |     |     `- (n,i,j->n)
+        |     `- ARestrictExp : 0x7f1584ffefe0
+        |     |  |- {n,i,j | i-j==0 && n>=2}
+        |     |  `- ADepExp : 0x7f1584fcc900
+        |     |     `- AIntegerExp : 0x7f158500b940
+        |     |     |  `- 1
+        |     |     `- (n,i,j->n)
+        |     `- ARestrictExp : 0x7f1584fffb90
+        |        |- {n,i,j | i-j>=1 && n>=2}
+        |        `- ANegExp : 0x7f1584fff0f0
+        |           `- ADepExp : 0x7f158500d600
+        |              `- AVariableExp : 0x7f1584fffc70
+        |              |  `- AlphaZTempRed_3_LInv
+        |              `- (n,i,j->n,i,j)
+        |- AStandardEquation : 0x7f15850029f0
+        |  `- AInv
+        |  `- ACaseExp : 0x7f1585002bd0
+        |     `- ARestrictExp : 0x7f15850018a0
+        |     |  |- {n,i,j | -i+j>=1 && n>=2}
+        |     |  `- ADepExp : 0x7f158500d230
+        |     |     `- AVariableExp : 0x7f1585001260
+        |     |     |  `- AInv
+        |     |     `- (n,i,j->n,j,i)
+        |     `- ARestrictExp : 0x7f1585002a90
+        |        |- {n,i,j | i-j>=0 && n>=2}
+        |        `- ADepExp : 0x7f158500e0c0
+        |           `- AVariableExp : 0x7f1585002400
+        |           |  `- AlphaZTempRed_4_AInv
+        |           `- (n,i,j->n,i,j)
+        |- AStandardEquation : 0x7f1585005530
+        |  `- AlphaZTempRed_1_D
+        |  `- AReduceExp : 0x7f158500e890
+        |     `- APlusOp : 0x7f1585002ff0
+        |     `- (n,i,j->n,i)
+        |     `- ARestrictExp : 0x7f1585003c40
+        |        |- {n,i,j | i-j>=1 && n>=2}
+        |        `- AMulExp : 0x7f1585005320
+        |           |- AMulExp : 0x7f1585004bd0
+        |           |  |- ADepExp : 0x7f158500e430
+        |           |  |  `- AVariableExp : 0x7f1585003d10
+        |           |  |  |  `- L
+        |           |  |  `- (n,i,j->n,i,j)
+        |           |  `- ADepExp : 0x7f158500e570
+        |           |     `- AVariableExp : 0x7f1585004670
+        |           |     |  `- D
+        |           |     `- (n,i,j->n,j)
+        |           `- ADepExp : 0x7f158500e6b0
+        |              `- AVariableExp : 0x7f1585004c70
+        |              |  `- L
+        |              `- (n,i,j->n,i,j)
+        |- AStandardEquation : 0x7f1585007a30
+        |  `- AlphaZTempRed_2_L
+        |  `- AReduceExp : 0x7f158500f320
+        |     `- APlusOp : 0x7f15850059e0
+        |     `- (n,i,j,k->n,i,j)
+        |     `- ARestrictExp : 0x7f1585006430
+        |        |- {n,i,j,k | j-k>=1 && n>=2}
+        |        `- AMulExp : 0x7f1585007820
+        |           |- AMulExp : 0x7f1585007090
+        |           |  |- ADepExp : 0x7f158500ece0
+        |           |  |  `- AVariableExp : 0x7f1585006580
+        |           |  |  |  `- L
+        |           |  |  `- (n,i,j,k->n,i,k)
+        |           |  `- ADepExp : 0x7f158500ee70
+        |           |     `- AVariableExp : 0x7f1585006c40
+        |           |     |  `- D
+        |           |     `- (n,i,j,k->n,k)
+        |           `- ADepExp : 0x7f158500f000
+        |              `- AVariableExp : 0x7f1585007180
+        |              |  `- L
+        |              `- (n,i,j,k->n,j,k)
+        |- AStandardEquation : 0x7f158500a180
+        |  `- AlphaZTempRed_3_LInv
+        |  `- AReduceExp : 0x7f158500fcc0
+        |     `- APlusOp : 0x7f1585007f10
+        |     `- (n,i,j,k->n,i,j)
+        |     `- ARestrictExp : 0x7f15850091d0
+        |        |- {n,i,j,k | -j+k>=0 && i-k>=1 && n>=2}
+        |        `- AMulExp : 0x7f1585009fb0
+        |           |- ADepExp : 0x7f158500f7c0
+        |           |  `- AVariableExp : 0x7f1585009320
+        |           |  |  `- L
+        |           |  `- (n,i,j,k->n,i,k)
+        |           `- ADepExp : 0x7f158500f950
+        |              `- AVariableExp : 0x7f15850099c0
+        |              |  `- LInv
+        |              `- (n,i,j,k->n,k,j)
+        `- AStandardEquation : 0x7f158500cfe0
+           `- AlphaZTempRed_4_AInv
+           `- AReduceExp : 0x7f15850106b0
+              `- APlusOp : 0x7f158500a6e0
+              `- (n,i,j,k->n,i,j)
+              `- ARestrictExp : 0x7f158500b990
+                 |- {n,i,j,k | -i+k>=0 && n-k>=1 && n>=2}
+                 `- ADivideExp : 0x7f158500cdd0
+                    |- AMulExp : 0x7f158500c820
+                    |  |- ADepExp : 0x7f1585010070
+                    |  |  `- AVariableExp : 0x7f158500ba60
+                    |  |  |  `- LInv
+                    |  |  `- (n,i,j,k->n,k,i)
+                    |  `- ADepExp : 0x7f1585010200
+                    |     `- AVariableExp : 0x7f158500c0d0
+                    |     |  `- LInv
+                    |     `- (n,i,j,k->n,k,j)
+                    `- ADepExp : 0x7f1585010390
+                       `- AVariableExp : 0x7f158500c8c0
+                       |  `- D
+                       `- (n,i,j,k->n,k)
+

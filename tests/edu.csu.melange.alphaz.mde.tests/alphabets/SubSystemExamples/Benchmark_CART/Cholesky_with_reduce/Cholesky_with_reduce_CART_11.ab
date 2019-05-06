@@ -1,0 +1,27 @@
+double sqrt(double);
+affine cholesky_withReduce {Nb,Nl,b|Nl==0 && Nb-1>=0 && Nb+b-4>=0 && b-1>=0}
+input
+	double A_bl {iBl,jBl,iLoc,jLoc| 0<=iBl<Nb && 0<=jBl<Nb && 0<=iLoc<b && 0<=jLoc<b};
+output
+	double L_bl {iBl,jBl,iLoc,jLoc| iBl==jBl && 0<=iBl<Nb && 0<=jLoc<=iLoc<b }
+			 || {iBl,jBl,iLoc,jLoc| 0<=jBl<iBl<Nb && 0<=iLoc<b && 0<=jLoc<b };
+let
+L_bl[iBl,jBl,iLoc,jLoc] = case
+	{ | iBl==jBl==0 && iLoc==jLoc==0 } : sqrt(A_bl);
+	{ | 0<=iBl && jBl==0 && 0<=iLoc<b && jLoc==0 && 1<=iBl+iLoc } :
+				( A_bl[iBl,jBl,iLoc,jLoc] / L_bl[jBl,jBl,jLoc,jLoc] );
+	{ | iBl==jBl && 0<=iLoc==jLoc<b } :
+				sqrt( A_bl[jBl,jBl,jLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,iLoc,jLoc),
+						{ | 0<=kBl==jBl && 0<=(iLoc,jLoc,kLoc)<b && kLoc<jLoc } || { | 0<=kBl<jBl && 0<=(iLoc,jLoc,kLoc)<b } :  
+								L_bl[jBl,kBl,jLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc] )
+					);
+	{ | iBl==jBl==0 && 1<=jLoc<iLoc<b }	|| { | 0<=jBl<iBl && jBl+jLoc>=1 && 0<=(iLoc,jLoc)<b } || { | 1<=iBl==jBl && 0<=jLoc<iLoc<b } :
+				(
+				A_bl[iBl,jBl,iLoc,jLoc] - reduce(+, (iBl,jBl,kBl,iLoc,jLoc,kLoc->iBl,jBl,iLoc,jLoc),
+						{ | 0<=jBl==kBl && 0<=(iLoc,jLoc,kLoc)<b && kLoc<jLoc } || { | 0<=kBl<jBl && 0<=(iLoc,jLoc,kLoc)<b } :
+								L_bl[iBl,kBl,iLoc,kLoc] * L_bl[jBl,kBl,jLoc,kLoc]
+					)
+				) / L_bl[jBl,jBl,jLoc,jLoc];
+esac;
+.
+

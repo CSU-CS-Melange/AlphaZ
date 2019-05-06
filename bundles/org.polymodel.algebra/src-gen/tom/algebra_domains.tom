@@ -1,0 +1,84 @@
+/* PROTECTED REGION ID(module_domains_user) ENABLED START */
+// Protected user region
+/* PROTECTED REGION END */
+
+
+%op C contraint(lhs : E, comparisonOperator : org_polymodel_algebra_ComparisonOperator, rhs : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_contraint) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraint}
+	get_slot(lhs,t) {((org.polymodel.algebra.IntConstraint)$t).getLhs()}
+	get_slot(comparisonOperator,t) {((org.polymodel.algebra.IntConstraint)$t).getComparisonOperator()}
+	get_slot(rhs,t) {((org.polymodel.algebra.IntConstraint)$t).getRhs()}
+	make(_lhs,_comparisonOperator,_rhs) {org.polymodel.algebra.internal.AlgebraTomFactory.createContraint($_lhs, $_comparisonOperator, $_rhs)}
+	/*PROTECTED REGION END*/
+}
+
+%op C eq(lhs : E, rhs : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_eq) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraint && ((org.polymodel.algebra.IntConstraint)$t).getComparisonOperator().equals(org.polymodel.algebra.ComparisonOperator.EQ)}
+	get_slot(lhs,t) {((org.polymodel.algebra.IntConstraint)$t).getLhs()}
+	get_slot(rhs,t) {((org.polymodel.algebra.IntConstraint)$t).getRhs()}
+	make(_lhs,_rhs) {org.polymodel.algebra.internal.AlgebraTomFactory.createEq($_lhs, $_rhs)}
+	/*PROTECTED REGION END*/
+}
+
+%op C ne(lhs : E, rhs : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_ne) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraint && ((org.polymodel.algebra.IntConstraint)$t).getComparisonOperator().equals(org.polymodel.algebra.ComparisonOperator.NE)}
+	get_slot(lhs,t) {((org.polymodel.algebra.IntConstraint)$t).getLhs()}
+	get_slot(rhs,t) {((org.polymodel.algebra.IntConstraint)$t).getRhs()}
+	make(_lhs,_rhs) {org.polymodel.algebra.internal.AlgebraTomFactory.createNe($_lhs, $_rhs)}
+	/*PROTECTED REGION END*/
+}
+
+%op C ge(lhs : E, rhs : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_ge) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraint && ((org.polymodel.algebra.IntConstraint)$t).getComparisonOperator().equals(org.polymodel.algebra.ComparisonOperator.GE)}
+	get_slot(lhs,t) {((org.polymodel.algebra.IntConstraint)$t).getLhs()}
+	get_slot(rhs,t) {((org.polymodel.algebra.IntConstraint)$t).getRhs()}
+	make(_lhs,_rhs) {org.polymodel.algebra.internal.AlgebraTomFactory.createGe($_lhs, $_rhs)}
+	/*PROTECTED REGION END*/
+}
+
+%op C le(lhs : E, rhs : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_le) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraint && ((org.polymodel.algebra.IntConstraint)$t).getComparisonOperator().equals(org.polymodel.algebra.ComparisonOperator.LE)}
+	get_slot(lhs,t) {((org.polymodel.algebra.IntConstraint)$t).getLhs()}
+	get_slot(rhs,t) {((org.polymodel.algebra.IntConstraint)$t).getRhs()}
+	make(_lhs,_rhs) {org.polymodel.algebra.internal.AlgebraTomFactory.createLe($_lhs, $_rhs)}
+	/*PROTECTED REGION END*/
+}
+
+%op C gt(lhs : E, rhs : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_gt) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraint && ((org.polymodel.algebra.IntConstraint)$t).getComparisonOperator().equals(org.polymodel.algebra.ComparisonOperator.GT)}
+	get_slot(lhs,t) {((org.polymodel.algebra.IntConstraint)$t).getLhs()}
+	get_slot(rhs,t) {((org.polymodel.algebra.IntConstraint)$t).getRhs()}
+	make(_lhs,_rhs) {org.polymodel.algebra.internal.AlgebraTomFactory.createGt($_lhs, $_rhs)}
+	/*PROTECTED REGION END*/
+}
+
+%op C lt(lhs : E, rhs : E) {
+	/*PROTECTED REGION ID(tom_operator_with_param_lt) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraint && ((org.polymodel.algebra.IntConstraint)$t).getComparisonOperator().equals(org.polymodel.algebra.ComparisonOperator.LT)}
+	get_slot(lhs,t) {((org.polymodel.algebra.IntConstraint)$t).getLhs()}
+	get_slot(rhs,t) {((org.polymodel.algebra.IntConstraint)$t).getRhs()}
+	make(_lhs,_rhs) {org.polymodel.algebra.internal.AlgebraTomFactory.createLt($_lhs, $_rhs)}
+	/*PROTECTED REGION END*/
+}
+
+%op ICS system(constraints : CL) {
+	/*PROTECTED REGION ID(tom_operator_with_param_system) DISABLED START*/
+	//make sure to change to ENABLED when using protected region
+	is_fsym(t) {$t instanceof org.polymodel.algebra.IntConstraintSystem}
+	get_slot(constraints,t) {enforce(((org.polymodel.algebra.IntConstraintSystem)$t).getConstraints())}
+	make(_constraints) {org.polymodel.algebra.internal.AlgebraTomFactory.createSystem($_constraints)}
+	/*PROTECTED REGION END*/
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="isl" nsURI="org.polymodel.isl" nsPrefix="org.polymodel.isl">
+  <eClassifiers xsi:type="ecore:EClass" name="ISLMap" eSuperTypes="../../org.polymodel/model/polymodel.ecore#//Relation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ISLSet" eSuperTypes="../../org.polymodel/model/polymodel.ecore#//Domain"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ISLUnionMap">
+    <eOperations name="lexMax" lowerBound="1" eType="#//ISLUnionMap">
+      <eParameters name="manager" lowerBound="1" eType="ecore:EClass ../../org.polymodel/model/polymodel.ecore#//DimensionsManager"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maps" upperBound="-1" eType="#//ISLMap"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ISLUnionSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sets" upperBound="-1" eType="#//ISLSet"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ISLBasicMap" eSuperTypes="../../org.polymodel/model/polymodel.ecore#//BasicRelation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ISLPoint">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="coordinates" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ISLFunction" eSuperTypes="../../org.polymodel/model/polymodel.ecore#//Function"/>
+</ecore:EPackage>

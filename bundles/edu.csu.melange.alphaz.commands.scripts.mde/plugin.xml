@@ -1,0 +1,1114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="fr.irisa.r2d2.gecos.framework.modules">
+
+
+
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ASave"
+            iterative="false"
+            name="ASave">
+         <description>
+            Outputs the program to the specified file with array syntax.
+When filename is not specified, saves as "original_filename-ASave.ab".
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ASaveSystem"
+            iterative="false"
+            name="ASaveSystem">
+         <description>
+            Outputs the result of AShow to the specified file.
+When filename is not specified, saves as "original_filename-ASave.ab".
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.AShow"
+            iterative="false"
+            name="AShow">
+         <description>
+            Prints out the program using array notation.
+Prints out the entire program when target system is unspecified.
+
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Save"
+            iterative="false"
+            name="Save">
+         <description>
+            Saves the output of show to the specified file.
+When output filename is unspecified, saves to "original_filename-Show.ab".
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SaveSystem"
+            iterative="false"
+            name="SaveSystem">
+         <description>
+            Saves the output of show to the specified file.
+When output filename is unspecified, saves to "original_filename-Show.ab".
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Show"
+            iterative="false"
+            name="Show">
+         <description>
+            Pretty prints the program using alpha-purist syntax.
+Prints out the entire program when target system is unspecified.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Normalize"
+            iterative="false"
+            name="Normalize">
+         <description>
+            Normalizes the program. Normalization rules are described in more detail at: \url{http://www.cs.colostate.edu/AlphaZ/wiki/doku.php?id=normalize}.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.PrintAST"
+            iterative="false"
+            name="PrintAST">
+         <description>
+            Prints out the AST of the program.
+Prints out the entire program when target system is unspecified.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ReadAlphabets"
+            iterative="false"
+            name="ReadAlphabets">
+         <description>
+            Parses the given alphabets program and returns a Program object.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.RenameSystem"
+            iterative="false"
+            name="RenameSystem">
+         <description>
+            Renames an AffineSystem.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.RenameVariable"
+            iterative="false"
+            name="RenameVariable">
+         <description>
+            Renames a variable.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.RemoveUnusedVariables"
+            iterative="false"
+            name="RemoveUnusedVariables">
+         <description>
+            Removes unused variables and equations. Unused variables are variables that is not used by the definition of output.
+         </description>
+      </module>
+
+
+
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CoB"
+            iterative="false"
+            name="CoB">
+         <description>
+            Change of Basis transforms the domain of a variable to the image by the given function, while adding necessary dependence expressions to maintain the original semantics of the program. Details can be found at \url{http://www.cs.colostate.edu/AlphaZ/wiki/doku.php?id=change_of_basis}.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ForceCoB"
+            iterative="false"
+            name="ForceCoB">
+         <description>
+            Force the change of basis even if the CoB is for input/output of a system.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Split"
+            iterative="false"
+            name="Split">
+         <description>
+            Splits a variable into two, where the domain of two variables are disjoint and union of them is equivalent to the original domain of the variable.
+If newName is not given, it creates a variable with prefix "_split" appended to the original name.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Merge"
+            iterative="false"
+            name="Merge">
+         <description>
+            Merge two variables (of name var1Name and var2Name) into a single one.
+These variables must both be locals and must have disjoint domains. The name of the merge of these two variables is "newName".
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Inline"
+            iterative="false"
+            name="Inline">
+         <description>
+            Inlines the nth(number) reference to inlineEq in the definition of targetEq once. If the number is not specified, all references to inlineEq are inlined.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Simplify"
+            iterative="false"
+            name="Simplify">
+         <description>
+            Simplifies the program in multiple ways. The domains are simplified by simplifyInContext (a.k.a. gist). When the domain of a reduction body is a single point, reduction is removed.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CreateFreeScheduler"
+            iterative="false"
+            name="createFreeScheduler">
+         <description>
+            Takes an alphabetes program and converts it to a program that computes the fastest possible schedule (free shcedule).
+This transformation DOES NOT preserve the original semantics, but instead creates a new Program object.
+
+Implemented by Alex Klein as a class project in cs560@spring11
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SplitUnion"
+            iterative="false"
+            name="SplitUnion">
+         <description>
+            Replace an expression that has unions of polyhedra as its context domain with a case expression that splits the union into multiple disjiont polyhedra.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ApplySTMap"
+            iterative="false"
+            name="ApplySTMap">
+         <description>
+            Applies sequence of CoBs using STMap given for each variable.
+This is identical to the pre-processing step of ScheduledC code generator, where all variables are mapped to a common space so that ordering of iterations can be defined.
+Assumes correct schedule [TODO:run verifier before applying the transformation once the verifier is fixed]
+All STMaps and MemoryMaps given for the system will also be transformed appropriately.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.UniformizeInContext"
+            iterative="false"
+            name="UniformizeInContext">
+         <description>
+            Attempts to uniformize all dependencies when possible.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.InlineForce"
+            iterative="false"
+            name="InlineForce">
+         <description>
+            Force the inline action even if there is a self loop dependence
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.InlineAll"
+            iterative="false"
+            name="InlineAll">
+         <description>
+            Inline all the possible equation in a system when there is no self loop dependence
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.InlineAllForce"
+            iterative="false"
+            name="InlineAllForce">
+         <description>
+            Inline all the possible equations in a system even with self loop dependence once
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.InlineSubSystem"
+            iterative="false"
+            name="InlineSubSystem">
+         <description>
+            Inline the subsystem used by the UseEquation specified by nodeID
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.OutlineSubSystem"
+            iterative="false"
+            name="OutlineSubSystem">
+         <description>
+            Outline a list of equations of a given system. These equation are defined through a list of variable ("listEquations") that corresponds to the variable of a StandardEquation or to the output of a UseEquation.
+[V1] The created use equation will have no extension domain, and only variable expressions as inputs.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.AddLocal"
+            iterative="false"
+            name="AddLocal">
+         <description>
+            Adds a local variable (of name specified by "nameLocal") for the expression "expr" and replace each occurrence of this expression in the considered system.
+"expr" can be specified through a expression of the system (located in "nodeID"), or through an external expression "expr" whose list of indexes is "lInds".
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.AddLocalUnique"
+            iterative="false"
+            name="AddLocalUnique">
+         <description>
+            Replace only the expression (specified by the location "nodeID") by a new local variable (of name "nameLocal").
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.DetectReductions"
+            iterative="false"
+            name="DetectReductions">
+         <description>
+            Detects simple reductions in the program and exposes as reduce expressions.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ReduceDimVariable"
+            iterative="false"
+            name="reduceDimVariable">
+         <description>
+            Use the equalities of the domain of the specified variable in order to reduce its number of dimension.
+Perform the corresponding change of basis and return the affine function used in this CoB.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.AlignDimVariable"
+            iterative="false"
+            name="alignDimVariable">
+         <description>
+            Align the bounding box of the domain of a variable with the point \vec{0}, by using a translation.
+Note: might not work if the lower bound is not an affine function
+Return the affine function used to perform the translation.
+         </description>
+      </module>
+
+
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.PermutationCaseReduce"
+            iterative="false"
+            name="PermutationCaseReduce">
+         <description>
+            Takes case expression inside reductions out side of the reduction.
+This transformation can be applied to three different targets, 
+the entire program, an affine system, or an equation.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ReductionDecomposition"
+            iterative="false"
+            name="ReductionDecomposition">
+         <description>
+            Decomposes a reduction spanning more than one dimensions to two reductions.
+Function f1 composed with f2 should match the original projection function.
+
+The target reduction is specified as the n-th occurrence in the rhs of an equation indexed from 0.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SimplifyingReduction"
+            iterative="false"
+            name="SimplifyingReduction">
+         <description>
+            Simplifies the specified reduction using the reuse specified. It does not check if the given reuse is correct.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.NormalizeReduction"
+            iterative="false"
+            name="NormalizeReduction">
+         <description>
+            Transforms reductions specified into normal form.
+The normal form of a reduction is when a reduce expression is the direct child of an equation.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.FactorOutFromReduction"
+            iterative="false"
+            name="FactorOutFromReduction">
+         <description>
+            Factors out an operand of point-wise operations (specified with nodeID) from the reduction body.
+It checks if the operator is distributive over the reduction operator, but does not verify that the given expression is constant in context.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SplitReductionBody"
+            iterative="false"
+            name="SplitReductionBody">
+         <description>
+            Takes a nodeID of a reduce expression, reduce(op, f, expr), and transform it in to two reductions;
+reduce(op, f, D1 : expr) op reduce(op, f, D2 : expr) where D1 is the splitDomain, and D2 is the difference between the original expression domain of the reduction body and the splitDomain.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.TransformReductionBody"
+            iterative="false"
+            name="TransformReductionBody">
+         <description>
+            Given a transformation T, and (the node id of a) reduce expression, reduce(op, f, expr), it transforms the reduction body by T.  Specifically, it first computes T’, the left-inverse of T in “the context of expr,” and then replaces the reduction by reduce(op, T'@f, T'@expr).
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SerializeReduction"
+            iterative="false"
+            name="SerializeReduction">
+         <description>
+            Serializes a reduction using the dependencies inferred from the given schedule.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.MergeReductions"
+            iterative="false"
+            name="MergeReductions">
+         <description>
+            Merges two reductions combined by a binary operator into one reduction (with case branches) if possible.
+It is possible if all the operators are the same and the projection functions matches.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ReductionComposition"
+            iterative="false"
+            name="ReductionComposition">
+         <description>
+            Composes the given reduction (represented by the nodeID) with its immediate child assuming that it is also a reduction with the same operator. this transformation implements the following reduce(op, f1, reduce(op, f2, body)); => reduce(op, f1 o f2, body); and is the reverse of ReductionDecomposition. Added support for the case when there is a restrict expression surrounding the inner reduction.
+         </description>
+      </module>
+
+
+
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.MonoparametricTiling_noOutlining"
+            iterative="false"
+            name="monoparametricTiling_noOutlining">
+         <description>
+            Perform a monoparametric tiling transformation without outlining (the result is a single system in which all the dimensions are doubled).
+By default, the ratio taken is 1^k (square), the minimum values of the blocked parameters are 0
+    and each variables of the system are tiled independently, with no change of basis as a preprocessing.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.MonoparametricTiling_Outlining_noSubsystem"
+            iterative="false"
+            name="monoparametricTiling_Outlining_noSubsystem">
+         <description>
+            Perform a monoparametric tiling transformation without outlining (the result is a single system in which all the dimensions are doubled).
+By default, the ratio taken is 1^k (square), the minimum values of the blocked parameters are 0
+    and each variables of the system are tiled independently, with no change of basis as a preprocessing.
+
+The equations of the produced system are double-nested case expression, the first level corresponding to the constraints on the blocked indices
+    and the second level to the constraints on the local indices.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.MonoparametricTiling_Outlining"
+            iterative="false"
+            name="monoparametricTiling_Outlining">
+         <description>
+            Perform a monoparametric tiling transformation with outlining (produces a subsystem for each kind of tiles in the program).
+By default, the ratio taken is 1^k (square), the minimum values of the blocked parameters are 0
+    and each variables of the system are tiled independently, with no change of basis as a preprocessing.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetRatio"
+            iterative="false"
+            name="setRatio">
+         <description>
+            Specify the ratio of a variable, before the tiling transformation. The default ratio taken for a variable is 1^k (square ratio)
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetMinParamValues"
+            iterative="false"
+            name="setMinParamValues">
+         <description>
+            Set the minimum blocked parameter values, before the tiling transformation.
+The default value is "0" for every parameters.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetTileGroup"
+            iterative="false"
+            name="setTileGroup">
+         <description>
+            Set the tile group of a variable (through a common name), before a tiling.
+By default, each variable is alone in its tile group (which has the same name than the variable name)
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetCoBPreprocess"
+            iterative="false"
+            name="setCoBPreprocess">
+         <description>
+            Set the Change of Basis transformation that need to be performed before tiling (usually to make the rectangular tiling legal).
+By default, this function is Id (i.e., no CoB is performed before the tiling)
+         </description>
+      </module>
+
+
+
+
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.GenerateScheduledCode"
+            iterative="false"
+            name="generateScheduledCode">
+         <description>
+            Generates scheduledC code for a system using the TargetMapping specified for the system.
+Detailed options can be given through optional argument.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.GenerateWriteC"
+            iterative="false"
+            name="generateWriteC">
+         <description>
+            Generates WriteC code for a system.
+TargetMapping is ignored except for MemoryMapping given for output variables.
+Detailed options can be given through optional argument.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.GenerateWrapper"
+            iterative="false"
+            name="generateWrapper">
+         <description>
+            Generates a wrapper code for the given sytem using the specified TargetMapping.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.GenerateVerificationCode"
+            iterative="false"
+            name="generateVerificationCode">
+         <description>
+            Generates code for verifying generated program. The code is generated using demand-driven code generator (WriteC).
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.GenerateMakefile"
+            iterative="false"
+            name="generateMakefile">
+         <description>
+            Generates Makefile to compile generated code + wrapper.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CreateCGOptionForWriteC"
+            iterative="false"
+            name="createCGOptionForWriteC">
+         <description>
+            Creates instance of CodeGenOptions for WriteC using default values.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CreateCGOptionForScheduledC"
+            iterative="false"
+            name="createCGOptionForScheduledC">
+         <description>
+            Creates instance of CodeGenOptions for ScheduledC using default values.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CreateCGOptionForHybridScheduledCGPU"
+            iterative="false"
+            name="createCGOptionForHybridScheduledCGPU">
+         <description>
+            Creates instance of CodeGenOptions for Hybrid ScheduledC for GPU using dimToInsertChecks to insert checks.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CreateCGOptionForHybridScheduledC"
+            iterative="false"
+            name="createCGOptionForHybridScheduledC">
+         <description>
+            Creates instance of CodeGenOptions for Hybrid ScheduledC using dimToInsertChecks to insert checks.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetCGOptionFlattenArrays"
+            iterative="false"
+            name="setCGOptionFlattenArrays">
+         <description>
+            Specifies true/false (1/0) values for if the multi-dimensional arrays allocated should be flattened to 1D or not.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetCGOptionDisableNormalize_depreciated"
+            iterative="false"
+            name="setCGOptionDisableNormalize_depreciated">
+         <description>
+            Options to skip Normalize before generating code with the ScheduleC code generator.
+This is an option added as an workaround to scalability problems with Normalize, and will be removed in the future.
+Not normalizing may lead to significantly inefficient code.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CreateTiledCGOptionForScheduledC"
+            iterative="false"
+            name="createTiledCGOptionForScheduledC">
+         <description>
+            Creates instance of CodeGenOptions for ScheduledC using default values for tiling.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CreateCGOptionsForPCOT"
+            iterative="false"
+            name="createCGOptionsForPCOT">
+         <description>
+            Creates instance of CodeGenOptions for PCOTC using default values for tiling.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetTiledCGOptionOptimize"
+            iterative="false"
+            name="setTiledCGOptionOptimize">
+         <description>
+            Applies optimizations to the tiled code generated using full-tile splitting of a selected statement group.
+Statement group is selected with heuristics that may not be accurate.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.GenerateScanC"
+            iterative="false"
+            name="generateScanC">
+         <description>
+            code generator for a scan subsystem ( a subsystem that contains only scan computations)
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.GeneratePCOTCode"
+            iterative="false"
+            name="generatePCOTCode">
+         <description>
+            CPU code generator for Polyhedral Cache Oblivious Tiling
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.GenerateFMPPCode"
+            iterative="false"
+            name="generateFMPPCode">
+         <description>
+            generate code using the flattened multi-pass tiling and parallelization strategy
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetVecOptionForTiledC"
+            iterative="false"
+            name="setVecOptionForTiledC">
+         <description>
+            Turn on the vectorization option for TiledC. Right now it is only open for DTiler -- Where only 1 level of tiling is applied and all dimensions are tiled.
+Four types of vectorization strategy is supported: naive, opt nobuff -- optimized vectorization strategy without temporary buffering, all aligned -- optimized vectorization strategy with temporary buffering and all vectors aligned, mostly aligned -- optimized vectorization strategy with temporary buffering and mostly aligned strategy. The default strategy is set to be "opt nobuff".
+Register block size only corresponds to the data dimensions of stencil computations, the default register block size is set to unroll the innermost vectorized dimension 4 times. 
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetVecVarsForTiledC"
+            iterative="false"
+            name="setVecVarsForTiledC">
+         <description>
+            Set the variables for vectorization. All the variable statement must occur under the same innermost loop nest. 
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetVecVarForTiledC"
+            iterative="false"
+            name="setVecVarForTiledC">
+         <description>
+            TODO : add description (to the model)
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.AddRecursionDepthForPCOT"
+            iterative="false"
+            name="addRecursionDepthForPCOT">
+         <description>
+            Generates code with recursion depth as an input parameter.
+         </description>
+      </module>
+
+
+
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ReadDomain"
+            iterative="false"
+            name="calc_ReadDomain">
+         <description>
+            Reads domain in String and returns a Domain object.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ReadFunction"
+            iterative="false"
+            name="calc_ReadFunction">
+         <description>
+            Reads affine function in String and returns an AffineFunction object.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Inverse"
+            iterative="false"
+            name="calc_Inverse">
+         <description>
+            Compute the inverse of the give affine function.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.InverseInContext"
+            iterative="false"
+            name="calc_InverseInContext">
+         <description>
+            Computes inverse of the given affine function, in the context of the given domain.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Compose"
+            iterative="false"
+            name="calc_Compose">
+         <description>
+            Returns a function, that computes function2@function1.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Intersection"
+            iterative="false"
+            name="calc_Intersection">
+         <description>
+            Returns the intersection of two domains given.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Union"
+            iterative="false"
+            name="calc_Union">
+         <description>
+            Returns the union of two domains given.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Join"
+            iterative="false"
+            name="calc_Join">
+         <description>
+            Returns a function that computes function1@function2.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.IsEmpty"
+            iterative="false"
+            name="calc_IsEmpty">
+         <description>
+            Returns true if the domain is empty.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.IsEquivalent"
+            iterative="false"
+            name="calc_IsEquivalent">
+         <description>
+            Returns true if the two domains/functions given are equivalent.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Image"
+            iterative="false"
+            name="calc_Image">
+         <description>
+            Compute the image of the given domain by the given function.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.PreImage"
+            iterative="false"
+            name="calc_PreImage">
+         <description>
+            Compute the pre-image of the given domain by the given function.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Difference"
+            iterative="false"
+            name="calc_Difference">
+         <description>
+            Returns domainA / domainB.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SimplifyInContext"
+            iterative="false"
+            name="calc_SimplifyInContext">
+         <description>
+            Takes domain and context domain, and returns the domain with constraints that are redundant with the context removed.
+         </description>
+      </module>
+
+
+
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.True"
+            iterative="false"
+            name="True">
+         <description>
+            Returning true
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.False"
+            iterative="false"
+            name="False">
+         <description>
+            Returning false
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Print"
+            iterative="false"
+            name="print">
+         <description>
+            Print the given Affine Function, Boolean, Domain or String
+         </description>
+      </module>
+
+
+
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.BuildPRDG"
+            iterative="false"
+            name="BuildPRDG">
+         <description>
+            Constructs a PRDG for the specified AffineSystem. Input variables are excluded from the PRDG default. To override this option, set the optional argument noInput to 0.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ExportPRDG"
+            iterative="false"
+            name="ExportPRDG">
+         <description>
+            Exports the given PRDG as a dot file.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CheckProgram"
+            iterative="false"
+            name="CheckProgram">
+         <description>
+            Performs uniqueness and completeness check of the program.
+The program is a valid alphabets program, if it passes this check.
+Details of the check can be found at \url{http://www.cs.colostate.edu/AlphaZ/wiki/doku.php?id=check_program}.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.VerifyTargetMapping"
+            iterative="false"
+            name="VerifyTargetMapping">
+         <description>
+            Verifies the target mapping given to a system. The third input takes "NONE", "MIN", "MAX" to control the verbosity.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CheckSystem"
+            iterative="false"
+            name="CheckSystem">
+         <description>
+            CheckSystem is CheckProgram applied to the specified system.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.Farkas1DScheduler"
+            iterative="false"
+            name="Farkas1DScheduler">
+         <description>
+            Farkas mono-dimensional scheduler.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.FarkasMDScheduler"
+            iterative="false"
+            name="FarkasMDScheduler">
+         <description>
+            Farkas multi-dimensional scheduler. Uses ISL implementation.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.PlutoScheduler"
+            iterative="false"
+            name="PlutoScheduler">
+         <description>
+            Pluto scheduler. Uses implementation in ISL.
+         </description>
+      </module>
+
+
+
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetSpaceTimeMap"
+            iterative="false"
+            name="setSpaceTimeMap">
+         <description>
+            Specifies a space time mapping of a variable at a certain level. By default (when there is no value for level), the space-time map is set up for the first level of targetMapping.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetMemoryMap"
+            iterative="false"
+            name="setMemoryMap">
+         <description>
+            Specifies a memory map for a variable. Some variables may share the same meory map and memory space, then they can be set up using one command by providing a list of variables. 
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetMemorySpace"
+            iterative="false"
+            name="setMemorySpace">
+         <description>
+            Specifies the memory space for a variable. Normally, each variable has a separate memory space. However, some variables may share the same memory space, and this can be set up once by providing a list of variable.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetStatementOrdering"
+            iterative="false"
+            name="setStatementOrdering">
+         <description>
+            Specifies the ordering of the statements (alphabets variables) in the generated code. This is similar to adding an additional ordering dimensions to the last dimension of space-time mapping, and providing ordering information.
+AlphaZ provides an alternative to such specification by allowing the user to specify partial orderings between statements.
+A total order is deduced at the time of code generation.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ListSpaceTimeMaps"
+            iterative="false"
+            name="listSpaceTimeMaps">
+         <description>
+            Lists all SpaceTime maps that have been specified for a system.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.ListMemoryMaps"
+            iterative="false"
+            name="listMemoryMaps">
+         <description>
+            Lists all memory mappings specified for a system.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetSchedule"
+            iterative="false"
+            name="setSchedule">
+         <description>
+            Applies schedules found by a scheduler (such as Farkas scheduler) to target mapping.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetParallel"
+            iterative="false"
+            name="setParallel">
+         <description>
+            Specify the parallel dimensions for a system. The nth dimension (specified by parallelDims, start with zero) with the specified ordering prefix to be parallel.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.CreateSpaceTimeLevel"
+            iterative="false"
+            name="CreateSpaceTimeLevel">
+         <description>
+            Create a spacetimelevel data stucture for level (level)
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetOrderingDimensions"
+            iterative="false"
+            name="setOrderingDimensions">
+         <description>
+            specify which dimension is the ordering dimension for each level of the targetMapping. Dimension starts with zero. If no value is specified for the targetMapping level, it is the first level by default. 
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetSpaceTimeMapForMemoryAllocation"
+            iterative="false"
+            name="setSpaceTimeMapForMemoryAllocation">
+         <description>
+            set space time map for the memory allocation statement for the input/output of the use equation.
+isInput -- 0: for nTh input of the use equaiton
+isInput -- 1: for nTh output of the use equation
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetSpaceTimeMapForValueCopy"
+            iterative="false"
+            name="setSpaceTimeMapForValueCopy">
+         <description>
+            set the space time map for the value copy statement for input/output of a use equation
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetSpaceTimeMapForMemoryFree"
+            iterative="false"
+            name="setSpaceTimeMapForMemoryFree">
+         <description>
+            set the space time map for the memory free statement for the input/ouput of a useEquation.
+isInput -- 0, for the input of the useEquation
+isInput -- 1, for the output of the useEquation
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetSpaceTimeMapForUseEquationOptimization"
+            iterative="false"
+            name="setSpaceTimeMapForUseEquationOptimization">
+         <description>
+            set the space time map for the memory allocation, value copy, memory allocation statement for the input/output of the useEuqation.
+isInput -- 0: for the input of the useEquation
+isInput -- 1: for the output of the useEquation
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetMemorySpaceForUseEquationOptimization"
+            iterative="false"
+            name="setMemorySpaceForUseEquationOptimization">
+         <description>
+            set memory space for the input/ouput of the useEquation
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetBandForTiling"
+            iterative="false"
+            name="setBandForTiling">
+         <description>
+            configure a band of continuous dimensions for tiling.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetSubTilingWithinBand"
+            iterative="false"
+            name="setSubTilingWithinBand">
+         <description>
+            Configure the subtiling specification for a band. The band is identified by the name. There are two types of tiling type: sequential and openmp wavefront. Represented with "sequential" and "wavefront" separately.
+         </description>
+      </module>
+
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetDefaultDTilerConfiguration"
+            iterative="false"
+            name="setDefaultDTilerConfiguration">
+         <description>
+            Set up the default configuration for dtiler: apply parametric one level tiling to all the dimensions from [start to end].
+         </description>
+      </module>
+
+
+
+   </extension>
+</plugin>

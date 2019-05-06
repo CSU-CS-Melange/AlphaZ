@@ -1,0 +1,8 @@
+affine HW2P4P1 {N|N>2}
+input
+	int A {i|0<=i<N};
+output
+	int m;
+let
+	m = reduce(max, [i,j], {|0<=i<=j<N} : reduce(+, [k], {|i<=k<=j} : A[k]));
+.

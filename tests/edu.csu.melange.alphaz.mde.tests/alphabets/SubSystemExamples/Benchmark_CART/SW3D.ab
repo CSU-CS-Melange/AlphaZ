@@ -1,0 +1,18 @@
+affine SW3D { NX, NY, NZ | NX>1 && NY>1 && NZ>1}
+input
+	double planeZ0 {x,y|0<=x<NX && 0<=y<NY};
+	double planeX0 {y,z|0<=y<NY && 0<=z<NZ};
+	double planeY0 {x,z|0<=x<NX && 0<=z<NZ};
+output
+	double score {|};
+local 
+	double temp {x,y,z|0<=x<NX && 0<=y<NY && 0<=z<NZ};
+let
+	temp[x,y,z] = case
+				{|x == 0} : planeX0[y,z];
+				{|x>0 && y == 0} : planeY0[x,z];
+				{|x>0 && y>0 && z==0} : planeZ0[x,y];
+				{|x > 0 && y > 0 && z>0} : temp[x-1,y,z]*temp[x,y-1,z] - temp[x,y,z-1];	// Arbitrary function (mult-add in this case)
+			esac;
+	score[] = temp[NX-1,NY-1,NZ-1];
+.

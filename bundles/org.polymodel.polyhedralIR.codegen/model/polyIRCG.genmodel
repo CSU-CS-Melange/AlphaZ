@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polymodel.polyhedralIR.codegen/src"
+    modelPluginID="org.polymodel.polyhedralIR.codegen" modelName="PolyIRCG" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.polymodel.algebra/model/algebra.genmodel#//algebra ../../org.polymodel.polyhedralIR/model/polyhedralIR.genmodel#//polyhedralIR ../../org.polymodel/model/polymodel.genmodel#//polymodel ../../org.polymodel.scop/model/scop.genmodel#//scop">
+  <foreignModel>polyIRCG.ecore</foreignModel>
+  <genPackages prefix="PolyIRCG" basePackage="org.polymodel.polyhedralIR" disposableProviderFactory="true"
+      ecorePackage="polyIRCG.ecore#/">
+    <genClasses ecoreClass="polyIRCG.ecore#//CompilationUnit">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CompilationUnit/program"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CompilationUnit/units"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//CodeUnit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeUnit/system"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeUnit/functions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeUnit/variables"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeUnit/compilationUnit"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeUnit/localParameters"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeUnit/compileTimeParameters"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//CodeUnit/findVariable">
+        <genParameters ecoreParameter="polyIRCG.ecore#//CodeUnit/findVariable/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//Function">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference polyIRCG.ecore#//Function/codeunit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//Function/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//Function/returnType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//Function/parameters"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//Function/inputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//Function/outputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//Function/locals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//Function/bodies"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//Function/entryPoint"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference polyIRCG.ecore#//Function/signature"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//FunctionSignature">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//FunctionSignature/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//FunctionSignature/returnType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//FunctionSignature/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//FunctionParameter">
+      <genOperations ecoreOperation="polyIRCG.ecore#//FunctionParameter/getName"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//FunctionParameter/getType"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//FunctionParameter/asParameter"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//FunctionParameter/asParameterType"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//BasicFunctionParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//BasicFunctionParameter/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//BasicFunctionParameter/type"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//VariableFunctionParameter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//VariableFunctionParameter/variable"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//CodeGenVariable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//CodeGenVariable/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeGenVariable/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeGenVariable/domain"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//CodeGenVariable/zeroAligned"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//CodeGenVariable/flattened"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//CodeGenVariable/global"/>
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeGenVariable/accessExpression"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//CodeGenVariable/codeunit"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//CodeGenVariable/getTypeString"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//CodeGenVariable/getVolumeExpression">
+        <genParameters ecoreParameter="polyIRCG.ecore#//CodeGenVariable/getVolumeExpression/startingDim"/>
+        <genParameters ecoreParameter="polyIRCG.ecore#//CodeGenVariable/getVolumeExpression/endingDim"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="polyIRCG.ecore#//MemoryDomain">
+      <genOperations ecoreOperation="polyIRCG.ecore#//MemoryDomain/getDim"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//MemoryDomain/getNParams"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//MemoryDomain/getNIndices"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//MemoryDomain/getParams"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//MemoryDomain/getIndices"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//MemoryDomain/getBounds">
+        <genParameters ecoreParameter="polyIRCG.ecore#//MemoryDomain/getBounds/dim"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//PseudoProjection">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//PseudoProjection/domain"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//PseudoProjection/modFactors"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="polyIRCG.ecore#//Body">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference polyIRCG.ecore#//Body/function"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//BasicBody">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//BasicBody/string"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//VariableInitialization">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//VariableInitialization/inputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//VariableInitialization/outputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//VariableInitialization/locals"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//VariableFinalization">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//VariableFinalization/inputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//VariableFinalization/outputs"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//VariableFinalization/locals"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="polyIRCG.ecore#//Loop">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//Loop/parameterDomain"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//Loop/statements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//Loop/declareIterators"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//Loop/iteratorNames"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//Loop/numConstantDimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//Loop/scop"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//Loop/getMaxDimension"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//Statement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//Statement/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//Statement/domain"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference polyIRCG.ecore#//Statement/containerLoop"/>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//BasicStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//BasicStatement/statement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="polyIRCG.ecore#//MemoryAccessExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//MemoryAccessExpression/variable"/>
+      <genOperations ecoreOperation="polyIRCG.ecore#//MemoryAccessExpression/getIndexingExpression">
+        <genParameters ecoreParameter="polyIRCG.ecore#//MemoryAccessExpression/getIndexingExpression/dim"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyIRCG.ecore#//MemoryAccessExpression/getVolumeExpression">
+        <genParameters ecoreParameter="polyIRCG.ecore#//MemoryAccessExpression/getVolumeExpression/dim"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polyIRCG.ecore#//PseudoProjectiveAccessExpression"/>
+    <genClasses ecoreClass="polyIRCG.ecore#//IdentityAccessExpression"/>
+    <genClasses ecoreClass="polyIRCG.ecore#//CompileTimeParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//CompileTimeParameter/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//CompileTimeParameter/defaultValue"/>
+    </genClasses>
+    <nestedGenPackages prefix="C" basePackage="org.polymodel.polyhedralIR.polyIRCG"
+        disposableProviderFactory="true" ecorePackage="polyIRCG.ecore#//C">
+      <genClasses ecoreClass="polyIRCG.ecore#//C/EquationAsStatement">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference polyIRCG.ecore#//C/EquationAsStatement/variable"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//C/EquationAsStatement/accessFunction"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference polyIRCG.ecore#//C/EquationAsStatement/rhs"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference polyIRCG.ecore#//C/EquationAsStatement/varDecl"/>
+      </genClasses>
+      <genClasses ecoreClass="polyIRCG.ecore#//C/ParameterCheck">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference polyIRCG.ecore#//C/ParameterCheck/parameterDomain"/>
+      </genClasses>
+      <genClasses ecoreClass="polyIRCG.ecore#//C/CLoop">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/CLoop/useMacros"/>
+      </genClasses>
+      <genClasses ecoreClass="polyIRCG.ecore#//C/TiledCLoop">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/TiledCLoop/tileSizes"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/TiledCLoop/tileIndexPrefix"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/TiledCLoop/tileSizePrefix"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/TiledCLoop/optimize"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/TiledCLoop/type"/>
+        <genOperations ecoreOperation="polyIRCG.ecore#//C/TiledCLoop/getTileIndices"/>
+      </genClasses>
+      <genClasses ecoreClass="polyIRCG.ecore#//C/CVariable">
+        <genOperations ecoreOperation="polyIRCG.ecore#//C/CVariable/getPointerType"/>
+        <genOperations ecoreOperation="polyIRCG.ecore#//C/CVariable/getPrintfSpecifier"/>
+      </genClasses>
+      <nestedGenPackages prefix="CWrapper" basePackage="org.polymodel.polyhedralIR.polyIRCG.C"
+          disposableProviderFactory="true" ecorePackage="polyIRCG.ecore#//C/wrapper">
+        <genClasses ecoreClass="polyIRCG.ecore#//C/wrapper/InputInitialization">
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/wrapper/InputInitialization/varDecl"/>
+        </genClasses>
+        <genClasses ecoreClass="polyIRCG.ecore#//C/wrapper/OutputPrinting">
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/wrapper/OutputPrinting/varDecl"/>
+        </genClasses>
+        <genClasses ecoreClass="polyIRCG.ecore#//C/wrapper/OutputVerification">
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/wrapper/OutputVerification/varDecl"/>
+        </genClasses>
+      </nestedGenPackages>
+      <nestedGenPackages prefix="CDistributed" basePackage="org.polymodel.polyhedralIR.polyIRCG.C"
+          disposableProviderFactory="true" ecorePackage="polyIRCG.ecore#//C/distributed">
+        <genClasses ecoreClass="polyIRCG.ecore#//C/distributed/PartitioningComputation">
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/distributed/PartitioningComputation/partitionedTile"/>
+        </genClasses>
+        <genClasses ecoreClass="polyIRCG.ecore#//C/distributed/DistributedPseudoProjection">
+          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/distributed/DistributedPseudoProjection/distributedDims"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/distributed/DistributedPseudoProjection/distributedDimSizes"/>
+        </genClasses>
+      </nestedGenPackages>
+      <nestedGenPackages prefix="Scan" basePackage="org.polymodel.polyhedralIR.polyIRCG.C"
+          disposableProviderFactory="true" ecorePackage="polyIRCG.ecore#//C/scan">
+        <genClasses ecoreClass="polyIRCG.ecore#//C/scan/BoundComputation">
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/BoundComputation/lb"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/BoundComputation/ub"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/BoundComputation/ConstantTerm"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/BoundComputation/volumeFunction"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/BoundComputation/volumeFunctionDerivative"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/BoundComputation/initialValue"/>
+        </genClasses>
+        <genClasses ecoreClass="polyIRCG.ecore#//C/scan/VolumeFunction">
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/VolumeFunction/unknown"/>
+        </genClasses>
+        <genClasses ecoreClass="polyIRCG.ecore#//C/scan/VolumeFunctionDerivative">
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/VolumeFunctionDerivative/unknown"/>
+        </genClasses>
+        <genClasses ecoreClass="polyIRCG.ecore#//C/scan/ScanBody">
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/domain"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/volumeFunction"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/boundComputationFunction"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/originDomainVolume"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/localReductionFunction"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/localScanFunction"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/localReductionVariables"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/localScanReductionVariables"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/localInitialVariables"/>
+          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/scan/ScanBody/nthreadVariableName"/>
+          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/scan/ScanBody/threadNumVariableName"/>
+          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/scan/ScanBody/beginVariableName"/>
+          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyIRCG.ecore#//C/scan/ScanBody/endVariableName"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanBody/scanReductionBody"/>
+        </genClasses>
+        <genClasses ecoreClass="polyIRCG.ecore#//C/scan/OriginDomainVolume"/>
+        <genClasses ecoreClass="polyIRCG.ecore#//C/scan/ScanReductionBody">
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanReductionBody/preProcessLoop"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanReductionBody/scanLoop"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanReductionBody/postProcessLoop"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanReductionBody/matrixTempVariables"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanReductionBody/initTempVariables"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanReductionBody/assignmentLoop"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanReductionBody/initValueUpdate"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanReductionBody/initValueCopy"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference polyIRCG.ecore#//C/scan/ScanReductionBody/matrixInitLoop"/>
+        </genClasses>
+      </nestedGenPackages>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="AlgebraEx" basePackage="org.polymodel.polyhedralIR.polyIRCG"
+        disposableProviderFactory="true" ecorePackage="polyIRCG.ecore#//algebraEx">
+      <genClasses ecoreClass="polyIRCG.ecore#//algebraEx/ModuloExpression">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//algebraEx/ModuloExpression/numerator"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyIRCG.ecore#//algebraEx/ModuloExpression/denominator"/>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,8 @@
+affine ReduceExpr {N | N > 1}
+input
+	int A {i | 0 <= i < N};
+output
+	int X {i | 0 <= i < N};
+let
+	A[i] = reduce(+, [j], {|0<= j <= i}:X[j]);
+.

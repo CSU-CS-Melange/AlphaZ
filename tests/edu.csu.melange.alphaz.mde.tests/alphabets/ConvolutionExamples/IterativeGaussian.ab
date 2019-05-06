@@ -1,0 +1,20 @@
+affine IterativeGaussian {N|N>0}
+	input
+		float img {i,j|};
+		float a {i|0<=i<5};
+		float b {i|0<=i<5};
+	output
+		float out {i,j|};
+	local
+		float tmp {i,j|};
+	let
+		tmp[i,j] = case
+			a[0]*img[i,j] + a[1]*img[i-1,j] + a[2]*img[i+1,j] + a[3]*img[i,j-1] + a[4]*img[i,j+1];
+			 
+		esac;
+
+		out[i,j] = case
+			b[0]*tmp[i,j] + b[1]*tmp[i-1,j] + b[2]*tmp[i+1,j] + b[3]*tmp[i,j-1] + b[4]*tmp[i,j+1];
+			 
+		esac;
+.

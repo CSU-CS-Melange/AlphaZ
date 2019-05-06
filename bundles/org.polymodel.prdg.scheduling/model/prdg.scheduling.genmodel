@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.polymodel.prdg.scheduling/src-gen" modelPluginID="org.polymodel.prdg.scheduling"
+    modelName="Prdg" importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0"
+    copyrightFields="false" usedGenPackages="../../org.polymodel.algebra/model/algebra.genmodel#//algebra ../../org.polymodel/model/polymodel.genmodel#//polymodel ../../org.polymodel.prdg/model/prdg.genmodel#//prdg"
+    operationReflection="true">
+  <foreignModel>prdg.scheduling.ecore</foreignModel>
+  <genPackages prefix="Scheduling" basePackage="org.polymodel.prdg" disposableProviderFactory="true"
+      ecorePackage="prdg.scheduling.ecore#/">
+    <genClasses ecoreClass="prdg.scheduling.ecore#//ScheduledStatement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//ScheduledStatement/statement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//ScheduledStatement/schedule"/>
+    </genClasses>
+    <genClasses ecoreClass="prdg.scheduling.ecore#//SchedulePrototype">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//SchedulePrototype/terms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//SchedulePrototype/coeficients"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//SchedulePrototype/distribute"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//SchedulePrototype/getConstantTerm"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//SchedulePrototype/apply">
+        <genParameters ecoreParameter="prdg.scheduling.ecore#//SchedulePrototype/apply/mapping"/>
+      </genOperations>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//SchedulePrototype/getDomain"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//SchedulePrototype/getScheduleIndices"/>
+    </genClasses>
+    <genClasses ecoreClass="prdg.scheduling.ecore#//ScheduleTerm">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//ScheduleTerm/var"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//ScheduleTerm/exp"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//ScheduleTerm/isConstant"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//ScheduleTerm/distribute"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//ScheduleTerm/apply">
+        <genParameters ecoreParameter="prdg.scheduling.ecore#//ScheduleTerm/apply/mapping"/>
+      </genOperations>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//ScheduleTerm/negate"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//ScheduleTerm/simplify"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//ScheduleTerm/isNull"/>
+    </genClasses>
+    <genClasses ecoreClass="prdg.scheduling.ecore#//Dependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//Dependency/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//Dependency/reference"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//Dependency/getTerms">
+        <genParameters ecoreParameter="prdg.scheduling.ecore#//Dependency/getTerms/constantPart"/>
+      </genOperations>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//Dependency/getCoefficientsContext"/>
+    </genClasses>
+    <genClasses ecoreClass="prdg.scheduling.ecore#//StatementSchedulePrototype">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//StatementSchedulePrototype/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="prdg.scheduling.ecore#//EdgeDependency">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//EdgeDependency/edge"/>
+      <genOperations ecoreOperation="prdg.scheduling.ecore#//EdgeDependency/isUniform"/>
+    </genClasses>
+    <genClasses ecoreClass="prdg.scheduling.ecore#//ScheduleCoefficient">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//ScheduleCoefficient/owner"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//ScheduleCoefficient/dimension"/>
+    </genClasses>
+    <nestedGenPackages prefix="Structured" disposableProviderFactory="true" ecorePackage="prdg.scheduling.ecore#//structured">
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/Channel">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Channel/edges"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Channel/source"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Channel/destination"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Channel/schedule"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Channel/domain"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//structured/Channel/name"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Channel/subscriptDimension"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/Process">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Process/inputs"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Process/outputs"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Process/internalNodes"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//structured/Process/name"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/Process/constraints"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/ProcessNetwork">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/ProcessNetwork/processes"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/ProcessNetwork/channels"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/ProcessNetwork/prdg"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="prdg.scheduling.ecore#//structured/DataPort">
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//structured/DataPort/getChannel"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/InputPort">
+        <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/InputPort/channel"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/OutputPort">
+        <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/OutputPort/channel"/>
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//structured/OutputPort/getSourceNode"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/ChannelSchedulePrototype">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/ChannelSchedulePrototype/channel"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="prdg.scheduling.ecore#//structured/ChannelDependency">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/ChannelDependency/channel"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/ChannelReadDependency">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/ChannelReadDependency/edge"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/ChannelWriteDependency"/>
+      <genClasses image="false" ecoreClass="prdg.scheduling.ecore#//structured/MemoryDependency">
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//structured/MemoryDependency/getChannel"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/LinearMemoryReadDependency"/>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/LinearMemoryWriteDependency"/>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/BoundedChannel">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//structured/BoundedChannel/maximalChannelSize"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/BoundedChannel/sizeVariable"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/BoundedChannel/boundingCoefficients"/>
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//structured/BoundedChannel/getBoundingCoefficient">
+          <genParameters ecoreParameter="prdg.scheduling.ecore#//structured/BoundedChannel/getBoundingCoefficient/index"/>
+          <genParameters ecoreParameter="prdg.scheduling.ecore#//structured/BoundedChannel/getBoundingCoefficient/dimension"/>
+        </genOperations>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/LinearMemoryAllocationDependency"/>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/MemoryReadDependency">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//structured/MemoryReadDependency/dimensionSizes"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/MemoryWriteDependency"/>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/MemoryAllocationDependency"/>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/MemoryDeallocationDependency">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//structured/MemoryDeallocationDependency/dimensionSizes"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/LinearDependency">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/LinearDependency/subscript"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/ChannelLinearReadDependency"/>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/ChannelLinearWriteDependency"/>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/CompositeDependency">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/CompositeDependency/dependencies"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//structured/CompositeDependency/dependencyDomain"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/MultidimDeallocationDependency">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//structured/MultidimDeallocationDependency/dimensionSizes"/>
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//structured/MultidimDeallocationDependency/getDomain"/>
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//structured/MultidimDeallocationDependency/getChannel"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/MultidimMemoryReadDependencyComponent">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//structured/MultidimMemoryReadDependencyComponent/dimension"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/BoundingCoefficient">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//structured/BoundingCoefficient/index"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//structured/BoundingCoefficient/dimension"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//structured/LinearMemoryDeallocationDependency"/>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Multidim" disposableProviderFactory="true" ecorePackage="prdg.scheduling.ecore#//multidim">
+      <genClasses ecoreClass="prdg.scheduling.ecore#//multidim/NullifiableDependency">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//multidim/NullifiableDependency/dimension"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//multidim/NullifiableDependency/previousDimensionsDependencies"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//multidim/NullifiableDependency/satisfactionVariable"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//multidim/NullifiableDependency/dependency"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute prdg.scheduling.ecore#//multidim/NullifiableDependency/K"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//multidim/MultidimDependency">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//multidim/MultidimDependency/dependencies"/>
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//multidim/MultidimDependency/computeConstraints"/>
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//multidim/MultidimDependency/getAllScheduleCoefficients"/>
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//multidim/MultidimDependency/getAllSatisfactionVariables"/>
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//multidim/MultidimDependency/getAllSourceCoefficients"/>
+        <genOperations ecoreOperation="prdg.scheduling.ecore#//multidim/MultidimDependency/getAllReferenceCoefficients"/>
+      </genClasses>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//multidim/MultidimSchedulePrototype">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//multidim/MultidimSchedulePrototype/prototypes"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference prdg.scheduling.ecore#//multidim/MultidimSchedulePrototype/scalars"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference prdg.scheduling.ecore#//multidim/MultidimSchedulePrototype/reference"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="prdg.scheduling.ecore#//multidim/ScalarSchedulePrototype"/>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//multidim/StatementScalarSchedulePrototype"/>
+      <genClasses ecoreClass="prdg.scheduling.ecore#//multidim/ChannelScalarSchedulePrototype"/>
+      <genClasses image="false" ecoreClass="prdg.scheduling.ecore#//multidim/IObservable"/>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

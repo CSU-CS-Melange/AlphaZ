@@ -1,0 +1,7 @@
+
+
+%typeterm DTilingOptions {
+	implement 		{DTilingOptions}
+	is_sort(t) 		{$t instanceof DTilingOptions}
+	equals(l1,l2) 	{$l1.equals($l2)}
+}

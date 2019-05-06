@@ -1,0 +1,16 @@
+affine syst1 {N| N>1}
+input
+	long A {i | 0<=i<N};
+	long B {i,j | 0<=j<=i<N};
+output
+	long ret {i| 0<=i<N};
+	long D {i,j | 0<=j<=i<N};
+local
+	long C {i | 0 <=i<N-1};
+let
+	C[i] = A[i] + (8*({i|i<N-1}: B[i,i]));
+	D[i,j] = B[i,j] + 2;
+	ret[i] = ({i|i<N-1}: B[i,i]) + C[i];
+.
+
+// Local added: ({i|i<N-1}: B[i,i])

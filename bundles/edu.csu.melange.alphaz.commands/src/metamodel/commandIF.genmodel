@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/edu.csu.melange.alphaz.commands/src"
+    modelPluginID="edu.csu.melange.alphaz.commands" modelName="CommandIF" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>commandIF.ecore</foreignModel>
+  <genPackages prefix="CommandIF" disposableProviderFactory="true" ecorePackage="commandIF.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="commandIF.ecore#//Type">
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/ProgramProxy"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/Program"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/String"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/StringList"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/StringArray"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/Boolean"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/int"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/intList"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/intArray"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/qVar"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/alphabetsFunctionAPrx"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/alphabetsPolyDomainAPrx"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/alphabetsExpressionAPrx"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/alphabetsExpressionAPrxList"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/alphabetsExpressionAPrxArray"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/TPMap"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/MemoryMap"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/LoopType"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/CodeGenOptions"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/TiledCodeGenOptions"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/void"/>
+      <genEnumLiterals ecoreEnumLiteral="commandIF.ecore#//Type/Object"/>
+    </genEnums>
+    <genClasses ecoreClass="commandIF.ecore#//Category">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute commandIF.ecore#//Category/name"/>
+      <genFeatures createChild="false" propertyCategory="" propertyDescription=""
+          propertyMultiLine="true" ecoreFeature="ecore:EAttribute commandIF.ecore#//Category/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference commandIF.ecore#//Category/subcategories"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference commandIF.ecore#//Category/commands"/>
+    </genClasses>
+    <genClasses ecoreClass="commandIF.ecore#//BasicCommand">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute commandIF.ecore#//BasicCommand/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference commandIF.ecore#//BasicCommand/inputs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute commandIF.ecore#//BasicCommand/output"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="commandIF.ecore#//Command">
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute commandIF.ecore#//Command/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference commandIF.ecore#//Command/overloads"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute commandIF.ecore#//Command/userCommand"/>
+      <genOperations ecoreOperation="commandIF.ecore#//Command/getName"/>
+      <genOperations ecoreOperation="commandIF.ecore#//Command/getOutput"/>
+      <genOperations ecoreOperation="commandIF.ecore#//Command/getCategory"/>
+      <genOperations ecoreOperation="commandIF.ecore#//Command/isExposedToUser"/>
+    </genClasses>
+    <genClasses ecoreClass="commandIF.ecore#//Overloading">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference commandIF.ecore#//Overloading/overLoadedInputs"/>
+    </genClasses>
+    <genClasses ecoreClass="commandIF.ecore#//SpecializedOverloading">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference commandIF.ecore#//SpecializedOverloading/additionalInputs"/>
+    </genClasses>
+    <genClasses ecoreClass="commandIF.ecore#//Input">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute commandIF.ecore#//Input/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute commandIF.ecore#//Input/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute commandIF.ecore#//Input/defaultValue"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

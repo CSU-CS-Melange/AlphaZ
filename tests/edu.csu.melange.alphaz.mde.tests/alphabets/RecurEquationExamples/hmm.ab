@@ -1,0 +1,80 @@
+affine HMM {L, M | (L, M) > 1}
+input
+	int XMB	{i| 0 <= i <= L};
+	int BSC	{i| 0 <= i <= M};
+	int TMM {i| 0 <= i <= M};
+	int TIM {i| 0 <= i <= M};
+	int TDM {i| 0 <= i <= M};
+	int MSC {i, j| 0 <= i <= L && 0 <= j <= M};
+	int ESC {i| 0 <= i <= M};
+	int TMD {i| 0 <= i <= M};
+	int TDD {i| 0 <= i <= M};
+	int TMI {i| 0 <= i <= M};
+	int TII {i| 0 <= i <= M};
+	int ISC {i, j| 0 <= i <= L && 0 <= j <= M};
+	//define scalar variables
+	int XTN_LOOP;
+	int XTE_LOOP;
+	int XTJ_LOOP;
+	int XTN_MOVE;
+	int XTJ_MOVE;
+	int XTC_LOOP;
+	int XTE_MOVE;
+	int INFTY;
+output
+	int xmc {i| 0 <= i <= L};
+local
+	int mmx {i,j| 0 <= i <= L && 0 <= j <= M};
+	int imx {i,j| 0 <= i <= L && 0 <= j <= M};
+	int dmx {i,j| 0 <= i <= L && 0 <= j <= M};
+	int xme {i,j| 0 <= i <= L && 0 <= j <= M};
+	int dmx {i,j| 0 <= i <= L && 0 <= j <= M};
+	int xmn {i|0 <= i <= L};
+	int xmj {i|0 <= i <= L};
+	int xmb {i|0 <= i <= L};
+let
+	mmx[i,j] = case
+			{|i==0}: -INFTY;
+			{|i > 0 && j==0}: -INFTY;
+			{|i > 0 && j > 0}: max(-INFTY, XMB[i-1] + BSC[j], mmx[i-1,j-1] + TMM[j-1], imx[i-1, j-1] + TIM[j-1], dmx[i-1,j-1] + TDM[j-1]) + MSC[i,j];
+			esac;
+			
+	xme[i,j] = case
+			{|i==0}: -INFTY;
+			{|i > 0 && j==0}: -INFTY;
+			{|i > 0 && j > 0}: max(mmx[i,j] + ESC[j], xme[i,j-1]);
+			esac;
+			
+	dmx[i,j] = case
+			{|i==0}: -INFTY;
+			{|i > 0 && j==0}: -INFTY;
+			{|i > 0 && j > 0}: max(mmx[i,j-1]+TMD[j-1], dmx[i,j-1] + TDD[j-1]);
+			esac;
+			
+	imx[i,j] = case
+			{|i==0}: -INFTY;
+			{|i > 0 && j==0}: -INFTY;
+			{|i > 0 && j==M}: -INFTY;
+			{|i > 0 && 0 < j < M}: max(mmx[i-1,j]+TMI[j-1] + ISC[i,j], imx[i-1,j] + TII[j] + ISC[i,j]);
+			esac;
+			
+	xmn[i] = case
+			{|i==0}: -INFTY;
+			{|i > 0}: xmn[i-1] + XTN_LOOP;
+			esac;
+			
+	xmj[i] = case
+			{|i==0}: -INFTY;
+			{|i > 0}: max(xme[i,M] + XTE_LOOP, xmj[i-1] + XTJ_LOOP);
+			esac;
+			
+	xmb[i] = case
+			{|i==0}: -INFTY;
+			{|i > 0}: max(xmn[i] + XTN_MOVE, xmj[i] + XTJ_MOVE);
+			esac;
+			
+	xmc[i] = case
+			{|i==0}: -INFTY;
+			{|i > 0}: max(xmc[i-1] + XTC_LOOP, xme[i,M] + XTE_MOVE);
+			esac;
+.

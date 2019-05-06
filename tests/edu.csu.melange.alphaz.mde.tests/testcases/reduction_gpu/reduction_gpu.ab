@@ -1,0 +1,14 @@
+//alpha code corresponding gpu code structure
+//b is the block id, t is the thread id, k is the loop index
+//B the number of blocks, T the number of threads, K the loop upper bound
+affine reduction_gpu {B, T, K|(B, T, K)>=1}
+input  
+	int X {b, t, k|0 <= b< B && 0 <= t < T && 0 <= k < K}; 
+output
+	int C {b | 0 <= b < B};
+local
+    int S {b, t | 0 <= b < B &&0 <= t < T};
+let
+	S = reduce(+, (b,t, k->b,t), X);
+	C = reduce(+, (b,t->b), S);
+.

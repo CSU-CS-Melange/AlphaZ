@@ -1,0 +1,15 @@
+affine InputVariableDefined {|}
+input
+	int x;
+	int z;
+output
+	int y;
+local
+	int temp1;
+	int temp2;
+let
+	temp1 = temp2;
+	temp2 = temp1+z;
+	y = x;
+	z=y;
+.

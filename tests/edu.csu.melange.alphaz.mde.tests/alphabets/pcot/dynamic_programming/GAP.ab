@@ -1,0 +1,147 @@
+int w(int, int);
+int wprime(int, int);
+int S(short, short);
+
+
+affine GAPSerSplit {M,N|M>=1 && N>=1}
+input
+	short x {i|i>=0 && M>=i};
+	short y {j|j>=0 && N>=j};
+output
+//	int lastCol {i|i>=0 && M>=i};
+//	int lastRow {j|j>=0 && N>=j};
+	int OUT;
+local
+	int D {i,j|i>=0 && M>=i && N>=j && j>=i};
+	int E {i,j|j>=1 && N>=j && i>=1 && M>=i};
+	int F {i,j|j>=1 && N>=j && i>=1 && M>=i};
+	int Eacc {i,j,q|q>=0 && j>=q+1 && i>=1 && M>=i && N>=j};
+	int Facc {i,j,p|p>=0 && i>=p+1 && M>=i && j>=1 && N>=j};
+	int D_ {i,j|j>=0 && i>=j+1 && N>=j && M>=i};
+let
+	D[i,j] = case
+		{|j==0 && i==0} : 0;
+		{|i==0 && j>=1} : w(0,[j]);
+		{|i>=1} : min((D[i-1,j-1] + S(x[i],y[j])),min(E,F));
+	esac;
+	E[i,j] = Eacc[i,j,j-1];
+	F[i,j] = Facc[i,j,i-1];
+//	lastCol[i] = case
+//		{|N>=i} : D[i,N];
+//		{|i>=N+1} : D_[i,N];
+//	esac;
+//	lastRow[j] = case
+//		{|j>=M} : D[M,j];
+//		{|M>=j+1} : D_[M,j];
+//	esac;
+	
+	OUT=D[M,N];
+
+	Eacc[i,j,q] = case
+		{|q==0} : (D_[i,q] + w([q],[j]));
+		{|q>=i} : (Eacc[i,j,q-1] min (D[i,q] + w([q],[j])));
+		{|q>=1 && i>=q+1} : (Eacc[i,j,q-1] min (D_[i,q] + w([q],[j])));
+	esac;
+	Facc[i,j,p] = case
+		{|p==0} : (D[p,j] + wprime([p],[i]));
+		{|p>=1 && j>=p} : (Facc[i,j,p-1] min (D[p,j] + wprime([p],[i])));
+		{|p>=j+1} : (Facc[i,j,p-1] min (D_[p,j] + wprime([p],[i])));
+	esac;
+	D_[i,j] = case
+		{|j==0} : wprime(0,[i]);
+		{|j>=1} : min((D_[i-1,j-1] + S(x[i],y[j])),min(E,F));
+	esac;
+.
+
+
+
+affine GAPSer {M,N| (M,N)>0}
+    input
+        short x {i|0<=i<=M};
+        short y {j|0<=j<=N};
+    output
+		int lastCol {i|0<=i<=M};
+		int lastRow {j|0<=j<=N};
+    local
+		int D {i,j|i>=0 && M>=i && N>=j && j>=0};
+		int E {i,j|j>=1 && N>=j && i>=1 && M>=i};
+		int F {i,j|j>=1 && N>=j && i>=1 && M>=i};
+		int Eacc {i,j,q|q>=0 && j>=q+1 && i>=1 && M>=i && N>=j};
+		int Facc {i,j,p|p>=0 && i>=p+1 && M>=i && j>=1 && N>=j};
+	let
+		D[i,j] = case
+			{|j==0 && i==0} : 0;
+			{|i==0 && j>=1} : w(0,[j]);
+			{|j==0 && i>=1} : wprime(0,[i]);
+			{|j>=1 && i>=1} : min((D[i-1,j-1] + S(x[i],y[j])),min(E,F));
+		esac;
+	
+		E[i,j] = Eacc[i,j,j-1];
+		F[i,j] = Facc[i,j,i-1];
+		
+		lastCol[i] = D[i,N];
+		lastRow[j] = D[M,j];
+		
+		Eacc[i,j,q] = case
+			{|q==0} : (D[i,q] + w([q],[j]));
+			{|q>=1} : (Eacc[i,j,q-1] min (D[i,q] + w([q],[j])));
+		esac;
+		
+		Facc[i,j,p] = case
+			{|p==0} : (D[p,j] + wprime([p],[i]));
+			{|p>=1} : (Facc[i,j,p-1] min (D[p,j] + wprime([p],[i])));
+		esac;
+.
+
+
+
+
+affine GAP {M,N| (M,N)>0}
+        input
+                short x {i|0<=i<=M};
+                short y {j|0<=j<=N};
+        output
+        		int lastCol {i|0<=i<=M};
+        		int lastRow {j|0<=j<=N};
+        local
+                int D {i,j|0<=i<=M && 0<=j<=N};
+                int E,F {i,j|1<=i<=M && 1<=j<=N};
+
+        let
+                D[i,j] = case
+                        {|i==j && j==0} : 0;
+                        {|i==0 && 1<=j<=N} : w(0, [j]);
+                        {|j==0 && 1<=i<=M} : wprime(0, [i]);
+                        {|i>0 && j>0} : min(D[i-1,j-1] + S(x[i], y[j]), min(E[i,j], F[i,j]));
+                esac;
+
+                E[i,j] = reduce(min, [q], {|0<=q<j} : D[i,q] + w([q], [j]));
+                F[i,j] = reduce(min, [p], {|0<=p<i} : D[p,j] + wprime([p], [i]));
+                
+                lastCol[i] = D[i,N];
+                lastRow[j] = D[M,j];
+
+.	
+
+affine GAP2 {M,N|}
+        input
+                short x {i|0<=i<=M};
+                short y {j|0<=j<=N};
+        output
+        local
+                int D {i,j|0<=i<=M && 0<=j<=N};
+                int Dp {j,i|0<=i<=M && 0<=j<=N};
+                int E,F {i,j|1<=i<=M && 1<=j<=N};
+
+        let
+                D[i,j] = case
+                        {|i==j && j==0} : 0;
+                        {|i==0 && 1<=j<=N} : w(0, [j]);
+                        {|j==0 && 1<=i<=M} : wprime(0, [i]);
+                        {|i>0 && j>0} : min(D[i-1,j-1] + S(x[i], y[j]), min(E[i,j], F[i,j]));
+                esac;
+                Dp[j,i] = D[i,j];
+
+                E[i,j] = reduce(min, [q], {|0<=q<j} : D[i,q] + w([q], [j]));
+                F[i,j] = reduce(min, [p], {|0<=p<i} : Dp[j,p] + wprime([p], [i]));
+.

@@ -1,0 +1,43 @@
+//Example of simplifying reductions. Use the following command
+//SimplifyingReductions("SREx", "Y", "-1,0,0");
+
+affine SREx {N | N > 2}
+input int X {i,j| 1<=i<=N && 1<=j<=2N};
+output int Y {i,j| 1<=i<=N && 1<=j<=N};
+let
+    Y[i,j] = reduce(*, [k], {|i+1<=k && k < i+N && 2k < 3N} : X[j,k]);
+.
+
+affine SRExCE {N | N>=3}
+input
+   int X {i,j | j>=1 && i>=1 && N-i>=0 && 2N-j>=0};
+output
+   int Y {i,j | j>=1 && i>=1 && N-i>=0 && N-j>=0};
+local 
+
+let
+
+Y[i,j] = case
+   { | i==1 && j>=1 && N-j>=0} : reduce(*, [k], { | i==1 && k>=2 && j>=1 && N-j>=0 && N-k>=0} || { | N+i-k==1 && j>=1 && i>=2 && N-2i>=-1 && N-j>=0} : X[j,k] );
+   { | -N+2i>=2 && j>=1 && N-i>=0 && N-j>=0} : (Y[i-1,j]/reduce(*, [k], { | i-k==0 && j>=1 && i>=2 && N-i>=0 && N-j>=0} : X[j,k] ));
+   { | j>=1 && i>=2 && N-2i>=-1 && N-j>=0} : (reduce(*, [k], { | i==1 && k>=2 && j>=1 && N-j>=0 && N-k>=0} || { | N+i-k==1 && j>=1 && i>=2 && N-2i>=-1 && N-j>=0} : X[j,k] )*(Y[i-1,j]/reduce(*, [k], { | i-k==0 && j>=1 && i>=2 && N-i>=0 && N-j>=0} : X[j,k] )));
+esac;
+.
+
+affine SREx2 {N|N>0}
+input
+	int X {i|0<=i<N};
+output
+	int Y {i|0<=i<N};
+let
+	Y[i] = reduce(+, [j], {|j<=i} : X[j]);
+.
+
+affine SREx3 {N|N>0}
+input
+	int x {i|0<=i<N};
+output
+	int y {i|0<=i<N};
+let
+	y[i] = reduce(+, [j,k], x[i]);
+.

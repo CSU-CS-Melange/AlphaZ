@@ -1,0 +1,19 @@
+affine test {P|P>0}
+       input  float A {i| 0<=i<P};
+              float x;
+              int Tin {i| i==P}; 
+     output  float C {i| 0<=i<P};
+              float y;
+              int Tout;
+              
+local
+   float temp_C {i,j|0<=i<P && 0<=j<P};
+let
+   temp_C[i,j] = case
+               {|j>0}  : temp_C[i,j-1] max x;
+               {|j==0} : A[i] + (i,j->i,j,i-j)@(a,b,c->a+b,a+c,b+c,a+b+c)@(val(x,y,z,w->x+y) + val(a,b,c,d->c+d));
+            esac;
+   y[] = reduce(+,[i], A[i]);
+   C = (x->x,P-1)@temp_C + val(y->y);
+   Tout = (->P)@Tin;
+.

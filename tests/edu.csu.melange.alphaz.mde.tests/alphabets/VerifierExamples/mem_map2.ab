@@ -1,0 +1,13 @@
+affine mem_map2 {N | N > 0}
+
+input
+	int a {i, j| 0 <= (i, j) < N };
+output
+	int T {i, j| 0 <= (i, j) < N };
+let 
+	T[i, j] = case 
+				{|j == 0} : a[i, j];
+				{|j > 0 } : T[i, j-1] + a[i, j];
+				esac;
+				
+.

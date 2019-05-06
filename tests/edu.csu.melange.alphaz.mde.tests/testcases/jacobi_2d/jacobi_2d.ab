@@ -1,0 +1,37 @@
+/**/
+affine jacobi_2d {TSTEPS,N | TSTEPS > 2 && N > 3}
+input 
+	double A {i,j|0<=(i,j)<N};
+output 
+	double B {t,i,j|0<=(i,j)<N && t==TSTEPS};
+local 
+	double temp_B {t,i,j|0<=(i,j)<N && 0<=t<TSTEPS};
+let
+
+	temp_B[t,i,j] = case
+						{|t == 0} : A[i,j];
+						{|t > 0 && 1<=(i,j)<N-1}  : (temp_B[t-1,i-1,j] + temp_B[t-1,i,j-1] + temp_B[t-1,i,j] + temp_B[t-1,i,j+1] + temp_B[t-1,i+1,j])*0.2;
+						{|t > 0 && 0==i } || {|t > 0 && 0==j } || {|t > 0 && i==N-1 } || {|t > 0 && j==N-1 } : temp_B[t-1,i,j];  
+					esac; 
+
+	B[t,i,j] = temp_B[t-1,i,j]; 
+./**/
+/*
+//for debugging
+affine jacobi_2d {TSTEPS,N | TSTEPS > 2 && N > 3}
+input 
+	double A {i,j|0<=(i,j)<N};
+output 
+	double B {t,i,j|0<=(i,j)<N && 0<=t<TSTEPS};
+local 
+	double temp_B {t,i,j|0<=(i,j)<N && 0<=t<TSTEPS};
+let
+
+	temp_B[t,i,j] = case
+						{|t == 0} : A[i,j];
+						{|t > 0 && 1<=(i,j)<N-1}  : (temp_B[t-1,i-1,j] + temp_B[t-1,i,j-1] + temp_B[t-1,i,j] + temp_B[t-1,i,j+1] + temp_B[t-1,i+1,j])*0.2;
+						{|t > 0 && 0==i } || {|t > 0 && 0==j } || {|t > 0 && i==N-1 } || {|t > 0 && j==N-1 } : temp_B[t-1,i,j];  
+					esac; 
+
+	B[t,i,j] = temp_B[t,i,j]; 
+.*/

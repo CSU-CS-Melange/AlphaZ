@@ -1,0 +1,125 @@
+affine J1DHexagonal {Nb,Tb,Nl,Tl,b | Nb>=2 && Tb>=2 && Nl==0 && Tl==0 && b>=2}
+input
+	double A {iBl,tBl, iLoc,tLoc| iBl==tBl+1 && tLoc==b && b<=iLoc<=3b && 0<=iBl+tBl && 3<=Nb-3iBl-3tBl}
+		|| {iBl,tBl, iLoc,tLoc| iBl==0 && tBl==-1 && tLoc==b && iLoc==3b}
+		|| {iBl,tBl, iLoc,tLoc| iBl==tBl+1 && tLoc==b && b<=iLoc<=2b && 0<=iBl+tBl && Nb==3iBl+3tBl+2}
+		|| {iBl,tBl, iLoc,tLoc| iBl==tBl+1 && tLoc==b && iLoc==b && 0<=iBl+tBl && Nb==3iBl+3tBl+1}
+		
+		|| {iBl,tBl, iLoc,tLoc| iBl==tBl && tLoc==0 && 0<iLoc<4b && 0<=iBl+tBl && 4<=Nb-3iBl-3tBl}
+		|| {iBl,tBl, iLoc,tLoc| iBl==tBl && tLoc==0 && 0<iLoc<=3b && 0<=iBl+tBl && 3==Nb-3iBl-3tBl}
+		|| {iBl,tBl, iLoc,tLoc| iBl==tBl && tLoc==0 && 0<iLoc<=2b && 0<=iBl+tBl && 2==Nb-3iBl-3tBl}
+		|| {iBl,tBl, iLoc,tLoc| iBl==tBl && tLoc==0 && 0<iLoc<=b && 0<=iBl+tBl && 1==Nb-3iBl-3tBl};	// t=0 && 0<=i<N
+output
+	double B {iBl,tBl, iLoc,tLoc| tBl+1==iBl+Tb && tLoc==b && b<=iLoc<=3b && 0<=iBl+tBl && 3<=Nb-3iBl-3tBl}
+		|| {iBl,tBl, iLoc,tLoc| tBl+1==iBl+Tb && tLoc==b && iLoc==3b && iBl+tBl==-1 && 1<=Nb}
+		|| {iBl,tBl, iLoc,tLoc| tBl+1==iBl+Tb && tLoc==b && b<=iLoc<=2b && 0<=iBl+tBl && Nb==3iBl+3tBl+2}
+		|| {iBl,tBl, iLoc,tLoc| tBl+1==iBl+Tb && tLoc==b && iLoc==b && 0<=iBl+tBl && Nb==3iBl+3tBl+1}
+		
+		|| {iBl,tBl, iLoc,tLoc| tBl==iBl+Tb && tLoc==0 && 0<iLoc<4b && 0<=iBl+tBl && 4<=Nb-3iBl-3tBl}
+		|| {iBl,tBl, iLoc,tLoc| tBl==iBl+Tb && tLoc==0 && 3b<=iLoc<4b && iBl+tBl==-1 && 1<=Nb}
+		|| {iBl,tBl, iLoc,tLoc| tBl==iBl+Tb && tLoc==0 && 0<iLoc<=3b && 0<=iBl+tBl && 3==Nb-3iBl-3tBl}
+		|| {iBl,tBl, iLoc,tLoc| tBl==iBl+Tb && tLoc==0 && 0<iLoc<=2b && 0<=iBl+tBl && 2==Nb-3iBl-3tBl}
+		|| {iBl,tBl, iLoc,tLoc| tBl==iBl+Tb && tLoc==0 && 0<iLoc<=b && 0<=iBl+tBl && 1==Nb-3iBl-3tBl}; // t=T && 0<=i<N
+local
+	double temp_B {iBl,tBl,iLoc,tLoc|tBl>=iBl+1 && iBl+tBl>=0 && Tb+tBl>=iBl && Nb>=3iBl+3tBl+4 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && b+tLoc>=1 && 4b>=iLoc+tLoc && 4b+tLoc>=iLoc+1}
+		|| {iBl,tBl,iLoc,tLoc|3iBl+3tBl==Nb-1 && Nb>=1 && Nb>=6iBl+4 && Nb+3Tb>=6iBl+1 && b>=iLoc && iLoc>=tLoc && iLoc+tLoc>=1}
+		|| {iBl,tBl,iLoc,tLoc|iBl+tBl==-1 && Nb>=1 && 0>=iBl+1 && Tb>=2iBl+1 && iLoc>=3b && 4b>=iLoc+tLoc && 4b+tLoc>=iLoc+1}
+		|| {iBl,tBl,iLoc,tLoc|6tBl==Nb-2 && 6iBl==Nb-2 && Nb>=2 && Tb>=1 && 2b>=iLoc && tLoc>=0 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc}
+		|| {iBl,tBl,iLoc,tLoc|3iBl+3tBl==Nb-2 && Nb>=2 && Nb>=6iBl+5 && Nb+3Tb>=6iBl+2 && 2b>=iLoc && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && b+tLoc>=1}
+		|| {iBl,tBl,iLoc,tLoc|3iBl+3tBl==Nb-3 && Nb>=3 && Nb>=6iBl+6 && Nb+3Tb>=6iBl+3 && 3b>=iLoc && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && b+tLoc>=1}
+		|| {iBl,tBl,iLoc,tLoc|tBl==iBl && Tb>=1 && iBl>=0 && Nb>=6iBl+4 && tLoc>=0 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && 4b>=iLoc+tLoc && 4b+tLoc>=iLoc+1}
+		|| {iBl,tBl,iLoc,tLoc|6tBl==Nb-3 && 6iBl==Nb-3 && Nb>=3 && Tb>=1 && 3b>=iLoc && tLoc>=0 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc}
+		|| {iBl,tBl,iLoc,tLoc|tLoc==b && 6tBl==Nb-5 && 6iBl==Nb+1 && Nb>=2 && Tb>=2 && b>=1 && iLoc>=b && 2b>=iLoc}
+		|| {iBl,tBl,iLoc,tLoc|tLoc==b && iLoc==b && 6tBl==Nb-4 && 6iBl==Nb+2 && Nb>=1 && Tb>=2 && b>=1}
+		|| {iBl,tBl,iLoc,tLoc|tLoc==b && iLoc==3b && tBl==-1 && iBl==0 && Nb>=1 && Tb>=2 && b>=1}
+		|| {iBl,tBl,iLoc,tLoc|tLoc==b && tBl==iBl-1 && Tb>=2 && b>=1 && iBl>=1 && Nb>=6iBl && iLoc>=b && 3b>=iLoc}
+		|| {iBl,tBl,iLoc,tLoc|6tBl==Nb-1 && 6iBl==Nb-1 && Nb>=1 && Tb>=1 && b>=iLoc && tLoc>=0 && iLoc>=tLoc && iLoc+tLoc>=1}; // 0<=t<T && 0<=i<N
+let
+	temp_B[iBl,tBl, iLoc,tLoc] = case
+		A[iBl,tBl, iLoc, tLoc]; // t=0 => A[i]
+		{iBl,tBl,iLoc,tLoc|iLoc==3b && iBl+tBl==-1 && Nb>=1 && 0>=iBl+1 && Tb>=2iBl+1 && b>=tLoc && b+tLoc>=1}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==b && iLoc==3b && tBl==-1 && iBl==0 && Nb>=1 && Tb>=2 && b>=1}: case
+					{|iLoc<b && iLoc+tLoc==1} : temp_B[iBl,tBl-1,iLoc+3b,tLoc+b-1];
+					{|b<=iLoc<=3b && tLoc==1-b} : temp_B[iBl+1,tBl-1,iLoc,tLoc+2b-1];
+					{|3b<iLoc && iLoc==tLoc+4b-1} : temp_B[iBl+1,tBl,iLoc-3b,tLoc+b-1];
+					{|1-b<tLoc<=b && tLoc<=iLoc<tLoc+4b-1 && 1-tLoc<iLoc<=4b-tLoc} : temp_B[iBl,tBl,iLoc,tLoc-1]; 
+				esac;	// i=0 => temp[i,t-1]
+		{iBl,tBl,iLoc,tLoc|iLoc==3b-1 && 3iBl+3tBl==Nb-3 && Nb>=3 && Nb>=6iBl+6 && Nb+3Tb>=6iBl+3 && b>=tLoc && b+tLoc>=1}
+			|| {iBl,tBl,iLoc,tLoc|iLoc==2b-1 && 3iBl+3tBl==Nb-2 && Nb>=2 && Nb>=6iBl+5 && Nb+3Tb>=6iBl+2 && b>=tLoc && b+tLoc>=1}
+			|| {iBl,tBl,iLoc,tLoc|iLoc==b-1 && 3iBl+3tBl==Nb-1 && Nb>=1 && Nb>=6iBl+4 && Nb+3Tb>=6iBl+1 && b>=tLoc+1 && b+tLoc>=2}
+			|| {iBl,tBl,iLoc,tLoc|iLoc==4b-1 && 3iBl+3tBl==Nb-4 && Nb>=4 && Nb>=6iBl+7 && Nb+3Tb>=6iBl+4 && 0>=tLoc-1 && tLoc>=0 && b>=tLoc && b+tLoc>=1}
+			|| {iBl,tBl,iLoc,tLoc|iLoc==4b-1 && iBl+tBl==-1 && Nb==1 && b>=1 && 0>=iBl+1 && Tb>=2iBl+1 && 0>=tLoc-1 && tLoc>=0}
+			|| {iBl,tBl,iLoc,tLoc|iLoc==4b-1 && 6tBl==Nb-4 && 6iBl==Nb-4 && Nb>=4 && Tb>=1 && 0>=tLoc-1 && tLoc>=0 && 4b+tLoc>=2}
+			|| {iBl,tBl,iLoc,tLoc|iLoc==3b-1 && 6tBl==Nb-3 && 6iBl==Nb-3 && Nb>=3 && Tb>=1 && tLoc>=0 && b>=tLoc && 3b+tLoc>=2}
+			|| {iBl,tBl,iLoc,tLoc|iLoc==2b-1 && 6tBl==Nb-2 && 6iBl==Nb-2 && Nb>=2 && Tb>=1 && tLoc>=0 && b>=tLoc && 2b+tLoc>=2}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==b && iLoc==3b-1 && 6tBl==Nb-6 && 6iBl==Nb && Nb>=6 && Tb>=2 && b>=1}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==b && iLoc==2b-1 && 6tBl==Nb-5 && 6iBl==Nb+1 && Nb>=2 && Tb>=2 && b>=1}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==1 && iLoc==3 && 6tBl==Nb-7 && 6iBl==Nb-1 && b==1 && Nb>=7 && Tb>=2}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==1 && iLoc==3 && tBl==-1 && iBl==0 && b==1 && Nb==1 && Tb>=2}
+			|| {iBl,tBl,iLoc,tLoc|iLoc==b-1 && 6tBl==Nb-1 && 6iBl==Nb-1 && Nb>=1 && Tb>=1 && tLoc>=0 && b>=tLoc+1 && b+tLoc>=2}: case
+					{iBl,tBl,iLoc,tLoc|iLoc<b && iLoc+tLoc==1} : temp_B[iBl,tBl-1,iLoc+3b,tLoc+b-1];
+					{iBl,tBl,iLoc,tLoc|b<=iLoc<=3b && tLoc==1-b} : temp_B[iBl+1,tBl-1,iLoc,tLoc+2b-1];
+					{iBl,tBl,iLoc,tLoc|3b<iLoc && iLoc==tLoc+4b-1} : temp_B[iBl+1,tBl,iLoc-3b,tLoc+b-1];
+					{iBl,tBl,iLoc,tLoc|1-b<tLoc<=b && tLoc<=iLoc<tLoc+4b-1 && 1-tLoc<iLoc<=4b-tLoc} : temp_B[iBl,tBl,iLoc,tLoc-1]; 
+				esac; // i=N-1 => temp[i,t-1]
+		{iBl,tBl,iLoc,tLoc|tBl>=iBl+1 && iBl+tBl>=0 && Tb+tBl>=iBl && Nb>=3iBl+3tBl+5 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && b+tLoc>=1 && 4b>=iLoc+tLoc && 4b+tLoc>=iLoc+1}
+			|| {iBl,tBl,iLoc,tLoc|3iBl+3tBl==Nb-1 && Nb>=1 && Nb>=6iBl+4 && Nb+3Tb>=6iBl+1 && b>=iLoc+2 && iLoc>=tLoc && iLoc+tLoc>=1}
+			|| {iBl,tBl,iLoc,tLoc|iBl+tBl==-1 && Nb>=2 && 0>=iBl+1 && Tb>=2iBl+1 && iLoc>=3b && 4b>=iLoc+tLoc && 4b+tLoc>=iLoc+1}
+			|| {iBl,tBl,iLoc,tLoc|3iBl+3tBl==Nb-2 && Nb>=2 && Nb>=6iBl+5 && Nb+3Tb>=6iBl+2 && 2b>=iLoc+2 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && b+tLoc>=1}
+			|| {iBl,tBl,iLoc,tLoc|3iBl+3tBl==Nb-3 && Nb>=3 && Nb>=6iBl+6 && Nb+3Tb>=6iBl+3 && 3b>=iLoc+2 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && b+tLoc>=1}
+			|| {iBl,tBl,iLoc,tLoc|tBl==iBl && Tb>=1 && iBl>=0 && Nb>=6iBl+5 && tLoc>=0 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && 4b>=iLoc+tLoc && 4b+tLoc>=iLoc+1}
+			|| {iBl,tBl,iLoc,tLoc|3iBl+3tBl==Nb-4 && Nb>=4 && Nb>=6iBl+7 && Nb+3Tb>=6iBl+4 && 4b>=iLoc+2 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && b+tLoc>=1 && 4b>=iLoc+tLoc && 4b+tLoc>=iLoc+1}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==b && tBl==iBl-1 && Tb>=2 && b>=1 && iBl>=1 && Nb>=6iBl+2 && iLoc>=b && 3b>=iLoc}
+			|| {iBl,tBl,iLoc,tLoc|6tBl==Nb-1 && 6iBl==Nb-1 && Nb>=1 && Tb>=1 && b>=iLoc+2 && tLoc>=0 && iLoc>=tLoc && iLoc+tLoc>=1}
+			|| {iBl,tBl,iLoc,tLoc|iBl+tBl==-1 && Nb==1 && 0>=iBl+1 && Tb>=2iBl+1 && iLoc>=3b && 4b>=iLoc+2 && 4b>=iLoc+tLoc && 4b+tLoc>=iLoc+1}
+			|| {iBl,tBl,iLoc,tLoc|6tBl==Nb-2 && 6iBl==Nb-2 && Nb>=2 && Tb>=1 && 2b>=iLoc+2 && tLoc>=0 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc}
+			|| {iBl,tBl,iLoc,tLoc|6tBl==Nb-3 && 6iBl==Nb-3 && Nb>=3 && Tb>=1 && 3b>=iLoc+2 && tLoc>=0 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc}
+			|| {iBl,tBl,iLoc,tLoc|6tBl==Nb-4 && 6iBl==Nb-4 && Nb>=4 && Tb>=1 && 4b>=iLoc+2 && tLoc>=0 && iLoc>=tLoc && iLoc+tLoc>=1 && b>=tLoc && 4b>=iLoc+tLoc}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==b && 6tBl==Nb-5 && 6iBl==Nb+1 && Nb>=2 && Tb>=2 && iLoc>=b && 2b>=iLoc+2}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==b && 6tBl==Nb-6 && 6iBl==Nb && Nb>=6 && Tb>=2 && iLoc>=b && 3b>=iLoc+2}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==b && 6tBl==Nb-7 && 6iBl==Nb-1 && Nb>=7 && Tb>=2 && iLoc>=b && 3b>=iLoc && 4b>=iLoc+2}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==b && iLoc==3b && tBl==-1 && iBl==0 && Nb>=2 && Tb>=2 && b>=1}
+			|| {iBl,tBl,iLoc,tLoc|tLoc==b && iLoc==3b && tBl==-1 && iBl==0 && Nb==1 && Tb>=2 && b>=2}: (
+				(case
+					{iBl,tBl,iLoc,tLoc|-tLoc==iLoc-1 && iLoc<=b}: temp_B[iBl,tBl-1,iLoc+3b-1,tLoc+b-1];
+					{iBl,tBl,iLoc,tLoc|b<iLoc<=3b && tLoc==-b+1}: temp_B[iBl+1,tBl-1,iLoc-1,tLoc+2b-1];
+					{iBl,tBl,iLoc,tLoc|1-b<tLoc<=b && tLoc<=iLoc<tLoc+4b && 1-tLoc<iLoc<=4b-tLoc}: temp_B[iBl,tBl,iLoc-1,tLoc-1];
+				esac) + (case
+					{|iLoc<b && iLoc+tLoc==1} : temp_B[iBl,tBl-1,iLoc+3b,tLoc+b-1];
+					{|b<=iLoc<=3b && tLoc==1-b} : temp_B[iBl+1,tBl-1,iLoc,tLoc+2b-1];
+					{|3b<iLoc && iLoc==tLoc+4b-1} : temp_B[iBl+1,tBl,iLoc-3b,tLoc+b-1];
+					{|1-b<tLoc<=b && tLoc<=iLoc<tLoc+4b-1 && 1-tLoc<iLoc<=4b-tLoc} : temp_B[iBl,tBl,iLoc,tLoc-1]; 
+				esac) + (case
+					{iBl,tBl,iLoc,tLoc|iLoc==tLoc+4b-1 && 3b<=iLoc}: temp_B[iBl+1,tBl,iLoc+1-3b,tLoc-1+b];
+					{iBl,tBl,iLoc,tLoc|b<=iLoc<3b && tLoc==-b+1}: temp_B[iBl+1,tBl-1,iLoc+1,tLoc+2b-1];
+					{iBl,tBl,iLoc,tLoc|1-b<tLoc<=b && tLoc<=iLoc<tLoc+4b-1 && -tLoc<iLoc<=4b-tLoc}: temp_B[iBl,tBl,iLoc+1,tLoc-1];
+				esac) )/3; // 0<i<N-1 => (temp[i-1,t-1]+temp[i,t-1]+temp[i+1,t-1])/3
+	esac;
+	
+	B[iBl,tBl, iLoc,tLoc] = case
+		{|iLoc<b && iLoc+tLoc==1} : temp_B[iBl,tBl-1,iLoc+3b,tLoc+b-1];
+		{|b<=iLoc<=3b && tLoc==1-b} : temp_B[iBl+1,tBl-1,iLoc,tLoc+2b-1];
+		{|3b<iLoc && iLoc==tLoc+4b-1} : temp_B[iBl+1,tBl,iLoc-3b,tLoc+b-1];
+		{|1-b<tLoc<=b && tLoc<=iLoc<tLoc+4b-1 && 1-tLoc<iLoc<=4b-tLoc} : temp_B[iBl,tBl,iLoc,tLoc-1]; 
+	esac;// B[i,t] = temp[i,t-1]
+.
+
+/*
+ERROR::  Variable temp_B is not defined over the domain :
+* 	{iBl,tBl,iLoc,tLoc|iLoc+tLoc==2  && tBl>=iBl+3 && iBl+tBl>=0 && b>=iLoc && Nb>=3iBl+3tBl+2 && iLoc>=1}
+* 	|| {iBl,tBl,iLoc,tLoc|4b+tLoc==iLoc+2 &&  tBl>=iBl+1 && iBl+tBl>=0 && Nb+4b>=3iBl+3tBl+iLoc+6 && 4b>=iLoc+1 && iLoc>=3b && Nb>=3iBl+3tBl+4}
+*  || {iBl,tBl,iLoc,tLoc|iLoc+tLoc==2 && 3iBl+3tBl==Nb-1 && Tl==0 && Nl==0 && Nb>=2 && Tb>=2 && Nb>=6iBl+4 && iLoc>=1 && b>=iLoc+2}
+*  || {iBl,tBl,iLoc,tLoc|4b+tLoc==iLoc+2 && iBl+tBl==-1 && Tl==0 && Nl==0 && Nb>=2 && Tb>=2 && 0>=iBl+1 && iLoc>=3b+1 && 4b>=iLoc+1}
+*  || {iBl,tBl,iLoc,tLoc|iLoc==3b && 6tBl==Nb-3 && 6iBl==Nb-3 && Tl==0 && Nl==0 && Nb>=3 && Tb>=2 && b>=2 && tLoc>=1 && b>=tLoc}
+*  || {iBl,tBl,iLoc,tLoc|iLoc+tLoc==2 && Tl==0 && Nl==0 && Tb>=2 && b>=2 && tBl>=iBl+1 && tBl>=1 && iLoc>=1 && iBl>=tBl-2 && Nb>=iBl+5tBl && b>=iLoc}
+*  || {iBl,tBl,iLoc,tLoc|iLoc==b && 6tBl==Nb-1 && 6iBl==Nb-1 && Tl==0 && Nl==0 && Nb>=2 && Tb>=2 && b>=2 && tLoc>=1 && b>=tLoc}
+*  || {iBl,tBl,iLoc,tLoc|iLoc+tLoc==2 && 6tBl==Nb+3 && 6iBl==Nb-9 && Tl==0 && Nl==0 && Nb>=3 && Tb>=2 && b>=2 && iLoc>=1 && b>=iLoc}
+*  || {iBl,tBl,iLoc,tLoc|iLoc==2b && 6tBl==Nb-2 && 6iBl==Nb-2 && Tl==0 && Nl==0 && Nb>=2 && Tb>=2 && b>=2 && tLoc>=1 && b>=tLoc}
+*  || {iBl,tBl,iLoc,tLoc|tLoc==1 && iLoc==1 && 6tBl==Nb-1 && 6iBl==Nb-1 && Tl==0 && Nl==0 && Nb>=2 && Tb>=2 && b>=3}
+*  || {iBl,tBl,iLoc,tLoc|iLoc==3b && 3iBl+3tBl==Nb-3 && Tl==0 && Nl==0 && Nb>=3 && Tb>=2 && b>=2 && Nb>=6iBl+6 && b>=tLoc && b+tLoc>=1}
+*  || {iBl,tBl,iLoc,tLoc|iLoc==2b && 3iBl+3tBl==Nb-2 && Tl==0 && Nl==0 && Nb>=2 && Tb>=2 && b>=2 && Nb>=6iBl+5 && b>=tLoc && b+tLoc>=1}
+*  || {iBl,tBl,iLoc,tLoc|iLoc==b && 3iBl+3tBl==Nb-1 && Tl==0 && Nl==0 && Nb>=2 && Tb>=2 && b>=2 && Nb>=6iBl+4 && b>=tLoc && b+tLoc>=1}
+*  || {iBl,tBl,iLoc,tLoc|tLoc==1 && iLoc==1 && tBl==iBl && Tl==0 && Nl==0 && Tb>=2 && b>=2 && iBl>=0 && Nb>=6iBl+2}
+*  || {iBl,tBl,iLoc,tLoc|tLoc==1 && iLoc==4b-1 && tBl==iBl && Tl==0 && Nl==0 && Tb>=2 && b>=2 && iBl>=0 && Nb>=6iBl+5}
+*  || {iBl,tBl,iLoc,tLoc|iLoc+tLoc==2 && 6tBl==Nb+4 && 6iBl==Nb-8 && Tl==0 && Nl==0 && Nb>=2 && Tb>=2 && iLoc>=1 && b>=iLoc && 2b>=iLoc+2}
+*/

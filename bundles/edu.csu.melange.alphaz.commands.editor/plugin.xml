@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="commandIF.presentation.CommandIFModelWizardID"
+            name="%_UI_CommandIFModelWizard_label"
+            class="commandIF.presentation.CommandIFModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/CommandIFModelFile.gif">
+         <description>%_UI_CommandIFModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            id="commandIF.presentation.CommandIFEditorID"
+            name="%_UI_CommandIFEditor_label"
+            icon="icons/full/obj16/CommandIFModelFile.gif"
+            extensions="commandif"
+            class="commandIF.presentation.CommandIFEditor"
+            contributorClass="commandIF.presentation.CommandIFActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

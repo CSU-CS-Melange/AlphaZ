@@ -1,0 +1,120 @@
+import polyIRCG;
+import polyIRCG::C;
+import polyhedralIR;
+import polymodel;
+import ecore;
+import integerLinearAlgebra;
+	
+//Short hand to get parameter domain
+ParameterDomain getParamDomain(CodeUnit cu):
+	cu.system.parameters;
+	
+ParameterDomain getParamDomain(Function f):
+	f.codeunit.getParamDomain();
+	
+ParameterDomain getParamDomain(Body body):
+	body.function.getParamDomain();
+
+//Short hand to get the highest dimension
+Variable getVariableWithMaxDim(Collection[Variable] set):
+	set.sortBy(e|e.domain.getNIndices()).last();
+	
+//Get string for calling macros
+String getMacroIndices(Variable var):
+	var.domain.getIndices().getMacroIndices();
+	
+String getMacroIndices(AffineFunction func):
+	func.getIndices().getMacroIndices();
+	
+String getMacroIndices(List[IVariable] indices):
+	if indices.size > 0 then
+		indices.first().getString() + indices.withoutFirst().getMacroIndicesHelper()
+	else
+		"";
+		
+private String getMacroIndicesHelper(List[IVariable] indices):
+	if indices.size > 0 then
+		","+indices.first().getString() + indices.withoutFirst().getMacroIndicesHelper()
+	else
+		"";
+
+private String getString(IVariable iv):
+	iv.toString();
+	
+//Method to make a variable pointer of appropriate dimension		
+String getPointerFor(Variable var, int dim):
+	if (dim == 0) then
+		var.type
+	else
+		getPointerFor(var, dim-1)+"*";
+		
+//Generate expression for accessing flattened array
+//Next two private methods are helper methods for this call
+//This is done with Xtend so that IntExpression is constructed
+// instead of String in the case if done in Xpand
+//By constructing IntExpression, the resulting expression can be simplified
+IntExpression getArrayIndexing1D(Variable var):
+	let sum = new IntSumExpression :
+		sum.terms.addAll(getArrayIndexing1DHelper(var, 0).reverse()) ->
+	sum.simplify();
+		
+private List[IntExpression] getArrayIndexing1DHelper(Variable var, int dim):
+	if dim >= var.domain.getNIndices() then
+		(List[IntExpression]).newInstance()
+	else
+		getArrayIndexing1DHelper(var, dim+1).add(var.domain.indexingExpression(dim).mult(var.getVolumeExpression(dim+1)));
+		
+private IntExpression mult(IntExpression exprA, IntExpression exprB):
+	let prod = new IntProdExpression:
+		prod.terms.add(exprA) ->
+		prod.terms.add(exprB) ->
+	prod;
+
+IntExpression indexingExpression(MemoryDomain dom, int dim):
+	let term = new IntTermExpression:
+		term.setVar(dom.getIndices().get(dim)) ->
+		term.setValue(1) ->
+	term;
+	
+String indexingExpression(Variable var, int dim):
+	var.accessExpression.getIndexingExpression(dim);
+	
+String getCPrintfSpecifier(Type type):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.CodeGenUtility.getCPrintfSpecifier(org.polymodel.polyhedralIR.Type);
+
+//Get constant parameters for Code Generation
+String getCGConstant(String name):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForC.get(java.lang.String);
+	
+//Generates malloc for a Variable
+String generateMallocStatement(CVariable var):
+	var.generateMallocStatement("", "");
+		
+String generateMallocStatement(CVariable var, String prefix, String postfix):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenUtilityForC.generateMallocStatement(
+		org.polymodel.polyhedralIR.polyIRCG.C.CVariable, java.lang.String, java.lang.String);
+		
+//Generate mfree for a Variable
+String generateMfreeStatement(Variable var):
+	var.generateMfreeStatement("", "");
+	
+String generateMfreeStatement(Variable var, String prefix, String postfix):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenUtilityForC.generateMfreeStatement(
+		org.polymodel.polyhedralIR.polyIRCG.Variable, java.lang.String, java.lang.String);
+
+//Static call to the LoopNestGenerator
+String generateLoopNest(CLoop loop):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.LoopNestGeneratorForC.generate(
+		org.polymodel.polyhedralIR.polyIRCG.Loop);
+	
+//Static call to the TiledLoopNestGenerator
+String generateLoopNest(TiledCLoop loop):JAVA
+	org.polymodel.polyhedralIR.polyIRCG.generator.C.TiledLoopNestGeneratorForC.generate(
+		org.polymodel.polyhedralIR.polyIRCG.Loop);
+
+//Compute string that evaluate the size of a domain starting from the specified domain
+//All dimensions before the starting dimension is ignored	
+IntExpression getVolumeExpression(Variable var, Integer startingDim):
+	var.getVolumeExpression(startingDim, var.domain.getNIndices());
+	
+	

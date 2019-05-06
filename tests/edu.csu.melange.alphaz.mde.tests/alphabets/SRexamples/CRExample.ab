@@ -1,0 +1,80 @@
+affine CREx {N | N > 2}
+input int X {i,j| 1<=i<=2N && 1<=j<=N};
+      int Y {i,j| N<=i<=3N && i<=j<=3N};
+output int R {i| 1<=i<=3N};
+let
+    R[i] = reduce(+, [j], case {|j <= N} : X[i,j];
+    							 {|N < j} : Y[i,j];
+    					    esac);
+.
+			    
+affine CREx2 {N | N > 2}
+input int X {i,j| 1<=i<=2N && 1<=j<=N};
+      int Y {i,j| N<=i<=3N && i<=j<=3N};
+output int R;
+let
+    R[] = reduce(+, [i,j], case {|j <= N} : X[i,j];
+    							 {|N < j} : Y[i,j];
+    					    esac);
+.
+
+affine CREx3 {N | N > 2}
+input
+	int A, B {i|0<=i<3N};
+output
+	int x;
+let
+	x[] = reduce (max, [i], case
+								{|i<N} : A[i];
+								{|i>2N} : B[i];
+							esac) + 
+		  reduce (min, [i], case
+								{|i<N} : A[i];
+								{|i>2N} : B[i];
+		  					esac);
+.
+
+affine CREx4 {N | N > 2}
+input int X {i,j| 1<=i<=N && 1<=j<=N};
+      int Y {i,j| N<i<=2N && 1<=j<=N};
+      int Z {i,j| 2N<i<=3N && 1<=j<=N};
+/*input int X {i,j| 1<=i<=2N && 1<=j<=N};
+      int Y {i,j| N<=i<=3N && i<=j<=3N};
+      int Z {i,j| 2N<=i<=3N && i<=j<=3N};*/
+output int R {i| 1<=i<=3N};
+let
+    R[i] = reduce(+, [j], case X[i,j];
+    							Y[i,j];
+    							Z[i,j];
+    					    esac);
+.
+
+affine CREx5 {N | N > 2}
+input int X {i,j| 1<=j<=2N && 1<=j<=3N};
+      int Y {i,j| N<j<=2N && 1<=j<=3N};
+      int Z {i,j| 2N<j<=3N && 1<=j<=3N};
+output int R {i| 1<=i<=3N};
+let
+    R[i] = reduce(+, [j], case  {|j <= N} : X[i,j];
+    							{|j > N && j <= 2N} : Y[i,j];
+    							{|j > 2N} : Z[i,j];
+    					    esac);
+.
+
+affine CREx6 {N|N>0}
+input
+	int A {i|0<=i<N};
+//	int S {i,j|-i+j>= 0 && i>= 0 && N-j-1>= 0};
+	int S {i,j|0<=(i,j)<N};
+output
+	int Y {i|0<=i<N};
+let
+	Y[i] = reduce(max, (i,j->j), 
+		case
+			{|-i+j== 0} : reduce(+, (i,j,k->i,j), {|-i+k== 0} : A[k]);
+		{|-i+j-1>= 0} : (reduce(+, (i,j,k->i,j), {|-j+k== 0} : A[k]) + S[i,j-1]);
+//		{|-i+j-1>= 0} : (reduce(+, (i,j,k->i,j), {|-j+k== 0} : A[k]) + S[i,j-1]);
+//{|-i+j== 0} : reduce(+, (i,j,k->i,j), {|-i+k== 0} : A[k]);
+//{|-i+j-1>= 0} : (reduce(+, (i,j,k->i,j), {|-j+k== 0} : A[k]) + S[i,j-1]);
+		esac);
+.

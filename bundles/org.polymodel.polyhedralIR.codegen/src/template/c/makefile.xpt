@@ -1,0 +1,32 @@
+«IMPORT polyhedralIR»
+«EXTENSION template::c::genericC»
+
+«DEFINE generate FOR AffineSystem»
+«FILE "Makefile"»
+«LET name+"VERIFY_POSTFIX".getCGConstant() AS verifyName»
+FLAGS=-O3
+CC=gcc
+
+plain: «name».o
+	$(CC) «name»-wrapper.c -o «name» «name».o $(FLAGS) -lm
+
+check: «name».o
+	$(CC) «name»-wrapper.c -o «name».check «name».o $(FLAGS) -lm -D«"CHECKING_FLAG".getCGConstant()»
+
+verify: «name».o «verifyName».o
+	$(CC) «name»-wrapper.c -o «name».verify «name».o «verifyName».o $(FLAGS) -lm -D«"VERIFY_FLAG".getCGConstant()»
+
+verify-rand: «name».o
+	$(CC) «name»-wrapper.c -o «name».verify-rand «name».o «verifyName».o $(FLAGS) -lm -D«"VERIFY_FLAG".getCGConstant()» -D«"RANDOM_FLAG".getCGConstant()»
+	
+«name».o : «name».c
+	$(CC) «name».c -o «name».o $(FLAGS) -c
+
+«verifyName».o : «verifyName».c
+	$(CC) «verifyName».c -o «verifyName».o $(FLAGS) -c
+
+clean:
+	rm -f *.o «name» «name».check «name».verify «name».verify-rand
+«ENDLET»
+«ENDFILE»
+«ENDDEFINE»

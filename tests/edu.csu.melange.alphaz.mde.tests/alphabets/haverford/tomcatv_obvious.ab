@@ -1,0 +1,86 @@
+float abs(float);
+
+affine
+	TOMCATV {ITACT,N | ITACT>0 && N>4}
+input
+	float X0  {  i,j |               0<=(i,j)<N  };
+	float Y0  {  i,j |               0<=(i,j)<N  };
+output
+	float RXM {t     | 1<=t<=ITACT                };
+	float RYM {t     | 1<=t<=ITACT                };
+local
+	float XX  {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float YX  {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float XY  {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float YY  {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float A   {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float B   {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float C   {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float AA  {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float DD  {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float PXX {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float QXX {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float PYY {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float QYY {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float PXY {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float QXY {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float RX0 {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float RY0 {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float R   {t,i,j | 1<=t<=ITACT && 1<=i<N-1 && 2<=j<N-1};
+	float D   {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float RX1 {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float RY1 {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float RX2 {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float RY2 {t,i,j | 1<=t<=ITACT && 1<=(i,j)<N-1};
+	float X   {t,i,j | 0<=t<=ITACT && 1<=(i,j)<N-1};
+	float Y   {t,i,j | 0<=t<=ITACT && 1<=(i,j)<N-1};
+let
+	XX [t,i,j] = X[t-1,i+1,j] - X[t-1,i-1,j];
+	YX [t,i,j] = Y[t-1,i+1,j] - Y[t-1,i-1,j];
+	XY [t,i,j] = X[t-1,i,j+1] - X[t-1,i,j-1];
+	YY [t,i,j] = Y[t-1,i,j+1] - Y[t-1,i,j-1];
+	A  [t,i,j] = 0.25 * (XY[t,i,j] * XY[t,i,j] + YY[t,i,j] * YY[t,i,j]);
+	B  [t,i,j] = 0.25 * (XX[t,i,j] * XX[t,i,j] + YX[t,i,j] * YX[t,i,j]);
+	C  [t,i,j] = 0.125 * (XX[t,i,j] * XY[t,i,j] + YX[t,i,j] * YY[t,i,j]);
+	AA [t,i,j] = (-1) * B[t,i,j];
+	DD [t,i,j] = B[t,i,j] + B[t,i,j] + (A[t,i,j] * (2.0 / 0.98));
+	PXX[t,i,j] = X[t-1,i+1,j] - (2.0 * X[t-1,i,j]) + X[t-1,i-1,j];
+	QXX[t,i,j] = Y[t-1,i+1,j] - (2.0 * Y[t-1,i,j]) + Y[t-1,i-1,j];
+	PYY[t,i,j] = X[t-1,i,j+1] - (2.0 * X[t-1,i,j]) + X[t-1,i,j-1];
+	QYY[t,i,j] = Y[t-1,i,j+1] - (2.0 * Y[t-1,i,j]) + Y[t-1,i,j-1];
+	PXY[t,i,j] = X[t-1,i+1,j+1] - X[t-1,i+1,j-1] - X[t-1,i-1,j+1] + X[t-1,i-1,j-1];
+	QXY[t,i,j] = Y[t-1,i+1,j+1] - Y[t-1,i+1,j-1] - Y[t-1,i-1,j+1] + Y[t-1,i-1,j-1];
+	RX0[t,i,j] = A[t,i,j] * PXX[t,i,j] + B[t,i,j] * PYY[t,i,j] - C[t,i,j] * PXY[t,i,j];
+	RY0[t,i,j] = A[t,i,j] * QXX[t,i,j] + B[t,i,j] * QYY[t,i,j] - C[t,i,j] * QXY[t,i,j];
+	R  [t,i,j] = AA[t,i,j] * D[t,i,j-1]; /* */
+	D  [t,i,j] = case
+	             {| j==1} : 1 / DD[t,i,1];
+	             {| j>1} : 1 / (DD[t,i,j] - AA[t,i,j-1] * R[t,i,j]);
+	             esac;
+	RX1[t,i,j] = case
+	             {| j==1} : RX0[t,i,j];
+	             {| 1<j<N-1} : RX0[t,i,j] - RX0[t,i,j-1] * R[t,i,j];
+	             esac;
+	RY1[t,i,j] = case
+	             {| j==1} : RY0[t,i,j];
+	             {| 1<j<N-1} : RY0[t,i,j] - RY0[t,i,j-1] * R[t,i,j];
+	             esac;
+	RX2[t,i,j] = case
+	             {| j==N-2} : RX1[t,i,N-2] * D[t,i,N-2];
+	             {| 1<=j<N-2} : RX1[t,i,j] - AA[t,i,j] * RX1[t,i,j+1] * D[t,i,j];
+	             esac;
+	RY2[t,i,j] = case
+	             {| j==N-2} : RY1[t,i,N-2] * D[t,i,N-2];
+	             {| 1<=j<N-2} : RY1[t,i,j] - AA[t,i,j] * RY1[t,i,j+1] * D[t,i,j];
+	             esac;
+	X  [t,i,j] = case
+	             {| t==0} : X0[i,j];
+	             {| 0<t<=ITACT} : X[t-1,i,j] + RX2[t,i,j];
+	             esac;
+	Y  [t,i,j] = case
+	             {| t==0} : Y0[i,j];
+	             {| 0<t<=ITACT} : Y[t-1,i,j] + RY2[t,i,j];
+	             esac;
+	RXM[t    ] = reduce(max, [k,l], {| 1<=(k,l)<N-1} : abs(RX0[t,k,l]));
+	RYM[t    ] = reduce(max, [k,l], {| 1<=(k,l)<N-1} : abs(RY0[t,k,l]));
+.

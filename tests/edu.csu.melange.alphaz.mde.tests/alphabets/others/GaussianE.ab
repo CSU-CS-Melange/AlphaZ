@@ -1,0 +1,16 @@
+affine Gauss {N | N>1} 
+   input
+     float A {i,j | 1<=i && j<=N};
+   output
+     float T {i,j | 1<=i<=j<=N};
+   local
+      float Ak {i,j,k | 1<=(i,j,k)<=N && i<=j} || {i,j,k | 1<=(i,j,k)<=N && j>=k};
+      float Ak1 {i,j,k | 1<=(i,j)<=N && 1<=k<N && i<=j} || {i,j,k | 1<=(i,j,k)<=N && j>k};
+   let
+      // use {k| 1<=k<N} ZeroColumn[N,k] (Ak) output (Ak1);
+      Ak[i,j,k] = case
+                     {| k==1} : A[i,j];
+                     {| k>1} : Ak1[i,j,k-1];
+      esac;
+      T[i,j] = Ak[i,j,N];
+.

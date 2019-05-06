@@ -1,0 +1,28 @@
+int similarity_function(short, short);
+
+affine UTSW {M | M>0}
+input 
+	short seq_A {i|0<=i<M};
+	short seq_B {i|0<=i<M};
+output
+	int Aout {i|0<=i<M};
+//	int Bout {i|0<=i<N};
+local
+	int gap_penalty;
+	int Table {i,j|0<=i<=j<M};
+let	
+	gap_penalty=-1;
+
+	Table[i,j] = case
+		{|i==0 && j==0}:	max(0,similarity_function(seq_A[i],seq_B[j]));
+		{|i==0 && j>0}:	max(0,similarity_function(seq_A[i],seq_B[j]),
+								Table[i,j-1]+gap_penalty);
+		{|i==j && j>0}:	max(0,similarity_function(seq_A[i],seq_B[j]),
+								Table[i-1,j]+gap_penalty);
+		{|j>i>0}:	max(0,Table[i-1,j-1]+similarity_function(seq_A[i],seq_B[j]),
+							Table[i,j-1]+gap_penalty, Table[i-1,j]+gap_penalty);
+	esac;
+	
+	Aout[i] = Table[i,M-1];
+//	Bout[i] = Table[M-1,i];
+.

@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="scop" nsURI="http://polymodel.scop" nsPrefix="scop">
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractScopNode" abstract="true" eSuperTypes="#//ScopVisitable">
+    <eOperations name="getSurroundingIterators" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getSurroundingScopFors" upperBound="-1" eType="#//ScopFor"/>
+    <eOperations name="simplify" lowerBound="1" eType="#//AbstractScopNode"/>
+    <eOperations name="getLoopDepth" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAbstractScopNode(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+    <eOperations name="getSurroundingScopFor" eType="#//ScopFor"/>
+    <eOperations name="getDerivedConstraints" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntConstraintSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scopAnnotations" upperBound="-1"
+        eType="#//IScopAnnotation" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IScopAnnotation" abstract="true" interface="true"
+      eSuperTypes="#//ScopVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitIScopAnnotation(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopRoot" eSuperTypes="#//ScopVisitable">
+    <eOperations name="simplify" lowerBound="1" eType="#//ScopRoot"/>
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitScopRoot(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
+        eType="#//AbstractScopNode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopFor" eSuperTypes="#//AbstractScopNode #//ScopVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitScopFor(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="iterator" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="LB" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="UB" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stride" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//AbstractScopNode"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopBlock" eSuperTypes="#//AbstractScopNode #//ScopVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitScopBlock(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
+        eType="#//AbstractScopNode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopGuard" eSuperTypes="#//AbstractScopNode #//ScopVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitScopGuard(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraintSystems" lowerBound="1"
+        upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntConstraintSystem"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="thenBody" lowerBound="1"
+        eType="#//AbstractScopNode" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elseBody" eType="#//AbstractScopNode"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopStatementMacro" eSuperTypes="#//AbstractScopStatement #//ScopVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitScopStatementMacro(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="macroParams" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopAssignment" eSuperTypes="#//AbstractScopStatement #//ScopVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitScopAssignment(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="LHS" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="RHS" lowerBound="1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractScopStatement" abstract="true"
+      eSuperTypes="#//AbstractScopNode #//ScopVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitAbstractScopStatement(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopVisitor" abstract="true" interface="true">
+    <eOperations name="defaultIn">
+      <eParameters name="node" eType="#//ScopVisitable"/>
+    </eOperations>
+    <eOperations name="defaultOut">
+      <eParameters name="node" eType="#//ScopVisitable"/>
+    </eOperations>
+    <eOperations name="visitAbstractScopNode">
+      <eParameters name="a" eType="#//AbstractScopNode"/>
+    </eOperations>
+    <eOperations name="inAbstractScopNode">
+      <eParameters name="a" eType="#//AbstractScopNode"/>
+    </eOperations>
+    <eOperations name="outAbstractScopNode">
+      <eParameters name="a" eType="#//AbstractScopNode"/>
+    </eOperations>
+    <eOperations name="visitIScopAnnotation">
+      <eParameters name="i" eType="#//IScopAnnotation"/>
+    </eOperations>
+    <eOperations name="inIScopAnnotation">
+      <eParameters name="i" eType="#//IScopAnnotation"/>
+    </eOperations>
+    <eOperations name="outIScopAnnotation">
+      <eParameters name="i" eType="#//IScopAnnotation"/>
+    </eOperations>
+    <eOperations name="visitScopRoot">
+      <eParameters name="s" eType="#//ScopRoot"/>
+    </eOperations>
+    <eOperations name="inScopRoot">
+      <eParameters name="s" eType="#//ScopRoot"/>
+    </eOperations>
+    <eOperations name="outScopRoot">
+      <eParameters name="s" eType="#//ScopRoot"/>
+    </eOperations>
+    <eOperations name="visitScopFor">
+      <eParameters name="s" eType="#//ScopFor"/>
+    </eOperations>
+    <eOperations name="inScopFor">
+      <eParameters name="s" eType="#//ScopFor"/>
+    </eOperations>
+    <eOperations name="outScopFor">
+      <eParameters name="s" eType="#//ScopFor"/>
+    </eOperations>
+    <eOperations name="visitScopBlock">
+      <eParameters name="s" eType="#//ScopBlock"/>
+    </eOperations>
+    <eOperations name="inScopBlock">
+      <eParameters name="s" eType="#//ScopBlock"/>
+    </eOperations>
+    <eOperations name="outScopBlock">
+      <eParameters name="s" eType="#//ScopBlock"/>
+    </eOperations>
+    <eOperations name="visitScopGuard">
+      <eParameters name="s" eType="#//ScopGuard"/>
+    </eOperations>
+    <eOperations name="inScopGuard">
+      <eParameters name="s" eType="#//ScopGuard"/>
+    </eOperations>
+    <eOperations name="outScopGuard">
+      <eParameters name="s" eType="#//ScopGuard"/>
+    </eOperations>
+    <eOperations name="visitScopStatementMacro">
+      <eParameters name="s" eType="#//ScopStatementMacro"/>
+    </eOperations>
+    <eOperations name="inScopStatementMacro">
+      <eParameters name="s" eType="#//ScopStatementMacro"/>
+    </eOperations>
+    <eOperations name="outScopStatementMacro">
+      <eParameters name="s" eType="#//ScopStatementMacro"/>
+    </eOperations>
+    <eOperations name="visitScopUnscannedDomain">
+      <eParameters name="s" eType="#//ScopUnscannedDomain"/>
+    </eOperations>
+    <eOperations name="inScopUnscannedDomain">
+      <eParameters name="s" eType="#//ScopUnscannedDomain"/>
+    </eOperations>
+    <eOperations name="outScopUnscannedDomain">
+      <eParameters name="s" eType="#//ScopUnscannedDomain"/>
+    </eOperations>
+    <eOperations name="visitScopAssignment">
+      <eParameters name="s" eType="#//ScopAssignment"/>
+    </eOperations>
+    <eOperations name="inScopAssignment">
+      <eParameters name="s" eType="#//ScopAssignment"/>
+    </eOperations>
+    <eOperations name="outScopAssignment">
+      <eParameters name="s" eType="#//ScopAssignment"/>
+    </eOperations>
+    <eOperations name="visitAbstractScopStatement">
+      <eParameters name="a" eType="#//AbstractScopStatement"/>
+    </eOperations>
+    <eOperations name="inAbstractScopStatement">
+      <eParameters name="a" eType="#//AbstractScopStatement"/>
+    </eOperations>
+    <eOperations name="outAbstractScopStatement">
+      <eParameters name="a" eType="#//AbstractScopStatement"/>
+    </eOperations>
+    <eOperations name="visitParallelLoopAnnotation">
+      <eParameters name="p" eType="#//annotation/ParallelLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="inParallelLoopAnnotation">
+      <eParameters name="p" eType="#//annotation/ParallelLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="outParallelLoopAnnotation">
+      <eParameters name="p" eType="#//annotation/ParallelLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="visitDescriptionAnnotation">
+      <eParameters name="d" eType="#//annotation/DescriptionAnnotation"/>
+    </eOperations>
+    <eOperations name="inDescriptionAnnotation">
+      <eParameters name="d" eType="#//annotation/DescriptionAnnotation"/>
+    </eOperations>
+    <eOperations name="outDescriptionAnnotation">
+      <eParameters name="d" eType="#//annotation/DescriptionAnnotation"/>
+    </eOperations>
+    <eOperations name="visitTileLoopAnnotation">
+      <eParameters name="t" eType="#//annotation/TileLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="inTileLoopAnnotation">
+      <eParameters name="t" eType="#//annotation/TileLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="outTileLoopAnnotation">
+      <eParameters name="t" eType="#//annotation/TileLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="visitParallelBlockAnnotation">
+      <eParameters name="p" eType="#//annotation/ParallelBlockAnnotation"/>
+    </eOperations>
+    <eOperations name="inParallelBlockAnnotation">
+      <eParameters name="p" eType="#//annotation/ParallelBlockAnnotation"/>
+    </eOperations>
+    <eOperations name="outParallelBlockAnnotation">
+      <eParameters name="p" eType="#//annotation/ParallelBlockAnnotation"/>
+    </eOperations>
+    <eOperations name="visitPolyhedralDomainAnnotation">
+      <eParameters name="p" eType="#//annotation/PolyhedralDomainAnnotation"/>
+    </eOperations>
+    <eOperations name="inPolyhedralDomainAnnotation">
+      <eParameters name="p" eType="#//annotation/PolyhedralDomainAnnotation"/>
+    </eOperations>
+    <eOperations name="outPolyhedralDomainAnnotation">
+      <eParameters name="p" eType="#//annotation/PolyhedralDomainAnnotation"/>
+    </eOperations>
+    <eOperations name="visitBarrierAnnotation">
+      <eParameters name="b" eType="#//annotation/BarrierAnnotation"/>
+    </eOperations>
+    <eOperations name="inBarrierAnnotation">
+      <eParameters name="b" eType="#//annotation/BarrierAnnotation"/>
+    </eOperations>
+    <eOperations name="outBarrierAnnotation">
+      <eParameters name="b" eType="#//annotation/BarrierAnnotation"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopVisitable" abstract="true" interface="true">
+    <eOperations name="accept">
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopDepthFirstVisitor" eSuperTypes="#//ScopVisitor">
+    <eOperations name="defaultIn">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value=""/>
+      </eAnnotations>
+      <eParameters name="node" eType="#//ScopVisitable"/>
+    </eOperations>
+    <eOperations name="defaultOut">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value=""/>
+      </eAnnotations>
+      <eParameters name="node" eType="#//ScopVisitable"/>
+    </eOperations>
+    <eOperations name="visitAbstractScopNode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAbstractScopNode(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outAbstractScopNode(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AbstractScopNode"/>
+    </eOperations>
+    <eOperations name="inAbstractScopNode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AbstractScopNode"/>
+    </eOperations>
+    <eOperations name="outAbstractScopNode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AbstractScopNode"/>
+    </eOperations>
+    <eOperations name="visitIScopAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inIScopAnnotation(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outIScopAnnotation(i);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//IScopAnnotation"/>
+    </eOperations>
+    <eOperations name="inIScopAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(i);"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//IScopAnnotation"/>
+    </eOperations>
+    <eOperations name="outIScopAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(i);"/>
+      </eAnnotations>
+      <eParameters name="i" eType="#//IScopAnnotation"/>
+    </eOperations>
+    <eOperations name="visitScopRoot">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inScopRoot(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outScopRoot(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopRoot"/>
+    </eOperations>
+    <eOperations name="inScopRoot">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopRoot"/>
+    </eOperations>
+    <eOperations name="outScopRoot">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopRoot"/>
+    </eOperations>
+    <eOperations name="visitScopFor">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inScopFor(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outScopFor(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopFor"/>
+    </eOperations>
+    <eOperations name="inScopFor">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopFor"/>
+    </eOperations>
+    <eOperations name="outScopFor">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopFor"/>
+    </eOperations>
+    <eOperations name="visitScopBlock">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inScopBlock(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outScopBlock(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopBlock"/>
+    </eOperations>
+    <eOperations name="inScopBlock">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopBlock"/>
+    </eOperations>
+    <eOperations name="outScopBlock">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopBlock"/>
+    </eOperations>
+    <eOperations name="visitScopGuard">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inScopGuard(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outScopGuard(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopGuard"/>
+    </eOperations>
+    <eOperations name="inScopGuard">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopGuard"/>
+    </eOperations>
+    <eOperations name="outScopGuard">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopGuard"/>
+    </eOperations>
+    <eOperations name="visitScopStatementMacro">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inScopStatementMacro(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outScopStatementMacro(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopStatementMacro"/>
+    </eOperations>
+    <eOperations name="inScopStatementMacro">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopStatementMacro"/>
+    </eOperations>
+    <eOperations name="outScopStatementMacro">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopStatementMacro"/>
+    </eOperations>
+    <eOperations name="visitScopUnscannedDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inScopUnscannedDomain(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outScopUnscannedDomain(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopUnscannedDomain"/>
+    </eOperations>
+    <eOperations name="inScopUnscannedDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopUnscannedDomain"/>
+    </eOperations>
+    <eOperations name="outScopUnscannedDomain">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopUnscannedDomain"/>
+    </eOperations>
+    <eOperations name="visitScopAssignment">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inScopAssignment(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outScopAssignment(s);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopAssignment"/>
+    </eOperations>
+    <eOperations name="inScopAssignment">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopAssignment"/>
+    </eOperations>
+    <eOperations name="outScopAssignment">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(s);"/>
+      </eAnnotations>
+      <eParameters name="s" eType="#//ScopAssignment"/>
+    </eOperations>
+    <eOperations name="visitAbstractScopStatement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inAbstractScopStatement(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outAbstractScopStatement(a);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AbstractScopStatement"/>
+    </eOperations>
+    <eOperations name="inAbstractScopStatement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AbstractScopStatement"/>
+    </eOperations>
+    <eOperations name="outAbstractScopStatement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(a);"/>
+      </eAnnotations>
+      <eParameters name="a" eType="#//AbstractScopStatement"/>
+    </eOperations>
+    <eOperations name="visitParallelLoopAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inParallelLoopAnnotation(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outParallelLoopAnnotation(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//annotation/ParallelLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="inParallelLoopAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//annotation/ParallelLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="outParallelLoopAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//annotation/ParallelLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="visitDescriptionAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inDescriptionAnnotation(d);&#xA;for (EObject obj : d.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outDescriptionAnnotation(d);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//annotation/DescriptionAnnotation"/>
+    </eOperations>
+    <eOperations name="inDescriptionAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(d);"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//annotation/DescriptionAnnotation"/>
+    </eOperations>
+    <eOperations name="outDescriptionAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(d);"/>
+      </eAnnotations>
+      <eParameters name="d" eType="#//annotation/DescriptionAnnotation"/>
+    </eOperations>
+    <eOperations name="visitTileLoopAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inTileLoopAnnotation(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outTileLoopAnnotation(t);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//annotation/TileLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="inTileLoopAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//annotation/TileLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="outTileLoopAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(t);"/>
+      </eAnnotations>
+      <eParameters name="t" eType="#//annotation/TileLoopAnnotation"/>
+    </eOperations>
+    <eOperations name="visitParallelBlockAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inParallelBlockAnnotation(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outParallelBlockAnnotation(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//annotation/ParallelBlockAnnotation"/>
+    </eOperations>
+    <eOperations name="inParallelBlockAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//annotation/ParallelBlockAnnotation"/>
+    </eOperations>
+    <eOperations name="outParallelBlockAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//annotation/ParallelBlockAnnotation"/>
+    </eOperations>
+    <eOperations name="visitPolyhedralDomainAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inPolyhedralDomainAnnotation(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outPolyhedralDomainAnnotation(p);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//annotation/PolyhedralDomainAnnotation"/>
+    </eOperations>
+    <eOperations name="inPolyhedralDomainAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//annotation/PolyhedralDomainAnnotation"/>
+    </eOperations>
+    <eOperations name="outPolyhedralDomainAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(p);"/>
+      </eAnnotations>
+      <eParameters name="p" eType="#//annotation/PolyhedralDomainAnnotation"/>
+    </eOperations>
+    <eOperations name="visitBarrierAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="inBarrierAnnotation(b);&#xA;for (EObject obj : b.eContents()) &#xA;&#x9;if (obj instanceof ScopVisitable) ((ScopVisitable)obj).accept(this);&#xA;outBarrierAnnotation(b);&#xA;"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//annotation/BarrierAnnotation"/>
+    </eOperations>
+    <eOperations name="inBarrierAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultIn(b);"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//annotation/BarrierAnnotation"/>
+    </eOperations>
+    <eOperations name="outBarrierAnnotation">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="defaultOut(b);"/>
+      </eAnnotations>
+      <eParameters name="b" eType="#//annotation/BarrierAnnotation"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ScopUnscannedDomain" eSuperTypes="#//AbstractScopStatement #//ScopVisitable">
+    <eOperations name="accept">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="body" value="visitor.visitScopUnscannedDomain(this);"/>
+      </eAnnotations>
+      <eParameters name="visitor" eType="#//ScopVisitor"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="macroParams" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="schedule" eType="#//JNIISLUnionMap"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="JNIISLUnionMap" instanceClassName="fr.irisa.cairn.jnimap.isl.jni.JNIISLUnionMap"/>
+  <eSubpackages name="annotation" nsURI="http://polymodel/scop/annotation" nsPrefix="annotation">
+    <eClassifiers xsi:type="ecore:EClass" name="ParallelLoopAnnotation" eSuperTypes="#//IScopAnnotation #//ScopVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitParallelLoopAnnotation(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//ScopVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="privates" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="schedule" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="chunksize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DescriptionAnnotation" eSuperTypes="#//IScopAnnotation #//ScopVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitDescriptionAnnotation(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//ScopVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="TileLoopAnnotation" eSuperTypes="#//IScopAnnotation #//ScopVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitTileLoopAnnotation(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//ScopVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tileIndex" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="tileSize" lowerBound="1"
+          eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="offset" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ParallelBlockAnnotation" eSuperTypes="#//IScopAnnotation #//ScopVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitParallelBlockAnnotation(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//ScopVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="privates" upperBound="-1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="PolyhedralDomainAnnotation" eSuperTypes="#//IScopAnnotation #//ScopVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitPolyhedralDomainAnnotation(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//ScopVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="domain" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="BarrierAnnotation" eSuperTypes="#//IScopAnnotation #//ScopVisitable">
+      <eOperations name="accept">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="body" value="visitor.visitBarrierAnnotation(this);"/>
+        </eAnnotations>
+        <eParameters name="visitor" eType="#//ScopVisitor"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="before" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VectorizationAnnotation" eSuperTypes="#//IScopAnnotation #//ScopVisitable">
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="ivdep" lowerBound="1"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="SingleAnnotation" eSuperTypes="#//IScopAnnotation #//ScopVisitable"/>
+  </eSubpackages>
+</ecore:EPackage>

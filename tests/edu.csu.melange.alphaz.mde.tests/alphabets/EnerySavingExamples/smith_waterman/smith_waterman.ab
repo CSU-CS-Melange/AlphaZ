@@ -1,0 +1,43 @@
+double w(double, double);
+//Use the following for verify-rand, remove mods for real input 
+//int w(int a, int b) {
+//	return W[a%5][b%5];
+//}
+
+//max(0, H[i-1,j-1] + w(A[i], B[j]), H[i-1,j] + w(A[i],4), H[i,j-1] + w(4, B[j])); 
+/*
+affine smith_waterman {M,N|N>2 && M>2}
+input
+	double A {i|0<=i<M};
+	double B {j|0<=j<N};
+output
+	double score {i,j|i==M && j==N};
+local 
+	double H {i,j|0<=i<M && 0<=j<N};
+let
+	H[i,j] = case
+				{|i == 0} || {|j == 0} : 0;
+				{|i > 0 && j > 0} : max(0, H[i-1,j-1] + w(A[i], B[j]), H[i-1,j] + w(A[i],4), H[i,j-1] + w(4, B[j]));
+			esac;
+			
+	score[i,j] = H[i-1,j-1];
+.
+*/
+//for debugging
+
+affine smith_waterman {M,N|N>2 && M>2}
+input
+	double A {i|0<=i<M};
+	double B {j|0<=j<N};
+output
+	double score {|};
+local 
+	double H {i,j|0<=i<M && 0<=j<N};
+let
+	H[i,j] = case
+				{|i == 0} || {|j == 0} : 0;
+				{|i > 0 && j > 0} : max(0, H[i-1,j-1] + w(A[i], B[j]), H[i-1,j] + w(A[i],4), H[i,j-1] + w(4, B[j]));
+			esac;
+			
+	score[] = H[M-1,N-1];
+.
