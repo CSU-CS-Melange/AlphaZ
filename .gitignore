@@ -29,6 +29,9 @@ workspace/
 # object files
 *.o
 
+# Mac stuff
+*.DS_store
+
 # library source
 bundles/edu.csu.melange.jnimap.cloog/native/build/cloog/cloog-*
 bundles/edu.csu.melange.jnimap.isl/native/build/isl/isl-*
