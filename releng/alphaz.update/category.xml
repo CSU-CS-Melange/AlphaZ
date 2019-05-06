@@ -1,0 +1,14 @@
+<site>
+  <description name="AlphaZ Update Site" url="">
+     AlphaZ update site
+  </description>
+
+  <feature id="alphaz.feature" version="0.1.0.qualifier">
+     <category name="AlphaZ"/>
+  </feature>
+
+  <category-def name="AlphaZ" label="AlphaZ">
+    <description> AlphaZ </description>
+  </category-def>
+
+</site>

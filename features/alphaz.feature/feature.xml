@@ -1,0 +1,74 @@
+<feature id="alphaz.feature" label="AlphaZ" version="0.1.0.qualifier" provider-name="INRIA">
+
+   <description>
+      AlphaZ System
+      This is a copy of AlphaZ developed at Colorado State University.
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      
+   </copyright>
+
+   <license url="http://www.example.com/license">
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+   </license>
+
+   <requires>
+      <import plugin="org.apache.log4j"/>
+      <import plugin="org.apache.commons.logging"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.compare"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.emf.ecore.xcore.lib"/>
+      <import plugin="org.eclipse.equinox.common" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.antlr.runtime"/>
+      <import plugin="org.eclipse.xtext.xbase"/>
+      <import plugin="org.eclipse.xtext.xbase.lib" version="2.12.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.util"/>
+      <import plugin="org.eclipse.xtend.lib" version="2.12.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext"/>
+      <import plugin="org.eclipse.xtext.ide"/>
+      <import plugin="org.eclipse.xtext.xbase.ide"/>
+      <import plugin="org.eclipse.xtext.ui"/>
+      <import plugin="org.eclipse.xtext.ui.shared"/>
+      <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
+      <import plugin="org.eclipse.xtext.builder"/>
+      <import plugin="org.eclipse.xtext.xbase.lib"/>
+   </requires>
+
+   <plugin id="edu.csu.melange.alphabets" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.alphabets.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.alphabets.xtext" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.alphabets.xtext.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.alphaz.commands" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.alphaz.commands.edit" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.alphaz.commands.editor" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.alphaz.commands.scripts.mde" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.alphaz.mde" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.jnimap.cloog" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="edu.csu.melange.jnimap.isl" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.algebra" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.antlr.parser" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.dataflow" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.isl" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.matrix" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.prdg" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.prdg.adapter" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.prdg.scheduling" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.scop" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.scop.bridge.clast" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.scop.cgenerator2" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.scop.dtiler" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.polyhedralIR" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.polymodel.polyhedralIR.codegen" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+	 
+</feature>

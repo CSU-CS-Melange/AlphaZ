@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>alphaz.bundles</artifactId>
+  <packaging>pom</packaging>
+
+  <parent>
+    <groupId>alphaz</groupId>
+    <artifactId>alphaz.root</artifactId>
+    <version>0.1.0</version>
+    <relativePath>..</relativePath>  
+  </parent>
+
+  <modules>
+     <module>edu.csu.melange.alphabets</module>
+     <module>edu.csu.melange.alphabets.ui</module>
+     <module>edu.csu.melange.alphabets.xtext</module>
+     <module>edu.csu.melange.alphabets.xtext.ui</module>
+     <module>edu.csu.melange.alphaz.commands</module>
+     <module>edu.csu.melange.alphaz.commands.edit</module>
+     <module>edu.csu.melange.alphaz.commands.editor</module>
+     <module>edu.csu.melange.alphaz.commands.scripts.mde</module>
+     <module>edu.csu.melange.alphaz.mde</module>
+     <module>edu.csu.melange.jnimap.cloog</module>
+     <module>edu.csu.melange.jnimap.isl</module>
+     <module>org.polymodel</module>
+     <module>org.polymodel.algebra</module>
+     <module>org.polymodel.antlr.parser</module>
+     <module>org.polymodel.dataflow</module>
+     <module>org.polymodel.isl</module>
+     <module>org.polymodel.matrix</module>
+     <module>org.polymodel.prdg</module>
+     <module>org.polymodel.prdg.adapter</module>
+     <module>org.polymodel.prdg.scheduling</module>
+     <module>org.polymodel.scop</module>
+     <module>org.polymodel.scop.bridge.clast</module>
+     <module>org.polymodel.scop.cgenerator2</module>
+     <module>org.polymodel.scop.dtiler</module>
+     <module>org.polymodel.polyhedralIR</module>
+     <module>org.polymodel.polyhedralIR.codegen</module>
+  </modules>
+
+</project>
+
