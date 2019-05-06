@@ -30,6 +30,6 @@ workspace/
 *.o
 
 # library source
-bundles/edu.csu.melange.jnimap.cloog/native/build/cloog/
-bundles/edu.csu.melange.jnimap.isl/native/build/isl/
+bundles/edu.csu.melange.jnimap.cloog/native/build/cloog/cloog-*
+bundles/edu.csu.melange.jnimap.isl/native/build/isl/isl-*
 
