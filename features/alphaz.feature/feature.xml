@@ -46,8 +46,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
    <plugin id="edu.csu.melange.alphabets" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="edu.csu.melange.alphabets.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin id="edu.csu.melange.alphabets.xtext" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin id="edu.csu.melange.alphabets.xtext.ui" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="edu.csu.melange.alphaz.commands" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="edu.csu.melange.alphaz.commands.edit" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="edu.csu.melange.alphaz.commands.editor" download-size="0" install-size="0" version="0.0.0" unpack="false"/>

@@ -13,8 +13,6 @@
   <modules>
      <module>edu.csu.melange.alphabets</module>
      <module>edu.csu.melange.alphabets.ui</module>
-     <module>edu.csu.melange.alphabets.xtext</module>
-     <module>edu.csu.melange.alphabets.xtext.ui</module>
      <module>edu.csu.melange.alphaz.commands</module>
      <module>edu.csu.melange.alphaz.commands.edit</module>
      <module>edu.csu.melange.alphaz.commands.editor</module>
