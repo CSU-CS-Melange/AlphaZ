@@ -5,8 +5,8 @@ Bundle-SymbolicName: edu.csu.melange.alphaz.commands.scripts.mde;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Colorado State University
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.6.0",
- org.polymodel.polyhedralIR;bundle-version="1.0.0",
- fr.irisa.r2d2.gecos.framework;bundle-version="1.0.0",
- edu.csu.melange.alphaz.mde;bundle-version="1.0.0"
+Require-Bundle: org.eclipse.core.runtime,
+ org.polymodel.polyhedralIR,
+ fr.irisa.r2d2.gecos.framework,
+ edu.csu.melange.alphaz.mde
 Import-Package: org.polymodel.polyhedralIR.polyIRCG.generator

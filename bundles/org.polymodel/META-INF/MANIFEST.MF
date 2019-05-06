@@ -17,7 +17,7 @@ Export-Package: org.polymodel,
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.polymodel.algebra;visibility:=reexport,
- fr.irisa.cairn.tools;bundle-version="1.0.0",
+ fr.irisa.cairn.tools,
  com.google.inject;bundle-version="3.0.0",
  com.google.guava;bundle-version="10.0.1"
 Bundle-ActivationPolicy: lazy
