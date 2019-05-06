@@ -16,7 +16,6 @@
 #include<isl/set.h>
 #include<isl/map.h>
 #include<isl/flow.h>
-#include<isl/dim.h>
 #include<isl/union_set.h>
 #include<isl/union_map.h>
 #include<isl/vertices.h>

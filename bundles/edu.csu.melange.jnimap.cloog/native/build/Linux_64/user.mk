@@ -1,6 +1,6 @@
 #PROTECTED REGION ID(user_Linux_64) ENABLED START#
-EXTRA_CFLAGS=
-JAVA_HOME=/usr/lib/jvm/default-java/
+EXTRA_CFLAGS=-DCLOOG_INT_GMP
+JAVA_HOME = /usr/lib/jvm/java-8-oracle
 JAVA_EXTRA_INC= -I$(JAVA_HOME)/include/linux
 EXTRA_LIBS=
 EXTRA_INCDIR=

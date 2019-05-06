@@ -1,5 +1,5 @@
 #Makefile
-PREFIX_BASE=$(HOME)/complibs/usr/local
+PREFIX_BASE=$(HOME)/complibs/usr/local/cloog/
 
 SYSTEM=$(shell uname -s)
 ifeq ($(SYSTEM),Linux)
