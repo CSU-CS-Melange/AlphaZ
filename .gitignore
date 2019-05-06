@@ -29,6 +29,7 @@ workspace/
 # object files
 *.o
 
-# test files
-*/alpha.model.tests/resources/experimental/*
+# library source
+bundles/edu.csu.melange.jnimap.cloog/native/build/cloog/
+bundles/edu.csu.melange.jnimap.isl/native/build/isl/
 
