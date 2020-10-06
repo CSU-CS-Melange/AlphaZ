@@ -1,18 +1,23 @@
 package org.polymodel.scop.dtiler.basic;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.polymodel.algebra.AlgebraUserFactory;
 import org.polymodel.algebra.FuzzyBoolean;
 import org.polymodel.algebra.IntConstraintSystem;
 import org.polymodel.algebra.IntExpression;
 import org.polymodel.algebra.Variable;
+import org.polymodel.algebra.affine.AffineExpression;
 import org.polymodel.algebra.affine.AffineTerm;
 import org.polymodel.algebra.factory.IntExpressionBuilder;
 import org.polymodel.algebra.impl.AlgebraVisitorImpl;
 import org.polymodel.algebra.polynomials.PolynomialVariable;
+import org.polymodel.algebra.quasiAffine.QuasiAffineExpression;
+import org.polymodel.algebra.quasiAffine.QuasiAffineTerm;
 import org.polymodel.scop.AbstractScopNode;
 import org.polymodel.scop.ScopFor;
 import org.polymodel.scop.ScopRoot;
@@ -86,18 +91,42 @@ public class Shift   {
     ShiftUp procedure from DaeGon's thesis.
   */
   protected IntExpression shiftUp(IntExpression expr) throws VisitFailure {
-	  IntExpression af = expr.copy();
-	  EList<Variable> indices = DTilingTools.findSurroundingLoopIndices(expr);
-	  int depth = indices.indexOf(var)+1; //depth is from 1
-	  
-	  //ShiftBounds shifts = new ShiftBounds(var, _options, indices, true);
-	  //af.accept(shifts);
-	  //return af;
-	  IntExpression sumForm = `InnermostId(toSummation()).visitLight(expr,tom.mapping.GenericIntrospector.INSTANCE);
-	  IntExpression res = `BottomUp(ShiftTrans(var,_options,indices, true)).visitLight(sumForm,tom.mapping.GenericIntrospector.INSTANCE);
 
-	  return res;
-	  //return `sum(EL(af, res)).simplify();
+	/*
+	 * Quick Fix for quasi-affine case 
+	 *
+	 * It expects quasi-affine expression with single term of the form:
+	 *    (op, affine, constant)
+	 * and extracts the affine expression and calls shift operation on just the affine term.
+	 */
+	if (expr instanceof QuasiAffineExpression) {
+		if (((QuasiAffineExpression) expr).getTerms().size() == 1) {
+			QuasiAffineTerm term = ((QuasiAffineExpression) expr).getTerms().get(0).copy();
+			
+			AffineExpression shiftedExpr = shiftUp(term.getExpression()).toAffine();
+			
+			QuasiAffineExpression qaff = AlgebraUserFactory.quasiAffineExpression(
+					Arrays.asList(new QuasiAffineTerm[] {
+							AlgebraUserFactory.simpleQuasiAffineTerm(term.getCoef(), term.getOperator(), shiftedExpr)}
+					));
+			
+			return qaff;
+		}
+		throw new RuntimeException("Detected unexpected QuasiAffineExpression");
+	}
+
+	IntExpression af = expr.copy();
+	EList<Variable> indices = DTilingTools.findSurroundingLoopIndices(expr);
+	int depth = indices.indexOf(var)+1; //depth is from 1
+	  
+	//ShiftBounds shifts = new ShiftBounds(var, _options, indices, true);
+	//af.accept(shifts);
+	//return af;
+	IntExpression sumForm = `InnermostId(toSummation()).visitLight(expr,tom.mapping.GenericIntrospector.INSTANCE);
+	IntExpression res = `BottomUp(ShiftTrans(var,_options,indices, true)).visitLight(sumForm,tom.mapping.GenericIntrospector.INSTANCE);
+
+	return res;
+	//return `sum(EL(af, res)).simplify();
   }
 
 
@@ -106,17 +135,40 @@ public class Shift   {
     ShiftDown procedure from DaeGon's thesis.
   */
   protected IntExpression shiftDown(IntExpression expr) throws VisitFailure {
-	  IntExpression af = expr.copy();
-	  EList<Variable> indices = DTilingTools.findSurroundingLoopIndices(expr);
-	  int depth = indices.indexOf(var) + 1; //depth is from 1
-	  AffineTerm tilesize = _options.getTileSize(depth+_options.tilingBand.getStart());
-	 
-	  IntExpression sumForm = `InnermostId(toSummation()).visitLight(expr,tom.mapping.GenericIntrospector.INSTANCE);
-	  IntExpression res = `BottomUp(ShiftTrans(var,_options,indices, false)).visitLight(sumForm,tom.mapping.GenericIntrospector.INSTANCE);
-	  res = `sum(EL(res, prod(EL(affine(terms(constant(-1))), affine(terms(tilesize, constant(-1)))))));
 
-	  return res;
-	  //return `sum(EL(af, res)).simplify();
+    /*
+	 * Quick Fix for quasi-affine case 
+	 *
+	 * This is a copy paste of what is used for shiftUp.
+     *
+     */
+	if (expr instanceof QuasiAffineExpression) {
+		if (((QuasiAffineExpression) expr).getTerms().size() == 1) {
+			QuasiAffineTerm term = ((QuasiAffineExpression) expr).getTerms().get(0).copy();
+			
+			AffineExpression shiftedExpr = shiftDown(term.getExpression()).toAffine();
+			
+			QuasiAffineExpression qaff = AlgebraUserFactory.quasiAffineExpression(
+					Arrays.asList(new QuasiAffineTerm[] {
+							AlgebraUserFactory.simpleQuasiAffineTerm(term.getCoef(), term.getOperator(), shiftedExpr)}
+					));
+			
+			return qaff;
+		}
+		throw new RuntimeException("Detected unexpected QuasiAffineExpression");
+	}
+
+	IntExpression af = expr.copy();
+	EList<Variable> indices = DTilingTools.findSurroundingLoopIndices(expr);
+	int depth = indices.indexOf(var) + 1; //depth is from 1
+	AffineTerm tilesize = _options.getTileSize(depth+_options.tilingBand.getStart());
+	 
+	IntExpression sumForm = `InnermostId(toSummation()).visitLight(expr,tom.mapping.GenericIntrospector.INSTANCE);
+	IntExpression res = `BottomUp(ShiftTrans(var,_options,indices, false)).visitLight(sumForm,tom.mapping.GenericIntrospector.INSTANCE);
+	res = `sum(EL(res, prod(EL(affine(terms(constant(-1))), affine(terms(tilesize, constant(-1)))))));
+
+	return res;
+	//return `sum(EL(af, res)).simplify();
   }
 
   private static class ShiftBounds extends AlgebraVisitorImpl{

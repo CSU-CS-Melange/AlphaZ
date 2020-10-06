@@ -1,18 +1,23 @@
 package org.polymodel.scop.dtiler.basic;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.polymodel.algebra.AlgebraUserFactory;
 import org.polymodel.algebra.FuzzyBoolean;
 import org.polymodel.algebra.IntConstraintSystem;
 import org.polymodel.algebra.IntExpression;
 import org.polymodel.algebra.Variable;
+import org.polymodel.algebra.affine.AffineExpression;
 import org.polymodel.algebra.affine.AffineTerm;
 import org.polymodel.algebra.factory.IntExpressionBuilder;
 import org.polymodel.algebra.impl.AlgebraVisitorImpl;
 import org.polymodel.algebra.polynomials.PolynomialVariable;
+import org.polymodel.algebra.quasiAffine.QuasiAffineExpression;
+import org.polymodel.algebra.quasiAffine.QuasiAffineTerm;
 import org.polymodel.scop.AbstractScopNode;
 import org.polymodel.scop.ScopFor;
 import org.polymodel.scop.ScopRoot;
@@ -592,6 +597,12 @@ return org.polymodel.algebra.internal.AlgebraTomFactory.createSum(_expressions);
 private static  EList<org.polymodel.algebra.IntExpression>  tom_get_slot_sum_expressions(IntExpression t) {
 return enforce(((org.polymodel.algebra.reductions.ReductionExpression)t).getExpressions());
 }
+private static boolean tom_equal_term_JNIISLUnionMap(Object l1, Object l2) {
+return l1.equals(l2);
+}
+private static boolean tom_is_sort_JNIISLUnionMap(Object t) {
+return t instanceof fr.irisa.cairn.jnimap.isl.jni.JNIISLUnionMap;
+}
 private static boolean tom_equal_term_nodes(Object l1, Object l2) {
 return (l1!=null && l1.equals(l2)) || l1==l2;
 }
@@ -678,6 +689,30 @@ Perform a shift with c > 0 as constraint and then append the original affine exp
 ShiftUp procedure from DaeGon's thesis.
 */
 protected IntExpression shiftUp(IntExpression expr) throws VisitFailure {
+
+/*
+* Quick Fix for quasi-affine case 
+*
+* It expects quasi-affine expression with single term of the form:
+*    (op, affine, constant)
+* and extracts the affine expression and calls shift operation on just the affine term.
+*/
+if (expr instanceof QuasiAffineExpression) {
+if (((QuasiAffineExpression) expr).getTerms().size() == 1) {
+QuasiAffineTerm term = ((QuasiAffineExpression) expr).getTerms().get(0).copy();
+
+AffineExpression shiftedExpr = shiftUp(term.getExpression()).toAffine();
+
+QuasiAffineExpression qaff = AlgebraUserFactory.quasiAffineExpression(
+Arrays.asList(new QuasiAffineTerm[] {
+AlgebraUserFactory.simpleQuasiAffineTerm(term.getCoef(), term.getOperator(), shiftedExpr)}
+));
+
+return qaff;
+}
+throw new RuntimeException("Detected unexpected QuasiAffineExpression");
+}
+
 IntExpression af = expr.copy();
 EList<Variable> indices = DTilingTools.findSurroundingLoopIndices(expr);
 int depth = indices.indexOf(var)+1; //depth is from 1
@@ -700,6 +735,29 @@ Perform a shift with c < 0 as constraint and then append the original affine exp
 ShiftDown procedure from DaeGon's thesis.
 */
 protected IntExpression shiftDown(IntExpression expr) throws VisitFailure {
+
+/*
+* Quick Fix for quasi-affine case 
+*
+* This is a copy paste of what is used for shiftUp.
+*
+*/
+if (expr instanceof QuasiAffineExpression) {
+if (((QuasiAffineExpression) expr).getTerms().size() == 1) {
+QuasiAffineTerm term = ((QuasiAffineExpression) expr).getTerms().get(0).copy();
+
+AffineExpression shiftedExpr = shiftDown(term.getExpression()).toAffine();
+
+QuasiAffineExpression qaff = AlgebraUserFactory.quasiAffineExpression(
+Arrays.asList(new QuasiAffineTerm[] {
+AlgebraUserFactory.simpleQuasiAffineTerm(term.getCoef(), term.getOperator(), shiftedExpr)}
+));
+
+return qaff;
+}
+throw new RuntimeException("Detected unexpected QuasiAffineExpression");
+}
+
 IntExpression af = expr.copy();
 EList<Variable> indices = DTilingTools.findSurroundingLoopIndices(expr);
 int depth = indices.indexOf(var) + 1; //depth is from 1
