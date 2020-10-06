@@ -40,10 +40,5 @@
 <repository location="http://mirror.ibcp.fr/pub/eclipse/releases//2019-03/"/>
 </location>
 
-<!-- Groovy -->
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.codehaus.groovy.eclipse.feature.feature.group" range="[3.2.0,4.0.0)"/>
-<repository location="https://dist.springsource.org/release/GRECLIPSE/e4.10"/>
-</location>
 </locations>
 </target>
