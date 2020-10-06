@@ -481,6 +481,12 @@ return  t instanceof EList<?> &&
     	(((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)t).size() == 0 
     	|| (((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)t).size()>0 && ((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)t).get(0) instanceof org.polymodel.algebra.polynomials.PolynomialVariable));
 }
+private static boolean tom_equal_term_JNIISLUnionMap(Object l1, Object l2) {
+return l1.equals(l2);
+}
+private static boolean tom_is_sort_JNIISLUnionMap(Object t) {
+return t instanceof fr.irisa.cairn.jnimap.isl.jni.JNIISLUnionMap;
+}
 private static boolean tom_equal_term_nodes(Object l1, Object l2) {
 return (l1!=null && l1.equals(l2)) || l1==l2;
 }
@@ -628,7 +634,7 @@ if (tom_is_sort_node(((AbstractScopNode)tom__arg))) {
 if (tom_is_fun_sym_loop(((AbstractScopNode)((AbstractScopNode)tom__arg)))) {
 AbstractScopNode tom_o=((AbstractScopNode)tom__arg);
 
-//System.out.println("visiting point loop: " + tom_o);
+//System.out.println("visiting point loop: " + `o);
 int depth = ((ScopFor)
 tom_o).getLoopDepth();
 Variable tileIndex = options.getTileIndex(depth+options.tilingBand.getStart());

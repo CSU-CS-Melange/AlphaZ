@@ -475,6 +475,12 @@ return  t instanceof EList<?> &&
     	(((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)t).size() == 0 
     	|| (((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)t).size()>0 && ((EList<org.polymodel.algebra.polynomials.PolynomialVariable>)t).get(0) instanceof org.polymodel.algebra.polynomials.PolynomialVariable));
 }
+private static boolean tom_equal_term_JNIISLUnionMap(Object l1, Object l2) {
+return l1.equals(l2);
+}
+private static boolean tom_is_sort_JNIISLUnionMap(Object t) {
+return t instanceof fr.irisa.cairn.jnimap.isl.jni.JNIISLUnionMap;
+}
 private static boolean tom_equal_term_nodes(Object l1, Object l2) {
 return (l1!=null && l1.equals(l2)) || l1==l2;
 }
@@ -631,13 +637,11 @@ if (tom_is_fun_sym_loop(((AbstractScopNode)((AbstractScopNode)tom__arg)))) {
 org.polymodel.algebra.Variable tom_ite=tom_get_slot_loop_iterator(((AbstractScopNode)tom__arg));
 AbstractScopNode tom_o=((AbstractScopNode)tom__arg);
 
-//System.out.println("visiting tiled loop: " + tom_o);
+//System.out.println("visiting tiled loop: " + `o);
 int depth = 
 tom_o.getLoopDepth();	//depth within the whole loop nest, starts from 1
-//System.out.println("visiting tiled loop depth: " + depth);
 AffineExpression tileSize = IntExpressionBuilder.affine(options.getTileSize(depth+options.tilingBand.getStart()));
 Variable tileIndex = options.getTileIndex(depth+options.tilingBand.getStart());
-//System.out.println("visiting tiled loop tileIndex: " + tileIndex);
 
 IntExpression lbe = Shift.down(
 tom_get_slot_loop_LB(((AbstractScopNode)tom__arg)),
@@ -656,7 +660,6 @@ List<ScopFor> loops =
 tom_o.getSurroundingScopFors();
 for (int i = 1; i < depth; i++) {
 Variable lite = loops.get(i-1).getIterator();
-//System.out.println("i: " + i + " : " + options.getTileIndex(i+options.tilingBand.getStart()));
 lbe = lbe.substitute(lite, options.getTileIndex(i+options.tilingBand.getStart()));
 ube = ube.substitute(lite, options.getTileIndex(i+options.tilingBand.getStart()));
 }
