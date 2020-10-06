@@ -8,7 +8,8 @@ Require-Bundle: org.polymodel.algebra;bundle-version="1.0.0",
  org.polymodel.scop;bundle-version="1.0.0",
  org.polymodel;bundle-version="1.0.0",
  fr.irisa.cairn.eclipse.tom;bundle-version="2.10.0",
- tom.mapping;bundle-version="1.0.0"
+ tom.mapping;bundle-version="1.0.0",
+ edu.csu.melange.jnimap.isl;bundle-version="1.8.1"
 Export-Package: org.polymodel.scop.dtiler,
  org.polymodel.scop.dtiler.basic,
  org.polymodel.scop.dtiler.basic.selection,
