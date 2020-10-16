@@ -8,6 +8,8 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.polymodel.PolymodelPackage;
+import org.polymodel.algebra.AlgebraPackage;
 import org.polymodel.polyhedralIR.PolyhedralIRPackage;
 
 import org.polymodel.polyhedralIR.polyIRCG.C.CPackage;
@@ -102,7 +104,7 @@ public class PcotPackageImpl extends EPackageImpl implements PcotPackage {
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link PcotPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -116,24 +118,36 @@ public class PcotPackageImpl extends EPackageImpl implements PcotPackage {
 		if (isInited) return (PcotPackage)EPackage.Registry.INSTANCE.getEPackage(PcotPackage.eNS_URI);
 
 		// Obtain or create and register package
-		PcotPackageImpl thePcotPackage = (PcotPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof PcotPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new PcotPackageImpl());
+		Object registeredPcotPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		PcotPackageImpl thePcotPackage = registeredPcotPackage instanceof PcotPackageImpl ? (PcotPackageImpl)registeredPcotPackage : new PcotPackageImpl();
 
 		isInited = true;
 
 		// Initialize simple dependencies
+		AlgebraPackage.eINSTANCE.eClass();
 		PolyhedralIRPackage.eINSTANCE.eClass();
+		PolymodelPackage.eINSTANCE.eClass();
 		ScopPackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
-		PolyIRCGPackageImpl thePolyIRCGPackage = (PolyIRCGPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PolyIRCGPackage.eNS_URI) instanceof PolyIRCGPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PolyIRCGPackage.eNS_URI) : PolyIRCGPackage.eINSTANCE);
-		CPackageImpl theCPackage = (CPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CPackage.eNS_URI) instanceof CPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CPackage.eNS_URI) : CPackage.eINSTANCE);
-		CWrapperPackageImpl theCWrapperPackage = (CWrapperPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CWrapperPackage.eNS_URI) instanceof CWrapperPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CWrapperPackage.eNS_URI) : CWrapperPackage.eINSTANCE);
-		CDistributedPackageImpl theCDistributedPackage = (CDistributedPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CDistributedPackage.eNS_URI) instanceof CDistributedPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CDistributedPackage.eNS_URI) : CDistributedPackage.eINSTANCE);
-		ScanPackageImpl theScanPackage = (ScanPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ScanPackage.eNS_URI) instanceof ScanPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ScanPackage.eNS_URI) : ScanPackage.eINSTANCE);
-		AlgebraExPackageImpl theAlgebraExPackage = (AlgebraExPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(AlgebraExPackage.eNS_URI) instanceof AlgebraExPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(AlgebraExPackage.eNS_URI) : AlgebraExPackage.eINSTANCE);
-		SIMDPackageImpl theSIMDPackage = (SIMDPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SIMDPackage.eNS_URI) instanceof SIMDPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SIMDPackage.eNS_URI) : SIMDPackage.eINSTANCE);
-		SimdExpPackageImpl theSimdExpPackage = (SimdExpPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(SimdExpPackage.eNS_URI) instanceof SimdExpPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SimdExpPackage.eNS_URI) : SimdExpPackage.eINSTANCE);
-		PCOTPackageImpl thePCOTPackage = (PCOTPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(PCOTPackage.eNS_URI) instanceof PCOTPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(PCOTPackage.eNS_URI) : PCOTPackage.eINSTANCE);
+		Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(PolyIRCGPackage.eNS_URI);
+		PolyIRCGPackageImpl thePolyIRCGPackage = (PolyIRCGPackageImpl)(registeredPackage instanceof PolyIRCGPackageImpl ? registeredPackage : PolyIRCGPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(CPackage.eNS_URI);
+		CPackageImpl theCPackage = (CPackageImpl)(registeredPackage instanceof CPackageImpl ? registeredPackage : CPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(CWrapperPackage.eNS_URI);
+		CWrapperPackageImpl theCWrapperPackage = (CWrapperPackageImpl)(registeredPackage instanceof CWrapperPackageImpl ? registeredPackage : CWrapperPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(CDistributedPackage.eNS_URI);
+		CDistributedPackageImpl theCDistributedPackage = (CDistributedPackageImpl)(registeredPackage instanceof CDistributedPackageImpl ? registeredPackage : CDistributedPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(ScanPackage.eNS_URI);
+		ScanPackageImpl theScanPackage = (ScanPackageImpl)(registeredPackage instanceof ScanPackageImpl ? registeredPackage : ScanPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(AlgebraExPackage.eNS_URI);
+		AlgebraExPackageImpl theAlgebraExPackage = (AlgebraExPackageImpl)(registeredPackage instanceof AlgebraExPackageImpl ? registeredPackage : AlgebraExPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(SIMDPackage.eNS_URI);
+		SIMDPackageImpl theSIMDPackage = (SIMDPackageImpl)(registeredPackage instanceof SIMDPackageImpl ? registeredPackage : SIMDPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(SimdExpPackage.eNS_URI);
+		SimdExpPackageImpl theSimdExpPackage = (SimdExpPackageImpl)(registeredPackage instanceof SimdExpPackageImpl ? registeredPackage : SimdExpPackage.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(PCOTPackage.eNS_URI);
+		PCOTPackageImpl thePCOTPackage = (PCOTPackageImpl)(registeredPackage instanceof PCOTPackageImpl ? registeredPackage : PCOTPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		thePcotPackage.createPackageContents();
@@ -162,7 +176,6 @@ public class PcotPackageImpl extends EPackageImpl implements PcotPackage {
 		// Mark meta-data to indicate it can't be changed
 		thePcotPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(PcotPackage.eNS_URI, thePcotPackage);
 		return thePcotPackage;

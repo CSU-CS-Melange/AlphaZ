@@ -74,7 +74,7 @@ public interface ParallelizedCLoop extends CLoop {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Subsystem Variables</em>' map.
 	 * @see org.polymodel.polyhedralIR.polyIRCG.C.CPackage#getParallelizedCLoop_SubsystemVariables()
-	 * @model mapType="org.polymodel.ValueContainedMap<K, V>"
+	 * @model mapType="org.polymodel.ValueContainedMap&lt;K, V&gt;"
 	 * @generated
 	 */
 	EMap<String, VariableDeclaration> getSubsystemVariables();

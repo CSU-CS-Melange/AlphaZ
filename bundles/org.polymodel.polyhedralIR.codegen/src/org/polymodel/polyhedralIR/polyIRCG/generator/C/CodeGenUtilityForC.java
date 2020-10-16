@@ -191,6 +191,38 @@ public class CodeGenUtilityForC {
 		return sb.toString();
 	}
 	
+	public static String createAccessIndices(AffineFunction accessFunction) {
+	    String index = "";
+	    for(int j = 0; j < accessFunction.getDimRHS()-1; j++){
+	      index += accessFunction.getExpressions().get(j).toString(OUTPUT_FORMAT.C) +",";
+	    }
+	    index += accessFunction.getExpressions().get(accessFunction.getDimRHS()-1).toString(OUTPUT_FORMAT.C);
+	    return index;
+	  }
+	
+	/**
+	   *
+	   * @param op
+	   * @param variable
+	   * @param expr
+	   * @return
+	   */
+	  public static String createAccumulation(OP op, Type type, String variable, AffineFunction access, String expr) {
+	    String binop = getBinaryOperatorInC(op);
+	
+	    if (isInfixInC(op)) {
+	      return variable+"("+createAccessIndices(access)+")" + " = ("+variable+"("+createAccessIndices(access)+")"+")"+binop+"("+expr+")";
+	    } else {
+	      if(isFixedFunctionInC(op)){
+	        binop = getBinaryOperatorFunctionInC(op, type);
+	      }
+	
+	      //use temp variable to avoid re-computation (expressions might have function calls)
+	      return "{" + type + " __temp__ = "+expr+"; "+ variable+"("+createAccessIndices(access)+")" + " = "+binop+"("+variable+"("+createAccessIndices(access)+")"+",__temp__); }";
+	    }
+	  }
+	
+	
 	/////////////////////////////////////Utility funtion for Tiling/////
 	/**
 	 * Filter out the ordering dimensions with the ordering prefix

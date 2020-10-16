@@ -2,9 +2,8 @@ package org.polymodel.algebra.tom;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.polymodel.algebra.CompositeOperator;
 import org.polymodel.algebra.FuzzyBoolean;
-import org.polymodel.algebra.IntExpression;
+import org.polymodel.algebra.*;
 import org.polymodel.algebra.affine.AffineExpression;
 import org.polymodel.algebra.polynomials.PolynomialVariable;
 import org.polymodel.algebra.quasiAffine.QuasiAffineTerm;

@@ -8,6 +8,7 @@ import org.polymodel.polyhedralIR.expression.DependenceExpression;
 import org.polymodel.polyhedralIR.expression.ReduceExpression;
 import org.polymodel.polyhedralIR.expression.RestrictExpression;
 import org.polymodel.polyhedralIR.factory.PolyhedralIRUserFactory;
+import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
 import org.polymodel.polyhedralIR.util.ContextDomainCalculator;
 import org.polymodel.polyhedralIR.util.ExpressionDomainCalculator;
 import org.polymodel.util.PolymodelException;
@@ -17,7 +18,7 @@ import org.polymodel.util.PolymodelException;
  * without changing the domain of other variables. It is a variation of Change of Basis.
  * 
  * Given ReduceExpression reduce(op, proj, expr) and AffineFunction T, transforms the reduction to
- * reduce(op, proj, image(expr) : Tinv@expr)
+ * reduce(op, Tinv@proj, image(expr) : Tinv@expr)
  * The domain is transformed to the image by T, and specified as restrict. All variable accesses are composed
  * with the inverse of T, so that other variables are unchanged.
  * 
@@ -54,6 +55,10 @@ public class TransformReductionBody {
 		DependenceExpression dep = PolyhedralIRUserFactory.eINSTANCE.createDependenceExpression(Tinv, reduce.getExpr());
 		RestrictExpression restrict = PolyhedralIRUserFactory.eINSTANCE.createRestrictExpression(dep.getExpr().getContextDomain().image(T), dep);
 		reduce.setExpr(restrict);
+		
+		//compute the T-1@f and set it as projection function
+	    AffineFunction newProjection = reduce.getProjection().compose(Tinv);
+	    reduce.setProjection(newProjection);
 		
 		AffineSystem syst;
 		if (dep.getContainerEquation() instanceof StandardEquation)

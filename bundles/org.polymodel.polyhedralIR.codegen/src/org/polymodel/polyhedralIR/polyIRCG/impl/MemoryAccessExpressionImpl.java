@@ -120,7 +120,7 @@ public abstract class MemoryAccessExpressionImpl extends EObjectImpl implements 
 		return getVariable().getVolumeExpression(dim, getVariable().getDomain().getNIndices());
 	}
 
-	private EList<IntExpression> arrayIndexing1D(boolean disableZeroAlignment) {
+	protected EList<IntExpression> arrayIndexing1D(boolean disableZeroAlignment) {
 		EList<IntExpression> exprs = new BasicEList<IntExpression>();
 		
 		ReductionExpression sum = IntExpressionBuilder.sum();

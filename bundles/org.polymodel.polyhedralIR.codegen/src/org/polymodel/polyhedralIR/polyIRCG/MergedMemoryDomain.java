@@ -37,7 +37,7 @@ public interface MergedMemoryDomain extends MemoryDomain {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Memory Domains</em>' map.
 	 * @see org.polymodel.polyhedralIR.polyIRCG.PolyIRCGPackage#getMergedMemoryDomain_MemoryDomains()
-	 * @model mapType="org.polymodel.ValueContainedMap<K, V>"
+	 * @model mapType="org.polymodel.ValueContainedMap&lt;K, V&gt;"
 	 * @generated
 	 */
 	EMap<String, MemoryDomain> getMemoryDomains();

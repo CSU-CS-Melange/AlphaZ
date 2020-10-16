@@ -42,6 +42,7 @@
     <genDataTypes ecoreDataType="polyhedralIR.visitor.ecore#//JNIISLSet"/>
     <genDataTypes ecoreDataType="polyhedralIR.visitor.ecore#//JNIISLBasicMap"/>
     <genDataTypes ecoreDataType="polyhedralIR.visitor.ecore#//longMatrix"/>
+    <genDataTypes ecoreDataType="polyhedralIR.visitor.ecore#//ListString"/>
     <genClasses ecoreClass="polyhedralIR.visitor.ecore#//Program">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//Program/externalFunctionDeclarations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//Program/systems"/>
@@ -76,7 +77,8 @@
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Program/isContainingSystem">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//Program/isContainingSystem/name"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Program/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Program/accept"
+          body="visitor.visitProgram(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//Program/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -84,7 +86,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//ExternalFunctionDeclaration/name"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//ExternalFunctionDeclaration/inputs"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//ExternalFunctionDeclaration/output"/>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//ExternalFunctionDeclaration/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//ExternalFunctionDeclaration/accept"
+          body="visitor.visitExternalFunctionDeclaration(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//ExternalFunctionDeclaration/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -99,6 +102,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//AffineSystem/useEquations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//AffineSystem/targetMapping"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//AffineSystem/whileInfo"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//AffineSystem/tilingInfo"/>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//AffineSystem/getVariableDeclaration">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//AffineSystem/getVariableDeclaration/name"/>
       </genOperations>
@@ -115,7 +119,8 @@
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//AffineSystem/findLabel">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//AffineSystem/findLabel/label"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//AffineSystem/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//AffineSystem/accept"
+          body="visitor.visitAffineSystem(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//AffineSystem/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -133,7 +138,8 @@
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//VariableDeclaration/isInput"/>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//VariableDeclaration/isOutput"/>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//VariableDeclaration/isLocal"/>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//VariableDeclaration/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//VariableDeclaration/accept"
+          body="visitor.visitVariableDeclaration(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//VariableDeclaration/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -142,12 +148,14 @@
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//VariableIdentifier/equilvalence">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//VariableIdentifier/equilvalence/other"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//VariableIdentifier/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//VariableIdentifier/accept"
+          body="visitor.visitVariableIdentifier(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//VariableIdentifier/accept/visitor"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="polyhedralIR.visitor.ecore#//Equation">
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Equation/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Equation/accept"
+          body="visitor.visitEquation(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//Equation/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -159,7 +167,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//UseEquation/subSystem"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//UseEquation/containerSystem"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//UseEquation/label"/>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//UseEquation/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//UseEquation/accept"
+          body="visitor.visitUseEquation(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//UseEquation/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -167,7 +176,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//StandardEquation/variable"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//StandardEquation/expression"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//StandardEquation/containerSystem"/>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//StandardEquation/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//StandardEquation/accept"
+          body="visitor.visitStandardEquation(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//StandardEquation/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -222,12 +232,13 @@
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//Domain/exactTransitiveClosure/f"/>
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//Domain/exactTransitiveClosure/range"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Domain/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Domain/accept" body="visitor.visitDomain(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//Domain/accept/visitor"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="polyhedralIR.visitor.ecore#//ParameterDomain">
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//ParameterDomain/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//ParameterDomain/accept"
+          body="visitor.visitParameterDomain(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//ParameterDomain/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -257,7 +268,8 @@
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//AffineFunction/isIdentity"/>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//AffineFunction/getNParams"/>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//AffineFunction/getNIndices"/>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//AffineFunction/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//AffineFunction/accept"
+          body="visitor.visitAffineFunction(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//AffineFunction/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -270,7 +282,8 @@
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Expression/equivalence">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//Expression/equivalence/expr"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Expression/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//Expression/accept"
+          body="visitor.visitExpression(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//Expression/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -279,7 +292,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//FastISLDomain/domDims"/>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//FastISLDomain/toMatrix"/>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//FastISLDomain/toLongMatrix"/>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//FastISLDomain/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//FastISLDomain/accept"
+          body="visitor.visitFastISLDomain(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//FastISLDomain/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -290,7 +304,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//FastISLMap/labelOut"/>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//FastISLMap/toMatrix"/>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//FastISLMap/toLongMatrix"/>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//FastISLMap/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//FastISLMap/accept"
+          body="visitor.visitFastISLMap(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//FastISLMap/accept/visitor"/>
       </genOperations>
     </genClasses>
@@ -298,8 +313,19 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//WhileInfo/timeDomain"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//WhileInfo/condition"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//WhileInfo/containerSystem"/>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//WhileInfo/accept">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//WhileInfo/accept"
+          body="visitor.visitWhileInfo(this);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//WhileInfo/accept/visitor"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="polyhedralIR.visitor.ecore#//TilingInformations">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//TilingInformations/ratios"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//TilingInformations/minParamValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//TilingInformations/tileGroups"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//TilingInformations/cobPreprocess"/>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//TilingInformations/accept"
+          body="visitor.visitTilingInformations(this);">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//TilingInformations/accept/visitor"/>
       </genOperations>
     </genClasses>
     <genClasses image="false" ecoreClass="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor">
@@ -443,6 +469,15 @@
       </genOperations>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/outWhileInfo">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/outWhileInfo/w"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/visitTilingInformations">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/visitTilingInformations/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/inTilingInformations">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/inTilingInformations/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/outTilingInformations">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/outTilingInformations/t"/>
       </genOperations>
       <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/visitCaseExpression">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRVisitor/visitCaseExpression/c"/>
@@ -721,828 +756,1126 @@
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor">
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/defaultIn">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/defaultIn"
+          body="">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/defaultIn/node"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/defaultOut">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/defaultOut"
+          body="">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/defaultOut/node"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitProgram">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitProgram"
+          body="inProgram(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outProgram(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitProgram/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inProgram">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inProgram"
+          body="defaultIn(p);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inProgram/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outProgram">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outProgram"
+          body="defaultOut(p);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outProgram/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitExternalFunctionDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitExternalFunctionDeclaration"
+          body="inExternalFunctionDeclaration(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExternalFunctionDeclaration(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitExternalFunctionDeclaration/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inExternalFunctionDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inExternalFunctionDeclaration"
+          body="defaultIn(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inExternalFunctionDeclaration/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outExternalFunctionDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outExternalFunctionDeclaration"
+          body="defaultOut(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outExternalFunctionDeclaration/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitAffineSystem">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitAffineSystem"
+          body="inAffineSystem(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outAffineSystem(a);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitAffineSystem/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inAffineSystem">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inAffineSystem"
+          body="defaultIn(a);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inAffineSystem/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outAffineSystem">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outAffineSystem"
+          body="defaultOut(a);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outAffineSystem/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVariableDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVariableDeclaration"
+          body="inVariableDeclaration(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableDeclaration(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVariableDeclaration/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVariableDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVariableDeclaration"
+          body="defaultIn(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVariableDeclaration/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVariableDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVariableDeclaration"
+          body="defaultOut(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVariableDeclaration/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVariableIdentifier">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVariableIdentifier"
+          body="inVariableIdentifier(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableIdentifier(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVariableIdentifier/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVariableIdentifier">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVariableIdentifier"
+          body="defaultIn(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVariableIdentifier/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVariableIdentifier">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVariableIdentifier"
+          body="defaultOut(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVariableIdentifier/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitEquation"
+          body="inEquation(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outEquation(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitEquation/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inEquation"
+          body="defaultIn(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inEquation/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outEquation"
+          body="defaultOut(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outEquation/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitUseEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitUseEquation"
+          body="inUseEquation(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUseEquation(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitUseEquation/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inUseEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inUseEquation"
+          body="defaultIn(u);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inUseEquation/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outUseEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outUseEquation"
+          body="defaultOut(u);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outUseEquation/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitStandardEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitStandardEquation"
+          body="inStandardEquation(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outStandardEquation(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitStandardEquation/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inStandardEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inStandardEquation"
+          body="defaultIn(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inStandardEquation/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outStandardEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outStandardEquation"
+          body="defaultOut(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outStandardEquation/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitDomain"
+          body="inDomain(d);&#xA;for (EObject obj : d.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outDomain(d);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitDomain/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inDomain"
+          body="defaultIn(d);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inDomain/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outDomain"
+          body="defaultOut(d);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outDomain/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitParameterDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitParameterDomain"
+          body="inParameterDomain(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outParameterDomain(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitParameterDomain/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inParameterDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inParameterDomain"
+          body="defaultIn(p);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inParameterDomain/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outParameterDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outParameterDomain"
+          body="defaultOut(p);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outParameterDomain/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitAffineFunction">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitAffineFunction"
+          body="inAffineFunction(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outAffineFunction(a);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitAffineFunction/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inAffineFunction">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inAffineFunction"
+          body="defaultIn(a);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inAffineFunction/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outAffineFunction">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outAffineFunction"
+          body="defaultOut(a);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outAffineFunction/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitExpression"
+          body="inExpression(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExpression(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitExpression/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inExpression"
+          body="defaultIn(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inExpression/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outExpression"
+          body="defaultOut(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outExpression/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitFastISLDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitFastISLDomain"
+          body="inFastISLDomain(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFastISLDomain(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitFastISLDomain/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inFastISLDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inFastISLDomain"
+          body="defaultIn(f);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inFastISLDomain/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outFastISLDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outFastISLDomain"
+          body="defaultOut(f);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outFastISLDomain/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitFastISLMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitFastISLMap"
+          body="inFastISLMap(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFastISLMap(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitFastISLMap/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inFastISLMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inFastISLMap"
+          body="defaultIn(f);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inFastISLMap/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outFastISLMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outFastISLMap"
+          body="defaultOut(f);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outFastISLMap/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitWhileInfo">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitWhileInfo"
+          body="inWhileInfo(w);&#xA;for (EObject obj : w.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outWhileInfo(w);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitWhileInfo/w"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inWhileInfo">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inWhileInfo"
+          body="defaultIn(w);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inWhileInfo/w"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outWhileInfo">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outWhileInfo"
+          body="defaultOut(w);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outWhileInfo/w"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitCaseExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitTilingInformations"
+          body="inTilingInformations(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTilingInformations(t);&#xA;">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitTilingInformations/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inTilingInformations"
+          body="defaultIn(t);">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inTilingInformations/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outTilingInformations"
+          body="defaultOut(t);">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outTilingInformations/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitCaseExpression"
+          body="inCaseExpression(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCaseExpression(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitCaseExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inCaseExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inCaseExpression"
+          body="defaultIn(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inCaseExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outCaseExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outCaseExpression"
+          body="defaultOut(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outCaseExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitDependenceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitDependenceExpression"
+          body="inDependenceExpression(d);&#xA;for (EObject obj : d.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outDependenceExpression(d);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitDependenceExpression/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inDependenceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inDependenceExpression"
+          body="defaultIn(d);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inDependenceExpression/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outDependenceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outDependenceExpression"
+          body="defaultOut(d);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outDependenceExpression/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitIfExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitIfExpression"
+          body="inIfExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIfExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitIfExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inIfExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inIfExpression"
+          body="defaultIn(i);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inIfExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outIfExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outIfExpression"
+          body="defaultOut(i);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outIfExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitIndexExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitIndexExpression"
+          body="inIndexExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIndexExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitIndexExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inIndexExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inIndexExpression"
+          body="defaultIn(i);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inIndexExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outIndexExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outIndexExpression"
+          body="defaultOut(i);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outIndexExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitReduceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitReduceExpression"
+          body="inReduceExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outReduceExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitReduceExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inReduceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inReduceExpression"
+          body="defaultIn(r);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inReduceExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outReduceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outReduceExpression"
+          body="defaultOut(r);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outReduceExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitRestrictExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitRestrictExpression"
+          body="inRestrictExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outRestrictExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitRestrictExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inRestrictExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inRestrictExpression"
+          body="defaultIn(r);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inRestrictExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outRestrictExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outRestrictExpression"
+          body="defaultOut(r);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outRestrictExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVariableExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVariableExpression"
+          body="inVariableExpression(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableExpression(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVariableExpression/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVariableExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVariableExpression"
+          body="defaultIn(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVariableExpression/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVariableExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVariableExpression"
+          body="defaultOut(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVariableExpression/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitBinaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitBinaryExpression"
+          body="inBinaryExpression(b);&#xA;for (EObject obj : b.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outBinaryExpression(b);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitBinaryExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inBinaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inBinaryExpression"
+          body="defaultIn(b);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inBinaryExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outBinaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outBinaryExpression"
+          body="defaultOut(b);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outBinaryExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitConstantExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitConstantExpression"
+          body="inConstantExpression(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outConstantExpression(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitConstantExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inConstantExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inConstantExpression"
+          body="defaultIn(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inConstantExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outConstantExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outConstantExpression"
+          body="defaultOut(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outConstantExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitBooleanExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitBooleanExpression"
+          body="inBooleanExpression(b);&#xA;for (EObject obj : b.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outBooleanExpression(b);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitBooleanExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inBooleanExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inBooleanExpression"
+          body="defaultIn(b);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inBooleanExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outBooleanExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outBooleanExpression"
+          body="defaultOut(b);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outBooleanExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitIntegerExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitIntegerExpression"
+          body="inIntegerExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIntegerExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitIntegerExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inIntegerExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inIntegerExpression"
+          body="defaultIn(i);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inIntegerExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outIntegerExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outIntegerExpression"
+          body="defaultOut(i);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outIntegerExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitRealExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitRealExpression"
+          body="inRealExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outRealExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitRealExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inRealExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inRealExpression"
+          body="defaultIn(r);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inRealExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outRealExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outRealExpression"
+          body="defaultOut(r);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outRealExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitMultiArgExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitMultiArgExpression"
+          body="inMultiArgExpression(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMultiArgExpression(m);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitMultiArgExpression/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inMultiArgExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inMultiArgExpression"
+          body="defaultIn(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inMultiArgExpression/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outMultiArgExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outMultiArgExpression"
+          body="defaultOut(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outMultiArgExpression/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitExternalFunctionCall">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitExternalFunctionCall"
+          body="inExternalFunctionCall(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExternalFunctionCall(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitExternalFunctionCall/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inExternalFunctionCall">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inExternalFunctionCall"
+          body="defaultIn(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inExternalFunctionCall/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outExternalFunctionCall">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outExternalFunctionCall"
+          body="defaultOut(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outExternalFunctionCall/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitUnaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitUnaryExpression"
+          body="inUnaryExpression(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUnaryExpression(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitUnaryExpression/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inUnaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inUnaryExpression"
+          body="defaultIn(u);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inUnaryExpression/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outUnaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outUnaryExpression"
+          body="defaultOut(u);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outUnaryExpression/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitTargetMapping">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitTargetMapping"
+          body="inTargetMapping(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTargetMapping(t);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitTargetMapping/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inTargetMapping">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inTargetMapping"
+          body="defaultIn(t);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inTargetMapping/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outTargetMapping">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outTargetMapping"
+          body="defaultOut(t);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outTargetMapping/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitSpaceTimeLevel">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitSpaceTimeLevel"
+          body="inSpaceTimeLevel(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSpaceTimeLevel(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitSpaceTimeLevel/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inSpaceTimeLevel">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inSpaceTimeLevel"
+          body="defaultIn(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inSpaceTimeLevel/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outSpaceTimeLevel">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outSpaceTimeLevel"
+          body="defaultOut(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outSpaceTimeLevel/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitSpaceTimeMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitSpaceTimeMap"
+          body="inSpaceTimeMap(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSpaceTimeMap(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitSpaceTimeMap/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inSpaceTimeMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inSpaceTimeMap"
+          body="defaultIn(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inSpaceTimeMap/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outSpaceTimeMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outSpaceTimeMap"
+          body="defaultOut(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outSpaceTimeMap/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitFeatureSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitFeatureSpecification"
+          body="inFeatureSpecification(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFeatureSpecification(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitFeatureSpecification/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inFeatureSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inFeatureSpecification"
+          body="defaultIn(f);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inFeatureSpecification/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outFeatureSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outFeatureSpecification"
+          body="defaultOut(f);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outFeatureSpecification/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitTilingSpecification"
+          body="inTilingSpecification(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTilingSpecification(t);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitTilingSpecification/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inTilingSpecification"
+          body="defaultIn(t);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inTilingSpecification/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outTilingSpecification"
+          body="defaultOut(t);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outTilingSpecification/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitLoopUnrollingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitLoopUnrollingSpecification"
+          body="inLoopUnrollingSpecification(l);&#xA;for (EObject obj : l.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outLoopUnrollingSpecification(l);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitLoopUnrollingSpecification/l"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inLoopUnrollingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inLoopUnrollingSpecification"
+          body="defaultIn(l);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inLoopUnrollingSpecification/l"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outLoopUnrollingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outLoopUnrollingSpecification"
+          body="defaultOut(l);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outLoopUnrollingSpecification/l"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVectorizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVectorizationSpecification"
+          body="inVectorizationSpecification(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVectorizationSpecification(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitVectorizationSpecification/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVectorizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVectorizationSpecification"
+          body="defaultIn(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inVectorizationSpecification/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVectorizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVectorizationSpecification"
+          body="defaultOut(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outVectorizationSpecification/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitParallelizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitParallelizationSpecification"
+          body="inParallelizationSpecification(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outParallelizationSpecification(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitParallelizationSpecification/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inParallelizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inParallelizationSpecification"
+          body="defaultIn(p);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inParallelizationSpecification/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outParallelizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outParallelizationSpecification"
+          body="defaultOut(p);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outParallelizationSpecification/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitMemoryMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitMemoryMap"
+          body="inMemoryMap(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMemoryMap(m);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitMemoryMap/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inMemoryMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inMemoryMap"
+          body="defaultIn(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inMemoryMap/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outMemoryMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outMemoryMap"
+          body="defaultOut(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outMemoryMap/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitMemorySpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitMemorySpace"
+          body="inMemorySpace(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMemorySpace(m);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitMemorySpace/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inMemorySpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inMemorySpace"
+          body="defaultIn(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inMemorySpace/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outMemorySpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outMemorySpace"
+          body="defaultOut(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outMemorySpace/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitStatementPartialOrder">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitStatementPartialOrder"
+          body="inStatementPartialOrder(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outStatementPartialOrder(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitStatementPartialOrder/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inStatementPartialOrder">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inStatementPartialOrder"
+          body="defaultIn(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inStatementPartialOrder/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outStatementPartialOrder">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outStatementPartialOrder"
+          body="defaultOut(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outStatementPartialOrder/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitUseEquationOptimization">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitUseEquationOptimization"
+          body="inUseEquationOptimization(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUseEquationOptimization(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitUseEquationOptimization/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inUseEquationOptimization">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inUseEquationOptimization"
+          body="defaultIn(u);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inUseEquationOptimization/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outUseEquationOptimization">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outUseEquationOptimization"
+          body="defaultOut(u);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outUseEquationOptimization/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitCommunicationMappingForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitCommunicationMappingForTiledSpace"
+          body="inCommunicationMappingForTiledSpace(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCommunicationMappingForTiledSpace(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitCommunicationMappingForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inCommunicationMappingForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inCommunicationMappingForTiledSpace"
+          body="defaultIn(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inCommunicationMappingForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outCommunicationMappingForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outCommunicationMappingForTiledSpace"
+          body="defaultOut(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outCommunicationMappingForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitCommunicatedVariableForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitCommunicatedVariableForTiledSpace"
+          body="inCommunicatedVariableForTiledSpace(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCommunicatedVariableForTiledSpace(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitCommunicatedVariableForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inCommunicatedVariableForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inCommunicatedVariableForTiledSpace"
+          body="defaultIn(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inCommunicatedVariableForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outCommunicatedVariableForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outCommunicatedVariableForTiledSpace"
+          body="defaultOut(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outCommunicatedVariableForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitSubTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitSubTilingSpecification"
+          body="inSubTilingSpecification(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSubTilingSpecification(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/visitSubTilingSpecification/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inSubTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inSubTilingSpecification"
+          body="defaultIn(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/inSubTilingSpecification/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outSubTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outSubTilingSpecification"
+          body="defaultOut(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRDepthFirstVisitor/outSubTilingSpecification/s"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor">
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/defaultIn">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/defaultIn"
+          body="">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/defaultIn/node"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/defaultOut">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/defaultOut"
+          body="">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/defaultOut/node"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitProgram">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitProgram"
+          body="inProgram(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outProgram(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitProgram/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inProgram">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inProgram"
+          body="defaultIn(p);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inProgram/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outProgram">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outProgram"
+          body="defaultOut(p);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outProgram/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitExternalFunctionDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitExternalFunctionDeclaration"
+          body="inExternalFunctionDeclaration(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExternalFunctionDeclaration(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitExternalFunctionDeclaration/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inExternalFunctionDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inExternalFunctionDeclaration"
+          body="defaultIn(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inExternalFunctionDeclaration/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outExternalFunctionDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outExternalFunctionDeclaration"
+          body="defaultOut(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outExternalFunctionDeclaration/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitAffineSystem">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitAffineSystem"
+          body="inAffineSystem(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outAffineSystem(a);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitAffineSystem/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inAffineSystem">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inAffineSystem"
+          body="defaultIn(a);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inAffineSystem/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outAffineSystem">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outAffineSystem"
+          body="defaultOut(a);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outAffineSystem/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVariableDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVariableDeclaration"
+          body="inVariableDeclaration(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableDeclaration(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVariableDeclaration/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVariableDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVariableDeclaration"
+          body="defaultIn(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVariableDeclaration/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVariableDeclaration">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVariableDeclaration"
+          body="defaultOut(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVariableDeclaration/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVariableIdentifier">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVariableIdentifier"
+          body="inVariableIdentifier(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableIdentifier(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVariableIdentifier/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVariableIdentifier">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVariableIdentifier"
+          body="defaultIn(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVariableIdentifier/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVariableIdentifier">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVariableIdentifier"
+          body="defaultOut(v);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVariableIdentifier/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitEquation"
+          body="inEquation(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outEquation(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitEquation/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inEquation"
+          body="defaultIn(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inEquation/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outEquation"
+          body="defaultOut(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outEquation/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitUseEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitUseEquation"
+          body="inUseEquation(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUseEquation(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitUseEquation/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inUseEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inUseEquation"
+          body="inEquation(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inUseEquation/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outUseEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outUseEquation"
+          body="outEquation(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outUseEquation/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitStandardEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitStandardEquation"
+          body="inStandardEquation(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outStandardEquation(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitStandardEquation/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inStandardEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inStandardEquation"
+          body="inEquation(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inStandardEquation/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outStandardEquation">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outStandardEquation"
+          body="outEquation(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outStandardEquation/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitDomain"
+          body="inDomain(d);&#xA;for (EObject obj : d.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outDomain(d);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitDomain/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inDomain"
+          body="defaultIn(d);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inDomain/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outDomain"
+          body="defaultOut(d);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outDomain/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitParameterDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitParameterDomain"
+          body="inParameterDomain(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outParameterDomain(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitParameterDomain/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inParameterDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inParameterDomain"
+          body="inDomain(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inParameterDomain/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outParameterDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outParameterDomain"
+          body="outDomain(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outParameterDomain/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitAffineFunction">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitAffineFunction"
+          body="inAffineFunction(a);&#xA;for (EObject obj : a.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outAffineFunction(a);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitAffineFunction/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inAffineFunction">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inAffineFunction"
+          body="defaultIn(a);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inAffineFunction/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outAffineFunction">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outAffineFunction"
+          body="defaultOut(a);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outAffineFunction/a"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitExpression"
+          body="inExpression(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExpression(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitExpression/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inExpression"
+          body="defaultIn(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inExpression/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outExpression"
+          body="defaultOut(e);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outExpression/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitFastISLDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitFastISLDomain"
+          body="inFastISLDomain(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFastISLDomain(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitFastISLDomain/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inFastISLDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inFastISLDomain"
+          body="inDomain(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inFastISLDomain/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outFastISLDomain">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outFastISLDomain"
+          body="outDomain(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outFastISLDomain/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitFastISLMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitFastISLMap"
+          body="inFastISLMap(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFastISLMap(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitFastISLMap/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inFastISLMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inFastISLMap"
+          body="inAffineFunction(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inFastISLMap/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outFastISLMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outFastISLMap"
+          body="outAffineFunction(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outFastISLMap/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitWhileInfo">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitWhileInfo"
+          body="inWhileInfo(w);&#xA;for (EObject obj : w.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outWhileInfo(w);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitWhileInfo/w"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inWhileInfo">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inWhileInfo"
+          body="defaultIn(w);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inWhileInfo/w"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outWhileInfo">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outWhileInfo"
+          body="defaultOut(w);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outWhileInfo/w"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitCaseExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitTilingInformations"
+          body="inTilingInformations(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTilingInformations(t);&#xA;">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitTilingInformations/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inTilingInformations"
+          body="defaultIn(t);">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inTilingInformations/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outTilingInformations"
+          body="defaultOut(t);">
+        <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outTilingInformations/t"/>
+      </genOperations>
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitCaseExpression"
+          body="inCaseExpression(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCaseExpression(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitCaseExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inCaseExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inCaseExpression"
+          body="inExpression(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inCaseExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outCaseExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outCaseExpression"
+          body="outExpression(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outCaseExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitDependenceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitDependenceExpression"
+          body="inDependenceExpression(d);&#xA;for (EObject obj : d.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outDependenceExpression(d);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitDependenceExpression/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inDependenceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inDependenceExpression"
+          body="inExpression(d);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inDependenceExpression/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outDependenceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outDependenceExpression"
+          body="outExpression(d);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outDependenceExpression/d"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitIfExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitIfExpression"
+          body="inIfExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIfExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitIfExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inIfExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inIfExpression"
+          body="inExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inIfExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outIfExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outIfExpression"
+          body="outExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outIfExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitIndexExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitIndexExpression"
+          body="inIndexExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIndexExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitIndexExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inIndexExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inIndexExpression"
+          body="inExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inIndexExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outIndexExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outIndexExpression"
+          body="outExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outIndexExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitReduceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitReduceExpression"
+          body="inReduceExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outReduceExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitReduceExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inReduceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inReduceExpression"
+          body="inExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inReduceExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outReduceExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outReduceExpression"
+          body="outExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outReduceExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitRestrictExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitRestrictExpression"
+          body="inRestrictExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outRestrictExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitRestrictExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inRestrictExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inRestrictExpression"
+          body="inExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inRestrictExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outRestrictExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outRestrictExpression"
+          body="outExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outRestrictExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVariableExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVariableExpression"
+          body="inVariableExpression(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVariableExpression(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVariableExpression/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVariableExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVariableExpression"
+          body="inExpression(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVariableExpression/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVariableExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVariableExpression"
+          body="outExpression(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVariableExpression/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitBinaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitBinaryExpression"
+          body="inBinaryExpression(b);&#xA;for (EObject obj : b.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outBinaryExpression(b);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitBinaryExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inBinaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inBinaryExpression"
+          body="inExpression(b);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inBinaryExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outBinaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outBinaryExpression"
+          body="outExpression(b);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outBinaryExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitConstantExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitConstantExpression"
+          body="inConstantExpression(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outConstantExpression(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitConstantExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inConstantExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inConstantExpression"
+          body="inExpression(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inConstantExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outConstantExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outConstantExpression"
+          body="outExpression(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outConstantExpression/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitBooleanExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitBooleanExpression"
+          body="inBooleanExpression(b);&#xA;for (EObject obj : b.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outBooleanExpression(b);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitBooleanExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inBooleanExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inBooleanExpression"
+          body="inConstantExpression(b);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inBooleanExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outBooleanExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outBooleanExpression"
+          body="outConstantExpression(b);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outBooleanExpression/b"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitIntegerExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitIntegerExpression"
+          body="inIntegerExpression(i);&#xA;for (EObject obj : i.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outIntegerExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitIntegerExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inIntegerExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inIntegerExpression"
+          body="inConstantExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inIntegerExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outIntegerExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outIntegerExpression"
+          body="outConstantExpression(i);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outIntegerExpression/i"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitRealExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitRealExpression"
+          body="inRealExpression(r);&#xA;for (EObject obj : r.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outRealExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitRealExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inRealExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inRealExpression"
+          body="inConstantExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inRealExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outRealExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outRealExpression"
+          body="outConstantExpression(r);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outRealExpression/r"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitMultiArgExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitMultiArgExpression"
+          body="inMultiArgExpression(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMultiArgExpression(m);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitMultiArgExpression/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inMultiArgExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inMultiArgExpression"
+          body="inExpression(m);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inMultiArgExpression/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outMultiArgExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outMultiArgExpression"
+          body="outExpression(m);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outMultiArgExpression/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitExternalFunctionCall">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitExternalFunctionCall"
+          body="inExternalFunctionCall(e);&#xA;for (EObject obj : e.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outExternalFunctionCall(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitExternalFunctionCall/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inExternalFunctionCall">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inExternalFunctionCall"
+          body="inMultiArgExpression(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inExternalFunctionCall/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outExternalFunctionCall">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outExternalFunctionCall"
+          body="outMultiArgExpression(e);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outExternalFunctionCall/e"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitUnaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitUnaryExpression"
+          body="inUnaryExpression(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUnaryExpression(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitUnaryExpression/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inUnaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inUnaryExpression"
+          body="inExpression(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inUnaryExpression/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outUnaryExpression">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outUnaryExpression"
+          body="outExpression(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outUnaryExpression/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitTargetMapping">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitTargetMapping"
+          body="inTargetMapping(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTargetMapping(t);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitTargetMapping/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inTargetMapping">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inTargetMapping"
+          body="defaultIn(t);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inTargetMapping/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outTargetMapping">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outTargetMapping"
+          body="defaultOut(t);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outTargetMapping/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitSpaceTimeLevel">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitSpaceTimeLevel"
+          body="inSpaceTimeLevel(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSpaceTimeLevel(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitSpaceTimeLevel/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inSpaceTimeLevel">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inSpaceTimeLevel"
+          body="defaultIn(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inSpaceTimeLevel/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outSpaceTimeLevel">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outSpaceTimeLevel"
+          body="defaultOut(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outSpaceTimeLevel/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitSpaceTimeMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitSpaceTimeMap"
+          body="inSpaceTimeMap(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSpaceTimeMap(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitSpaceTimeMap/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inSpaceTimeMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inSpaceTimeMap"
+          body="defaultIn(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inSpaceTimeMap/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outSpaceTimeMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outSpaceTimeMap"
+          body="defaultOut(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outSpaceTimeMap/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitFeatureSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitFeatureSpecification"
+          body="inFeatureSpecification(f);&#xA;for (EObject obj : f.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outFeatureSpecification(f);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitFeatureSpecification/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inFeatureSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inFeatureSpecification"
+          body="defaultIn(f);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inFeatureSpecification/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outFeatureSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outFeatureSpecification"
+          body="defaultOut(f);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outFeatureSpecification/f"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitTilingSpecification"
+          body="inTilingSpecification(t);&#xA;for (EObject obj : t.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outTilingSpecification(t);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitTilingSpecification/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inTilingSpecification"
+          body="inFeatureSpecification(t);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inTilingSpecification/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outTilingSpecification"
+          body="outFeatureSpecification(t);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outTilingSpecification/t"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitLoopUnrollingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitLoopUnrollingSpecification"
+          body="inLoopUnrollingSpecification(l);&#xA;for (EObject obj : l.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outLoopUnrollingSpecification(l);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitLoopUnrollingSpecification/l"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inLoopUnrollingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inLoopUnrollingSpecification"
+          body="inFeatureSpecification(l);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inLoopUnrollingSpecification/l"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outLoopUnrollingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outLoopUnrollingSpecification"
+          body="outFeatureSpecification(l);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outLoopUnrollingSpecification/l"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVectorizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVectorizationSpecification"
+          body="inVectorizationSpecification(v);&#xA;for (EObject obj : v.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outVectorizationSpecification(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitVectorizationSpecification/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVectorizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVectorizationSpecification"
+          body="inFeatureSpecification(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inVectorizationSpecification/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVectorizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVectorizationSpecification"
+          body="outFeatureSpecification(v);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outVectorizationSpecification/v"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitParallelizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitParallelizationSpecification"
+          body="inParallelizationSpecification(p);&#xA;for (EObject obj : p.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outParallelizationSpecification(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitParallelizationSpecification/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inParallelizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inParallelizationSpecification"
+          body="inFeatureSpecification(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inParallelizationSpecification/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outParallelizationSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outParallelizationSpecification"
+          body="outFeatureSpecification(p);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outParallelizationSpecification/p"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitMemoryMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitMemoryMap"
+          body="inMemoryMap(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMemoryMap(m);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitMemoryMap/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inMemoryMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inMemoryMap"
+          body="defaultIn(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inMemoryMap/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outMemoryMap">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outMemoryMap"
+          body="defaultOut(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outMemoryMap/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitMemorySpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitMemorySpace"
+          body="inMemorySpace(m);&#xA;for (EObject obj : m.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outMemorySpace(m);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitMemorySpace/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inMemorySpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inMemorySpace"
+          body="defaultIn(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inMemorySpace/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outMemorySpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outMemorySpace"
+          body="defaultOut(m);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outMemorySpace/m"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitStatementPartialOrder">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitStatementPartialOrder"
+          body="inStatementPartialOrder(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outStatementPartialOrder(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitStatementPartialOrder/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inStatementPartialOrder">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inStatementPartialOrder"
+          body="defaultIn(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inStatementPartialOrder/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outStatementPartialOrder">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outStatementPartialOrder"
+          body="defaultOut(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outStatementPartialOrder/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitUseEquationOptimization">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitUseEquationOptimization"
+          body="inUseEquationOptimization(u);&#xA;for (EObject obj : u.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outUseEquationOptimization(u);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitUseEquationOptimization/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inUseEquationOptimization">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inUseEquationOptimization"
+          body="defaultIn(u);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inUseEquationOptimization/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outUseEquationOptimization">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outUseEquationOptimization"
+          body="defaultOut(u);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outUseEquationOptimization/u"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitCommunicationMappingForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitCommunicationMappingForTiledSpace"
+          body="inCommunicationMappingForTiledSpace(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCommunicationMappingForTiledSpace(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitCommunicationMappingForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inCommunicationMappingForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inCommunicationMappingForTiledSpace"
+          body="defaultIn(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inCommunicationMappingForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outCommunicationMappingForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outCommunicationMappingForTiledSpace"
+          body="defaultOut(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outCommunicationMappingForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitCommunicatedVariableForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitCommunicatedVariableForTiledSpace"
+          body="inCommunicatedVariableForTiledSpace(c);&#xA;for (EObject obj : c.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outCommunicatedVariableForTiledSpace(c);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitCommunicatedVariableForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inCommunicatedVariableForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inCommunicatedVariableForTiledSpace"
+          body="defaultIn(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inCommunicatedVariableForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outCommunicatedVariableForTiledSpace">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outCommunicatedVariableForTiledSpace"
+          body="defaultOut(c);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outCommunicatedVariableForTiledSpace/c"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitSubTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitSubTilingSpecification"
+          body="inSubTilingSpecification(s);&#xA;for (EObject obj : s.eContents()) &#xA;&#x9;if (obj instanceof PolyhedralIRVisitable) ((PolyhedralIRVisitable)obj).accept(this);&#xA;outSubTilingSpecification(s);&#xA;">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/visitSubTilingSpecification/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inSubTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inSubTilingSpecification"
+          body="defaultIn(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/inSubTilingSpecification/s"/>
       </genOperations>
-      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outSubTilingSpecification">
+      <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outSubTilingSpecification"
+          body="defaultOut(s);">
         <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//PolyhedralIRInheritedDepthFirstVisitor/outSubTilingSpecification/s"/>
       </genOperations>
     </genClasses>
@@ -1550,14 +1883,16 @@
         disposableProviderFactory="true" ecorePackage="polyhedralIR.visitor.ecore#//expression">
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/CaseExpression">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/CaseExpression/exprs"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/CaseExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/CaseExpression/accept"
+            body="visitor.visitCaseExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/CaseExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/DependenceExpression">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/DependenceExpression/dep"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/DependenceExpression/expr"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/DependenceExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/DependenceExpression/accept"
+            body="visitor.visitDependenceExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/DependenceExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1565,13 +1900,15 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/IfExpression/cond"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/IfExpression/then"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/IfExpression/else"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/IfExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/IfExpression/accept"
+            body="visitor.visitIfExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/IfExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/IndexExpression">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/IndexExpression/function"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/IndexExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/IndexExpression/accept"
+            body="visitor.visitIndexExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/IndexExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1580,21 +1917,24 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/ReduceExpression/projection"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/ReduceExpression/expr"/>
         <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/ReduceExpression/getIdentityValue"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/ReduceExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/ReduceExpression/accept"
+            body="visitor.visitReduceExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/ReduceExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/RestrictExpression">
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/RestrictExpression/restrictDomain"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/RestrictExpression/expr"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/RestrictExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/RestrictExpression/accept"
+            body="visitor.visitRestrictExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/RestrictExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/VariableExpression">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/VariableExpression/varDecl"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/VariableExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/VariableExpression/accept"
+            body="visitor.visitVariableExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/VariableExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1602,51 +1942,59 @@
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//expression/BinaryExpression/operator"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/BinaryExpression/lexp"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/BinaryExpression/rexp"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/BinaryExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/BinaryExpression/accept"
+            body="visitor.visitBinaryExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/BinaryExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses image="false" ecoreClass="polyhedralIR.visitor.ecore#//expression/ConstantExpression">
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/ConstantExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/ConstantExpression/accept"
+            body="visitor.visitConstantExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/ConstantExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/BooleanExpression">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//expression/BooleanExpression/value"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/BooleanExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/BooleanExpression/accept"
+            body="visitor.visitBooleanExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/BooleanExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/IntegerExpression">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//expression/IntegerExpression/value"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/IntegerExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/IntegerExpression/accept"
+            body="visitor.visitIntegerExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/IntegerExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/RealExpression">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//expression/RealExpression/value"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/RealExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/RealExpression/accept"
+            body="visitor.visitRealExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/RealExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses image="false" ecoreClass="polyhedralIR.visitor.ecore#//expression/MultiArgExpression">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//expression/MultiArgExpression/operator"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/MultiArgExpression/exprs"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/MultiArgExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/MultiArgExpression/accept"
+            body="visitor.visitMultiArgExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/MultiArgExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/ExternalFunctionCall">
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/ExternalFunctionCall/exFunc"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/ExternalFunctionCall/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/ExternalFunctionCall/accept"
+            body="visitor.visitExternalFunctionCall(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/ExternalFunctionCall/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//expression/UnaryExpression">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//expression/UnaryExpression/operator"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//expression/UnaryExpression/expr"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/UnaryExpression/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//expression/UnaryExpression/accept"
+            body="visitor.visitUnaryExpression(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//expression/UnaryExpression/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1697,7 +2045,8 @@
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/TargetMapping/getUseEquationOptimization/isInput"/>
         </genOperations>
         <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/TargetMapping/isParallelized"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/TargetMapping/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/TargetMapping/accept"
+            body="visitor.visitTargetMapping(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/TargetMapping/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1720,7 +2069,8 @@
         <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeLevel/getTilingSpecification">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeLevel/getTilingSpecification/bandName"/>
         </genOperations>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeLevel/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeLevel/accept"
+            body="visitor.visitSpaceTimeLevel(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeLevel/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1728,13 +2078,15 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeMap/mapping"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeMap/inverseOfMapping"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeMap/label"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeMap/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeMap/accept"
+            body="visitor.visitSpaceTimeMap(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/SpaceTimeMap/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses image="false" ecoreClass="polyhedralIR.visitor.ecore#//targetMapping/FeatureSpecification">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//targetMapping/FeatureSpecification/orderingPrefix"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/FeatureSpecification/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/FeatureSpecification/accept"
+            body="visitor.visitFeatureSpecification(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/FeatureSpecification/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1747,24 +2099,28 @@
         <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/TilingSpecification/getSubTile">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/TilingSpecification/getSubTile/level"/>
         </genOperations>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/TilingSpecification/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/TilingSpecification/accept"
+            body="visitor.visitTilingSpecification(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/TilingSpecification/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//targetMapping/LoopUnrollingSpecification">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//targetMapping/LoopUnrollingSpecification/unrollingFactors"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/LoopUnrollingSpecification/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/LoopUnrollingSpecification/accept"
+            body="visitor.visitLoopUnrollingSpecification(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/LoopUnrollingSpecification/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//targetMapping/VectorizationSpecification">
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/VectorizationSpecification/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/VectorizationSpecification/accept"
+            body="visitor.visitVectorizationSpecification(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/VectorizationSpecification/accept/visitor"/>
         </genOperations>
       </genClasses>
       <genClasses ecoreClass="polyhedralIR.visitor.ecore#//targetMapping/ParallelizationSpecification">
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//targetMapping/ParallelizationSpecification/parallelDims"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/ParallelizationSpecification/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/ParallelizationSpecification/accept"
+            body="visitor.visitParallelizationSpecification(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/ParallelizationSpecification/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1775,7 +2131,8 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/MemoryMap/modFactors"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/MemoryMap/space"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/MemoryMap/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/MemoryMap/accept"
+            body="visitor.visitMemoryMap(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/MemoryMap/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1787,7 +2144,8 @@
         <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/MemorySpace/containerTM"/>
         <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/MemorySpace/getModFactors"/>
         <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/MemorySpace/getMemoryMaps"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/MemorySpace/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/MemorySpace/accept"
+            body="visitor.visitMemorySpace(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/MemorySpace/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1796,7 +2154,8 @@
             ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/StatementPartialOrder/predecessor"/>
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/StatementPartialOrder/successor"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/StatementPartialOrder/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/StatementPartialOrder/accept"
+            body="visitor.visitStatementPartialOrder(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/StatementPartialOrder/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1809,7 +2168,8 @@
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/UseEquationOptimization/memoryAllocationSpaceTimeMap"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/UseEquationOptimization/valueCopySpaceTimeMap"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/UseEquationOptimization/memoryFreeSpaceTimeMap"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/UseEquationOptimization/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/UseEquationOptimization/accept"
+            body="visitor.visitUseEquationOptimization(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/UseEquationOptimization/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1818,7 +2178,8 @@
         <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/CommunicationMappingForTiledSpace/getCommunicatedVariable">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/CommunicationMappingForTiledSpace/getCommunicatedVariable/variable"/>
         </genOperations>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/CommunicationMappingForTiledSpace/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/CommunicationMappingForTiledSpace/accept"
+            body="visitor.visitCommunicationMappingForTiledSpace(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/CommunicationMappingForTiledSpace/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1826,7 +2187,8 @@
         <genFeatures notify="false" createChild="false" propertySortChoices="true"
             ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/CommunicatedVariableForTiledSpace/variable"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//targetMapping/CommunicatedVariableForTiledSpace/communicationDepths"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/CommunicatedVariableForTiledSpace/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/CommunicatedVariableForTiledSpace/accept"
+            body="visitor.visitCommunicatedVariableForTiledSpace(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/CommunicatedVariableForTiledSpace/accept/visitor"/>
         </genOperations>
       </genClasses>
@@ -1838,7 +2200,8 @@
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//targetMapping/SubTilingSpecification/level"/>
         <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference polyhedralIR.visitor.ecore#//targetMapping/SubTilingSpecification/communicationMapping"/>
         <genFeatures createChild="false" ecoreFeature="ecore:EAttribute polyhedralIR.visitor.ecore#//targetMapping/SubTilingSpecification/endDim"/>
-        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/SubTilingSpecification/accept">
+        <genOperations ecoreOperation="polyhedralIR.visitor.ecore#//targetMapping/SubTilingSpecification/accept"
+            body="visitor.visitSubTilingSpecification(this);">
           <genParameters ecoreParameter="polyhedralIR.visitor.ecore#//targetMapping/SubTilingSpecification/accept/visitor"/>
         </genOperations>
       </genClasses>

@@ -23,8 +23,10 @@ import org.polymodel.polyhedralIR.AffineFunction;
 import org.polymodel.polyhedralIR.Domain;
 import org.polymodel.polyhedralIR.PolyhedralIRVisitor;
 import org.polymodel.polyhedralIR.Type;
+import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
 import org.polymodel.polyhedralIR.targetMapping.MemoryMap;
 import org.polymodel.polyhedralIR.targetMapping.MemorySpace;
+import org.polymodel.polyhedralIR.targetMapping.SpaceTimeLevel;
 import org.polymodel.polyhedralIR.targetMapping.TargetMapping;
 import org.polymodel.polyhedralIR.targetMapping.TargetMappingPackage;
 import org.polymodel.util.PolymodelException;
@@ -180,7 +182,21 @@ public class MemorySpaceImpl extends EObjectImpl implements MemorySpace {
 			try {
 				//inv = tm.getSpaceTimeMap(map.getVariable()).getMapping().inverse();
 				//TODO: FIX here, we are assuming there is only 1 level for now
-				inv = getContainerTM().getSpaceTimeLevel(0).getSpaceTimeMaps().get(mmap.getVariable().getName()).getInverseOfMapping();
+//				inv = getContainerTM().getSpaceTimeLevel(0).getSpaceTimeMaps().get(mmap.getVariable().getName()).getInverseOfMapping();
+				SpaceTimeLevel stlevel = getContainerTM().getSpaceTimeLevel(0);
+		        /*This is a bad way to implement reductions with schedule for the body. But since
+		         * we dont have a way to keep track of multiple stmaps per a single equation,
+		         * we doing this hack */
+		        if (stlevel.getSpaceTimeMaps().containsKey(mmap.getVariable().getName()+"_Alpha_Init")) {
+		          //This is a variable where the schedule for the reduction body is specified.
+		          //Therefore we going to use the inv = inverse of init variable st mapping
+		          //Therefore we going to use the inv = identity
+
+		          inv=PolyhedralIRUtility.createIdentityFunction(mmap.getVariable().getDomain());
+//		          inv = stlevel.getSpaceTimeMaps().get(mmap.getVariable().getName()+"_Alpha_Init").getInverseOfMapping();
+		        } else {
+		          inv = stlevel.getSpaceTimeMaps().get(mmap.getVariable().getName()).getInverseOfMapping();
+		        }
 				//This shouldn't be done for Wrapper TODO
 				//System.out.println("check mapping for variable: " + mmap.getVariable().getName());
 				//System.out.println("domain before: " +mmap.getVariable().getDomain());

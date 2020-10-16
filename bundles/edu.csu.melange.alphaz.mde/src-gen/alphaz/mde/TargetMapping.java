@@ -13,6 +13,7 @@ import org.polymodel.algebra.affine.AffineExpression;
 import org.polymodel.algebra.util.PolymodelRegexParser;
 import org.polymodel.polyhedralIR.AffineFunction;
 import org.polymodel.polyhedralIR.AffineSystem;
+import org.polymodel.polyhedralIR.DATATYPE;
 import org.polymodel.polyhedralIR.OP;
 import org.polymodel.polyhedralIR.Program;
 import org.polymodel.polyhedralIR.SIGNED;
@@ -20,9 +21,11 @@ import org.polymodel.polyhedralIR.StandardEquation;
 import org.polymodel.polyhedralIR.Type;
 import org.polymodel.polyhedralIR.UseEquation;
 import org.polymodel.polyhedralIR.VariableDeclaration;
+import org.polymodel.polyhedralIR.expression.ConstantExpression;
 import org.polymodel.polyhedralIR.expression.DependenceExpression;
 import org.polymodel.polyhedralIR.expression.ExpressionFactory;
 import org.polymodel.polyhedralIR.expression.IntegerExpression;
+import org.polymodel.polyhedralIR.expression.RealExpression;
 import org.polymodel.polyhedralIR.factory.PolyhedralIRUserFactory;
 import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
 import org.polymodel.polyhedralIR.factory.TargetMappingUserFactory;
@@ -98,10 +101,10 @@ public class TargetMapping {
 
 	    String[] varNames = Utility.stringListToArray(varList);
 	    for (String varName : varNames) {
-	      Long identityValue = getIdentityValue(
-	          ((ReduceExpression)syst.getEquation(varName).getExpression()).getOP(),
-	          syst.getEquation(varName).getExpression().getExpressionType());
-	      setSpaceTimeMapEQWithReduction(program, varName, syst, bodySTMap, initSTMap, identityValue);
+	      //Long identityValue = getIdentityValue(
+	      //    ((ReduceExpression)syst.getEquation(varName).getExpression()).getOP(),
+	      //    syst.getEquation(varName).getExpression().getExpressionType());
+	      setSpaceTimeMapEQWithReduction(program, varName, syst, bodySTMap, initSTMap);
 	    }
 	    /*PROTECTED REGION END*/
 	}
@@ -124,7 +127,7 @@ public class TargetMapping {
 
 	    String[] varNames = Utility.stringListToArray(varList);
 	    for (String varName : varNames) {
-	      setSpaceTimeMapEQWithReduction(program,  varName, syst, bodySTMap, initSTMap, Long.parseLong(intValue));
+	      setSpaceTimeMapEQWithReduction(program,  varName, syst, bodySTMap, initSTMap);
 //	      String initVarName = varName+"_Alpha_Init";
 //	      VariableDeclaration var = syst.getVariableDeclaration(varName);
 //	      VariableDeclaration varDeclLoc = _polyIR.createVariableDeclaration(initVarName, var.getType(), var.getDomain().copy());
@@ -166,7 +169,7 @@ public class TargetMapping {
 	   *
 	   */
 	  private static void setSpaceTimeMapEQWithReduction(Program program, String varName, AffineSystem syst,
-	      String bodySTMap, String initSTMap, Long identityValue) {
+	      String bodySTMap, String initSTMap) {
 	    String initVarName = varName+"_Alpha_Init";
 
 	    VariableDeclaration var = syst.getVariableDeclaration(varName);
@@ -174,11 +177,10 @@ public class TargetMapping {
 	        eINSTANCE.createVariableDeclaration(initVarName,
 	            var.getType(), var.getDomain().copy());
 
-	    //ExpressionFactory.eINSTANCE.createFromString(Double.class, initValue);
-
-	    IntegerExpression expr = ExpressionFactory.eINSTANCE.createIntegerExpression();
-	    expr.setValue(identityValue);
-
+	    OP op = ((ReduceExpression)syst.getEquation(varName).getExpression()).getOP();
+	    Type expressionType = syst.getEquation(varName).getExpression().getExpressionType();
+	    ConstantExpression expr = createIdentityConstantExpression(op, expressionType);
+	    
 	    DependenceExpression dexpr = ExpressionFactory.eINSTANCE.createDependenceExpression();
 	    dexpr.setExpr(expr);
 	    // create projection function (z -> )
@@ -195,45 +197,120 @@ public class TargetMapping {
 
 	    setSpaceTimeMap(program, syst.getName(), 0, varName, bodySTMap);
 	    setSpaceTimeMap(program, syst.getName(), 0, initVarName, initSTMap);
-	    setMemorySpace(program, syst.getName(), varName, initVarName);
+	    
+	    MemoryMap varMemMap = syst.getTargetMapping().getMemoryMaps().get(var);
+	    setMemorySpace(program, syst.getName(), varMemMap.getSpace().getName(), initVarName);
+	    setMemoryMap(program, syst.getName(), initVarName, varMemMap.getSpace().getName(), varMemMap.getMapping().copy(), null);
+	    
 	    setStatementOrdering(program, syst.getName(), initVarName, varName);
 
 	  }
 
 	  /* @generated NOT
+	   *
+	   */
+	  public static ConstantExpression createIdentityConstantExpression(OP op, Type expressionType) {
+		  ConstantExpression expr;
+		  if (expressionType.getTypeID().equals(DATATYPE.INTEGER)) {
+			  expr = ExpressionFactory.eINSTANCE.createIntegerExpression();
+			  ((IntegerExpression)expr).setValue(getIntegerIdentityValue(op, expressionType));
+		  } else {
+			  expr = ExpressionFactory.eINSTANCE.createRealExpression();
+			  ((RealExpression)expr).setValue(getFloatIdentityValue(op, expressionType));
+		  }
+		  return expr;
+	  }
+	  
+	  /* @generated NOT
 	   * Auto
 	   */
-	  private static long getIdentityValue(OP op, Type expressionType) {
-	    switch (op) {
-	    case ADD:
-	    case OR:
-	      return  0;
-	    case MUL:
-	    case AND:
-	      return  1;
-	    case MAX:
-	      //When unsigned, 0 is the minimum
-	      if (expressionType.getSigned() == SIGNED.UNSIGNED) {
-	        return 0;
-	      //Otherwise, use symbolic value MIN_INT
-	      } else {
-	        return Long.MIN_VALUE;
-//	        IntMin min = IntegerExpressionUserFactory.intMin();
-//	        IntExpressionBuilder.
-//	        min.setSigned(true);
-//	        min.setWidth(getExpressionType().getWidth());
-//	        return min;
-	      }
-	    case MIN:
-	      return Long.MAX_VALUE;
-//	      IntMax max = IntegerExpressionUserFactory.intMax();
-//	      max.setSigned(getExpressionType().getSigned() == SIGNED.SIGNED);
-//	      max.setWidth(getExpressionType().getWidth());
-//	      return max;
-	    default:
-	      throw new RuntimeException("Reduction with operator " + op + " is currently not supported.");
+	  public static double getFloatIdentityValue(OP op, Type expressionType) {
+		  // TODO - remove this altogether and use on org.polymodel.polyhedralIR.expression.impl.ReduceExpressionImpl.getIdentityValue() instead
+		  switch (op) {
+		  case ADD:
+	      case OR:
+	    	  return  0.0;
+	      case MUL:
+	      case AND:
+	    	  return  1.0;
+		  case MAX:
+			  switch (expressionType.getWidth()) {
+			  case DATATYPE.SINGLE_PRECISION_WIDTH:
+    			  return Float.MIN_VALUE;
+    		  case DATATYPE.DOUBLE_PRECISION_WIDTH:
+    			  return Double.MIN_VALUE; 
+			  }
+		  case MIN:
+			  switch (expressionType.getWidth()) {
+			  case DATATYPE.SINGLE_PRECISION_WIDTH:
+    			  return Float.MAX_VALUE;
+    		  case DATATYPE.DOUBLE_PRECISION_WIDTH:
+    			  return Double.MAX_VALUE; 
+			  }
+		  default:
+		      throw new RuntimeException("Reduction with operator " + op + " is currently not supported.");
+		  }
 	  }
-	  }
+	  
+	  /* @generated NOT
+	   * Auto
+	   */
+	  public static long getIntegerIdentityValue(OP op, Type expressionType) {
+		    switch (op) {
+		    case ADD:
+		    case OR:
+		      return  0;
+		    case MUL:
+		    case AND:
+		      return  1;
+		    case MAX:
+		      //When unsigned, 0 is the minimum
+		      if (expressionType.getSigned() == SIGNED.UNSIGNED) {
+		        return 0;
+		      //Otherwise, use symbolic value MIN_INT
+		      } else {
+		    	  if (expressionType.getTypeID().equals(DATATYPE.INTEGER)) {
+		    		  switch (expressionType.getWidth()) {
+		    		  case DATATYPE.WORD:
+		    			  return Character.MIN_VALUE;
+		    		  case DATATYPE.SHORT_WIDTH:
+		    			  return Short.MIN_VALUE;
+		    		  case DATATYPE.INT_WIDTH:
+		    			  return Integer.MIN_VALUE;
+		    		  case DATATYPE.LONG_WIDTH:
+		    			  return Long.MIN_VALUE;
+		    		  }
+		    	  }
+	    		  return Long.MIN_VALUE;
+		    	  
+//		        IntMin min = IntegerExpressionUserFactory.intMin();
+//		        IntExpressionBuilder.
+//		        min.setSigned(true);
+//		        min.setWidth(getExpressionType().getWidth());
+//		        return min;
+		      }
+		    case MIN:
+				if (expressionType.getTypeID().equals(DATATYPE.INTEGER)) {
+					  switch (expressionType.getWidth()) {
+					  case DATATYPE.WORD:
+						  return Character.MAX_VALUE;
+					  case DATATYPE.SHORT_WIDTH:
+						  return Short.MAX_VALUE;
+					  case DATATYPE.INT_WIDTH:
+						  return Integer.MAX_VALUE;
+					  case DATATYPE.LONG_WIDTH:
+						  return Long.MAX_VALUE;
+					  }
+				  }
+				return Long.MAX_VALUE;
+//		      IntMax max = IntegerExpressionUserFactory.intMax();
+//		      max.setSigned(getExpressionType().getSigned() == SIGNED.SIGNED);
+//		      max.setWidth(getExpressionType().getWidth());
+//		      return max;
+		    default:
+		      throw new RuntimeException("Reduction with operator " + op + " is currently not supported.");
+		  }
+		  }
 	/*PROTECTED REGION END*/
 
 	/**

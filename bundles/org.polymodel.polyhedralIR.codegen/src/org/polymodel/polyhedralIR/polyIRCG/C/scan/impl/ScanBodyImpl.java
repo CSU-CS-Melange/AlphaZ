@@ -944,7 +944,7 @@ public class ScanBodyImpl extends EObjectImpl implements ScanBody {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (nthreadVariableName: ");
 		result.append(nthreadVariableName);
 		result.append(", threadNumVariableName: ");

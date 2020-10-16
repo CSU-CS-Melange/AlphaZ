@@ -37,6 +37,7 @@ import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
 import org.polymodel.polyhedralIR.impl.PolyhedralIRDepthFirstVisitorImpl;
 import org.polymodel.polyhedralIR.transformation.helper.FunctionOperations;
 import org.polymodel.polyhedralIR.transformation.reduction.PermutationCaseReduce;
+import org.polymodel.polyhedralIR.util.PolyhedralIRToAlphabets;
 
 /**
  * New implementation of the "Normalize", "LowerDependence" and "NormalizeExpression" transformations, with a single visitor
@@ -526,7 +527,7 @@ public class NormalizeVisitor extends PolyhedralIRDepthFirstVisitorImpl {
 		_lSubExpr.clear();
 		for (Pair<Domain, List<Expression>> pDomlExpr : lCurrentSubExpr)
 			_lSubExpr.add(Pair.with(pDomlExpr.getValue0(), 
-					(Expression) _polyIRFact.createMultiArgExpression(multExpr.getOperator(), pDomlExpr.getValue1())));
+					(Expression) _polyIRFact.createMultiArgExpression(multExpr.getOperator(), pDomlExpr.getValue1()).copy()));
 	}
 	
 	@Override

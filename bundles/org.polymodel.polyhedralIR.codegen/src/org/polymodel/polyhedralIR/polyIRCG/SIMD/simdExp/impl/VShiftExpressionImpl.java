@@ -271,7 +271,7 @@ public class VShiftExpressionImpl extends SIMDExpressionImpl implements VShiftEx
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (dis: ");
 		result.append(dis);
 		result.append(')');

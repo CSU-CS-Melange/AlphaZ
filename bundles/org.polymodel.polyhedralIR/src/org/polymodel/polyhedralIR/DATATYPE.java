@@ -263,5 +263,7 @@ public enum DATATYPE implements Enumerator {
 	public static final int SHORT_WIDTH = 16;
 	public static final int INT_WIDTH = 32;
 	public static final int LONG_WIDTH = 64;
+	public static final int SINGLE_PRECISION_WIDTH = 32;
+	public static final int DOUBLE_PRECISION_WIDTH = 64;
 	
 } //DATATYPE

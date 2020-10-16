@@ -17,6 +17,8 @@ import org.polymodel.polyhedralIR.expression.ReduceExpression;
 import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.CodeUnit;
+import org.polymodel.polyhedralIR.targetMapping.SpaceTimeLevel;
+import org.polymodel.polyhedralIR.targetMapping.SpaceTimeMap;
 import org.polymodel.polyhedralIR.transformation.helper.DomainOperations;
 import org.polymodel.polyhedralIR.transformation.helper.DomainOperations.Constraint;
 

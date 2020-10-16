@@ -2,6 +2,7 @@ package org.polymodel.polyhedralIR.transformation;
 
 import java.util.Map;
 
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -32,6 +33,7 @@ import org.polymodel.polyhedralIR.expression.DependenceExpression;
 import org.polymodel.polyhedralIR.expression.IfExpression;
 import org.polymodel.polyhedralIR.expression.IndexExpression;
 import org.polymodel.polyhedralIR.expression.IntegerExpression;
+import org.polymodel.polyhedralIR.expression.RealExpression;
 import org.polymodel.polyhedralIR.expression.ReduceExpression;
 import org.polymodel.polyhedralIR.expression.RestrictExpression;
 import org.polymodel.polyhedralIR.factory.PolyhedralIRUserFactory;

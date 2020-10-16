@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.polymodel.algebra.IntExpression;
 import org.polymodel.algebra.factory.IntExpressionBuilder;
 import org.polymodel.polyhedralIR.AffineFunction;
+import org.polymodel.polyhedralIR.DATATYPE;
 import org.polymodel.polyhedralIR.Expression;
 import org.polymodel.polyhedralIR.OP;
 import org.polymodel.polyhedralIR.PolyhedralIRVisitor;
@@ -214,7 +215,7 @@ public class ReduceExpressionImpl extends ExpressionImpl implements ReduceExpres
 	 * @generated　NOT
 	 */
 	public IntExpression getIdentityValue() {
-		
+		Type expressionType = getExpressionType();
 		switch (getOP()) {
 			case ADD:
 			case OR:
@@ -224,23 +225,39 @@ public class ReduceExpressionImpl extends ExpressionImpl implements ReduceExpres
 				return  affine(term(1));
 			case MAX:
 				//When unsigned, 0 is the minimum
-				if (getExpressionType().getSigned() == SIGNED.UNSIGNED) {
+				if (expressionType.getSigned() == SIGNED.UNSIGNED) {
 					return affine(term(0));
 				//Otherwise, use symbolic value MIN_INT
 				} else {
-					return affine(term(1, IntExpressionBuilder.var("INT_MIN")));
-//					IntMin min = IntegerExpressionUserFactory.intMin();
-//					IntExpressionBuilder.
-//					min.setSigned(true);
-//					min.setWidth(getExpressionType().getWidth());
-//					return min;
+					if (expressionType.getTypeID().equals(DATATYPE.FLOATING_POINT)) {
+						if (expressionType.getWidth() == DATATYPE.SINGLE_PRECISION_WIDTH) {
+							return affine(term(-1, IntExpressionBuilder.var("FLT_MAX")));
+						} else {
+							return affine(term(-1, IntExpressionBuilder.var("DBL_MAX")));
+						}
+					} else {
+						return affine(term(1, IntExpressionBuilder.var("INT_MIN")));
+//						IntMin min = IntegerExpressionUserFactory.intMin();
+//						IntExpressionBuilder.
+//						min.setSigned(true);
+//						min.setWidth(getExpressionType().getWidth());
+//						return min;
+					}
 				}
 			case MIN:
-				return affine(term(1, IntExpressionBuilder.var("INT_MAX")));
-//				IntMax max = IntegerExpressionUserFactory.intMax();
-//				max.setSigned(getExpressionType().getSigned() == SIGNED.SIGNED);
-//				max.setWidth(getExpressionType().getWidth());
-//				return max;
+				if (expressionType.getTypeID().equals(DATATYPE.FLOATING_POINT)) {
+					if (expressionType.getWidth() == DATATYPE.SINGLE_PRECISION_WIDTH) {
+						return affine(term(1, IntExpressionBuilder.var("FLT_MAX")));
+					} else {
+						return affine(term(1, IntExpressionBuilder.var("DBL_MAX")));
+					}
+				} else {
+					return affine(term(1, IntExpressionBuilder.var("INT_MAX")));
+//					IntMax max = IntegerExpressionUserFactory.intMax();
+//					max.setSigned(getExpressionType().getSigned() == SIGNED.SIGNED);
+//					max.setWidth(getExpressionType().getWidth());
+//					return max;
+				}
 			default:
 				throw new RuntimeException("Reduction with operator " + getOP() + " is currently not supported.");
 		}

@@ -500,7 +500,7 @@ public abstract class LoopImpl extends EObjectImpl implements Loop {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (declareIterators: ");
 		result.append(declareIterators);
 		result.append(", iteratorNames: ");

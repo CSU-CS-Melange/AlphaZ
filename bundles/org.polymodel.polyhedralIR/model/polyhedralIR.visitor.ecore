@@ -236,8 +236,8 @@
     <eOperations name="preimage" lowerBound="1" eType="#//Domain">
       <eParameters name="T" eType="#//AffineFunction"/>
     </eOperations>
-    <eOperations name="getParams" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
-    <eOperations name="getIndices" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getParams" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getIndices" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
     <eOperations name="getDim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eOperations name="getNParams" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eOperations name="getNIndices" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -253,7 +253,7 @@
     </eOperations>
     <eOperations name="boundingBox" lowerBound="1" eType="#//Domain"/>
     <eOperations name="affineHull" lowerBound="1" eType="#//Domain"/>
-    <eOperations name="getBounds" lowerBound="2" upperBound="2" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression">
+    <eOperations name="getBounds" lowerBound="2" upperBound="2" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression">
       <eParameters name="dim" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     </eOperations>
     <eOperations name="copy" lowerBound="1" eType="#//Domain"/>
@@ -289,11 +289,11 @@
     <eOperations name="compose" eType="#//AffineFunction">
       <eParameters name="f2" eType="#//AffineFunction"/>
     </eOperations>
-    <eOperations name="getParams" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
-    <eOperations name="getIndices" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getParams" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
+    <eOperations name="getIndices" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//Variable"/>
     <eOperations name="getDimLHS" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eOperations name="getDimRHS" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eOperations name="getExpressions" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//affine/AffineExpression"/>
+    <eOperations name="getExpressions" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//affine/AffineExpression"/>
     <eOperations name="copy" lowerBound="1" eType="#//AffineFunction"/>
     <eOperations name="inverse" eType="#//AffineFunction">
       <eParameters name="names" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -2576,7 +2576,7 @@
           containment="true"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ReduceExpression" eSuperTypes="#//Expression #//PolyhedralIRVisitable">
-      <eOperations name="getIdentityValue" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+      <eOperations name="getIdentityValue" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="body" value="visitor.visitReduceExpression(this);"/>
@@ -2859,13 +2859,13 @@
       <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" lowerBound="1"
           eType="#//AffineFunction" containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="modFactors" upperBound="-1"
-          eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"
+          eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"
           containment="true"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="space" lowerBound="1"
           eType="#//targetMapping/MemorySpace"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MemorySpace" eSuperTypes="#//PolyhedralIRVisitable">
-      <eOperations name="getModFactors" upperBound="-1" eType="ecore:EClass ../../org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
+      <eOperations name="getModFactors" upperBound="-1" eType="ecore:EClass platform:/plugin/org.polymodel.algebra/model/algebra.ecore#//IntExpression"/>
       <eOperations name="getMemoryMaps" upperBound="-1" eType="#//targetMapping/MemoryMap"/>
       <eOperations name="accept">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

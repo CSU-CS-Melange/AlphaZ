@@ -34,9 +34,14 @@ import org.polymodel.isl.factory.ISLNativeBinder;
 import org.polymodel.matrix.MatrixRow;
 import org.polymodel.polyhedralIR.AffineFunction;
 import org.polymodel.polyhedralIR.Domain;
+import org.polymodel.polyhedralIR.Equation;
 import org.polymodel.polyhedralIR.ParameterDomain;
 import org.polymodel.polyhedralIR.PolyhedralIRFactory;
+import org.polymodel.polyhedralIR.StandardEquation;
 import org.polymodel.polyhedralIR.WhileInfo;
+import org.polymodel.polyhedralIR.expression.ReduceExpression;
+import org.polymodel.polyhedralIR.targetMapping.SpaceTimeLevel;
+import org.polymodel.polyhedralIR.targetMapping.SpaceTimeMap;
 
 /**
  * This class contains static methods for creating various objects for
@@ -1043,4 +1048,13 @@ public class PolyhedralIRUtility {
 	public static WhileInfo createWhileInfo() {
 		return PolyhedralIRFactory.eINSTANCE.createWhileInfo();
 	}
+	
+	public static Boolean isReductionsWithScheduledBody(Equation eqn) {
+	    if (eqn  instanceof StandardEquation) {
+	      StandardEquation eq = (StandardEquation)eqn;
+	      String varName = eq.getVariable().getName();
+	      return eq.getContainerSystem().containsVariable(varName + "_Alpha_Init");
+	    }
+	    return false;
+	  }
 }

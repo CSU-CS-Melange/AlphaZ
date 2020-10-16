@@ -1,18 +1,19 @@
 package org.polymodel.polyhedralIR.transformation;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.BasicEList;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.polymodel.algebra.Variable;
+import org.polymodel.factory.PolymodelComponent;
 import org.polymodel.polyhedralIR.AffineFunction;
 import org.polymodel.polyhedralIR.AffineSystem;
 import org.polymodel.polyhedralIR.DATATYPE;
 import org.polymodel.polyhedralIR.Domain;
 import org.polymodel.polyhedralIR.Expression;
-import org.polymodel.polyhedralIR.ExternalFunctionDeclaration;
 import org.polymodel.polyhedralIR.OP;
 import org.polymodel.polyhedralIR.ParameterDomain;
 import org.polymodel.polyhedralIR.Program;
@@ -21,23 +22,20 @@ import org.polymodel.polyhedralIR.StandardEquation;
 import org.polymodel.polyhedralIR.UseEquation;
 import org.polymodel.polyhedralIR.VariableDeclaration;
 import org.polymodel.polyhedralIR.VariableIdentifier;
-import org.polymodel.polyhedralIR.expression.BinaryExpression;
-import org.polymodel.polyhedralIR.expression.CaseExpression;
-import org.polymodel.polyhedralIR.expression.DependenceExpression;
-import org.polymodel.polyhedralIR.expression.ExternalFunctionCall;
-import org.polymodel.polyhedralIR.expression.IfExpression;
-import org.polymodel.polyhedralIR.expression.IndexExpression;
-import org.polymodel.polyhedralIR.expression.MultiArgExpression;
-import org.polymodel.polyhedralIR.expression.RestrictExpression;
-import org.polymodel.polyhedralIR.expression.UnaryExpression;
+import org.polymodel.polyhedralIR.ExternalFunctionDeclaration;
+import org.polymodel.polyhedralIR.expression.*;
+import org.polymodel.polyhedralIR.factory.PolyhedralIRModule;
 import org.polymodel.polyhedralIR.factory.PolyhedralIRUserFactory;
-import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
+
+import tom.mapping.introspectors.polyhedralIR.expression.ExpressionIntrospector;
+
 import org.polymodel.polyhedralIR.targetMapping.MEMORY_TYPE;
 import org.polymodel.polyhedralIR.targetMapping.TILE_SIZE_TYPE;
 import org.polymodel.polyhedralIR.targetMapping.TILING_TYPE;
+import org.polymodel.polyhedralIR.transformation.helper.FunctionOperations;
+import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
 
 import tom.library.sl.VisitFailure;
-import tom.mapping.introspectors.polyhedralIR.expression.ExpressionIntrospector;
 
 public class NormalizeExpression extends PolyhedralIRTomTransformation {
 

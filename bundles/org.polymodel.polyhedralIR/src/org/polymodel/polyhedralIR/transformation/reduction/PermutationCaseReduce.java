@@ -1,33 +1,20 @@
 package org.polymodel.polyhedralIR.transformation.reduction;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.polymodel.polyhedralIR.AffineFunction;
-import org.polymodel.polyhedralIR.AffineSystem;
-import org.polymodel.polyhedralIR.DATATYPE;
-import org.polymodel.polyhedralIR.Domain;
-import org.polymodel.polyhedralIR.Expression;
-import org.polymodel.polyhedralIR.ExternalFunctionDeclaration;
-import org.polymodel.polyhedralIR.OP;
-import org.polymodel.polyhedralIR.ParameterDomain;
-import org.polymodel.polyhedralIR.Program;
-import org.polymodel.polyhedralIR.SIGNED;
-import org.polymodel.polyhedralIR.StandardEquation;
-import org.polymodel.polyhedralIR.UseEquation;
-import org.polymodel.polyhedralIR.VariableDeclaration;
-import org.polymodel.polyhedralIR.VariableIdentifier;
-import org.polymodel.polyhedralIR.expression.CaseExpression;
-import org.polymodel.polyhedralIR.expression.ReduceExpression;
-import org.polymodel.polyhedralIR.factory.PolyhedralIRUserFactory;
+import org.eclipse.emf.common.util.EList;
+
+import tom.library.sl.VisitFailure;
+
+import java.util.List;
+import java.util.LinkedList;
+
 import org.polymodel.polyhedralIR.targetMapping.MEMORY_TYPE;
 import org.polymodel.polyhedralIR.targetMapping.TILE_SIZE_TYPE;
 import org.polymodel.polyhedralIR.targetMapping.TILING_TYPE;
+import org.polymodel.polyhedralIR.*;
+import org.polymodel.polyhedralIR.expression.*;
 import org.polymodel.polyhedralIR.transformation.PolyhedralIRTomTransformation;
-
-import tom.library.sl.VisitFailure;
+import org.polymodel.polyhedralIR.factory.PolyhedralIRUserFactory;
 
 /**
 PermutationCaseReduce looks for CaseExpression inside ReduceExpression, 

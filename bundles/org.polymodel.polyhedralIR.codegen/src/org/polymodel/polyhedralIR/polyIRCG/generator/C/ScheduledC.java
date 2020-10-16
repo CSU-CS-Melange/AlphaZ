@@ -36,6 +36,7 @@ import org.polymodel.polyhedralIR.polyIRCG.SIMD.SIMDFunction;
 import org.polymodel.polyhedralIR.polyIRCG.factory.PolyIRCGSIMDUserFactory;
 import org.polymodel.polyhedralIR.polyIRCG.factory.PolyIRCGUserFactory;
 import org.polymodel.polyhedralIR.polyIRCG.generator.CodeGenOptions;
+import org.polymodel.polyhedralIR.polyIRCG.generator.CodeGenUtility;
 import org.polymodel.polyhedralIR.polyIRCG.generator.PolyIRCodeGen.CODEGEN;
 import org.polymodel.polyhedralIR.polyIRCG.generator.TiledCodeGenOptions;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.simd.dtiler.PreprocessForTemporaryBuffer;
@@ -45,11 +46,13 @@ import org.polymodel.polyhedralIR.targetMapping.MemorySpace;
 import org.polymodel.polyhedralIR.targetMapping.SpaceTimeLevel;
 import org.polymodel.polyhedralIR.targetMapping.SpaceTimeMap;
 import org.polymodel.polyhedralIR.targetMapping.TargetMapping;
+import org.polymodel.polyhedralIR.targetMapping.TargetMappingFactory;
 import org.polymodel.polyhedralIR.targetMapping.UseEquationOptimization;
 import org.polymodel.polyhedralIR.transformation.ChangeOfBasis;
 import org.polymodel.polyhedralIR.transformation.Normalize;
 import org.polymodel.polyhedralIR.transformation.helper.FunctionOperations;
 import org.polymodel.polyhedralIR.transformation.reduction.SerializeReduction;
+import org.polymodel.polyhedralIR.transformation.reduction.TransformReductionBody;
 import org.polymodel.polyhedralIR.util.AShow;
 
 
@@ -176,10 +179,24 @@ public class ScheduledC extends CodeGeneratorTemplateForC {
 	}
 
 	/**
-	 * Finds equations (after NormalizeReductions) with scheduled reduction body.
+	 * Finds equations (after NormalizeReductions) where the schedule for the reduction is specified 
+	 * in the stmap of the equation.
 	 * 
 	 * @return
 	 */
+	private List<StandardEquation> findReductionsWithScheduledBody() {
+	    List<StandardEquation> res = new LinkedList<StandardEquation>();
+
+	    for (StandardEquation eq : system.getEquations()) {
+	    	String varName = eq.getVariable().getName();
+	    	if (varName.contains("_Alpha_Init")) {
+	    		res.add(system.getEquation(varName.replaceAll("_Alpha_Init", "")));
+	    	}
+	    }
+
+	    return res;
+	  }
+	/*
 	private List<StandardEquation> findReductionsWithScheduledBody() {
 		List<StandardEquation> res = new LinkedList<StandardEquation>();
 		SpaceTimeLevel stlevel = system.getTargetMapping().getSpaceTimeLevel(0);
@@ -193,17 +210,22 @@ public class ScheduledC extends CodeGeneratorTemplateForC {
 				final int schLHS = stMap.getMapping().getDimLHS();
 				
 				if (varDims == bodyDims) {
-					throw new RuntimeException("Reduction body and answer space has same dimensionality.");
+					throw new RuntimeException("Reduction body and answer space has same dimensionality "
+							+ "for variable " + eq.getVariable().getName());
 				}
-				//body specified
+				//the schedule for the reduction body is specified in the stmap of the equation
 				if (bodyDims == schLHS) {
 					res.add(eq);
+//					SpaceTimeMap newSTMap = TargetMappingFactory.eINSTANCE.createSpaceTimeMap();
+					
+//					stlevel.getSpaceTimeMaps().add();
 				}
 			}
 		}
 		
 		return res;
 	}
+	*/
 
 	/**
 	 * post processing after serialization of reduction
@@ -232,6 +254,8 @@ public class ScheduledC extends CodeGeneratorTemplateForC {
 		//set up the space time map for the new equation with old variable name
 		StandardEquation eq = system.getEquation(var.getName());
 		DependenceExpression dep= (DependenceExpression)eq.getExpression();
+		
+//		System.out.println("OLD ST: " + stMap.getMapping() + " : " + dep.getDep() + " : " + stMap.getMapping().compose(dep.getDep().copy()));
 		SpaceTimeMap newStMap = TargetMappingUserFactory.createStandardEquationSpaceTimeMap(var, stMap.getMapping().compose(dep.getDep().copy()));
 		stlevel.getSpaceTimeMaps().removeKey(stMap);	//remove old mapping
 		stlevel.getSpaceTimeMaps().put(var.getName(), newStMap);	//set the new mapping
@@ -290,10 +314,10 @@ public class ScheduledC extends CodeGeneratorTemplateForC {
 		if (options.isHybridSchedule) {
 			GenerateSyncronizationVariables.generateSyncronizationVariables(system);
 			
-			System.out.println("ASHOW:\n" + AShow.toString(program));
+//			System.out.println("ASHOW:\n" + AShow.toString(program));
 			//Check program
 			ValidatorOutput output = UniquenessAndCompletenessCheck.validate(system);
-			System.out.println(output.toString(org.polymodel.polyhedralIR.analysis.validator.IValidatorMessage.VERBOSITY.MAX));
+//			System.out.println(output.toString(org.polymodel.polyhedralIR.analysis.validator.IValidatorMessage.VERBOSITY.MAX));
 			
 			
 			
@@ -416,20 +440,31 @@ public class ScheduledC extends CodeGeneratorTemplateForC {
 			
 		}
 		
-		
+		//We no longer serialize reductions when the schedule for the reduction body is specified.
+	    /*
+	     * Add two statements
+	     *  Cinit = init
+	     *  C op= body
+	     * set memory space of Cinit to C
+	     *
+	     * setSTMap for both reduction body and init of result variable in the command script
+	    */
 		
 		//find scheduled reduction bodies
 		//TODO: currently we only handle reductions in standard equations
 		//TODO: This needs to be extended to handle reduction bodies inside the subsystems
 		List<StandardEquation> scheduledReductionBodies = findReductionsWithScheduledBody();
 		//serialize the reduction
+				
+/*		//we no longer serialize reductions. see the comments above
 		for (StandardEquation eq : scheduledReductionBodies) {
+			
 			ReduceExpression re_copy = EcoreUtil.copy((ReduceExpression)eq.getExpression());
 			String serVar = SerializeReduction.transform((ReduceExpression)eq.getExpression(), 
 					stlevel.getSpaceTimeMaps().get(eq.getVariable().getName()).getMapping());
 			postProcessingForSerializeReduction(eq.getVariable(), system.getVariableDeclaration(serVar), re_copy);
 		}
-		
+*/		
 		
 		
 		EList<SpaceTimeMap> varSpacetimes = new BasicEList<SpaceTimeMap>();
@@ -448,12 +483,22 @@ public class ScheduledC extends CodeGeneratorTemplateForC {
 		//CoB to reflect STmap
 		//reflect the STmap for the standardEquations first
 		for(SpaceTimeMap stmap: varSpacetimes){
+//			System.out.println(stmap.getLabel() + " : MMmappin: " + stmap.getMapping());
 			VariableDeclaration var = system.getVariableDeclaration(stmap.getLabel());
 			if( COBignoreList.contains(var)) continue;
-			if(subSystemOutputVars.contains(var)) continue;
-			if (scheduledReductionBodies.contains(var)) continue;
+			if(subSystemOutputVars	.contains(var)) continue;
+//			if (scheduledReductionBodies.contains(var)) continue;
+			if (scheduledReductionBodies.contains(system.getEquation(var.getName()))) {
+		        TransformReductionBody.apply(
+		            (ReduceExpression)system.getEquation(var.getName()).getExpression(),
+		            stmap.getMapping());
+		        continue;
+		    }
+//			if (scheduledReductionBodies.contains(system.getEquation(var.getName()))) continue;
 			//skip inputs
 			if (var.isInput()) continue;
+			
+//			System.out.println(stmap.getLabel() + " : mappin: " + stmap.getMapping());
 			if(!stmap.getMapping().isIdentity()){
 				ChangeOfBasis.CoB(system, stmap.getLabel(), stmap.getMapping(), true);
 			}
@@ -591,6 +636,7 @@ public class ScheduledC extends CodeGeneratorTemplateForC {
 		
 		//reflect TargetMapping for the input and ouput variables
 		for(MemorySpace ms : system.getTargetMapping().getMemorySpaces()){
+//			System.out.println("mm: " + ms.getName());
 			CVariable v = _fact.createCVariable(ms,  options.flattenArrays, false);
 			unit.getVariables().add(v);
 		}

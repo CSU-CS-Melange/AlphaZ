@@ -611,7 +611,7 @@ public class RecursionBodyImpl extends EObjectImpl implements RecursionBody {
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
+		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (parallel: ");
 		result.append(parallel);
 		result.append(", bandStart: ");

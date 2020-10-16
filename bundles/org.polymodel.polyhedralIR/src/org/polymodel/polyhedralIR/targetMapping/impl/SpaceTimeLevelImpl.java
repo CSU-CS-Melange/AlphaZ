@@ -30,6 +30,7 @@ import org.polymodel.polyhedralIR.AffineFunction;
 import org.polymodel.polyhedralIR.PolyhedralIRVisitor;
 import org.polymodel.polyhedralIR.UseEquation;
 import org.polymodel.polyhedralIR.VariableDeclaration;
+import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
 import org.polymodel.polyhedralIR.targetMapping.LoopUnrollingSpecification;
 import org.polymodel.polyhedralIR.targetMapping.ParallelizationSpecification;
 import org.polymodel.polyhedralIR.targetMapping.SpaceTimeLevel;
@@ -384,11 +385,40 @@ public class SpaceTimeLevelImpl extends EObjectImpl implements SpaceTimeLevel {
 		}
 		
 		//Compute Access Function
-		AffineFunction access = getContainerTM().getMemoryMaps().get(variable).getMapping();
+		AffineFunction access;
 		AffineFunction invST;
 		try {
 			//invST = getSpaceTimeMap(var).getMapping().inverse(null);
-			invST = getSpaceTimeMaps().get(variable.getName()).getInverseOfMapping();
+			/*This is a bad way to implement reductions with schedule for the body. But since
+		       * we dont have a way to keep track of multiple stmaps per a single equation,
+		       * we doing this hack */
+//		      if (getContainerTM().getSpaceTimeLevel(0).getSpaceTimeMaps().containsKey(variable.getName()+"_Alpha_Init")) {
+		      if (PolyhedralIRUtility.isReductionsWithScheduledBody(getContainerTM().getContainerSystem().getEquation(variable.getName()))) {
+		        access = getContainerTM().getMemoryMaps().get(variable).getMapping();
+		        return access;
+		        /*
+		        ReduceExpression re = (ReduceExpression)getContainerTM().getContainerSystem().getEquation(variable.getName()).getExpression();
+		        AffineFunction projectionFunction = re.getProjection();
+
+		        AffineFunction stmap = getContainerTM().getSpaceTimeLevel(0).getSpaceTimeMaps().get(variable.getName()).getMapping();
+		        AffineFunction id = PolyhedralIRUtility.createIdentityFunction(stmap.getParams(),stmap.getIndices());
+		        invST = stmap.inverse();
+		        System.out.println("inv0: "+invST);
+		        invST=invST.compose(id); //To get the index names same as in the stmap
+		        System.out.println("stmap: "+stmap);
+		        System.out.println("inv1: "+invST);
+		        System.out.println("proj: "+projectionFunction);
+		        System.out.println("access: "+access);
+		        invST = projectionFunction.compose(invST);
+		        System.out.println("inv2: "+invST);
+		        */
+
+//		        invST=PolyhedralIRUtility.createIdentityFunction(variable.getDomain());
+//		        invST = getContainerTM().getSpaceTimeLevel(0).getSpaceTimeMaps().get(variable.getName()+"_Alpha_Init").getInverseOfMapping();
+		      } else {
+		        access = getContainerTM().getMemoryMaps().get(variable).getMapping();
+		        invST = getSpaceTimeMaps().get(variable.getName()).getInverseOfMapping();
+		      }
 		} catch (PolymodelException pme) {
 			throw new RuntimeException("No inverse found for schedule given to " + variable.getName() + "(" + getSpaceTimeMaps().get(variable.getName()).getMapping()+")");
 		}
@@ -396,6 +426,58 @@ public class SpaceTimeLevelImpl extends EObjectImpl implements SpaceTimeLevel {
 		return  access.compose(invST);
 	}
 
+	 /**
+	   * <!-- begin-user-doc -->
+	   * <!-- end-user-doc -->
+	   * @generated NOT
+	   */
+	  public AffineFunction getAccessFunction(VariableDeclaration variable, AffineFunction projectionFunction) {
+//	    TODO create anotherfunction, which takes projection function as input
+//	    Then compose inverse of schedule of the body with projection function
+//	    T-1(proj);
+	    //Check memory
+	    if (getContainerTM().getMemoryMaps().get(variable) == null) {
+	      throw new RuntimeException("Memory map is not specified for variable : " + variable.getName());
+	    }
+
+	    //Check ST
+	    if (getSpaceTimeMaps().get(variable.getName()) == null) {
+	      throw new RuntimeException("Space Time map is not specified for variable : " + variable.getName());
+	    }
+
+	    //Compute Access Function
+	    AffineFunction access;
+	    AffineFunction invST;
+	    try {
+	      //invST = getSpaceTimeMap(var).getMapping().inverse(null);
+	      /*This is a bad way to implement reductions with schedule for the body. But since
+	       * we dont have a way to keep track of multiple stmaps per a single equation,
+	       * we doing this hack */
+	      if (getContainerTM().getSpaceTimeLevel(0).getSpaceTimeMaps().containsKey(variable.getName()+"_Alpha_Init")) {
+	        //This is a variable where the schedule for the reduction body is specified.
+	        //Therefore we going to use the inv = inverse of init variable st mapping
+	        //Therefore we going to use the inv = identity
+//	        getSpaceTimeMaps();
+//	        getContainerTM().getMemorySpace(variable.getName()+"_Alpha_Init").
+	        access = getContainerTM().getMemoryMaps().get(variable).getMapping();
+//	        invST=PolyhedralIRUtility.createIdentityFunction(variable.getDomain());
+	        AffineFunction stmap = getContainerTM().getSpaceTimeLevel(0).getSpaceTimeMaps().get(variable.getName()).getMapping();
+	        AffineFunction id = PolyhedralIRUtility.createIdentityFunction(stmap.getParams(),stmap.getIndices());
+	        invST = stmap.inverse();
+	        invST=invST.compose(id);
+	        invST = projectionFunction.compose(invST);
+	      } else {
+	        access = getContainerTM().getMemoryMaps().get(variable).getMapping();
+	        invST = getSpaceTimeMaps().get(variable.getName()).getInverseOfMapping();
+	      }
+	    } catch (PolymodelException pme) {
+	      throw new RuntimeException("No inverse found for schedule given to " + variable.getName() + "(" + getSpaceTimeMaps().get(variable.getName()).getMapping()+")");
+	    }
+
+	    return  access.compose(invST);
+	  }
+
+	
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

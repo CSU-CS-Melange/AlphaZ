@@ -45,6 +45,8 @@ import org.polymodel.polyhedralIR.expression.CaseExpression;
 import org.polymodel.polyhedralIR.expression.DependenceExpression;
 import org.polymodel.polyhedralIR.expression.ReduceExpression;
 import org.polymodel.polyhedralIR.expression.VariableExpression;
+import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
+import org.polymodel.polyhedralIR.factory.PolyhedralIRUserFactory;
 import org.polymodel.polyhedralIR.impl.PolyhedralIRInheritedDepthFirstVisitorImpl;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.Body;
@@ -135,7 +137,7 @@ public class StatementVisitorForScheduledC extends PolyhedralIRInheritedDepthFir
 						throw new RuntimeException("subtile at level " + i +" is not specified for tile band with prefix " + 
 								tile.getOrderingPrefix().toString() + " [" + tile.getStartDim() + "," + tile.getEndDim() + "].");
 					}
-					int start = CodeGenUtilityForC.orderingDimensionFilter(orderingDimensions, orderingPrefix, subtile.getStartDim(), true);
+					int start = CodeGenUtilityForC.orderingDimensionFilter(orderingDimensions, orderingPrefix, tile.getStartDim(), true);
 					int end = CodeGenUtilityForC.orderingDimensionFilter(orderingDimensions, orderingPrefix, subtile.getEndDim(), false);
 					subtiles.add(_fact.createSubTileSpecification(subtile.getLevel(), start, end, subtile.getTileSizes(), subtile.getTilingType()));
 				}
@@ -221,7 +223,9 @@ public class StatementVisitorForScheduledC extends PolyhedralIRInheritedDepthFir
 		
 		//Add free
 		entryFunction.getBodies().add(_fact.createVariableFinalization(entryFunction));
-		
+//		entryFunction.getBodies().add(_fact.createBody("printf(\"count: %ld\\n\", count);"));
+//		entryFunction.getBodies().add(_fact.createBody("printf(\"count2: %ld\\n\", count2);"));
+//		entryFunction.getBodies().add(_fact.createBody("printf(\"empty: %ld\\n\", empty);"));
 		unit.getFunctions().add(entryFunction);	
 	}
 	
@@ -247,39 +251,83 @@ public class StatementVisitorForScheduledC extends PolyhedralIRInheritedDepthFir
 	
 	@Override
 	public void inStandardEquation(StandardEquation s) {
+//		System.out.println("IN STD EQ: " + s.getVariable().getName());
 		SpaceTimeLevel stlevel = targetMapping.getSpaceTimeLevel(0);
 		//Find CodeGenVariable for this equation
 		CodeGenVariable var = mainLoop.getFunction().getCodeunit().findCGVariable(
 				targetMapping.getMemoryMaps().get(s.getVariable()).getSpace().getName());
-		AffineFunction access = stlevel.getAccessFunction(s.getVariable());
+//		AffineFunction access = stlevel.getAccessFunction(s.getVariable());
 
 		List<Statement> statements = new BasicEList<Statement>();
 
 		//When case is used
 		if (s.getExpression() instanceof CaseExpression) {
 			CaseExpression caseExpr = (CaseExpression)s.getExpression();
+			AffineFunction access = stlevel.getAccessFunction(s.getVariable());
 			//Execute different branches as different statements
 			for (Expression expr : caseExpr.getExprs()) {
-				// mainLoop.getStatements().size()
 				Statement stmt = _fact.createStatement(s.getVariable(),
 						CodeGenUtility.createStatementName(unit, mainLoopStatementCount), expr.getContextDomain().copy(), var, access, expr);
 				statements.add(stmt);
 				mainLoopStatementCount++;
-				//mainLoop.getStatements().add(stmt);
 			}
 		} else {
-			Statement stmt = _fact.createStatement(s.getVariable(),
-					CodeGenUtility.createStatementName(unit,mainLoopStatementCount), s.getExpression().getContextDomain().copy(), var, access, s.getExpression());
-			//mainLoop.getStatements().add(stmt);
-			statements.add(stmt);
-			
-			mainLoopStatementCount++;
+			if (PolyhedralIRUtility.isReductionsWithScheduledBody(s)) {
+		        ReduceExpression r = (ReduceExpression)s.getExpression();
+		        VariableDeclaration variable = s.getVariable();
+
+		        AffineFunction access = targetMapping.getMemoryMaps().get(variable).getMapping();
+		        ReduceExpression re = (ReduceExpression)targetMapping.getContainerSystem().getEquation(variable.getName()).getExpression();
+		        AffineFunction projectionFunction = re.getProjection();
+
+		        AffineFunction stmap = targetMapping.getSpaceTimeLevel(0).getSpaceTimeMaps().get(variable.getName()).getMapping();
+		        AffineFunction id = PolyhedralIRUtility.createIdentityFunction(stmap.getParams(),stmap.getIndices());
+
+		        access = access.compose(projectionFunction);
+
+		        // Reduction body
+		        String expr = ExpressionPrinterForScheduledC.print(r.getExpr(), false);
+
+		        // Make it accumulation
+		        expr = CodeGenUtilityForC.createAccumulation(r.getOP(),
+		        		r.getExpressionType(), 
+		        		targetMapping.getMemoryMaps().get(s.getVariable()).getSpace().getName(), 
+		        		access, 
+		        		expr);
+		        
+		        // Match macro signature index names with macro body index names
+		        AffineFunction newStmap = stmap.compose(stmap.inverse());
+		        newStmap = PolyhedralIRUserFactory.eINSTANCE.createAffineFunction(newStmap.getParams(), 
+		        		newStmap.getIndices(), 
+		        		newStmap.getExpressions());
+		        
+		        Statement stmt = _fact.createStatement(CodeGenUtility.createStatementName(unit, mainLoopStatementCount),
+		        		r.getExpr().getExpressionDomain().image(newStmap),
+		        		expr);
+		        statements.add(stmt);
+		        
+		      } else {
+		        AffineFunction access = stlevel.getAccessFunction(s.getVariable());
+				Statement stmt = _fact.createStatement(s.getVariable(), 
+						CodeGenUtility.createStatementName(unit,mainLoopStatementCount), 
+						s.getExpression().getContextDomain().copy(), 
+						var, 
+						access, 
+						s.getExpression());
+				statements.add(stmt);
+				
+		      }
+			  mainLoopStatementCount++;
 		}
 		statementEquationMap.put(s, statements);
 	}
 	
 	@Override
 	public void outReduceExpression(ReduceExpression r) {
+		if (PolyhedralIRUtility.isReductionsWithScheduledBody((StandardEquation)r.getContainerEquation())) {
+	      return;
+	    }
+//		System.out.println("OUT RED: " + ((StandardEquation)r.getContainerEquation()).getVariable().getName());
 		if (r.getContainerEquation() instanceof UseEquation)
 			throw new RuntimeException("todo: implement this method for UseEquation");
 		
@@ -317,7 +365,7 @@ public class StatementVisitorForScheduledC extends PolyhedralIRInheritedDepthFir
 		//Make it accumulation
 		expr = CodeGenUtilityForC.createAccumulation(r.getOP(), r.getExpressionType(), CodeGenConstantsForC.REDUCE_VAR_NAME, expr);
 		loop.getStatements().add(_fact.createStatement(
-				CodeGenUtility.createStatementName(unit, 0), scanDom, expr));
+				CodeGenUtility.createStatementName(unit, mainLoopStatementCount), scanDom, expr));
 
 		//Create a body to initialize variable used during reduction
 		Body reduceVar = _fact.createBody(r.getExpressionType() + " "+CodeGenConstantsForC.REDUCE_VAR_NAME+" = " + r.getIdentityValue()+";");
