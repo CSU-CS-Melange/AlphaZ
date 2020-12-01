@@ -1,0 +1,16 @@
+affine ospsq_float {M,N| M>=2 && N>=2}
+input
+	int seq1 {i| 0 <= i < M} ;
+	int seq2 {i| 0 <= i < N} ;
+output
+	float FTable {i1,j1,i2,j2| 0<=i1<=j1<=M-1 && 0<=i2<=j2<=N-1};
+
+let
+	FTable[i1,j1,i2,j2] = case
+		{ | j1==i1 } : seq2[i2];
+		{ | j2==i2 && j1>=i1+1} : seq1[i1];
+		{ | j2>=i2+1 && j1>=i1+1} :
+					case {|i1<j1  && i2<j2}:  reduce(max, [k1, k2], {|i1<=k1<j1 && i2<=k2<j2 }: FTable[i1, k1, i2, k2] * FTable[k1+1, j1, k2+1, j2]);
+			             {|i1==j1 && i2<j2} || {|i1<j1 && i2 == j2} || {|i1==j1 && i2==j2}: 0; esac;
+		esac;
+.

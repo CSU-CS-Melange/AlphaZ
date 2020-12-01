@@ -1,0 +1,14 @@
+affine matrix_product {P, Q, R|P>0 && Q>0 && R>0}
+       given  float A {i,k| 0<=i<P && 0<=k<Q};
+              float B {k,j| 0<=k<Q && 0<=j<R}; 
+     returns  float C {i,j,k| 0<=i<P && 0<=j<R && k==Q};
+using
+   float temp_C {i,j,k|0<=i<P && 0<=j<R && 0<=k<=Q};
+through
+   temp_C[i,j,k] = case
+                      {|k>0}  : temp_C[i,j,k-1] + A[i,k-1]*B[k-1,j];
+                      {|k==0} : 0; 
+                   esac;
+   C      = temp_C;
+.
+      
