@@ -37,3 +37,5 @@ bundles/edu.csu.melange.jnimap.cloog/native/build/cloog/cloog-*
 bundles/edu.csu.melange.jnimap.isl/native/build/isl/isl-*
 tests/edu.csu.melange.alphaz.mde.tests/regression/codegen/codes/
 
+# git
+*.gitignore
