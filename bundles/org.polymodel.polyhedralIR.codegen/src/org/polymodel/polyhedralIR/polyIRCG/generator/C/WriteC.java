@@ -22,6 +22,7 @@ import org.polymodel.polyhedralIR.factory.TargetMappingUserFactory;
 import org.polymodel.polyhedralIR.polyIRCG.CodeUnit;
 import org.polymodel.polyhedralIR.polyIRCG.factory.PolyIRCGUserFactory;
 import org.polymodel.polyhedralIR.polyIRCG.generator.CodeGenOptions;
+import org.polymodel.polyhedralIR.polyIRCG.generator.TiledCodeGenOptions;
 import org.polymodel.polyhedralIR.polyIRCG.generator.PolyIRCodeGen.CODEGEN;
 import org.polymodel.polyhedralIR.targetMapping.MemoryMap;
 import org.polymodel.polyhedralIR.targetMapping.MemorySpace;
@@ -104,6 +105,11 @@ public class WriteC extends CodeGeneratorTemplateForC {
 		}
 		
 		super.initialize();
+
+		if(system.getTargetMapping().isTiled() || ((options instanceof TiledCodeGenOptions) && ((TiledCodeGenOptions)options).multiPassSequential) ||
+				((options instanceof TiledCodeGenOptions) && ((TiledCodeGenOptions)options).multiPassWavefront)){
+			addTileSizesAsParameters(system, (TiledCodeGenOptions)options);
+		}
 
 		final TargetMapping tm = system.getTargetMapping();
 		final SpaceTimeLevel stlevel = tm.getSpaceTimeLevel(0);

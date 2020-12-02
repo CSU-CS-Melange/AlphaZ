@@ -155,19 +155,23 @@ Detailed options can be given through optional argument.
 		generateWrapper( program, system, getDefaultCodeGenOptions(program, system) , "./" );
 	}
 	
-
-
 	/**
 	Generates code for verifying generated program. The code is generated using demand-driven code generator (WriteC).
 	**/
 	public static void generateVerificationCode(  Program program , String systemName , String outDir ) {
+		generateVerificationCode(program, systemName, CodeGenOptions.writeCDefault(), outDir);
+	}
+
+	/**
+	Generates code for verifying generated program. The code is generated using demand-driven code generator (WriteC).
+	**/
+	public static void generateVerificationCode(  Program program , String systemName , CodeGenOptions options, String outDir ) {
 		/*PROTECTED REGION ID(alphaz.mde.codegen.generateVerificationCode) ENABLED START*/
-		CodeGenOptions writeCopt = CodeGenOptions.writeCDefault();
-		writeCopt.funcPostfix += "_verify";
+		options.funcPostfix += "_verify";
 		String verifySystemName = systemName + "_verify";
 		AffineSystem system = program.getSystem(systemName);
 		system.setName(verifySystemName);
-		generateWriteC(program, verifySystemName, writeCopt, outDir);
+		generateWriteC(program, verifySystemName, options, outDir);
 		system.setName(systemName);
 		/*PROTECTED REGION END*/
 	}
