@@ -57,7 +57,7 @@ public class JNIUnionMapBuilderFromPRDG {
 		JNIISLUnionSet domains = null;
 		for (PRDGNode node : this.prdg.getNodes()) {
 			ISLSet islDom = factory.createDomain(node.getDomain());
-			JNIISLSet set = ISLNativeBinder.jniIslSetNoString(islDom);
+			JNIISLSet set = ISLNativeBinder.jniIslSet(islDom);
 			set = set.setTupleName(node.getName());
 			if (domains == null) domains = set.toUnionSet();
 			else domains = domains.union(set.toUnionSet());
@@ -70,7 +70,7 @@ public class JNIUnionMapBuilderFromPRDG {
 		JNIISLUnionMap islPrdg = JNIISLMap.buildEmpty(JNIISLSpace.copySpaceParamsForMap(domains.getSpace().copy())).toUnionMap();
 		for (PRDGEdge edge : prdg.getEdges()) {
 			JNIISLMap map1 = ISLNativeBinder.jniIslMapNoString(edge.getFunction().getMapping());
-			JNIISLSet set = ISLNativeBinder.jniIslSetNoString(edge.getDomain());
+			JNIISLSet set = ISLNativeBinder.jniIslSet(edge.getDomain());
 			JNIISLMap map2 = map1.copy().intersectDomain(set.copy());
 			
 			if (map2 == null) {
@@ -106,7 +106,7 @@ public class JNIUnionMapBuilderFromPRDG {
 		JNIISLUnionSet domains = null;
 		for (PRDGNode node : this.prdg.getNodes()) {
 			ISLSet islDom = factory.createDomain(node.getDomain());
-			JNIISLSet set = ISLNativeBinder.jniIslSetNoString(islDom);
+			JNIISLSet set = ISLNativeBinder.jniIslSet(islDom);
 			set = set.setTupleName(node.getName());
 			if (domains == null) domains = set.toUnionSet();
 			else domains = domains.union(set.toUnionSet());
@@ -118,7 +118,7 @@ public class JNIUnionMapBuilderFromPRDG {
 		JNIISLUnionMap islPrdg = JNIISLMap.buildEmpty(JNIISLSpace.copySpaceParamsForMap(domains.getSpace().copy())).toUnionMap();
 		for (PRDGEdge edge : prdg.getEdges()) {
 			JNIISLMap map1 = ISLNativeBinder.jniIslMapNoString(edge.getFunction().getMapping());
-			JNIISLSet set = ISLNativeBinder.jniIslSetNoString(edge.getDomain());
+			JNIISLSet set = ISLNativeBinder.jniIslSet(edge.getDomain());
 			JNIISLMap map2 = map1.copy().intersectDomain(set.copy());
 			
 			if (edge.getFunction() instanceof ProjectionFunction) {

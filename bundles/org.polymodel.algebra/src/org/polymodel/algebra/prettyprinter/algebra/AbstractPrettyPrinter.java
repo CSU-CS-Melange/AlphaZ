@@ -74,9 +74,16 @@ public abstract class AbstractPrettyPrinter extends EObjectImpl implements Algeb
 		else
 			for (AlgebraVisitable algebraVisitable : intExpressions) {
 				buffer.append((first?"":separator));
-				buffer.append("(");
+				boolean no_enclose = algebraVisitable instanceof AffineExpression && 
+						((AffineExpression)algebraVisitable).getTerms().size()==1 && 
+						((AffineExpression)algebraVisitable).getTerms().get(0).getVariable() == null;
+				if (! no_enclose) { 
+					buffer.append("("); 
+				}
 				algebraVisitable.accept(this);
-				buffer.append(")");
+				if (! no_enclose) { 
+					buffer.append(")"); 
+				}
 				first=false;
 			}
 		return buffer.toString();

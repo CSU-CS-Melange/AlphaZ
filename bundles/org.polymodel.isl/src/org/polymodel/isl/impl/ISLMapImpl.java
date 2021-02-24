@@ -239,7 +239,7 @@ public class ISLMapImpl extends RelationImpl implements ISLMap {
 
 	@Override
 	public <T extends AbstractRelation> T intersectDomain(Domain domain) {
-		JNIISLSet islDom = ISLNativeBinder.jniIslSetNoString(domain);
+		JNIISLSet islDom = ISLNativeBinder.jniIslSet(domain);
 		JNIISLMap jniMap = getJNImap().intersectDomain(islDom);
 		return buildMap(jniMap, dimensions);
 	}

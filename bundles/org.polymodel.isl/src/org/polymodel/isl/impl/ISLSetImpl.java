@@ -213,7 +213,7 @@ public class ISLSetImpl extends DomainImpl implements ISLSet {
 	}
 
 	public JNIISLSet getJNIset() {
-		return ISLNativeBinder.jniIslSetNoString(this);
+		return ISLNativeBinder.jniIslSet(this);
 	}
 
 	protected JNIISLSet getJNIset(Domain domain) {
@@ -325,7 +325,7 @@ public class ISLSetImpl extends DomainImpl implements ISLSet {
 	}
 	public Map<ISLSet,ISLFunction> glexmin(int i, DimensionsManager manager) {
 
-		JNIISLSet jniIslSet = ISLNativeBinder.jniIslSetNoString(this);
+		JNIISLSet jniIslSet = ISLNativeBinder.jniIslSet(this);
 		if (jniIslSet == null) throw new RuntimeException("Could not build JNI object.");
 
 		String lbl = null;
@@ -361,7 +361,7 @@ public class ISLSetImpl extends DomainImpl implements ISLSet {
 	 */
 	public Map<ISLSet,ISLFunction> gnext(int nbInnerLoop, DimensionsManager manager) {
 
-		JNIISLSet jniIslSet = ISLNativeBinder.jniIslSetNoString(this);
+		JNIISLSet jniIslSet = ISLNativeBinder.jniIslSet(this);
 		if (jniIslSet == null) throw new RuntimeException("Could not build JNI object.");
 
 		String lbl = null;

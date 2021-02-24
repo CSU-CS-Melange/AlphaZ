@@ -494,7 +494,7 @@ public class PolyhedralIRUserFactory {
 	}
 	
 	public FastISLDomain createFastISLDomain(org.polymodel.Domain dom) {
-		JNIISLSet set = ISLNativeBinder.jniIslSetNoString(dom);
+		JNIISLSet set = ISLNativeBinder.jniIslSet(dom);
 		return createFastISLDomain(dom.getDimensions(), set);
 	}
 	

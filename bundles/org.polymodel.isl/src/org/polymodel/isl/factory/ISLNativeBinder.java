@@ -171,6 +171,7 @@ public class ISLNativeBinder {
 		return ISLFactory.islSet(s);
 	}
 
+	/*
 	public static JNIISLSet jniIslSetNoString(Domain set) {
 		JNIISLSpace space = jniIslSpace(set.getDimensions());
 		JNIISLSet res = null;
@@ -192,6 +193,7 @@ public class ISLNativeBinder {
 //		res.setTupleName(name);
 		return res;
 	}
+	*/
 	
 
 	public static JNIISLBasicSet jniIslBasicSetNoString(Domain set) {
@@ -1109,7 +1111,7 @@ public class ISLNativeBinder {
 	public static JNIISLUnionSet jniIslUnionSet(ISLUnionSet uset) {
 		JNIISLUnionSet res = null;
 		for (ISLSet set : uset.getSets()) {
-			JNIISLSet jset = jniIslSetNoString(set);
+			JNIISLSet jset = jniIslSet(set);
 			if (res == null) res = jset.toUnionSet();
 			else res = res.union(jset.toUnionSet());
 		}
