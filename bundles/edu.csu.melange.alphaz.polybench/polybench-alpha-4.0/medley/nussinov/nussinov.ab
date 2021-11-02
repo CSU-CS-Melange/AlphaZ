@@ -1,0 +1,52 @@
+// Author: Swetha Varadarajan
+
+int foo(int,int);
+affine nussinov {N|N>=1}
+input
+	int seq {i|1<=i<=N};
+	
+output
+	int table {i,j|1<=i<=N && j>=1 && i-1<=j<=N};//{i,j|1<=(i,j)<=N}; //
+local
+	int w {i,j|1<=i<=N && j>=1 && i-1<=j<=N};
+let
+	
+	w [i,j] = foo(seq[i],seq[j]);
+			
+	
+	table [i,j] =  case
+					{i,j|i==j}:0;
+					{i,j|i>j}:0;
+					{i,j|i+1==j}:	max(table[i+1,j],table[i,j-1],(table[i+1,j-1] + w[i,j]));
+					{i,j|i+1<j}:	max(table[i+1,j],table[i,j-1],(table[i+1,j-1] + w[i,j]),
+							reduce(max, [k], {|i<k<j}: table[i,k] + table[k+1,j]));
+				esac;
+								
+					
+				
+.
+
+// ALT Version with 2 inputs
+//affine nussinov {N|N>=1}
+//input
+//	int seq1 {i|1<=i<=N};
+//	int seq2 {i|1<=i<=N};
+//output
+//	int table {i,j|1<=i<=N && j>=1 && i-1<=j<=N};
+//local
+	//locals
+	//scoring function that evaluate the pair of sequences seq[i] and seq[j]. 
+	// It is 1 if the sequence is complementary (either 'A' with 'T' or 'G' with 'C' 
+	// else 0.
+//	int w {i,j|1<=i<=N && j>=1 && i-1<=j<=N};
+//let
+//	w [i,j] = foo(seq1[i],seq2[j]);
+//	table [i,j] =  case
+//					{i,j|i==j}:0;
+//					{i,j|i>j}:0;
+//					{i,j|i+1==j}:	max(table[i+1,j],table[i,j-1],(table[i+1,j-1] + w[i,j]));
+//					{i,j|i+1<j}:	max(table[i+1,j],table[i,j-1],(table[i+1,j-1] + w[i,j]),
+//							reduce(max, [k], {|i<k<j}: table[i,k] + table[k+1,j]));
+//				esac;			
+//.
+

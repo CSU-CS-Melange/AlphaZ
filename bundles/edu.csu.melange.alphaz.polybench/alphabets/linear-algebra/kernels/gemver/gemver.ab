@@ -1,0 +1,39 @@
+affine gemver {N|N>0}
+given
+	double alpha {i|i==0};
+	double beta  {i|i==0};
+	double u1 {i|0<=i<N};
+	double u2 {i|0<=i<N};
+	double v2 {i|0<=i<N};
+	double v1 {i|0<=i<N};
+	double y  {i|0<=i<N};
+	double z  {i|0<=i<N};
+returns
+	double w {i,j|0<=i<N && j==N-1};
+using
+	double A {i,j|0<=(i,j)<N};
+	double x {i,j|0<=i<N && 0<=j<=N};
+	double temp_w {i,j|0<=i<N && 0<=j<N};
+through
+	//Originally A[i][j] = A[i][j] + u1[i] * v1[j] + u2[i] * v2[j];
+	//but assuming A is initialized to 0 for now
+	A[i,j] = u1[i] * v1[j] + u2[i] * v2[j];
+	
+	x[i,j] = case
+				//Originally x[i] = x[i] + beta * A[j][i] * y[j];
+				//but assuming x is initialized to 0 for now 
+				{|j==0}  : beta[0] * A[j,i] * y[j]; 
+				{|0<j<N} :x[i,j-1] + beta[0] * A[j,i] * y[j];
+				{|j==N}  : x[i,j-1] * z[i];
+			esac;
+		
+	temp_w[i,j] = case
+					//Originally  w[i] = w[i] +  alpha * A[i][j] * x[j];
+					//but assuming w[i] is initialized to 0 for now
+					{|j==0} : alpha[0] * A[i,j] * x[j,N]; 
+					{|j>0}  : temp_w[i,j-1] + alpha[0] * A[i,j] * x[j,N];
+				esac;
+				
+	w = temp_w;
+	
+.

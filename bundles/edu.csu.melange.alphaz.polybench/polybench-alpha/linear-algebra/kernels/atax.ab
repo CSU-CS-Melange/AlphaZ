@@ -1,0 +1,13 @@
+//A.A.x (A times A.x)
+affine atax {N|N>0}
+	input
+		double A{i,j|0<=(i,j)<N};
+		double x{i|0<=i<N};
+	output
+		double y{i|0<=i<N};
+	local
+		double temp{i|0<=i<N};
+	let
+		temp[i] = reduce(+, [j], A[i,j] * x[j]);
+		y[i]    = reduce(+, [j], A[i,j] * temp[j]);
+.

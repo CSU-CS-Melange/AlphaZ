@@ -1,0 +1,27 @@
+affine scop_new {m,n,float_n|m-2>=0 && n-2>=0 && float_n-2>=0}
+input
+double data {i0,i1|i0>=0 && -i1+m-1>=0 && -i0+n-1>=0 && i1>=0};
+output
+local
+double S0 {j|-j+m-1>=0 && j>=0};
+double S1 {j,i|j>=0 && -j+m-1>=0 && -i+n-1>=0 && i>=0};
+double S2 {j|-j+m-1>=0 && j>=0};
+double S3 {i,j|i>=0 && -j+m-1>=0 && -i+n-1>=0 && j>=0};
+double S4 {j1,j2|j1>=0 && -j2+m-1>=0 && -j1+j2>=0};
+double S5 {j1,j2,i|-j2+m-1>=0 && -i+n-1>=0 && j1>=0 && i>=0 && -j1+j2>=0};
+double S6 {j1,j2|j1>=0 && -j2+m-1>=0 && -j1+j2>=0};
+let
+S0[j] = 0.0;
+S1[j,i] = case
+{|i==0} : (S0[j] + data[i,j]);
+{|i-1>=0} : (S1[j,i-1] + data[i,j]);
+esac;
+S2[j] = (S1[j,n-1] / [float_n]);
+S3[i,j] = (data - S2[j]);
+S4[j1,j2] = 0.0;
+S5[j1,j2,i] = case
+{|i==0} : (S4[j1,j2] + (S3[i,j1] * S3[i,j2]));
+{|i-1>=0} : (S5[j1,j2,i-1] + (S3[i,j1] * S3[i,j2]));
+esac;
+S6[j1,j2] = S5[j1,j2,n-1];
+.

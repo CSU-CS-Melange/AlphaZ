@@ -1,0 +1,13 @@
+// Kernel of BiCGSTAB (biconjugate gradient stabilized method)
+affine bicg {N,M|(N,M)>0}
+	input
+		double A{i,j|0<=i<N && 0<=j<M};
+		double p{j|0<=j<M};
+		double r{i|0<=i<N};
+	output
+		double q{i|0<=i<N};
+		double s{j|0<=j<M};
+	let
+		q[i] = reduce(+, [j], p[j] * A[i,j]);
+		s[j] = reduce(+, [i], r[i] * A[i,j]);
+.

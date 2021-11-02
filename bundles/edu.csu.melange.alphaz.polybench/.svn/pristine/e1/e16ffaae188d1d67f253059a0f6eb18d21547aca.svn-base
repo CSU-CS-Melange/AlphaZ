@@ -1,0 +1,36 @@
+affine fdtd-2d {tmax,ny,nx| tmax-2>=0 && ny-2>=0 && nx-2>=0 }
+	given
+		double _fict_ {i0| -i0+tmax-1>=0 && i0>=0 } ;
+		double ex {i0,i1| -i0+nx-1>=0 && -i1+ny-1>=0 && -i0+i1+nx-2>=0 && i1>=0 && i0>=0 } ;
+		double ey {i0,i1| -i0+nx-1>=0 && i0-1>=0 && -i1+ny-1>=0 && i1>=0 } ;
+		double hz {i0,i1| i0>=0 && -i0+nx-1>=0 && -i1+ny-1>=0 && i1>=0 } ;
+	using
+		double S0 {i0,i1,i2| i1==0 && i0>=0 && -i0+tmax-1>=0 && -i2+ny-1>=0 && i2>=0 } ;
+		double S1 {t,i,j| -j+ny-1>=0 && t>=0 && -t+tmax-1>=0 && j>=0 && -i+nx-1>=0 && i-1>=0 } ;
+		double S2 {t,i,j| -j+ny-1>=0 && t>=0 && -t+tmax-1>=0 && j-1>=0 && i>=0 && -i+nx-1>=0 } ;
+		double S3 {t,i,j| -i+nx-2>=0 && t>=0 && -t+tmax-1>=0 && j>=0 && i>=0 && -j+ny-2>=0 } ;
+	through
+		S0[i0,i1,i2] = _fict_[i0];
+		S1[t,i,j] = case
+			{ | t-1>=0 && -j+ny-2>=0 && -i+nx-2>=0 } : S1[t-1,i,j] - 0.5 * (S3[t-1,i,j] - S3[t-1,i-1,j]) ;
+			{ | i-nx+1==0 && -j+ny-2>=0 && t-1>=0 } : S1[t-1,i,j] - 0.5 * (hz[i,j] - S3[t-1,i-1,j]) ;
+			{ | j-ny+1==0 && t-1>=0 } : S1[t-1,i,j] - 0.5 * (hz[i,j] - hz[i-1,j]) ;
+			{ | t==0 } : ey[i,j] - 0.5 * (hz[i,j] - hz[i-1,j]) ;
+		esac;
+		S2[t,i,j] = case
+			{ | t-1>=0 && -j+ny-2>=0 && -i+nx-2>=0 } : S2[t-1,i,j] - 0.5 * (S3[t-1,i,j] - S3[t-1,i,j-1]) ;
+			{ | j-ny+1==0 && t-1>=0 && -i+nx-2>=0 } : S2[t-1,i,j] - 0.5 * (hz[i,j] - S3[t-1,i,j-1]) ;
+			{ | i-nx+1==0 && t-1>=0 } : S2[t-1,i,j] - 0.5 * (hz[i,j] - hz[i,j-1]) ;
+			{ | t==0 } : ex[i,j] - 0.5 * (hz[i,j] - hz[i,j-1]) ;
+		esac;
+		S3[t,i,j] = case
+			{ | i==0 && j-1>=0 && t-1>=0 } : S3[t-1,i,j] - 0.7 * (S2[t,i,j+1] - S2 + S1[t,i+1,j] - S0) ;
+			{ | t-1>=0 && j-1>=0 && i-1>=0 } : S3[t-1,i,j] - 0.7 * (S2[t,i,j+1] - S2 + S1[t,i+1,j] - S1) ;
+			{ | j==0 && i==0 && t-1>=0 } : S3[t-1,i,j] - 0.7 * (S2[t,i,j+1] - ex[i,i] + S1[t,i+1,j] - S0) ;
+			{ | j==0 && i-1>=0 && t-1>=0 } : S3[t-1,i,j] - 0.7 * (S2[t,i,j+1] - ex[i,j] + S1[t,i+1,j] - S1) ;
+			{ | i==0 && t==0 && j-1>=0 } : hz[t,j] - 0.7 * (S2[t,i,j+1] - S2 + S1[t,i+1,j] - S0) ;
+			{ | t==0 && i-1>=0 && j-1>=0 } : hz[i,j] - 0.7 * (S2[t,i,j+1] - S2 + S1[t,i+1,j] - S1) ;
+			{ | j==0 && i==0 && t==0 } : hz[t,i] - 0.7 * (S2[t,i,j+1] - ex[t,i] + S1[t,i+1,j] - S0) ;
+			{ | j==0 && t==0 && i-1>=0 } : hz[i,j] - 0.7 * (S2[t,i,j+1] - ex[i,j] + S1[t,i+1,j] - S1) ;
+		esac;
+.

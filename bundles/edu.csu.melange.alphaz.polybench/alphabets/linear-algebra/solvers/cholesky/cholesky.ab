@@ -1,0 +1,26 @@
+//========================================================//
+//
+// Cholesky Factorization serialized (by hand)
+//
+//========================================================//
+//
+double sqrt(double);
+affine cholesky {N | 2<=N } // Size Parameter
+given // Inputs
+double A {i,j | 0 <= j <= i < N};
+returns
+double L {i,j | 0 <= j <= i < N};
+using
+double Acc {i,j,k| 0 <= k < j <=i < N };
+through
+Acc[i,j,k] = case
+	{| k==0} : L[i,k]*L[j,k];
+	{| k>0}  : Acc[i,j,k-1] + L[i,k]*L[j,k];
+esac;
+L[i,j] = case
+       	 {| i==j==0}:	sqrt(A[i,j]);
+       	 {| i==j>0}:	sqrt(A[i,j] - Acc[i,j,j-1]);
+       	 {| i>j==0}:	A[i,j]/L[j,j];
+       	 {| i>j>0}:	(A[i,j] - Acc[i,j,j-1])/L[j,j];
+esac;
+.

@@ -1,0 +1,24 @@
+affine atax {N|N>0}
+given
+	double A {i,j|0<=(i,j)<N};
+	double X {j|0<=j<N};
+returns
+	double Y {i,j|i==N && 0<=j<N};
+using
+	double temp {i,j|0<=(i,j)<N};
+	double temp_Y {i,j|0<=(i,j)<N};
+through
+
+	temp[i,j] = case
+				{|j==0} : A[i,j] * X[j];
+				{|j>0 } : temp[i,j-1] + A[i,j] * X[j];
+			esac;
+
+	temp_Y[i,j] = case
+				{|i==0} : A[i,j] * temp[i,N-1];
+				{|i>0 } : temp_Y[i-1,j] + A[i,j] * temp[i,N-1];
+			esac;
+			
+	Y[i,j] = temp_Y[i-1,j];
+	
+.

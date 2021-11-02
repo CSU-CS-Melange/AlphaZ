@@ -1,0 +1,29 @@
+// Serialized LU decomposition  This corresponds to the 
+// a version from which a systolic array can be systematically
+// derived.  It CANNOT be derived obtained from the version
+// with reductions by using the curent set of AlphaZ (or
+//  even MMAlpha) transformations.  In particular we initialize
+// the accumulation with A[i,j] and then successively SUBTRACT
+// partial accumulations.  Hence the results it produces may
+// not agree numerically with the reduction version (roundoff
+// errors)
+
+affine lu {N|1<N}
+given
+   double A {i,j|0<=i<N && 0<=j<N};
+returns
+   double LU {i,j|0<=i<N && 0<=j<N } ;
+using
+   double F {i,j,k|0<=i<N && 0<=j<N && -1<=k && k<i && k<=j };
+through
+   F = case
+          {i,j,k | k<0} : (i,j,k->i,j)@A;
+          {i,j,k | k>=0 && k==j} : (i,j,k->i,j,k-1)@F / (i,j,k->j,j,j-1)@F; //F[i,j,k-1]/U[j,j]
+          {i,j,k | k>=0 && k<j}  : (i,j,k->i,j,k-1)@F - (i,j,k->i,k,k)@F * (i,j,k->k,j,k-1)@F;
+         esac;
+
+   LU = case
+           {i,j | i<=j} : (i,j->i,j,i-1)@F;
+           {i,j | i>j}  : (i,j->i,j,j)@F;
+        esac;
+.

@@ -1,0 +1,48 @@
+affine reg_detect {niter,length,maxgrid| niter-2>=0 && maxgrid-2>=0 && length-2>=0 }
+	input
+		int sum_tang {i0,i1| i0>=0 && -i0+i1>=0 && -i1+maxgrid-1>=0 } ;
+	output
+		int path {i0,i1| 0<=(i0,i1)<maxgrid } ;
+	local
+		int S0 {t,j,i,cnt| -cnt+length-1>=0 && -t+niter-1>=0 && t>=0 && cnt>=0 && -j+i>=0 && -i+maxgrid-1>=0 && j>=0 } ;
+		int S1 {t,j,i| -i+maxgrid-1>=0 && t>=0 && -t+niter-1>=0 && j>=0 && -j+i>=0 } ;
+		int S2 {t,j,i,cnt| -cnt+length-1>=0 && -t+niter-1>=0 && t>=0 && cnt-1>=0 && -j+i>=0 && -i+maxgrid-1>=0 && j>=0 } ;
+		int S3 {t,j,i| -i+maxgrid-1>=0 && t>=0 && -t+niter-1>=0 && j>=0 && -j+i>=0 } ;
+		int S4 {t,i| 0<=t<niter && 0<=i<maxgrid } ;
+		int S5 {t,j,i| 0<=t<niter && 0<j<=i<maxgrid } ;
+	let
+		S0[t,j,i,cnt] = sum_tang[j,i];
+		S1[t,j,i] = case
+			{ | t-1>=0 } : S0[t,j,i,0] ;
+			{ | t==0 } : S0[0,j,i,0] ;
+		esac;
+		S2[t,j,i,cnt] = case
+			{ | cnt-1==0 && t==0 } : S1[0,j,i] + S0[0,j,i,cnt] ;
+			{ | cnt-1==0 && t-1>=0 } : S1[t,j,i] + S0 ;
+			{ | t==0 && cnt-2>=0 } : S2[0,j,i,cnt-1] + S0[0,j,i,cnt] ;
+			{ | t-1>=0 && cnt-2>=0 } : S2[t,j,i,cnt-1] + S0 ;
+		esac;
+		S3[t,j,i] = case
+			{ | t-1>=0 } : S2[t,j,i,length-1] ;
+			{ | t==0 } : S2[0,j,i,length-1] ;
+		esac;
+		S4[t,i] = case
+			{ | t-1>=0 } : S3[t,0,i] ;
+			{ | t==0 } : S3[0,0,i] ;
+		esac;
+		S5[t,j,i] = case
+			{ | j-1==0 && t==0 } : S4[0,i-1] + S3[0,j,i] ;
+			{ | j-1==0 && t-1>=0 } : S4[t,i-1] + S3 ;
+			{ | t==0 && j-2>=0 } : S5[0,j-1,i-1] + S3[0,j,i] ;
+			{ | t-1>=0 && j-2>=0 } : S5[t,j-1,i-1] + S3 ;
+		esac;
+		
+		path[i0,i1] = case
+			{|i0==0} : S4[niter-1,i1];
+			S5[niter-1,i0,i1];
+			//initialization code for lower triangle of output value in the original c code
+			//this region is never updated in scop
+			{|0<i0<maxgrid && 0<=i1<maxgrid && i0>i1} : ([i1]*[i0-1]) / [maxgrid];
+			
+		esac;
+.

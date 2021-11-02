@@ -1,0 +1,85 @@
+affine fdtd-2d {tmax,ny,nx|(tmax,ny,nx)>1}
+	given 
+		double _fict_ {i|0<=i<tmax};
+		double ex {i,j|0<=i<nx && 0<=j<ny};
+		double ey {i,j|0<=i<nx && 0<=j<ny};
+		double hz {i,j|0<=i<nx && 0<=j<ny};
+	using
+		double S0 {t,j  |0<=j<ny && 0<=t<tmax};
+		double S1 {t,i,j|0<=j<ny && 1<=i<nx && 0<=t<tmax};
+		double S2 {t,i,j|1<=j<ny && 0<=i<nx && 0<=t<tmax};
+		double S3 {t,i,j|0<=j<ny-1 && 0<=i<nx-1 && 0<=t<tmax};
+	through
+	/*
+ERROR::  Variable S1 is not defined over the domain : {t,i,j|j-ny+1==0 && ny-2>=0 && -t+tmax-1>=0 && i-1>=0 && -i+nx-1>=0 && t-1>=0} || {t,i,j|i-nx+1==0 && j>=0 && -j+ny-2>=0 && nx-2>=0 && -t+tmax-1>=0 && t-1>=0}
+ERROR::  For Parameters {|tmax-2>=0 && ny-2>=0 && nx-2>=0} Variable S1 is not defined over the domain : {t,i,j|j-ny+1==0 && t-1>=0} || {t,i,j|i-nx+1==0 && -j+ny-2>=0 && t-1>=0}
+ERROR::  Variable S2 is not defined over the domain : {t,i,j|j-ny+1==0 && ny-2>=0 && nx-2>=0 && i>=0 && -i+nx-1>=0 && t-1>=0 && -t+tmax-1>=0} || {t,i,j|i-nx+1==0 && j-1>=0 && -j+ny-2>=0 && nx-2>=0 && -t+tmax-1>=0 && t-1>=0}
+ERROR::  For Parameters {|tmax-2>=0 && ny-2>=0 && nx-2>=0} Variable S2 is not defined over the domain : {t,i,j|j-ny+1==0 && t-1>=0} || {t,i,j|i-nx+1==0 && t-1>=0 && -j+ny-2>=0}
+ERROR::  Variable S3 is not defined over the domain : {t,i,j|j==0 && ny-2>=0 && -i+nx-2>=0 && i>=0 && -t+tmax-1>=0 && tmax-2>=0 && t>=0}
+ERROR::  For Parameters {|tmax-2>=0 && ny-2>=0 && nx-2>=0} Variable S3 is not defined over the domain : {t,i,j|j==0}
+	S1[t, i, j] -> S1[-1 + t, i, j] : t >= 1;
+	S1[t, i, j] -> S3[-1 + t, i', j] : j <= -2 + ny and t >= 1 and i' >= -1 + i and i' <= i and i' <= -2 + nx;
+* 
+*/
+	
+		//write to ey
+		S0[t,j] = _fict_[t];
+		
+		S1[t,i,j] = case
+						{|t==0} : ey[i,j] - 0.5*(hz[i,j]-hz[i-1,j]);
+						{|t>=1 && j==ny-1} : S1[t-1,i,j] - 0.5*(hz[i,j]-hz[i-1,j]);
+						{|t>=1 && i==nx-1} : S1[t-1,i,j] - 0.5*(hz[i,j]-S3[t-1,i-1,j]);
+						{|t>=1} : S1[t-1,i,j] - 0.5*(S3[t-1,i,j]-S3[t-1,i-1,j]);
+					esac;
+				
+		//write to ex
+		S2[t,i,j] = case 
+						{|t==0} : ex[i,j] - 0.5 * (hz[i,j] - hz[i,j-1]);
+						{|t>=1 && i==nx-1} : S2[t-1,i,j] - 0.5 * (hz[i,j] - hz[i,j-1]);
+						{|t>=1 && j==ny-1} : S2[t-1,i,j] - 0.5 * (hz[i,j] - S3[t-1,i,j-1]);
+						{|t>=1} : S2[t-1,i,j] - 0.5 * (S3[t-1,i,j] - S3[t-1,i,j-1]);
+					esac;
+		//write to hz
+		S3[t,i,j] = case
+						{|t==0 && i==0 && j==0} : hz[i,j] - 0.7*  (S2[t,i,j+1] - ex[i,j] +  S1[t,i+1,j] - S0[t,j]);
+						{|t==0 && i==0} : hz[i,j] - 0.7*  (S2[t,i,j+1] - S2[t,i,j] +  S1[t,i+1,j] - S0[t,j]);
+						{|t==0 && j==0} : hz[i,j] - 0.7*  (S2[t,i,j+1] - ex[i,j] +  S1[t,i+1,j] - S1[t,i,j]);
+						{|t==0}         : hz[i,j] - 0.7*  (S2[t,i,j+1] - S2[t,i,j] +  S1[t,i+1,j] - S1[t,i,j]);
+						{|t>=1 && i==0 && j==0}: S3[t-1,i,j] - 0.7*  (S2[t,i,j+1] - ex[i,j] +  S1[t,i+1,j] - S0[t,j]);
+						{|t>=1 && i==0}: S3[t-1,i,j] - 0.7*  (S2[t,i,j+1] - S2[t,i,j] +  S1[t,i+1,j] - S0[t,j]);
+						{|t>=1 && j==0}: S3[t-1,i,j] - 0.7*  (S2[t,i,j+1] - ex[i,j] +  S1[t,i+1,j] - S1[t,i,j]);
+						{|t>=1}        : S3[t-1,i,j] - 0.7*  (S2[t,i,j+1] - S2[t,i,j] +  S1[t,i+1,j] - S1[t,i,j]);
+					esac;
+.
+
+/*
+void kernel_fdtd_2d(int tmax,
+		    int nx,
+		    int ny,
+		    DATA_TYPE POLYBENCH_2D(ex,NX,NY,nx,ny),
+		    DATA_TYPE POLYBENCH_2D(ey,NX,NY,nx,ny),
+		    DATA_TYPE POLYBENCH_2D(hz,NX,NY,nx,ny),
+		    DATA_TYPE POLYBENCH_1D(_fict_,TMAX,tmax))
+{
+  int t, i, j;
+
+#pragma scop
+
+  for(t = 0; t < _PB_TMAX; t++)
+    {
+      for (j = 0; j < _PB_NY; j++)
+S0:	ey[0][j] = _fict_[t];
+      for (i = 1; i < _PB_NX; i++)
+	for (j = 0; j < _PB_NY; j++)
+S1:	  ey[i][j] = ey[i][j] - 0.5*(hz[i][j]-hz[i-1][j]);
+      for (i = 0; i < _PB_NX; i++)
+	for (j = 1; j < _PB_NY; j++)
+S2:	  ex[i][j] = ex[i][j] - 0.5*(hz[i][j]-hz[i][j-1]);
+      for (i = 0; i < _PB_NX - 1; i++)
+	for (j = 0; j < _PB_NY - 1; j++)
+S3:	  hz[i][j] = hz[i][j] - 0.7*  (ex[i][j+1] - ex[i][j] +
+				       ey[i+1][j] - ey[i][j]);
+    }
+
+#pragma endscop
+ */

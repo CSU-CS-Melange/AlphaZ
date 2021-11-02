@@ -1,0 +1,26 @@
+//========================================================//
+//
+// Optimal String Parenthesization Reverse Serialized
+//
+//========================================================//
+//
+
+affine QuadOSP1 {N |2<= N}
+given
+    int P {i | 0<=i<=N};
+returns
+    int F {i,j | 1<=i<=j<=N};
+using
+    int AuxF {i,j,k | 1<=i<=j<=N && i<=k<j};
+through
+    F[i,j] = case
+    	{|i==j}: 0;
+		{|i<j} : AuxF[i,j,i];
+	esac;
+    AuxF[i,j,k] = case
+		{|i<j==k+1} : F[i,k] + F[k+1,j] + P[i-1]*P[k]*P[j];
+		{|i<=k<j-1} : min(AuxF[i,j,k+1],
+			      		 (F[i,k] + F[k+1,j] + P[i-1]*P[k]*P[j]));
+	esac;
+.
+

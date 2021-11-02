@@ -1,0 +1,10 @@
+affine jacobi-1d-imper {tsteps,n|tsteps>=5 && n>=5}
+	input
+		double A {i0|i0>=0 && tsteps-2>=0 && n-3>=0 && -i0+n-1>=0};
+	local
+		double S0 {t,i|i-1>=0 && -i+n-2>=0 && t>=0 && -t+tsteps-1>=0 && tsteps>=2 && n>=2};
+		double S1 {t,j|j-1>=0 && -j+n-2>=0 && t>=0 && -t+tsteps-1>=0 && tsteps>=2 && n>=2};
+	let
+		S0[t, i] = (0.33333 *((case {t,i|t-1>=0 && -t+tsteps-1>=0 && i-2>=0 && -i+n-2>=0} : S1[t-1, i-1]; {t,i|t==0} || {t,i|i-1==0 && t-1>=0} : A[i-1]; esac +case {t,i|-t+tsteps-1>=0 && t-1>=0 && i-1>=0 && -i+n-2>=0} : S1[t-1, i]; {t,i|t==0} : A[i]; esac) +case {t,i|t-1>=0 && -t+tsteps-1>=0 && i-1>=0 && -i+n-3>=0} : S1[t-1, i+1]; {t,i|t==0} || {t,i|i-n+2==0 && t-1>=0} : A[i+1]; esac));
+		S1[t, j] = case {t,j|t-1>=0 && -t+tsteps-1>=0 && j-1>=0 && -j+n-2>=0} : S0[t, j]; {t,j|t==0 && j-1>=0 && -j+n-2>=0 && tsteps-2>=0} : S0[0, j]; esac;
+.

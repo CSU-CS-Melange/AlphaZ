@@ -1,0 +1,20 @@
+affine kernel_gramschmidt_scop_0 {nj,ni|nj>=2 && ni>=2}
+	input
+		double A {i0,i1|-i0+ni-1>=0 && nj-2>=0 && -i1+nj-1>=0 && ni-2>=0 && i1>=0 && i0>=0};
+	local
+		double S0 {k|k>=0 && -k+nj-1>=0 && nj>=2 && ni>=2};
+		double S1 {k,i|i>=0 && -i+ni-1>=0 && k>=0 && -k+nj-1>=0 && nj>=2 && ni>=2};
+		double S2 {k|k>=0 && -k+nj-1>=0 && nj>=2 && ni>=2};
+		double S3 {k,i|i>=0 && -i+ni-1>=0 && k>=0 && -k+nj-1>=0 && nj>=2 && ni>=2};
+		double S4 {k,j|-k+j-1>=0 && -j+nj-1>=0 && k>=0 && -k+nj-1>=0 && nj>=2 && ni>=2};
+		double S5 {k,j,i|i>=0 && -i+ni-1>=0 && -k+j-1>=0 && -j+nj-1>=0 && k>=0 && -k+nj-1>=0 && nj>=2 && ni>=2};
+		double S6 {k,j,i|i>=0 && -i+ni-1>=0 && -k+j-1>=0 && -j+nj-1>=0 && k>=0 && -k+nj-1>=0 && nj>=2 && ni>=2};
+	let
+		S0[k] = [0];
+		S1[k, i] = (case {k,i|i==0 && k==0 && ni-2>=0 && nj-2>=0} : S0[0]; {k,i|i==0 && k-1>=0 && -k+nj-1>=0 && ni-2>=0} : S0[k]; {k,i|k==0 && nj-2>=0 && i-1>=0 && -i+ni-1>=0} : S1[0, i-1]; {k,i|-k+nj-1>=0 && i-1>=0 && -i+ni-1>=0 && k-1>=0} : S1[k, i-1]; esac +(case {k,i|i>=0 && -i+ni-1>=0 && -k+nj-1>=0 && k-1>=0 && ni-2>=0} : S6[k-1, k, i]; {k,i|k==0} : A[i, k]; esac *case {k,i|i>=0 && -i+ni-1>=0 && k-1>=0 && -k+nj-1>=0 && ni-2>=0} : S6[k-1, k, i]; {k,i|k==0} : A[i, k]; esac));
+		S2[k] = 1 /* TODO: see parse error for detail */;
+		S3[k, i] = (case {k,i|i>=0 && -i+ni-1>=0 && k-1>=0 && -k+nj-1>=0 && ni-2>=0} : S6[k-1, k, i]; {k,i|k==0} : A[i, k]; esac /S2[k]);
+		S4[k, j] = [0];
+		S5[k, j, i] = (case {k,j,i|i==0 && -j+nj-1>=0 && -k+j-1>=0 && k>=0 && ni-2>=0} : S4[k, j]; {k,j,i|k>=0 && -j+nj-1>=0 && i-1>=0 && -i+ni-1>=0 && -k+j-1>=0} : S5[k, j, i-1]; esac +(S3[k, i] *case {k,j,i|ni-2>=0 && k-1>=0 && i>=0 && -i+ni-1>=0 && -k+j-1>=0 && -j+nj-1>=0} : S6[k-1, j, i]; {k,j,i|k==0} : A[i, j]; esac));
+		S6[k, j, i] = (case {k,j,i|ni-2>=0 && k-1>=0 && i>=0 && -i+ni-1>=0 && -k+j-1>=0 && -j+nj-1>=0} : S6[k-1, j, i]; {k,j,i|k==0} : A[i, j]; esac -(S3[k, i] *S5[k, j, ni-1]));
+.

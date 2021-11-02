@@ -1,0 +1,14 @@
+//Dynamic programming
+// the original code has a useless loop, removed in Alpha version
+affine dynprog {N|N>1}
+	input
+		int weights {i,j|0<=(i,j)<N};
+	output
+		int costs {i,j|0<=i<j<N};
+	let
+		costs[i,j] = case
+						{|i+1==j} : weights[i,j];
+						{|i+1<j}  : reduce(+, [k], {|i<k<j} : costs[i,k] + costs[k,j]) + weights[i,j];
+					esac;
+					
+.

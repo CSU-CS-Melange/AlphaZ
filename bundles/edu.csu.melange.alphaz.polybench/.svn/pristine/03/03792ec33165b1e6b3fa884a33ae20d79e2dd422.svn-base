@@ -1,0 +1,43 @@
+affine scop_new {n|n-2>=0}
+input
+double r {i0|-i0+n-1>=0 && i0>=0};
+output
+local
+double S0 {|};
+double S1 {|};
+double S2 {|};
+double S3 {k|-k+n-1>=0 && k-1>=0};
+double S4 {k|-k+n-1>=0 && k-1>=0};
+double S5 {k,i|k-i-1>=0 && i>=0 && -k+n-1>=0};
+double S6 {k|-k+n-1>=0 && k-1>=0};
+double S7 {k,i|k-i-1>=0 && i>=0 && -k+n-1>=0};
+double S8 {k|-k+n-1>=0 && k-1>=0};
+double S9 {i|-i+n-1>=0 && i>=0};
+let
+S0[] = r[0];
+S1[] = [1];
+S2[] = r[0];
+S3[k] = case
+{|k-1==0} : (S1 - ((S2 * S2) * S1));
+{|k-2>=0} : (S3[k-1] - ((S6[k-1] * S6[k-1]) * S3[k-1]));
+esac;
+S4[k] = r;
+S5[k,i] = case
+{|i==0 && k-1==0} : (S4[k] + (r[k-i-1] * S0));
+{|i==0 && k-2>=0} : (S4[k] + (r[k-i-1] * S7[k-1,i]));
+{|k-i-2>=0 && i-1>=0} : (S5[k,i-1] + (r[k-i-1] * S7[k-1,i]));
+{|-k+i+1==0 && k-2>=0} : (S5[k,i-1] + (r[k-i-1] * S8[i]));
+esac;
+S6[k] = (-S5[k,k-1] * S3);
+S7[k,i] = case
+{|i==0 && k-1==0} : (S0 + (S6[k] * S0));
+{|k-i-2>=0 && i-1>=0} : (S7[k-1,i] + (S6[k] * S7[k-1,-i+k-1]));
+{|i==0 && k-2>=0} : (S7[k-1,i] + (S6[k] * S8[k-1]));
+{|-k+i+1==0 && k-2>=0} : (S8[i] + (S6[k] * S7[k-1,-i+k-1]));
+esac;
+S8[k] = S6;
+S9[i] = case
+{|-i+n-2>=0} : S7[n-1,i];
+{|i-n+1==0} : S8;
+esac;
+.

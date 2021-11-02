@@ -1,0 +1,17 @@
+affine trisolv {n| n-2>=0 }
+	input
+		double A {i0,i1| -i0+n-1>=0 && i1>=0 && i0-i1>=0 } ;
+		double c {i0| -i0+n-1>=0 && i0>=0 } ;
+	local
+		double S1 {i,j| i-j-1>=0 && j>=0 && -i+n-1>=0 } ;
+		double S2 {i0,i1| -i0+i1+1==0 && -i0+n-1>=0 && i0>=0 } ;
+	let
+		S1[i,j] = case
+			{ | j==0 } : c[i] - A * S2[j,j-1] ;
+			{ | j-1>=0 } : S1[i,j-1] - A * S2[j,j-1] ;
+		esac;
+		S2[i0,i1] = case
+			{ | i0==0 } : c[i0] / A[i0,i1+1] ;
+			{ | i0-1>=0 } : S1[i0,i1] / A[i0,i1+1] ;
+		esac;
+.

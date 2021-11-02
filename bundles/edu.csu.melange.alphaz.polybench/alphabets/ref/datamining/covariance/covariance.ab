@@ -1,0 +1,34 @@
+affine covariance {m,n| m-2>=0 && n-2>=0 }
+	input
+		double float_n { | } ;
+		double data {i0,i1| -i1+m-1>=0 && -i0+n-1>=0 && i1>=0 && i0>=0 } ;
+	output
+		double symmat {i0,i1| 0<=(i0,i1)<m};
+	local
+		double S0 {j| j>=0 && -j+m-1>=0 } ;
+		double S1 {j,i| -j+m-1>=0 && -i+n-1>=0 && i>=0 && j>=0 } ;
+		double S2 {j| j>=0 && -j+m-1>=0 } ;
+		double S3 {i,j| -j+m-1>=0 && -i+n-1>=0 && j>=0 && i>=0 } ;
+		double S4 {j1,j2| 0<=j1<=j2<m } ;
+		double S5 {j1,j2,i| 0<=j1<=j2<m && 0<=i<n } ;
+		double S6 {j1,j2| 0<=j1<=j2<m } ;
+	let
+		S0[j] = 0.0;
+		S1[j,i] = case
+			{ | i==0 } : S0[j] + data[i,j] ;
+			{ | i-1>=0 } : S1[j,i-1] + data[i,j] ;
+		esac;
+		S2[j] = S1[j,n-1] / float_n;
+		S3[i,j] = data - S2[j];
+		S4[j1,j2] = 0.0;
+		S5[j1,j2,i] = case
+			{ | i==0 } : S4[j1,j2] + S3[i,j1] * S3[i,j2] ;
+			{ | i-1>=0 } : S5[j1,j2,i-1] + S3[i,j1] * S3[i,j2] ;
+		esac;
+		S6[j1,j2] = S5[j1,j2,n-1];
+		
+		symmat[i0,i1] = case
+			{j1,j2| 0<=j1<j2<m } : S5[i0,i1,n-1];
+			{j1,j2| 0<=j2<=j1<m } : S6[i1,i0];
+		esac;
+.

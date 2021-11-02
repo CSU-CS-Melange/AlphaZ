@@ -1,0 +1,18 @@
+affine kernel_gesummv_scop_0 {n,alpha,beta|n>=2 && alpha>=2 && beta>=2}
+	input
+		double A {i0,i1|i1>=0 && -i1+n-1>=0 && i0>=0 && -i0+n-1>=0 && n-2>=0 && alpha-2>=0 && beta-2>=0};
+		double B {i0,i1|i1>=0 && -i1+n-1>=0 && i0>=0 && -i0+n-1>=0 && n-2>=0 && alpha-2>=0 && beta-2>=0};
+		double x {i0|i0>=0 && -i0+n-1>=0 && beta-2>=0 && n-2>=0 && alpha-2>=0};
+	local
+		double S0 {i|i>=0 && -i+n-1>=0 && n>=2 && alpha>=2 && beta>=2};
+		double S1 {i|i>=0 && -i+n-1>=0 && n>=2 && alpha>=2 && beta>=2};
+		double S2 {i,j|j>=0 && -j+n-1>=0 && i>=0 && -i+n-1>=0 && n>=2 && alpha>=2 && beta>=2};
+		double S3 {i,j|j>=0 && -j+n-1>=0 && i>=0 && -i+n-1>=0 && n>=2 && alpha>=2 && beta>=2};
+		double S4 {i|i>=0 && -i+n-1>=0 && n>=2 && alpha>=2 && beta>=2};
+	let
+		S0[i] = [0];
+		S1[i] = [0];
+		S2[i, j] = ((A[i, j] *x[j]) +case {i,j|j==0 && beta-2>=0 && alpha-2>=0 && n-2>=0 && i>=0 && -i+n-1>=0} : S0[i]; {i,j|-j+n-1>=0 && i>=0 && -i+n-1>=0 && j-1>=0 && alpha-2>=0 && beta-2>=0} : S2[i, j-1]; esac);
+		S3[i, j] = ((B[i, j] *x[j]) +case {i,j|j==0 && beta-2>=0 && alpha-2>=0 && n-2>=0 && i>=0 && -i+n-1>=0} : S1[i]; {i,j|-j+n-1>=0 && i>=0 && -i+n-1>=0 && j-1>=0 && alpha-2>=0 && beta-2>=0} : S3[i, j-1]; esac);
+		S4[i] = (([alpha] *S2[i, n-1]) +([beta] *S3[i, n-1]));
+.

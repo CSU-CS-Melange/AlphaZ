@@ -1,0 +1,17 @@
+The directory structure of alphabets for polybench programs
+
+
+ - Each benchmark is in its own directory corresponding to the name of the benchmark
+ - Each alphabets has only one system, with the system name matching the name of the benchmark
+ - All benchmarks are categorized as it is in the polybench using sub-directories
+
+ - The benchmark category (e.g., stencils) in the top-level is partial implementation of the benchmarks by hand.
+ - 'alphaz-variants' contain programs not in the polybench, but a good candidate addition to it
+ - All other sub-directories are extracted alphabets from C loop nests with some post-processsing
+     - 'raw': untouched program as extracted, reference for extraction part
+     - 'raw-normalized': 'raw' after normalization
+     - 'fixed': 'raw' programs post-processed to:
+        - use the system name according to the convention
+        - external functions handled
+     - 'fixed-normalized': 'fixed' after normalization
+     - 'ref': 'fixed-normalized' with output variables defined

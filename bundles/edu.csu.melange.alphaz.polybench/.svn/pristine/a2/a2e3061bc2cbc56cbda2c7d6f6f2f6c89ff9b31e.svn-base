@@ -1,0 +1,17 @@
+affine scop_new {ni,nj,nk,alpha,nl,beta|ni>=5 && nj>=5 && nk>=5 && alpha>=5 && nl>=5 && beta>=5}
+	input
+		double A {i0,i1|i1>=0 && -i1+nk-1>=0 && beta-5>=0 && nj-5>=0 && i0>=0 && -i0+ni-1>=0 && ni-5>=0 && nl-5>=0 && nk-5>=0 && alpha-5>=0};
+		double B {i0,i1|i0>=0 && -i0+nk-1>=0 && i1>=0 && -i1+nj-1>=0 && beta-5>=0 && ni-5>=0 && nl-5>=0 && nj-5>=0 && nk-5>=0 && alpha-5>=0};
+		double C {i0,i1|i0>=0 && -i0+nj-1>=0 && i1>=0 && -i1+nl-1>=0 && beta-5>=0 && ni-5>=0 && nl-5>=0 && nj-5>=0 && nk-5>=0 && alpha-5>=0};
+		double D {i0,i1|i1>=0 && -i1+nl-1>=0 && i0>=0 && -i0+ni-1>=0 && ni-5>=0 && nj-5>=0 && nk-5>=0 && alpha-5>=0 && nl-5>=0 && beta-5>=0};
+	local
+		double S0 {i,j|j>=0 && -j+nj-1>=0 && i>=0 && -i+ni-1>=0 && ni>=5 && nj>=5 && nk>=5 && alpha>=5 && nl>=5 && beta>=5};
+		double S1 {i,j,k|k>=0 && -k+nk-1>=0 && j>=0 && -j+nj-1>=0 && i>=0 && -i+ni-1>=0 && ni>=5 && nj>=5 && nk>=5 && alpha>=5 && nl>=5 && beta>=5};
+		double S2 {i,j|j>=0 && -j+nl-1>=0 && i>=0 && -i+ni-1>=0 && ni>=5 && nj>=5 && nk>=5 && alpha>=5 && nl>=5 && beta>=5};
+		double S3 {i,j,k|k>=0 && -k+nj-1>=0 && j>=0 && -j+nl-1>=0 && i>=0 && -i+ni-1>=0 && ni>=5 && nj>=5 && nk>=5 && alpha>=5 && nl>=5 && beta>=5};
+	let
+		S0[i, j] = [0];
+		S1[i, j, k] = (case {i,j,k|k==0 && -j+nj-1>=0 && j>=0 && i>=0 && -i+ni-1>=0 && ni-5>=0 && nj-5>=0 && nk-5>=0 && alpha-5>=0 && nl-5>=0 && beta-5>=0} : S0[i, j]; {i,j,k|i>=0 && -i+ni-1>=0 && ni-5>=0 && nj-5>=0 && nk-5>=0 && alpha-5>=0 && nl-5>=0 && beta-5>=0 && k-1>=0 && -k+nk-1>=0 && j>=0 && -j+nj-1>=0} : S1[i, j, k-1]; esac +(([alpha] *A[i, k]) *B[k, j]));
+		S2[i, j] = (D[i, j] *[beta]);
+		S3[i, j, k] = (case {i,j,k|k==0 && -j+nl-1>=0 && j>=0 && i>=0 && -i+ni-1>=0 && ni-5>=0 && nj-5>=0 && nk-5>=0 && alpha-5>=0 && nl-5>=0 && beta-5>=0} : S2[i, j]; {i,j,k|i>=0 && -i+ni-1>=0 && ni-5>=0 && nj-5>=0 && nk-5>=0 && alpha-5>=0 && nl-5>=0 && beta-5>=0 && k-1>=0 && -k+nj-1>=0 && j>=0 && -j+nl-1>=0} : S3[i, j, k-1]; esac +(S1[i, k, nk-1] *C[k, j]));
+.

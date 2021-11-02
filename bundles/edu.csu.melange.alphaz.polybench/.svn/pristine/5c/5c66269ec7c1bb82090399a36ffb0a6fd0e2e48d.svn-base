@@ -1,0 +1,21 @@
+//LU decomposition
+// Find lower triangular matrix L and upper triangular matrix U given matrix A such that A = LU
+//  - no pivoting
+affine lu {N|N>1}
+	input
+		double A {i,j|0<=(i,j)<N}; 
+	output
+		//unit diagonal of L is implicit
+		double L {i,j|0<i<N && 0<=j<i};
+		double U {i,j|0<=j<N && 0<=i<=j};
+	let
+		U[i,j] = case
+			{|i==0} : A[i,j];
+			{|i>0} : A[i,j] - reduce(+, [k], {|0<=k<i} : L[i,k]*U[k,j]);
+		esac;
+		
+		L[i,j] = case
+			{|j==0} : A[i,j] / U[j,j];
+			{|j>0} : (A[i,j] - reduce(+, [k], {|0<=k<j} : L[i,k]*U[k,j]))/U[j,j];
+		esac;
+.

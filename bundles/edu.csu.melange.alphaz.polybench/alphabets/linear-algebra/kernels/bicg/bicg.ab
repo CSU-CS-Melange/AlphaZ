@@ -1,0 +1,27 @@
+affine bicg {N|N>0}
+given
+	double A {i,j|0<=(i,j)<N};
+	double r {i|0<=i<N};
+	double p {j|0<=j<N};
+returns
+	double s {i,j|0<=i<N && j==N};
+	double q {i,j|0<=j<N && i==N};
+using
+	double temp_s {i,j|0<=i<N && 0<=j<N};
+	double temp_q {i,j|0<=i<N && 0<=j<N};
+through
+
+	temp_s[i,j] = case
+					{|j==0} : r[i] * A[i,j];
+					{|j>0}  : temp_s[i,j-1] + r[i] * A[i,j];
+				esac;
+
+	temp_q[i,j] = case
+					{|i==0} : A[i,j] * p[j];
+					{|i>0}  : temp_q[i-1,j] + A[i,j] * p[j];
+				esac;
+	
+	s[i,j] = temp_s[i,j-1];
+	q[i,j] = temp_q[i-1,j];
+
+.

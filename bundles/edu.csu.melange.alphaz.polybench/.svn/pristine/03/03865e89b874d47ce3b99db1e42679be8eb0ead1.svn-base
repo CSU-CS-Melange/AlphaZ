@@ -1,0 +1,22 @@
+//QR Decomposition using Gram-Schmidt process
+// Find orthogonal matrix Q and upper triangular matrix R given matrix A such that A = QR
+// 
+affine gramschmidt {N|N>0}
+.
+//
+// 85   for (k = 0; k < _PB_NJ; k++)
+// 86     {
+// 87       nrm = 0;
+// 88       for (i = 0; i < _PB_NI; i++)
+// 89         nrm += A[i][k] * A[i][k];
+// 90       R[k][k] = sqrt(nrm);
+// 91       for (i = 0; i < _PB_NI; i++)
+// 92         Q[i][k] = A[i][k] / R[k][k];
+// 93       for (j = k + 1; j < _PB_NJ; j++)
+// 94         {
+// 95           R[k][j] = 0;
+// 96           for (i = 0; i < _PB_NI; i++)
+// 97             R[k][j] += Q[i][k] * A[i][j];
+// 98           for (i = 0; i < _PB_NI; i++)
+// 99             A[i][j] = A[i][j] - Q[i][k] * R[k][j];
+//100         }

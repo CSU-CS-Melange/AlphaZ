@@ -1,0 +1,37 @@
+double sqrt (double) ;
+affine gramschmidt {nj,ni| nj-2>=0 && ni-2>=0 }
+	input
+		double A {i0,i1| -i1+nj-1>=0 && -i0+ni-1>=0 && i1>=0 && i0>=0 } ;
+	local
+		double S0 {k| k>=0 && -k+nj-1>=0 } ;
+		double S1 {k,i| -k+nj-1>=0 && -i+ni-1>=0 && i>=0 && k>=0 } ;
+		double S2 {k| k>=0 && -k+nj-1>=0 } ;
+		double S3 {k,i| -k+nj-1>=0 && -i+ni-1>=0 && i>=0 && k>=0 } ;
+		double S4 {k,j| -j+nj-1>=0 && -k+j-1>=0 && k>=0 } ;
+		double S5 {k,j,i| -i+ni-1>=0 && k>=0 && i>=0 && -j+nj-1>=0 && -k+j-1>=0 } ;
+		double S6 {k,j,i| -i+ni-1>=0 && k>=0 && i>=0 && -j+nj-1>=0 && -k+j-1>=0 } ;
+	let
+		S0[k] =[0];
+		S1[k,i] = case
+			{ | i==0 && k==0 } : S0[0] + A[i,k] * A[i,k] ;
+			{ | i==0 && k-1>=0 } : S0[k] + S6[k-1,k,i] * S6[k-1,k,i] ;
+			{ | k==0 && i-1>=0 } : S1[0,i-1] + A[i,k] * A[i,k] ;
+			{ | i-1>=0 && k-1>=0 } : S1[k,i-1] + S6[k-1,k,i] * S6[k-1,k,i] ;
+		esac;
+		S2[k] = sqrt (S1[k,ni-1]);
+		S3[k,i] = case
+			{ | k-1>=0 } : S6[k-1,k,i] / S2[k] ;
+			{ | k==0 } : A[i,k] / S2[k] ;
+		esac;
+		S4[k,j] =[0];
+		S5[k,j,i] = case
+			{ | i==0 && k-1>=0 } : S4[k,j] + S3[k,i] * S6[k-1,j,i] ;
+			{ | i==0 && k==0 } : S4[k,j] + S3[k,i] * A[i,j] ;
+			{ | i-1>=0 && k-1>=0 } : S5[k,j,i-1] + S3[k,i] * S6[k-1,j,i] ;
+			{ | k==0 && i-1>=0 } : S5[k,j,i-1] + S3[k,i] * A[i,j] ;
+		esac;
+		S6[k,j,i] = case
+			{ | k-1>=0 } : S6[k-1,j,i] - S3[k,i] * S5[k,j,ni-1] ;
+			{ | k==0 } : A[i,j] - S3[k,i] * S5[k,j,ni-1] ;
+		esac;
+.

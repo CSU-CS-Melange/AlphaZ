@@ -1,0 +1,36 @@
+double sqrt (double) ;
+affine correlation {m,n| m-2>=0 && n-2>=0 }
+	input
+		double eps { | } ;
+		double float_n { | } ;
+		double data {i0,i1| -i1+m-1>=0 && -i0+n-1>=0 && i1>=0 && i0>=0 } ;
+	local
+		double S2 {i0,i1,i2| i1==0 && -i0+m-1>=0 && -i2+n-1>=0 && i2>=0 && i0>=0 } ;
+		double S3 {i0,i1,i2| i2-n+1==0 && i1==0 && i0>=0 && -i0+m-1>=0 } ;
+		double S5 {i0,i1,i2| i1==0 && -i0+m-1>=0 && -i2+n-1>=0 && i2>=0 && i0>=0 } ;
+		double S6 {i0,i1,i2| i2-n+1==0 && i1==0 && i0>=0 && -i0+m-1>=0 } ;
+		double S8 {i0,i1,i2| i2==0 && i1==0 && i0>=0 && -i0+m-1>=0 } ;
+		double S9 {i0,i1,i2| i1==0 && -i0+m-1>=0 && -i2+n-1>=0 && i2>=0 && i0>=0 } ;
+		double S10 {i0,i1,i2| i1==0 && -i0+m-1>=0 && -i2+n-1>=0 && i2>=0 && i0>=0 } ;
+		double S13 {j1,j2,i| -i+n-1>=0 && j1>=0 && i>=0 && -j2+m-1>=0 && -j1+j2-1>=0 } ;
+		double S14 {i0,i1,i2| i2-n+1==0 && -i0+i1-1>=0 && i0>=0 && -i1+m-1>=0 } ;
+	let
+		S2[i0,i1,i2] = case
+			{ | i2==0 } : 0.0 + data[i2,i0] ;
+			{ | i2-1>=0 } : S2[i0,i1,i2-1] + data[i2,i0] ;
+		esac;
+		S3[i0,i1,i2] = S2[i0,i1,i2] / float_n;
+		S5[i0,i1,i2] = case
+			{ | i2==0 } : 0.0 + (data[i2,i0] - S3[i0,i1,n-1]) * (data[i2,i0] - S3[i0,i1,n-1]) ;
+			{ | i2-1>=0 } : S5[i0,i1,i2-1] + (data[i2,i0] - S3[i0,i1,n-1]) * (data[i2,i0] - S3[i0,i1,n-1]) ;
+		esac;
+		S6[i0,i1,i2] = S5[i0,i1,i2] / float_n;
+		S8[i0,i1,i2] = if sqrt (S6[i0,i1,n-1]) <= eps then 1.0 else sqrt (S6[i0,i1,n-1]);
+		S9[i0,i1,i2] = data[i2,i0] - S3[i0,i1,n-1];
+		S10[i0,i1,i2] = S9[i0,i1,i2] / (sqrt (float_n) * S8[i0,i1,0]);
+		S13[j1,j2,i] = case
+			{ | i==0 } : 0.0 + S10[j1,0,i] * S10[j2,0,i] ;
+			{ | i-1>=0 } : S13[j1,j2,i-1] + S10[j1,0,i] * S10[j2,0,i] ;
+		esac;
+		S14[i0,i1,i2] = S13[i0,i1,i2];
+.

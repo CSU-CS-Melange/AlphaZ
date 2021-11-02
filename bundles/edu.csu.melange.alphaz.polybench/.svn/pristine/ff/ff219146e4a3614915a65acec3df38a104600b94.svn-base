@@ -1,0 +1,51 @@
+affine fdtd-apml {cz,cym,cxm|cz>=2 && cym>=2 && cxm>=2}
+	input
+		double ch;
+		double mui;
+		double Ax {i0,i1|i1>=0 && -i1+cxm>=0 && cym-2>=0 && i0>=0 && -i0+cz-1>=0 && cz-2>=0 && cxm-2>=0};
+		double Bza {i0,i1,i2|i0>=0 && -i2+cxm>=0 && i1>=0 && -i1+cym>=0 && -i0+cz-1>=0 && cz-2>=0 && cym-2>=0 && cxm-2>=0 && i2>=0 && -i1-i2+cym+cxm-1>=0} || {i0,i1,i2|i2-cxm==0 && i1-cym==0 && cym-2>=0 && i0>=0 && -i0+cz-1>=0 && cz-2>=0 && cxm-2>=0};
+		double Ex {i0,i1,i2|-i1+cym>=0 && -i0+cz-1>=0 && -i2+cxm>=0 && i0>=0 && cz-2>=0 && cym-2>=0 && cxm-2>=0 && i2>=0 && i1>=0};
+		double Ey {i0,i1,i2|i0>=0 && i1>=0 && -i1+cym>=0 && cz-2>=0 && cym-2>=0 && cxm-2>=0 && -i0+cz-1>=0 && -i2+cxm>=0 && i2>=0};
+		double Hz {i0,i1,i2|i0>=0 && -i2+cxm>=0 && i1>=0 && -i1+cym>=0 && -i0+cz-1>=0 && cz-2>=0 && cym-2>=0 && cxm-2>=0 && i2>=0 && -i1-i2+cym+cxm-1>=0} || {i0,i1,i2|i2-cxm==0 && i1-cym==0 && cym-2>=0 && i0>=0 && -i0+cz-1>=0 && cz-2>=0 && cxm-2>=0};
+		double Ry {i0,i1|i1>=0 && -i1+cym>=0 && i0>=0 && -i0+cz-1>=0 && cz-2>=0 && cym-2>=0 && cxm-2>=0};
+		double cxmh {i0|i0>=0 && -i0+cxm>=0 && cym-2>=0 && cxm-2>=0 && cz-2>=0};
+		double cxph {i0|i0>=0 && -i0+cxm>=0 && cym-2>=0 && cxm-2>=0 && cz-2>=0};
+		double cymh {i0|cxm-2>=0 && i0>=0 && -i0+cym>=0 && cz-2>=0 && cym-2>=0};
+		double cyph {i0|cxm-2>=0 && i0>=0 && -i0+cym>=0 && cz-2>=0 && cym-2>=0};
+		double czm {i0|cxm-2>=0 && cym-2>=0 && i0>=0 && -i0+cz-1>=0 && cz-2>=0};
+		double czp {i0|cxm-2>=0 && cym-2>=0 && i0>=0 && -i0+cz-1>=0 && cz-2>=0};
+	local
+		double S0 {iz,iy,ix|ix>=0 && -ix+cxm-1>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S1 {iz,iy,ix|ix>=0 && -ix+cxm-1>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S2 {iz,iy,ix|ix>=0 && -ix+cxm-1>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S3 {iz,iy,ix|ix>=0 && -ix+cxm-1>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S4 {iz,iy|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S5 {iz,iy|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S6 {iz,iy|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S7 {iz,iy|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S8 {iz,iy,ix|ix>=0 && -ix+cxm-1>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S9 {iz,iy,ix|ix>=0 && -ix+cxm-1>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S10 {iz,iy,ix|ix>=0 && -ix+cxm-1>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S11 {iz,iy,ix|ix>=0 && -ix+cxm-1>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S12 {iz,iy|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S13 {iz,iy|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S14 {iz,iy|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+		double S15 {iz,iy|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz>=2 && cym>=2 && cxm>=2};
+	let
+		S0[iz, iy, ix] = (((Ex[iz, iy, ix] -Ex[iz, iy+1, ix]) +Ey[iz, iy, ix+1]) -Ey[iz, iy, ix]);
+		S1[iz, iy, ix] = (((cymh[iy] /cyph[iy]) *Bza[iz, iy, ix]) -((ch /cyph[iy]) *case {iz,iy,ix|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0 && ix-1>=0 && -ix+cxm-1>=0} : S0[iz, iy, ix]; {iz,iy,ix|ix==0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0 && cxm-2>=0} : S0[iz, iy, 0]; esac));
+		S2[iz, iy, ix] = ((((cxmh[ix] /cxph[ix]) *Hz[iz, iy, ix]) +(((mui *czp[iz]) /cxph[ix]) *case {iz,iy,ix|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0 && ix-1>=0 && -ix+cxm-1>=0} : S1[iz, iy, ix]; {iz,iy,ix|ix==0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0 && cxm-2>=0} : S1[iz, iy, 0]; esac)) -(((mui *czm[iz]) /cxph[ix]) *Bza[iz, iy, ix]));
+		S3[iz, iy, ix] = case {iz,iy,ix|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0 && ix-1>=0 && -ix+cxm-1>=0} : S1[iz, iy, ix]; {iz,iy,ix|ix==0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0 && cxm-2>=0} : S1[iz, iy, 0]; esac;
+		S4[iz, iy] = (((Ex[iz, iy, cxm] -Ex[iz, iy+1, cxm]) +Ry[iz, iy]) -Ey[iz, iy, cxm]);
+		S5[iz, iy] = (((cymh[iy] /cyph[iy]) *Bza[iz, iy, cxm]) -((ch /cyph[iy]) *S4[iz, iy]));
+		S6[iz, iy] = ((((cxmh[cxm] /cxph[cxm]) *Hz[iz, iy, cxm]) +(((mui *czp[iz]) /cxph[cxm]) *S5[iz, iy])) -(((mui *czm[iz]) /cxph[cxm]) *Bza[iz, iy, cxm]));
+		S7[iz, iy] = S5[iz, iy];
+		S8[iz, iy, ix] = (((Ex[iz, cym, ix] -Ax[iz, ix]) +Ey[iz, cym, ix+1]) -Ey[iz, cym, ix]);
+		S9[iz, iy, ix] = (((cymh[cym] /cyph[iy]) *S3[iz, iy, ix]) -((ch /cyph[iy]) *case {iz,iy,ix|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0 && -ix+cxm-1>=0 && ix-1>=0} : S8[iz, iy, ix]; {iz,iy,ix|ix==0 && cxm-2>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0} : S8[iz, iy, 0]; esac));
+		S10[iz, iy, ix] = ((((cxmh[ix] /cxph[ix]) *case {iz,iy,ix|-iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && iy-1>=0 && cxm-2>=0 && ix>=0 && -ix+cxm-1>=0} : S10[iz, iy-1, ix]; {iz,iy,ix|iy==0} : Hz[iz, cym, ix]; esac) +(((mui *czp[iz]) /cxph[ix]) *case {iz,iy,ix|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0 && -ix+cxm-1>=0 && ix-1>=0} : S9[iz, iy, ix]; {iz,iy,ix|ix==0 && cxm-2>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0} : S9[iz, iy, 0]; esac)) -(((mui *czm[iz]) /cxph[ix]) *case {iz,iy,ix|-iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && iy-1>=0 && cxm-2>=0 && ix>=0 && -ix+cxm-1>=0} : S11[iz, iy-1, ix]; {iz,iy,ix|iy==0} : Bza[iz, cym, ix]; esac));
+		S11[iz, iy, ix] = case {iz,iy,ix|iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0 && -ix+cxm-1>=0 && ix-1>=0} : S9[iz, iy, ix]; {iz,iy,ix|ix==0 && cxm-2>=0 && iy>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cym-2>=0} : S9[iz, iy, 0]; esac;
+		S12[iz, iy] = (((Ex[iz, cym, cxm] -Ax[iz, cxm]) +Ry[iz, cym]) -Ey[iz, cym, cxm]);
+		S13[iz, iy] = (((cymh[cym] /cyph[cym]) *case {iz,iy|iy-1>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cxm-2>=0} : S15[iz, iy-1]; {iz,iy|iy==0} : Bza[iz, cym, cxm]; esac) -((ch /cyph[cym]) *S12[iz, iy]));
+		S14[iz, iy] = ((((cxmh[cxm] /cxph[cxm]) *case {iz,iy|iy-1>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cxm-2>=0} : S14[iz, iy-1]; {iz,iy|iy==0} : Hz[iz, cym, cxm]; esac) +(((mui *czp[iz]) /cxph[cxm]) *S13[iz, iy])) -(((mui *czm[iz]) /cxph[cxm]) *case {iz,iy|iy-1>=0 && -iy+cym-1>=0 && iz>=0 && -iz+cz-1>=0 && cz-2>=0 && cxm-2>=0} : S15[iz, iy-1]; {iz,iy|iy==0} : Bza[iz, cym, cxm]; esac));
+		S15[iz, iy] = S13[iz, iy];
+.

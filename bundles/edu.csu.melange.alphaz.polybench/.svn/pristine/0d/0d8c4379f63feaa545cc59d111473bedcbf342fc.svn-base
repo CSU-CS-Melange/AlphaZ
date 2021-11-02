@@ -1,0 +1,19 @@
+affine doitgen {nr,nq,np| nr-2>=0 && nq-2>=0 && np-2>=0 }
+	given
+		double A {i0,i1,i2| i0>=0 && -i2+np-1>=0 && -i0+nr-1>=0 && i2>=0 && i1>=0 && -i1+nq-1>=0 } ;
+		double C4 {i0,i1| i0>=0 && -i0+np-1>=0 && -i1+np-1>=0 && i1>=0 } ;
+		double sum {i0,i1,i2| i0>=0 && i2-np>=0 && -i0+nr-1>=0 && i1>=0 && -i2+nr-1>=0 && -i1+nq-1>=0 } ;
+	using
+		double S1 {i0,i1,i2,i3| -i0+nr-1>=0 && i0>=0 && -i1+nq-1>=0 && i3>=0 && i2>=0 && -i2+np-1>=0 && i1>=0 && -i3+np-1>=0
+		} ;
+		double S2 {i0,i1,i2,i3| i3-np+1==0 && -i0+nr-1>=0 && i0>=0 && -i1+nq-1>=0 && i2>=0 && -i2+nr-1>=0 && i1>=0 } ;
+	through
+		S1[i0,i1,i2,i3] = case
+			{ | i3==0 } :[0]+ A[i0,i1,i3] * C4[i3,i2] ;
+			{ | i3-1>=0 } : S1[i0,i1,i2,i3-1] + A[i0,i1,i3] * C4[i3,i2] ;
+		esac;
+		S2[i0,i1,i2,i3] = case
+			{ | -i2+np-1>=0 } : S1 ;
+			{ | i2-np>=0 } : sum[i0,i1,i2] ;
+		esac;
+.

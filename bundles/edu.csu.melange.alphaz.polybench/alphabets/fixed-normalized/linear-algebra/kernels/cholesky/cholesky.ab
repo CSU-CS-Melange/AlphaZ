@@ -1,0 +1,31 @@
+double sqrt (double) ;
+affine cholesky {n| n-2>=0 }
+	input
+		double A {i0,i1| -i0+i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+	local
+		double S0 {i| -i+n-1>=0 && i>=0 } ;
+		double S1 {i,j| i-j-1>=0 && j>=0 && -i+n-1>=0 } ;
+		double S2 {i| -i+n-1>=0 && i>=0 } ;
+		double S3 {i,j| -i+j-1>=0 && i>=0 && -j+n-1>=0 } ;
+		double S4 {i,j,k| -i+j-1>=0 && k>=0 && -j+n-1>=0 && i-k-1>=0 } ;
+		double S5 {i,j| -i+j-1>=0 && i>=0 && -j+n-1>=0 } ;
+	let
+		S0[i] = A[i,i];
+		S1[i,j] = case
+			{ | j==0 } : S0[i] - S5[j,i] * S5[j,i] ;
+			{ | j-1>=0 } : S1[i,j-1] - S5[j,i] * S5[j,i] ;
+		esac;
+		S2[i] = case
+			{ | i==0 } : 1.0 / sqrt (S0) ;
+			{ | i-1>=0 } : 1.0 / sqrt (S1[i,i-1]) ;
+		esac;
+		S3[i,j] = A;
+		S4[i,j,k] = case
+			{ | k==0 } : S3[i,j] - S5[k,j] * S5[k,i] ;
+			{ | k-1>=0 } : S4[i,j,k-1] - S5[k,j] * S5[k,i] ;
+		esac;
+		S5[i,j] = case
+			{ | i==0 } : S3[0,j] * S2[i] ;
+			{ | i-1>=0 } : S4[i,j,i-1] * S2[i] ;
+		esac;
+.

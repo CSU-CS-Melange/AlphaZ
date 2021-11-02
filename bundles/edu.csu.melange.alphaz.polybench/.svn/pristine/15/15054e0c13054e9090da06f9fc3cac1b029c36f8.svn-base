@@ -1,0 +1,26 @@
+//Regularity Detection
+//No idea what it is actually doing
+//Source is from:  http://www.cs.uic.edu/~iluican/reg_detect.c
+affine reg_detect {MAXGRID,MAXRGC,LENGTH|(MAXGRID,MAXRGC,LENGTH)>0}
+	input
+		float sum_tang {j,i|0<=j<MAXGRID && j<=i<MAXGRID};
+	output
+		float path     {j,i|0<=j<MAXGRID && j<=i<MAXGRID};
+	let
+		path[j,i] = case
+			{|j==0}: sum_tang[0,i]*[LENGTH];
+			{|j>0 }: path[j-1,i-1] + sum_tang[j,i]*[LENGTH];
+		esac;
+.
+
+//Based on the following "optimized" version
+
+//#pragma scop
+//for (i=0; i<MAXGRID; i++)
+//  path[0][i] = sum_tang[0][i]*LENGTH;
+//
+//for (j=1; j<MAXGRID; j++)
+//  for (i=j; i<MAXGRID; i++)
+//    path[j][i] = path[j-1][i-1] 
+//               + sum_tang[j][i]*LENGTH;
+//#pragma endscop

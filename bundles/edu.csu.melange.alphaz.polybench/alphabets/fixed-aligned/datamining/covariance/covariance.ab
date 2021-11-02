@@ -1,0 +1,23 @@
+affine covariance {m,n| m-2>=0 && n-2>=0 }
+	input
+		double float_n { | } ;
+		double data {i0,i1| -i1+m-1>=0 && -i0+n-1>=0 && i1>=0 && i0>=0 } ;
+	local
+		double S1 {i0,i1,i2| i2==0 && -i0+m-1>=0 && i0>=0 && i1>=0 && -i1+n-1>=0 } ;
+		double S2 {i0,i1,i2| i2==0 && i0==0 && i1>=0 && -i1+m-1>=0 } ;
+		double S3 {i0,i1,i2| i2==0 && -i0+n-1>=0 && i0>=0 && i1>=0 && -i1+m-1>=0 } ;
+		double S5 {j1,j2,i| -i+n-1>=0 && j1>=0 && i>=0 && -j1+j2>=0 && -j2+m-1>=0 } ;
+		double S6 {i0,i1,i2| i2-n+1==0 && -i1+m-1>=0 && i0>=0 && -i0+i1>=0 } ;
+	let
+		S1[i0,i1,i2] = case
+			{ | i1==0 } : 0.0 + data[i1,i0] ;
+			{ | i1-1>=0 } : S1[i0,i1-1,i2] + data[i1,i0] ;
+		esac;
+		S2[i0,i1,i2] = S1[i1,n-1,i2] / float_n;
+		S3[i0,i1,i2] = data[i0,i1] - S2[0,i1,i2];
+		S5[j1,j2,i] = case
+			{ | i==0 } : 0.0 + S3[i,j1,i] * S3[i,j2,i] ;
+			{ | i-1>=0 } : S5[j1,j2,i-1] + S3[i,j1,0] * S3[i,j2,0] ;
+		esac;
+		S6[i0,i1,i2] = S5[i0,i1,i2];
+.

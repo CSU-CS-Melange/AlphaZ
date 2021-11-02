@@ -1,0 +1,22 @@
+int w(int, int);
+//Use the following for verify-rand, remove mods for real input 
+//int w(int a, int b) {
+//	return W[a%5][b%5];
+//}
+
+affine smith_waterman {M,N|N>0 && M>0}
+given
+	int A {i|0<=i<M};
+	int B {j|0<=j<N};
+returns
+	int score {i,j|i==M && j==N};
+using 
+	int H {i,j|0<=i<M && 0<=j<N};
+through
+	H[i,j] = case
+				{|i == 0} || {|j == 0} : 0;
+				{|i > 0 && j > 0} : max(0, H[i-1,j-1] + w(A[i], B[j]), H[i-1,j] + w(A[i],4), H[i,j-1] + w(4, B[j])); 
+			esac;
+			
+	score[i,j] = H[i-1,j-1];
+.

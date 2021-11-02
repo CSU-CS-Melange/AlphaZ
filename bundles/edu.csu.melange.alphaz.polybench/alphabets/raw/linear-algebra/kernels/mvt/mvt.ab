@@ -1,0 +1,14 @@
+affine scop_new {n|n>=2}
+	input
+		double A {i0,i1|i1>=0 && -i1+n-1>=0 && i0>=0 && -i0+n-1>=0 && n-2>=0};
+		double x1 {i0|-i0+n-1>=0 && n-2>=0 && i0>=0};
+		double x2 {i0|-i0+n-1>=0 && n-2>=0 && i0>=0};
+		double y_1 {i0|i0>=0 && -i0+n-1>=0 && n-2>=0};
+		double y_2 {i0|i0>=0 && -i0+n-1>=0 && n-2>=0};
+	local
+		double S0 {i,j|j>=0 && -j+n-1>=0 && i>=0 && -i+n-1>=0 && n>=2};
+		double S1 {i,j|j>=0 && -j+n-1>=0 && i>=0 && -i+n-1>=0 && n>=2};
+	let
+		S0[i, j] = (case {i,j|i>=0 && -i+n-1>=0 && j-1>=0 && -j+n-1>=0} : S0[i, j-1]; {i,j|j==0} : x1[i]; esac +(A[i, j] *y_1[j]));
+		S1[i, j] = (case {i,j|i>=0 && -i+n-1>=0 && j-1>=0 && -j+n-1>=0} : S1[i, j-1]; {i,j|j==0} : x2[i]; esac +(A[j, i] *y_2[j]));
+.

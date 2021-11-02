@@ -1,0 +1,83 @@
+affine fdtd-apml {cz,cym,cxm| cz-2>=0 && cym-2>=0 && cxm-2>=0 }
+	input
+		double ch { | } ;
+		double mui { | } ;
+		double Ax {i0,i1| i0>=0 && -i0+cz-1>=0 && -i1+cxm>=0 && i1>=0 } ;
+		double Bza {i0,i1,i2| -i2+cxm>=0 && -i0+cz-1>=0 && i0>=0 && i2>=0 && -i1+cym>=0 && i1>=0 && -i1-i2+cym+cxm-1>=0 } ||
+		{i0,i1,i2| i2-cxm==0 && i1-cym==0 && -i0+cz-1>=0 && i0>=0 } ;
+		double Ex {i0,i1,i2| i0>=0 && -i2+cxm>=0 && -i0+cz-1>=0 && i2>=0 && -i1+cym>=0 && i1>=0 } ;
+		double Ey {i0,i1,i2| i0>=0 && -i2+cxm>=0 && -i0+cz-1>=0 && i2>=0 && -i1+cym>=0 && i1>=0 } ;
+		double Hz {i0,i1,i2| -i2+cxm>=0 && -i0+cz-1>=0 && i0>=0 && i2>=0 && -i1+cym>=0 && i1>=0 && -i1-i2+cym+cxm-1>=0 } ||
+		{i0,i1,i2| i2-cxm==0 && i1-cym==0 && -i0+cz-1>=0 && i0>=0 } ;
+		double Ry {i0,i1| i0>=0 && -i0+cz-1>=0 && -i1+cym>=0 && i1>=0 } ;
+		double cxmh {i0| -i0+cxm>=0 && i0>=0 } ;
+		double cxph {i0| -i0+cxm>=0 && i0>=0 } ;
+		double cymh {i0| -i0+cym>=0 && i0>=0 } ;
+		double cyph {i0| -i0+cym>=0 && i0>=0 } ;
+		double czm {i0| -i0+cz-1>=0 && i0>=0 } ;
+		double czp {i0| -i0+cz-1>=0 && i0>=0 } ;
+	local
+		double S1 {i0,i1,i2| -i2+cym-1>=0 && i0>=0 && -i0+cz-1>=0 && i2>=0 && i1>=0 && -i1+cxm-1>=0 } ;
+		double S2 {i0,i1,i2| -i2+cym-1>=0 && i0>=0 && -i0+cz-1>=0 && i2>=0 && i1>=0 && -i1+cxm-1>=0 } ;
+		double S3 {i0,i1,i2| -i2+cym-1>=0 && i0>=0 && -i0+cz-1>=0 && i2>=0 && i1>=0 && -i1+cxm-1>=0 } ;
+		double S5 {i0,i1,i2| i2==0 && -i1+cym-1>=0 && i0>=0 && -i0+cz-1>=0 && i1>=0 } ;
+		double S6 {i0,i1,i2| i2==0 && -i1+cym-1>=0 && i0>=0 && -i0+cz-1>=0 && i1>=0 } ;
+		double S8 {i0,i1,i2| -i2+cym-1>=0 && i0>=0 && -i0+cz-1>=0 && i2>=0 && i1>=0 && -i1+cxm-1>=0 } ;
+		double S9 {i0,i1,i2| -i2+cym-1>=0 && i0>=0 && -i0+cz-1>=0 && i2>=0 && i1>=0 && -i1+cxm-1>=0 } ;
+		double S10 {i0,i1,i2| -i2+cym-1>=0 && i0>=0 && -i0+cz-1>=0 && i2>=0 && i1>=0 && -i1+cxm-1>=0 } ;
+		double S11 {i0,i1,i2| -i2+cym-1>=0 && i0>=0 && -i0+cz-1>=0 && i2>=0 && i1>=0 && -i1+cxm-1>=0 } ;
+		double S12 {i0,i1,i2| i1==0 && i0>=0 && -i0+cz-1>=0 && -i2+cym-1>=0 && i2>=0 } ;
+		double S13 {i0,i1,i2| i1==0 && i0>=0 && -i0+cz-1>=0 && -i2+cym-1>=0 && i2>=0 } ;
+		double S14 {i0,i1,i2| i1==0 && i0>=0 && -i0+cz-1>=0 && -i2+cym-1>=0 && i2>=0 } ;
+	let
+		S1[i0,i1,i2] = case
+			{ | i1-1>=0 } : cymh[i2] / cyph[i2] * Bza[i0,i2,i1] - ch / cyph[i2] * (Ex[i0,i2,i1] - Ex[i0,i2+1,i1] +
+			Ey[i0,i2,i1+1] - Ey[i0,i2,i1]) ;
+			{ | i1==0 } : cymh[i2] / cyph[i2] * Bza[i0,i2,i1] - ch / cyph[i2] * (Ex[i0,i2,i1] - Ex[i0,i2+1,i1] + Ey[i0,i2,i1+1]
+			- Ey[i0,i2,i1]) ;
+		esac;
+		S2[i0,i1,i2] = case
+			{ | i1-1>=0 } : cxmh[i1] / cxph[i1] * Hz[i0,i2,i1] + mui * czp[i0] / cxph[i1] * S1 - mui * czm[i0] / cxph[i1] *
+			Bza[i0,i2,i1] ;
+			{ | i1==0 } : cxmh[i1] / cxph[i1] * Hz[i0,i2,i1] + mui * czp[i0] / cxph[i1] * S1 - mui * czm[i0] / cxph[i1] *
+			Bza[i0,i2,i1] ;
+		esac;
+		S3[i0,i1,i2] = case
+			{ | i1-1>=0 } : S1 ;
+			{ | i1==0 } : S1 ;
+		esac;
+		S5[i0,i1,i2] = cymh[i1] / cyph[i1] * Bza[i0,i1,cxm] - ch / cyph[i1] * (Ex[i0,i1,cxm] - Ex[i0,i1+1,cxm] + Ry[i0,i1] -
+		Ey[i0,i1,cxm]);
+		S6[i0,i1,i2] = cxmh[cxm] / cxph[cxm] * Hz[i0,i1,cxm] + mui * czp[i0] / cxph[cxm] * S5 - mui * czm[i0] / cxph[cxm] *
+		Bza[i0,i1,cxm];
+		S8[i0,i1,i2] = Ex[i0,cym,i1] - Ax[i0,i1] + Ey[i0,cym,i1+1] - Ey[i0,cym,i1];
+		S9[i0,i1,i2] = case
+			{ | i1-1>=0 } : cymh[cym] / cyph[i2] * S3 - ch / cyph[i2] * S8 ;
+			{ | i1==0 } : cymh[cym] / cyph[i2] * S3 - ch / cyph[i2] * S8 ;
+		esac;
+		S10[i0,i1,i2] = case
+			{ | i1-1>=0 && i2-1>=0 } : cxmh[i1] / cxph[i1] * S10[i0,i1,i2-1] + mui * czp[i0] / cxph[i1] * S9 - mui * czm[i0] /
+			cxph[i1] * S11[i0,i1,i2-1] ;
+			{ | i1==0 && i2-1>=0 } : cxmh[i1] / cxph[i1] * S10[i0,i1,i2-1] + mui * czp[i0] / cxph[i1] * S9 - mui * czm[i0] /
+			cxph[i1] * S11[i0,i1,i2-1] ;
+			{ | i2==0 && i1-1>=0 } : cxmh[i1] / cxph[i1] * Hz[i0,cym,i1] + mui * czp[i0] / cxph[i1] * S9 - mui * czm[i0] /
+			cxph[i1] * Bza[i0,cym,i1] ;
+			{ | i2==0 && i1==0 } : cxmh[i1] / cxph[i1] * Hz[i0,cym,i1] + mui * czp[i0] / cxph[i1] * S9 - mui * czm[i0] /
+			cxph[i1] * Bza[i0,cym,i1] ;
+		esac;
+		S11[i0,i1,i2] = case
+			{ | i1-1>=0 } : S9 ;
+			{ | i1==0 } : S9 ;
+		esac;
+		S12[i0,i1,i2] = Ex[i0,cym,cxm] - Ax[i0,cxm] + Ry[i0,cym] - Ey[i0,cym,cxm];
+		S13[i0,i1,i2] = case
+			{ | i2-1>=0 } : cymh[cym] / cyph[cym] * S13[i0,i1,i2-1] - ch / cyph[cym] * S12 ;
+			{ | i2==0 } : cymh[cym] / cyph[cym] * Bza[i0,cym,cxm] - ch / cyph[cym] * S12 ;
+		esac;
+		S14[i0,i1,i2] = case
+			{ | i2-1>=0 } : cxmh[cxm] / cxph[cxm] * S14[i0,i1,i2-1] + mui * czp[i0] / cxph[cxm] * S13 - mui * czm[i0] /
+			cxph[cxm] * S13[i0,i1,i2-1] ;
+			{ | i2==0 } : cxmh[cxm] / cxph[cxm] * Hz[i0,cym,cxm] + mui * czp[i0] / cxph[cxm] * S13 - mui * czm[i0] / cxph[cxm] *
+			Bza[i0,cym,cxm] ;
+		esac;
+.

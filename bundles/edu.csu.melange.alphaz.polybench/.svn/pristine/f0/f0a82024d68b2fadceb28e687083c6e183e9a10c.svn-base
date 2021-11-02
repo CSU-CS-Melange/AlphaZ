@@ -1,0 +1,10 @@
+affine trmm {ni|ni>=2}
+	input
+		double alpha;
+		double A {i0,i1|i1>=0 && i0-i1-1>=0 && -i0+ni-1>=0};
+		double B {i0,i1|i0>=0 && -i1+ni-1>=0 && -i0+ni-1>=0 && i1>=0 && i0-i1+ni-2>=0};
+	local
+		double S0 {i,j,k|k>=0 && i-k-1>=0 && j>=0 && -j+ni-1>=0 && i-1>=0 && -i+ni-1>=0 && ni>=2};
+	let
+		S0[i, j, k] = (case {i,j,k|k-1>=0 && -i+ni-1>=0 && i-k-1>=0 && j>=0 && -j+ni-1>=0} : S0[i, j, k-1]; {i,j,k|k==0} : B[i, j]; esac +((alpha*A[i, k]) *case {i,j,k|-i+ni-1>=0 && j-1>=0 && k>=0 && i-k-1>=0 && i-j>=0} : S0[j, k, j-1]; {i,j,k|j==0} || {i,j,k|-i+j-1>=0} : B[j, k]; esac));
+.

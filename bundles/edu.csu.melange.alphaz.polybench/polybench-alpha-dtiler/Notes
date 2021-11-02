@@ -1,0 +1,5 @@
+
+* Bug:
+ - Cholesky => SerializeReduction does not work on the "reduce" under the "i==j>0" branch (dimensionality issue?)
+ - Same issue with the first reduction of "gramschmidt"
+

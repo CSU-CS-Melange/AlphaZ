@@ -1,0 +1,35 @@
+affine gemver {n| n-2>=0 }
+	given
+		double alpha { | } ;
+		double beta { | } ;
+		double A {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double u1 {i0| -i0+n-1>=0 && i0>=0 } ;
+		double u2 {i0| -i0+n-1>=0 && i0>=0 } ;
+		double v1 {i0| -i0+n-1>=0 && i0>=0 } ;
+		double v2 {i0| -i0+n-1>=0 && i0>=0 } ;
+		double w {i0| -i0+n-1>=0 && i0>=0 } ;
+		double x {i0| -i0+n-1>=0 && i0>=0 } ;
+		double y {i0| -i0+n-1>=0 && i0>=0 } ;
+		double z {i0| -i0+n-1>=0 && i0>=0 } ;
+	using
+		double S0 {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double S1 {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double S2 {i0,i1| i1-n+1==0 && -i0+n-1>=0 && i0>=0 } ;
+		double S3 {i0,i1| -i0+n-1>=0 && i0>=0 && -i1+3n-1>=0 && i1-2n>=0 } ;
+		double S2_uni1B {i0,i1| -i0+n-1>=0 && i0>=0 && i1-n>=0 && -i1+2n>=0 } ;
+	through
+		S0[i0,i1] = A[i1,i0] + u1[i1] * v1[i0] + u2[i1] * v2[i0];
+		S1[i0,i1] = case
+			{ | i1-1>=0 } : S1[i0,i1-1] + beta * S0 * y[i1] ;
+			{ | i1==0 } : x[i0] + beta * S0 * y[i1] ;
+		esac;
+		S2[i0,i1] = S1 + z[i0];
+		S3[i0,i1] = case
+			{ | i0-1>=0 } : S3[i0-1,i1] + alpha * S0[i0,i1-2n] * S2_uni1B[i0,4n-i1] ;
+			{ | i0==0 } : w[i1-2n] + alpha * S0[i0,i1-2n] * S2_uni1B[i0,4n-i1] ;
+		esac;
+		S2_uni1B[i0,i1] = case
+			{ | i1-n==0 } : S2[i0,2n-i1-1] ;
+			{ | i1-n-1>=0 } : S2_uni1B[i0,i1-1] ;
+		esac;
+.

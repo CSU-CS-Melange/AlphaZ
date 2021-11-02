@@ -1,0 +1,24 @@
+affine atax {ny,nx| ny-2>=0 && nx-2>=0 }
+	given
+		double A {i0,i1| -i1+ny-1>=0 && -i0+nx-1>=0 && i1>=0 && i0>=0 } ;
+		double x {i0| i0>=0 && -i0+ny-1>=0 } ;
+	using
+		double S2 {i0,i1| i1+2ny>=0 && -i0+nx-1>=0 && -i1-ny-2>=0 && i0>=0 } ;
+		double S3 {i0,i1| i1+ny-1>=0 && -i0+nx-1>=0 && -i1>=0 && i0>=0 } ;
+		double S2_uni1B {i0,i1| i1+ny>=0 && -i0+nx-1>=0 && -i1>=0 && i0>=0 } ;
+		double S2_bound {i0,i1| i1+ny+1==0 && i0>=0 && -i0+nx-1>=0 } ;
+	through
+		S2[i0,i1] = case
+			{ | i1+2ny==0 } :[0]+ A[i0,i1+2ny] * x[i1+2ny] ;
+			{ | i1+2ny-1>=0 } : S2[i0,i1-1] + A[i0,i1+2ny] * x[i1+2ny] ;
+		esac;
+		S3[i0,i1] = case
+			{ | i0==0 } :[0]+ A[i0,-i1] * S2_uni1B ;
+			{ | i0-1>=0 } : S3[i0-1,i1] + A[i0,-i1] * S2_uni1B ;
+		esac;
+		S2_uni1B[i0,i1] = case
+			{ | i1+ny==0 } : S2_bound[i0,-i1-2ny-1] ;
+			{ | i1+ny-1>=0 } : S2_uni1B[i0,i1-1] ;
+		esac;
+		S2_bound[i0,i1] = { | i1+2ny-1>=0 && -i0+nx-1>=0 && i0>=0 && -i1-ny-1>=0 } : S2[i0,i1-1] + A[i0,i1+2ny] * x[i1+2ny];
+.

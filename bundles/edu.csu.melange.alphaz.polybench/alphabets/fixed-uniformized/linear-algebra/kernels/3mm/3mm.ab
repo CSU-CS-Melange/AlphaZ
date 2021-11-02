@@ -1,0 +1,50 @@
+affine 3mm {ni,nj,nk,nl,nm| ni-2>=0 && nj-2>=0 && nk-2>=0 && nl-2>=0 && nm-2>=0 }
+	given
+		double A {i0,i1| -i1+nk-1>=0 && i1>=0 && i0>=0 && -i0+ni-1>=0 } ;
+		double B {i0,i1| -i1+nj-1>=0 && i1>=0 && i0>=0 && -i0+nk-1>=0 } ;
+		double C {i0,i1| -i1+nm-1>=0 && i1>=0 && i0>=0 && -i0+nj-1>=0 } ;
+		double D {i0,i1| -i1+nl-1>=0 && i1>=0 && i0>=0 && -i0+nm-1>=0 } ;
+	using
+		double S1 {i0,i1,i2| i1>=0 && -i1+nk-1>=0 && -i2+nj-1>=0 && i0>=0 && -i0+ni-1>=0 && i2>=0 } ;
+		double S3 {i0,i1,i2| i1>=0 && -i1+nl-1>=0 && -i2+nj-1>=0 && i0>=0 && -i0+nm-1>=0 && i2>=0 } ;
+		double S5 {i,j,k| j>=0 && -j+nl-1>=0 && -k+nj-1>=0 && i>=0 && -i+ni-1>=0 && k>=0 } ;
+		double S3_uni1A {i0,i1,i2| i2>=0 && i1>=0 && -i1+nl-1>=0 && -i2+nj-1>=0 && i0-nm>=0 } ;
+		double S3_uni1B {i0,i1,i2| i1>=0 && -i1+nl-1>=0 && -i2+nj-1>=0 && -i0+nm>=0 && i0>=0 && i2>=0 } ;
+		double S1_uni1A {i0,i1,i2| i2>=0 && i1-nk>=0 && i0>=0 && -i2+nj-1>=0 && -i0+ni-1>=0 } ;
+		double S1_uni1B {i0,i1,i2| -i1+nk>=0 && i1>=0 && -i2+nj-1>=0 && i0>=0 && -i0+ni-1>=0 && i2>=0 } ;
+	through
+		S1[i0,i1,i2] = case
+			{ | i1==0 } :[0]+ A[i0,i1] * B[i1,i2] ;
+			{ | i1-1>=0 } : S1[i0,i1-1,i2] + A[i0,i1] * B[i1,i2] ;
+		esac;
+		S3[i0,i1,i2] = case
+			{ | i0==0 } :[0]+ C[i2,i0] * D[i0,i1] ;
+			{ | i0-1>=0 } : S3[i0-1,i1,i2] + C[i2,i0] * D[i0,i1] ;
+		esac;
+		S5[i,j,k] = case
+			{ | k==0 && i-nm>=0 && j-nk>=0 } :[0]+ S1_uni1A * S3_uni1A ;
+			{ | k==0 && -i+nm-1>=0 && j-nk>=0 } :[0]+ S1_uni1A * S3_uni1B ;
+			{ | k==0 && i-nm>=0 && -j+nk-1>=0 } :[0]+ S1_uni1B * S3_uni1A ;
+			{ | k==0 && -i+nm-1>=0 && -j+nk-1>=0 } :[0]+ S1_uni1B * S3_uni1B ;
+			{ | j-nk>=0 && i-nm>=0 && k-1>=0 } : S5[i,j,k-1] + S1_uni1A * S3_uni1A ;
+			{ | j-nk>=0 && -i+nm-1>=0 && k-1>=0 } : S5[i,j,k-1] + S1_uni1A * S3_uni1B ;
+			{ | -j+nk-1>=0 && i-nm>=0 && k-1>=0 } : S5[i,j,k-1] + S1_uni1B * S3_uni1A ;
+			{ | -j+nk-1>=0 && -i+nm-1>=0 && k-1>=0 } : S5[i,j,k-1] + S1_uni1B * S3_uni1B ;
+		esac;
+		S3_uni1A[i0,i1,i2] = case
+			{ | i0-nm==0 } : S3[i0-1,i1,i2] ;
+			{ | i0-nm-1>=0 } : S3_uni1A[i0-1,i1,i2] ;
+		esac;
+		S3_uni1B[i0,i1,i2] = case
+			{ | i0-nm==0 } : S3[i0-1,i1,i2] ;
+			{ | -i0+nm-1>=0 } : S3_uni1B[i0+1,i1,i2] ;
+		esac;
+		S1_uni1A[i0,i1,i2] = case
+			{ | i1-nk==0 } : S1[i0,i1-1,i2] ;
+			{ | i1-nk-1>=0 } : S1_uni1A[i0,i1-1,i2] ;
+		esac;
+		S1_uni1B[i0,i1,i2] = case
+			{ | i1-nk==0 } : S1[i0,i1-1,i2] ;
+			{ | -i1+nk-1>=0 } : S1_uni1B[i0,i1+1,i2] ;
+		esac;
+.

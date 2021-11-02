@@ -1,0 +1,58 @@
+//doitgen
+//  You, H., Seymour, K., Dongarra, J., Moore, S.
+//  "Empirical Tuning of a Multiresolution Analysis Kernel using a Specialized Code Generator,"
+//  ICL Technical Report, ICL-UT-07-02, March 5, 2007.
+//    http://icl.cs.utk.edu/news_pub/submissions/gco-madness-notes.ps
+//
+// isn't Np==Ns?
+affine doitgen {Np,Nq,Nr,Ns|(Np,Nq,Nr,Ns)>0}
+	input
+		double Ain{r,q,s|0<=r<Nr && 0<=q<Nq && 0<=s<Ns};
+		double x{p,s|0<=p<Np && 0<=s<Ns};
+	output
+		double Aout{r,q,p|0<=r<Nr && 0<=q<Nq && 0<=p<Np};
+	let
+		
+		Aout[r,q,p] = reduce(+, [s], Ain[r,q,s] * x[p,s]);
+		
+		
+.
+
+//Original
+//ia1,ia2,ia3 are increments in array (bytes), and thus the accesses are seemingly non-affine
+//int doitgen_ref_C(double *a, int ia1, int ia2, int ia3, double *x, int ldx, int np, int nq, int nr, int ns) ￼￼￼￼{
+//	int p, q, r, s, pqr, qr, sqr;
+//	double sum;
+//	double t0[30];
+//	for(r = 0; r < nr; r++ ){
+//		for(q = 0; q < nq; q++) {
+//			qr = q * ia2 + r * ia3;
+//			for(p = 0; p < np; p++) {
+//				sum = 0;
+//				sqr = qr;
+//				for(s = 0; s < ns; s++) {
+//					sum = sum + a[sqr] * x[s + p * ldx ];
+//					sqr = sqr + ia1;
+//				}
+//				t0[p] = sum;
+//			}
+//			pqr = qr;
+//			for(p = 0; p < np; p++) {
+//				a[pqr] = t0[p]; pqr = pqr + ia1;
+//			}
+//		}
+//	}
+//	return 0;
+//}
+
+//PolyBench
+//for (r = 0; r < _PB_NR; r++)
+// 	for (q = 0; q < _PB_NQ; q++)  {
+// 		for (p = 0; p < _PB_NP; p++)  {
+// 			sum[r][q][p] = 0;
+// 			for (s = 0; s < _PB_NP; s++)
+// 				sum[r][q][p] = sum[r][q][p] + A[r][q][s] * C4[s][p];
+// 		}
+// 		for (p = 0; p < _PB_NR; p++)
+// 			A[r][q][p] = sum[r][q][p];
+// 	}

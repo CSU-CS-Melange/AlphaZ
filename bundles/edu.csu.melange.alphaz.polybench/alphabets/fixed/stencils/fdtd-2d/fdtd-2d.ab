@@ -1,0 +1,17 @@
+affine fdtd-2d {tmax,nx,ny|tmax>=2 && ny>=2 && nx>=2}
+	input
+		double _fict_ {i0|nx-2>=0 && ny-2>=0 && i0>=0 && -i0+tmax-1>=0 && tmax-2>=0};
+		double ex {i0,i1|-i1+ny-1>=0 && i1>=0 && -i0+nx-1>=0 && tmax-2>=0 && nx-2>=0 && -i0+i1+nx-2>=0 && ny-2>=0 && i0>=0};
+		double ey {i0,i1|i1>=0 && -i1+ny-1>=0 && i0-1>=0 && -i0+nx-1>=0 && ny-2>=0 && tmax-2>=0 && nx-2>=0};
+		double hz {i0,i1|i0>=0 && -i1+ny-1>=0 && -i0+nx-1>=0 && ny-2>=0 && tmax-2>=0 && nx-2>=0 && i1>=0};
+	local
+		double S0 {t,j|j>=0 && -j+ny-1>=0 && t>=0 && -t+tmax-1>=0 && tmax>=2 && ny>=2 && nx>=2};
+		double S1 {t,i,j|j>=0 && -j+ny-1>=0 && i-1>=0 && -i+nx-1>=0 && t>=0 && -t+tmax-1>=0 && tmax>=2 && ny>=2 && nx>=2};
+		double S2 {t,i,j|j-1>=0 && -j+ny-1>=0 && i>=0 && -i+nx-1>=0 && t>=0 && -t+tmax-1>=0 && tmax>=2 && ny>=2 && nx>=2};
+		double S3 {t,i,j|j>=0 && -j+ny-2>=0 && i>=0 && -i+nx-2>=0 && t>=0 && -t+tmax-1>=0 && tmax>=2 && ny>=2 && nx>=2};
+	let
+		S0[t, j] = _fict_[t];
+		S1[t, i, j] = (case {t,i,j|ny-2>=0 && j>=0 && -j+ny-1>=0 && i-1>=0 && -i+nx-1>=0 && -t+tmax-1>=0 && t-1>=0} : S1[t-1, i, j]; {t,i,j|t==0} : ey[i, j]; esac -(0.5 *(case {t,i,j|-t+tmax-1>=0 && t-1>=0 && j>=0 && -j+ny-2>=0 && i-1>=0 && -i+nx-2>=0} : S3[t-1, i, j]; {t,i,j|t==0} || {t,i,j|j-ny+1==0 && t-1>=0} || {t,i,j|i-nx+1==0 && -j+ny-2>=0 && t-1>=0} : hz[i, j]; esac -case {t,i,j|t-1>=0 && -t+tmax-1>=0 && j>=0 && -j+ny-2>=0 && i-1>=0 && -i+nx-1>=0} : S3[t-1, i-1, j]; {t,i,j|t==0} || {t,i,j|j-ny+1==0 && t-1>=0} : hz[i-1, j]; esac)));
+		S2[t, i, j] = (case {t,i,j|nx-2>=0 && j-1>=0 && -j+ny-1>=0 && i>=0 && -i+nx-1>=0 && -t+tmax-1>=0 && t-1>=0} : S2[t-1, i, j]; {t,i,j|t==0} : ex[i, j]; esac -(0.5 *(case {t,i,j|-t+tmax-1>=0 && t-1>=0 && j-1>=0 && -j+ny-2>=0 && i>=0 && -i+nx-2>=0} : S3[t-1, i, j]; {t,i,j|t==0} || {t,i,j|j-ny+1==0 && t-1>=0} || {t,i,j|i-nx+1==0 && t-1>=0 && -j+ny-2>=0} : hz[i, j]; esac -case {t,i,j|t-1>=0 && -t+tmax-1>=0 && j-1>=0 && -j+ny-1>=0 && i>=0 && -i+nx-2>=0} : S3[t-1, i, j-1]; {t,i,j|t==0} || {t,i,j|i-nx+1==0 && t-1>=0} : hz[i, j-1]; esac)));
+		S3[t, i, j] = (case {t,i,j|-t+tmax-1>=0 && t-1>=0 && j>=0 && -j+ny-2>=0 && i>=0 && -i+nx-2>=0} : S3[t-1, i, j]; {t,i,j|t==0} : hz[i, j]; esac -(0.7 *(((case {t,i,j|t-1>=0 && -t+tmax-1>=0 && j>=0 && -j+ny-2>=0 && i>=0 && -i+nx-2>=0} : S2[t, i, j+1]; {t,i,j|t==0 && i>=0 && -i+nx-2>=0 && tmax-2>=0 && j>=0 && -j+ny-2>=0} : S2[0, i, j+1]; esac -case {t,i,j|t-1>=0 && -t+tmax-1>=0 && j-1>=0 && -j+ny-2>=0 && i>=0 && -i+nx-2>=0} : S2[t, i, j]; {t,i,j|t==0 && i>=0 && -i+nx-2>=0 && tmax-2>=0 && j-1>=0 && -j+ny-2>=0} : S2[0, i, j]; {t,i,j|j==0} : ex[i, j]; esac) +case {t,i,j|-t+tmax-1>=0 && t-1>=0 && j>=0 && -j+ny-2>=0 && i>=0 && -i+nx-2>=0} : S1[t, i+1, j]; {t,i,j|t==0 && i>=0 && -i+nx-2>=0 && tmax-2>=0 && j>=0 && -j+ny-2>=0} : S1[0, i+1, j]; esac) -case {t,i,j|i==0 && t==0 && tmax-2>=0 && nx-2>=0 && -j+ny-2>=0 && j>=0} : S0[0, j]; {t,i,j|i==0 && nx-2>=0 && -t+tmax-1>=0 && j>=0 && -j+ny-2>=0 && t-1>=0} : S0[t, j]; {t,i,j|t==0 && i-1>=0 && -i+nx-2>=0 && tmax-2>=0 && j>=0 && -j+ny-2>=0} : S1[0, i, j]; {t,i,j|-t+tmax-1>=0 && t-1>=0 && j>=0 && -j+ny-2>=0 && i-1>=0 && -i+nx-2>=0} : S1[t, i, j]; esac)));
+.

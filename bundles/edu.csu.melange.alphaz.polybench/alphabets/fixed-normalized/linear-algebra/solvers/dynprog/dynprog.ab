@@ -1,0 +1,31 @@
+affine dynprog {tsteps,length| tsteps-2>=0 && length-2>=0 }
+	given
+		int W {i0,i1| -i0+i1-1>=0 && -i1+length-1>=0 && i0>=0 } ;
+	using
+		int S0 { | } ;
+		int S1 {iter,i,j| -iter+tsteps-1>=0 && iter>=0 && j>=0 && i>=0 && -i+length-1>=0 && -j+length-1>=0 } ;
+		int S2 {iter,i,j| -iter+tsteps-1>=0 && iter>=0 && i>=0 && -i+j-1>=0 && -j+length-1>=0 } ;
+		int S3 {iter,i,j,k| -i+k-1>=0 && i>=0 && -j+length-1>=0 && j-k-1>=0 && -iter+tsteps-1>=0 && iter>=0 } ;
+		int S4 {iter,i,j| -iter+tsteps-1>=0 && iter>=0 && i>=0 && -i+j-1>=0 && -j+length-1>=0 } ;
+		int S5 {iter| iter>=0 && -iter+tsteps-1>=0 } ;
+	through
+		S0[] =[0];
+		S1[iter,i,j] =[0];
+		S2[iter,i,j] =[0];
+		S3[iter,i,j,k] = case
+			{ | -i+k-1==0 && iter==0 } : S2[0,k-1,j] + S4[0,i,k] + S1[0,k,j] ;
+			{ | -i+k-1==0 && iter-1>=0 } : S2[iter,k-1,j] + S4[iter,i,k] + S1[iter,k,j] ;
+			{ | iter==0 && -i+k-2>=0 } : S3[0,i,j,k-1] + S4[0,i,k] + S1[0,k,j] ;
+			{ | iter-1>=0 && -i+k-2>=0 } : S3[iter,i,j,k-1] + S4[iter,i,k] + S1[iter,k,j] ;
+		esac;
+		S4[iter,i,j] = case
+			{ | -i+j-1==0 && iter==0 } : S2[0,j-1,j] + W[i,j] ;
+			{ | -i+j-1==0 && iter-1>=0 } : S2[iter,j-1,j] + W[i,j] ;
+			{ | iter==0 && -i+j-2>=0 } : S3[0,i,j,j-1] + W[i,j] ;
+			{ | -i+j-2>=0 && iter-1>=0 } : S3[iter,i,j,j-1] + W[i,j] ;
+		esac;
+		S5[iter] = case
+			{ | iter==0 } : S0 + S4[0,0,length-1] ;
+			{ | iter-1>=0 } : S5[iter-1] + S4[iter,0,length-1] ;
+		esac;
+.

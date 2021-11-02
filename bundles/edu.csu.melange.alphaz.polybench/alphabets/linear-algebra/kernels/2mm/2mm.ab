@@ -1,0 +1,24 @@
+affine twomm {NI,NJ,NK,NL|NI>0 && NJ>0 && NK>0 && NL>0 }
+given
+	double A {i,k|0<=i<NI && 0<=k<NK};
+	double B {k,j|0<=k<NK && 0<=j<NJ};
+	double D {j,l|0<=j<NJ && 0<=l<NL};
+returns
+	double E {i,l,j|0<=i<NI && 0<=l<NL && j==NJ};
+using
+	double C {i,j,k|0<=i<NI && 0<=j<NJ && 0<=k<NK};
+	double temp_E {i,l,j|0<=i<NI && 0<=l<NL && 0<=j<NJ};
+through
+
+	C[i,j,k] = case
+					{|k==0} : A[i,k] * B[k,j];
+					{|k>0} : C[i,j,k-1] + A[i,k] * B[k,j];
+			   esac;
+			   
+	temp_E[i,l,j] = case
+					{|j==0} : C[i,j,NK-1] * D[j,l];
+					{|j>0} : temp_E[i,l,j-1] + C[i,j,NK-1] * D[j,l];
+			   esac;
+			 
+	E[i,l,j] = temp_E[i,l,j-1];
+.

@@ -1,0 +1,33 @@
+affine 2mm {ni,nj,nk,nl| ni-2>=0 && nj-2>=0 && nk-2>=0 && nl-2>=0 }
+	given
+		double alpha { | } ;
+		double beta { | } ;
+		double A {i0,i1| i1>=0 && i0>=0 && -i0+ni-1>=0 && -i1+nk-1>=0 } ;
+		double B {i0,i1| i1>=0 && i0>=0 && -i0+nk-1>=0 && -i1+nj-1>=0 } ;
+		double C {i0,i1| i1>=0 && i0>=0 && -i0+nj-1>=0 && -i1+nl-1>=0 } ;
+		double D {i0,i1| i1>=0 && i0>=0 && -i0+ni-1>=0 && -i1+nl-1>=0 } ;
+	using
+		double S1 {i0,i1,i2| -i1+nk-1>=0 && -i2+nj-1>=0 && i0>=0 && -i0+ni-1>=0 && i2>=0 && i1>=0 } ;
+		double S3 {i,j,k| -j+nl-1>=0 && -k+nj-1>=0 && i>=0 && -i+ni-1>=0 && k>=0 && j>=0 } ;
+		double S1_uni1A {i0,i1,i2| i1-nk>=0 && i0>=0 && -i2+nj-1>=0 && -i0+ni-1>=0 && i2>=0 } ;
+		double S1_uni1B {i0,i1,i2| i1>=0 && -i2+nj-1>=0 && i0>=0 && -i0+ni-1>=0 && i2>=0 && -i1+nk>=0 } ;
+	through
+		S1[i0,i1,i2] = case
+			{ | i1==0 } :[0]+ alpha * A[i0,i1] * B[i1,i2] ;
+			{ | i1-1>=0 } : S1[i0,i1-1,i2] + alpha * A[i0,i1] * B[i1,i2] ;
+		esac;
+		S3[i,j,k] = case
+			{ | k==0 && j-nk>=0 } : D[i,j] * beta + S1_uni1A * C[k,j] ;
+			{ | k==0 && -j+nk-1>=0 } : D[i,j] * beta + S1_uni1B * C[k,j] ;
+			{ | k-1>=0 && j-nk>=0 } : S3[i,j,k-1] + S1_uni1A * C[k,j] ;
+			{ | k-1>=0 && -j+nk-1>=0 } : S3[i,j,k-1] + S1_uni1B * C[k,j] ;
+		esac;
+		S1_uni1A[i0,i1,i2] = case
+			{ | i1-nk==0 } : S1[i0,i1-1,i2] ;
+			{ | i1-nk-1>=0 } : S1_uni1A[i0,i1-1,i2] ;
+		esac;
+		S1_uni1B[i0,i1,i2] = case
+			{ | i1-nk==0 } : S1[i0,i1-1,i2] ;
+			{ | -i1+nk-1>=0 } : S1_uni1B[i0,i1+1,i2] ;
+		esac;
+.

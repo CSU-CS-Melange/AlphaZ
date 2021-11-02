@@ -1,0 +1,23 @@
+//========================================================//
+//
+// Blas strsm function (particualr case)
+// Solves AX = B where A is m by m unit lower triangular, and
+// X and B are m by n.  Unlike blas, the ALpha(bets) program 
+// has separate output variables, it must be the schedule and the
+// memory allocation during codegen that should take care of this.
+//
+//========================================================//
+//
+
+affine strsmWithReduction {N,M | 2<=(N,M) } // Size Parameters
+given // Inputs
+double A {i,j | 0 <= (i,j) < M};
+double B {i,j | 0 <= i < M && 0 <= j < N};
+returns
+double X {i,j | 0 <= i < M && 0 <= j < N};
+through
+X[i,j] = case
+       	 {| i==0}: B[i,j];
+       	 {| i>0} : B[i,j] - SUM([k], {|k<i}: A[i,k]*X[k,j]);
+	esac;
+.

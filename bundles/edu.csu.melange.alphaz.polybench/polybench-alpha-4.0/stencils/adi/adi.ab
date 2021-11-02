@@ -1,0 +1,97 @@
+// Author: Guillaume Iooss
+affine adi {TSTEPS, N | 2<TSTEPS && 2<N}
+input
+	double u0 {i,j | 0<=i<N && 0<=j<N};
+	double p0 {i,j| 1<=i<N && 0<=j<N};
+	double q0 {i,j| 1<=i<N && 0<=j<N};
+output
+	double u {i,j| 1<=i<N && 0<=j<N};
+	double v {j,i| 1<=i<N && 0<=j<N};
+	double p {i,j| 1<=i<N && 0<=j<N};
+	double q {i,j| 1<=i<N && 0<=j<N};
+local
+	double DX;
+	double DY;
+	double DT;
+	double B1;
+	double B2;
+	double mul1;
+	double mul2;
+	double a;
+	double b;
+	double c;
+	double d;
+	double e;
+	double f;
+	double uTemp {t,i,j | 0<=t<=TSTEPS && 1<=i<N && 0<=j<N};
+	double vTemp {t,j,i | 1<=t<=TSTEPS && 1<=i<N && 0<=j<N};
+	double p1Temp {t,i,j | 1<=t<=TSTEPS && 1<=i<N && 0<=j<N};	// Column swap
+	double p2Temp {t,i,j | 1<=t<=TSTEPS && 1<=i<N && 0<=j<N};	// Row swap
+	double q1Temp {t,i,j | 1<=t<=TSTEPS && 1<=i<N && 0<=j<N};	// Column swap
+	double q2Temp {t,i,j | 1<=t<=TSTEPS && 1<=i<N && 0<=j<N};	// Row swap
+let
+	DX = 1.0/[N];
+	DY = 1.0/[N];
+	DT = 1.0/[TSTEPS];
+	
+	B1 = 2.0;
+	B2 = 1.0;
+	
+	mul1 = B1*DT / (DX*DX);
+	mul2 = B2*DT / (DY*DY);
+	
+	a = -mul1/2.0;
+	b = 1.0 + mul1;
+	c = a;
+	d = -mul2/2.0;
+	e = 1.0 + mul2;
+	f = d;
+	
+	// Column swap
+	p1Temp[t,i,j] = case
+		{t,i,j | j==0} : 0;
+		{t,i,j | 0<j<N-1} : -c / (a* p1Temp[t,i,j-1] + b);
+		{t,i,j | t==1 && j==N-1} : p0[i,j];
+		{t,i,j | t>1 && j==N-1} : p2Temp[t-1,i,j];
+	esac;
+	
+	q1Temp[t,i,j] = case
+		{t,i,j | j==0 && i<N-1} : vTemp[t,0,i];
+		{t,i,j | 0<j<N-1 && i<N-1} : (-d*uTemp[t-1,j,i-1] + (1+2*d)*uTemp[t-1,j,i] - f*uTemp[t-1,j,i+1] - a*q1Temp[t,i,j-1] ) / (a*p1Temp[t,i,j-1] + b);
+		{t,i,j | j==N-1 && i<N-1} : q1Temp[t,i,j];
+		{t,i,j | t==1 && i==N-1} : q0[i,j];
+		{t,i,j | t>1 && i==N-1} : q2Temp[t-1,i,j];
+	esac;
+	
+	vTemp[t,j,i] = case
+		{t,j,i | j==0} : 1;
+		{t,j,i | j==N-1} : 1;
+		{t,j,i | 0<j<N-1}: p1Temp[t,i,j] * vTemp[t,j+1,i] + q2Temp[t,i,j];
+	esac;
+	
+	// Row swap
+	p2Temp[t,i,j] = case
+		{t,i,j | j==0} : 0;
+		{t,i,j | 0<j<N-1} : -f / (d*p2Temp[t,i,j-1] + e);
+		{t,i,j | j==N-1} : p1Temp[t,i,j];
+	esac;
+	
+	q2Temp[t,i,j] = case
+		{t,i,j | j==0 && i<N-1} : uTemp[t,i,0];
+		{t,i,j | 0<j<N-1 && i<N-1} : (-a*vTemp[t,i-1,j] + (1+2*a)*vTemp[t,i,j] - c*vTemp[t,i+1,j] - d*q2Temp[t,i,j-1]) / (d*p2Temp[t,i,j-1] + e);
+		{t,i,j | j==N-1 && i<N-1} : q1Temp[t,i,j];
+		{t,i,j | i==N-1} : q1Temp[t,i,j];
+	esac;
+	
+	uTemp[t,i,j] = case
+		{t,i,j | t==0} : u0[i,j];
+		{t,i,j | t>0 && j==0} : 1;
+		{t,i,j | t>0 && j==N-1} : 1;
+		{t,i,j | t>0 && 0<j<N-1} : p2Temp[t,i,j] * uTemp[t,i,j+1] + q2Temp[t,i,j];
+	esac;
+	
+	u[i,j] = uTemp[TSTEPS,i,j];
+	v[i,j] = vTemp[TSTEPS,i,j];
+	p[i,j] = p2Temp[TSTEPS,i,j];
+	q[i,j] = q2Temp[TSTEPS,i,j];
+.

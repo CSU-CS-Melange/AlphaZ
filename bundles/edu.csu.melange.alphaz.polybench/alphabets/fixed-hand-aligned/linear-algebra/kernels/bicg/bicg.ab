@@ -1,0 +1,18 @@
+affine bicg {ny,nx| ny-2>=0 && nx-2>=0 }
+	input
+		double A {i0,i1| -i1+ny-1>=0 && -i0+nx-1>=0 && i1>=0 && i0>=0 } ;
+		double p {i0| i0>=0 && -i0+ny-1>=0 } ;
+		double r {i0| i0>=0 && -i0+nx-1>=0 } ;
+	local
+		double S2 {i,j| -j+ny-1>=0 && -i+nx-1>=0 && j>=0 && i>=0 } ;
+		double S3 {i,j| -j+ny-1>=0 && -i+nx-1>=0 && j>=0 && i>=0 } ;
+	let
+		S2[i,j] = case
+			{ | i==0 } :[0]+ r[i] * A[i,j] ;
+			{ | i-1>=0 } : S2[i-1,j] + r[i] * A[i,j] ;
+		esac;
+		S3[i,j] = case
+			{ | j==0 } :[0]+ A[i,j] * p[j] ;
+			{ | j-1>=0 } : S3[i,j-1] + A[i,j] * p[j] ;
+		esac;
+.

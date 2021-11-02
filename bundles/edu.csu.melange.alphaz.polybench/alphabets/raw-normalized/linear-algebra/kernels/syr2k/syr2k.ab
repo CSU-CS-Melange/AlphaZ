@@ -1,0 +1,21 @@
+affine scop_new {ni,beta,nj,alpha|ni-2>=0 && beta-2>=0 && nj-2>=0 && alpha-2>=0}
+input
+double A {i0,i1|i1>=0 && i0>=0 && -i0+ni-1>=0 && -i1+nj-1>=0};
+double B {i0,i1|i1>=0 && i0>=0 && -i0+ni-1>=0 && -i1+nj-1>=0};
+double C {i0,i1|i1>=0 && i0>=0 && -i1+ni-1>=0 && -i0+ni-1>=0};
+output
+local
+double S0 {i,j|j>=0 && i>=0 && -j+ni-1>=0 && -i+ni-1>=0};
+double S1 {i,j,k|-j+ni-1>=0 && i>=0 && -k+nj-1>=0 && -i+ni-1>=0 && k>=0 && j>=0};
+double S2 {i,j,k|-j+ni-1>=0 && i>=0 && -k+nj-1>=0 && -i+ni-1>=0 && k>=0 && j>=0};
+let
+S0[i,j] = (C * [beta]);
+S1[i,j,k] = case
+{|k==0} : (S0[i,j] + (([alpha] * A[i,k]) * B[j,k]));
+{|k-1>=0} : (S2[i,j,k-1] + (([alpha] * A[i,k]) * B[j,k]));
+esac;
+S2[i,j,k] = case
+{|k==0} : (S1[i,j,0] + (([alpha] * B[i,k]) * A[j,k]));
+{|k-1>=0} : (S1 + (([alpha] * B[i,k]) * A[j,k]));
+esac;
+.

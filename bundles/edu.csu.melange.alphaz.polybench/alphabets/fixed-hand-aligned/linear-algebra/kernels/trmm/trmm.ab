@@ -1,0 +1,15 @@
+affine trmm {ni| ni-2>=0 }
+	given
+		double alpha { | } ;
+		double A {i0,i1| i0-i1-1>=0 && i1>=0 && -i0+ni-1>=0 } ;
+		double B {i0,i1| -i0+ni-1>=0 && i1>=0 && i0>=0 && -i1+ni-1>=0 && i0-i1+ni-2>=0 } ;
+	using
+		double S0 {i,j,k| -j+ni-1>=0 && k>=0 && j>=0 && i-k-1>=0 && -i+ni-1>=0 } ;
+	through
+		S0[i,j,k] = case
+			{ | j-1>=0 && i-j>=0 && k-1>=0 } : S0[i,j,k-1] + alpha * A[i,k] * S0[j,k,j-1] ;
+			{ | j==0 && k-1>=0 } || { | -i+j-1>=0 && k-1>=0 } : S0[i,j,k-1] + alpha * A[i,k] * B[j,k] ;
+			{ | k==0 && j-1>=0 && i-j>=0 } : B[i,j] + alpha * A[i,k] * S0[j,k,j-1] ;
+			{ | k==0 && j==0 } || { | k==0 && -i+j-1>=0 } : B[i,j] + alpha * A[i,k] * B[j,k] ;
+		esac;
+.

@@ -1,0 +1,12 @@
+affine syrk {ni,nj|ni>=2 && nj>=2}
+	input
+		double alpha, beta;
+		double A {i0,i1|i1>=0 && -i1+nj-1>=0 && ni-2>=0 && i0>=0 && -i0+ni-1>=0 && nj-2>=0};
+		double C {i0,i1|i1>=0 && -i1+ni-1>=0 && i0>=0 && -i0+ni-1>=0 && ni-2>=0 && nj-2>=0};
+	local
+		double S0 {i,j|j>=0 && -j+ni-1>=0 && i>=0 && -i+ni-1>=0 && ni>=2 && nj>=2};
+		double S1 {i,j,k|k>=0 && -k+nj-1>=0 && j>=0 && -j+ni-1>=0 && i>=0 && -i+ni-1>=0 && ni>=2 && nj>=2};
+	let
+		S0[i, j] = (C[i, j] * beta);
+		S1[i, j, k] = (case {i,j,k|k==0 && nj-2>=0 && j>=0 && -j+ni-1>=0 && i>=0 && -i+ni-1>=0 && ni-2>=0} : S0[i, j]; {i,j,k|j>=0 && -j+ni-1>=0 && i>=0 && -i+ni-1>=0 && ni-2>=0 && -k+nj-1>=0 && k-1>=0} : S1[i, j, k-1]; esac +((alpha *A[i, k]) *A[j, k]));
+.

@@ -1,0 +1,26 @@
+// Author: Tomofumi Yuki
+
+//BLAS routine (symmetric matrix matrix multiply)
+// C := alpha*A*B + beta*C; A is symmetric, B anc C are MxN
+//
+// There are various options in BLAS for how A is stored. Here A is lower triangular.
+//
+// Modification by Guillaume Iooss to fit the computation of the Polybench code (version 4.2.1)
+affine symm {N,M|(N,M)>0}
+	input
+		double alpha,beta;
+		double A    {i,j|0<=j<=i<M};
+		double B,C  {i,j|0<=i<M && 0<=j<N};
+	output
+		double Cout {i,j|0<=i<M && 0<=j<N};
+	local
+		double temp2, Ctemp {i,j|0<=i<M && 0<=j<N};
+	let
+		temp2[i,j] = reduce(+, [k], {|k<=i}: A[i,k] * B[k,j]);
+		Ctemp[i,j] = beta * C[i,j] + alpha * temp2[i,j];
+		Cout[i,j] = Ctemp[i,j] + alpha * (case
+					{|i==M-1} : 0;
+					{|i<M-1} : reduce(+, [l], {|i<l}: A[l,i] * B[l,j]);
+				esac);
+.
+

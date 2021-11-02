@@ -1,0 +1,9 @@
+floyd-warshall.c
+ ° Schedules : [n] -> { S0[k, i, j] -> [0, k, 0, i, 0, j, 0] }
+ ° Domains :   [n] -> { S0[k, i, j] : j >= 0 and j <= -1 + n and i >= 0 and i <= -1 + n and k >= 0 and k <= -1 + n }
+ ° Writes :    [n] -> { S0[k, i, j] -> path[i, j] }
+ ° Reads :     [n] -> { S0[k, i, j] -> path[i, k]; S0[k, i, j] -> path[i, j]; S0[k, i, j] -> path[k, j] }
+PRDG (simplified) : 
+[n] -> {
+	S0[k, i, j] -> S0[k, i, k] : j >= 1 + k; S0[k, i, j] -> S0[-1 + k, i, k] : j <= -1 + k; S0[k, i, j] -> S0[k, k, j] : i >= 1 + k; S0[k, i, j] -> S0[-1 + k, k, j] : k >= 1 and i <= k; S0[k, i, j] -> S0[-1 + k, i, j] : i <= -1 + k or (k >= 1 and i >= 1 + k);
+}

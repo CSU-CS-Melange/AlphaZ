@@ -1,0 +1,45 @@
+//BLAS routine (symmetric matrix matrix multiply)
+// C := alpha*A*B + beta*C; A is symmetric, B anc C are MxN
+//
+// There are various options in BLAS for how A is stored. Here A is upper triangular.
+//
+// In BLAS, array A is MxN,
+// PolyBench has a bug in its implementation of symm.
+//   --  write to C[k][j] should not be read in the last statement
+affine symm {N,M|(N,M)>0}
+	input
+		double alpha,beta;
+		double A{i,j|0<=i<=j<M};
+		double B,C{i,j|0<=i<M && 0<=j<N};
+	output
+		double Cout{i,j|0<=i<M && 0<=j<N};
+	let
+		Cout[i,j] = case 
+						{|i<=j} : alpha * reduce(+, [k], {|i<=k}: A[i,k] * B[k,j]) + beta*C[i,j];
+						{|j<i}  : alpha * reduce(+, [k], {|k<i} : A[k,i] * B[k,j]) + beta*C[i,j];
+					esac;
+	
+.
+
+//              DO 70 J = 1,N
+//                  DO 60 I = 1,M
+//                      TEMP2 = ZERO
+//                      DO 50 K = 1,I - 1
+//                          C(K,J) = C(K,J) + ALPHA*B(I,J)*A(K,I)
+//                          TEMP2 = TEMP2 + B(K,J)*A(K,I)
+//   50                 CONTINUE
+//                          C(I,J) = BETA*C(I,J) + TEMP1*A(I,I) + ALPHA*TEMP2
+//   60             CONTINUE
+//   70         CONTINUE
+
+
+//              DO 70 J = 1,N
+//                  DO 60 I = 1,M
+//                      TEMP2 = ZERO
+//                      DO 50 K = 1,I - 1
+//                          C(j,k) = C(j,k) + ALPHA*B(j,i)*A(i,k)
+//                          TEMP2 = TEMP2 + B(K,J)*A(K,I)
+//   50                 CONTINUE
+//                          C(j,i) = BETA*C(j,i) + TEMP1*A(i,i) + ALPHA*TEMP2
+//   60             CONTINUE
+//   70         CONTINUE

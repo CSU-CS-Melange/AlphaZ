@@ -1,0 +1,18 @@
+reg_detect.c
+ ° Schedules : [niter, maxgrid, length] -> { S1[t, j, i] -> [0, t, 1, j, 0, i, 0, 0, 0]; S3[t, j, i] -> [0, t, 1, j, 0, i, 2, 0, 0]; S5[t, j, i] -> [0, t, 3, j, 0, i, 0, 0, 0]; S2[t, j, i, cnt] -> [0, t, 1, j, 0, i, 1, cnt, 0]; S4[t, i] -> [0, t, 2, i, 0, 0, 0, 0, 0]; S0[t, j, i, cnt] -> [0, t, 0, j, 0, i, 0, cnt, 0] }
+ ° Domains :   [niter, maxgrid, length] -> { S1[t, j, i] : i >= j and i <= -1 + maxgrid and j >= 0 and j <= -1 + maxgrid and t >= 0 and t <= -1 + niter; S5[t, j, i] : i >= j and i <= -1 + maxgrid and j >= 1 and j <= -1 + maxgrid and t >= 0 and t <= -1 + niter; S0[t, j, i, cnt] : cnt >= 0 and cnt <= -1 + length and i >= j and i <= -1 + maxgrid and j >= 0 and j <= -1 + maxgrid and t >= 0 and t <= -1 + niter; S3[t, j, i] : i >= j and i <= -1 + maxgrid and j >= 0 and j <= -1 + maxgrid and t >= 0 and t <= -1 + niter; S4[t, i] : i >= 0 and i <= -1 + maxgrid and t >= 0 and t <= -1 + niter; S2[t, j, i, cnt] : cnt >= 1 and cnt <= -1 + length and i >= j and i <= -1 + maxgrid and j >= 0 and j <= -1 + maxgrid and t >= 0 and t <= -1 + niter }
+ ° Writes :    [niter, maxgrid, length] -> { S1[t, j, i] -> sum_diff[j, i, 0]; S3[t, j, i] -> mean[j, i]; S2[t, j, i, cnt] -> sum_diff[j, i, cnt]; S4[t, i] -> path[0, i]; S5[t, j, i] -> path[j, i]; S0[t, j, i, cnt] -> diff[j, i, cnt] }
+ ° Reads :     [niter, maxgrid, length] -> { S2[t, j, i, cnt] -> diff[j, i, cnt]; S1[t, j, i] -> diff[j, i, 0]; S4[t, i] -> mean[0, i]; S2[t, j, i, cnt] -> sum_diff[j, i, -1 + cnt]; S5[t, j, i] -> mean[j, i]; S3[t, j, i] -> sum_diff[j, i, -1 + length]; S0[t, j, i, cnt] -> sum_tang[j, i]; S5[t, j, i] -> path[-1 + j, -1 + i] }
+PRDG (simplified) : 
+[niter, maxgrid, length] -> {
+	S5[t, j, i] -> S5[t, -1 + j, -1 + i] : j >= 2;
+	S2[t, j, i, cnt] -> S2[t, j, i, -1 + cnt] : cnt >= 2;
+	S2[t, j, i, cnt] -> S0[t, j, i, cnt];
+	S3[t, j, i] -> S2[t, j, i, -1 + length] : length >= 2;
+	S4[t, i] -> S3[t, 0, i];
+	S1[t, j, i] -> S0[t, j, i, 0] : length >= 1;
+	S5[t, 1, i] -> S4[t, -1 + i];
+	S5[t, j, i] -> S3[t, j, i];
+	S3[t, j, i] -> S1[t, j, i] : length = 1;
+	S2[t, j, i, 1] -> S1[t, j, i];
+}

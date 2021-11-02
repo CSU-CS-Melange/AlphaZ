@@ -1,0 +1,8 @@
+affine doitgen {P,Q,R|P>0 && Q>0 && R>0}
+given
+	double C4 {i,j|0<=(i,j)<P};
+	double A {i,j,k|0<=i<R && 0<=j<Q && 0<=k<P};
+	double sum {i,j,k|0<=i<R && 0<=j<Q && 0<=k<P};
+through
+
+.

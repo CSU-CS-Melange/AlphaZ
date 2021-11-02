@@ -1,0 +1,38 @@
+affine scop_new {m,n,float_n|m>=5 && n>=5 && float_n>=5}
+	input
+		double data {i0,i1|i0>=0 && -i0+n-1>=0 && i1>=0 && -i1+m-1>=0 && m-5>=0 && n-5>=0 && float_n-5>=0};
+	local
+		double S0 {|m>=5 && n>=5 && float_n>=5};
+		double S1 {j|j>=0 && -j+m-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S2 {j,i|i>=0 && -i+n-1>=0 && j>=0 && -j+m-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S3 {j|j>=0 && -j+m-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S4 {j|j>=0 && -j+m-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S5 {j,i|i>=0 && -i+n-1>=0 && j>=0 && -j+m-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S6 {j|j>=0 && -j+m-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S7 {j|j>=0 && -j+m-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S8 {j|j>=0 && -j+m-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S9 {i,j|j>=0 && -j+m-1>=0 && i>=0 && -i+n-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S10 {i,j|j>=0 && -j+m-1>=0 && i>=0 && -i+n-1>=0 && m>=5 && n>=5 && float_n>=5};
+		double S11 {j1|j1>=0 && -j1+m-2>=0 && m>=5 && n>=5 && float_n>=5};
+		double S12 {j1,j2|-j1+j2-1>=0 && -j2+m-1>=0 && j1>=0 && -j1+m-2>=0 && m>=5 && n>=5 && float_n>=5};
+		double S13 {j1,j2,i|i>=0 && -i+n-1>=0 && -j1+j2-1>=0 && -j2+m-1>=0 && j1>=0 && -j1+m-2>=0 && m>=5 && n>=5 && float_n>=5};
+		double S14 {j1,j2|-j1+j2-1>=0 && -j2+m-1>=0 && j1>=0 && -j1+m-2>=0 && m>=5 && n>=5 && float_n>=5};
+		double S15 {|m>=5 && n>=5 && float_n>=5};
+	let
+		S0[] = 0.10000000149011612;
+		S1[j] = 0.0;
+		S2[j, i] = (case {j,i|i==0 && -j+m-1>=0 && j>=0 && m-5>=0 && n-5>=0 && float_n-5>=0} : S1[j]; {j,i|m-5>=0 && n-5>=0 && float_n-5>=0 && i-1>=0 && -i+n-1>=0 && j>=0 && -j+m-1>=0} : S2[j, i-1]; esac +data[i, j]);
+		S3[j] = (S2[j, n-1] /[float_n]);
+		S4[j] = 0.0;
+		S5[j, i] = (case {j,i|i==0 && -j+m-1>=0 && j>=0 && m-5>=0 && n-5>=0 && float_n-5>=0} : S4[j]; {j,i|m-5>=0 && n-5>=0 && float_n-5>=0 && i-1>=0 && -i+n-1>=0 && j>=0 && -j+m-1>=0} : S5[j, i-1]; esac +((data[i, j] -S3[j]) *(data[i, j] -S3[j])));
+		S6[j] = (S5[j, n-1] /[float_n]);
+		S7[j] = 1 /* TODO: see parse error for detail */;
+		S8[j] = if (S7[j] <=S0[]) then 1.0 else S7[j];
+		S9[i, j] = (data[i, j] -S3[j]);
+		S10[i, j] = (S9[i, j] /(1 /* TODO: see parse error for detail */ *S8[j]));
+		S11[j1] = 1.0;
+		S12[j1, j2] = 0.0;
+		S13[j1, j2, i] = (case {j1,j2,i|i==0 && j1>=0 && float_n-5>=0 && n-5>=0 && m-5>=0 && -j1+j2-1>=0 && -j2+m-1>=0} : S12[j1, j2]; {j1,j2,i|i-1>=0 && -i+n-1>=0 && -j1+j2-1>=0 && -j2+m-1>=0 && j1>=0 && float_n-5>=0 && m-5>=0 && n-5>=0} : S13[j1, j2, i-1]; esac +(S10[i, j1] *S10[i, j2]));
+		S14[j1, j2] = S13[j1, j2, n-1];
+		S15[] = 1.0;
+.

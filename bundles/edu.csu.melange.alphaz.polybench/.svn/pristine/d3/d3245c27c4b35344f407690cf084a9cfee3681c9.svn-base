@@ -1,0 +1,27 @@
+affine gesummv {N|N>0}
+given
+	double alpha {i|i==0};
+	double beta  {i|i==0};
+	double A {i,j|0<=(i,j)<N};
+	double B {i,j|0<=(i,j)<N};
+	double x {i|0<=i<N};
+returns
+	double y {i,j|0<=i<N && j==N};
+using
+	double temp   {i,j|0<=(i,j)<N};
+	double temp_y {i,j|0<=i<N && 0<=j<=N};
+through
+
+	temp[i,j] = case
+				{|j==0} : A[i,j] * x[j];
+				{|j>0}  : temp[i,j-1] + A[i,j] * x[j];
+				esac;
+	
+	temp_y[i,j] = case
+				{|j==0} : B[i,j] * x[j];
+				{|0<j<N}  : temp_y[i,j-1] + B[i,j] * x[j];
+				{|j==N} : alpha[0] * temp[i,N-1] + beta[0] * temp_y[i,N-1];
+				esac;
+
+	y = temp_y;
+.

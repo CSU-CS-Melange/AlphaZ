@@ -1,0 +1,23 @@
+//========================================================//
+//
+// Cholesky Factorization with reductions
+//
+//========================================================//
+//
+double sqrt(double);
+affine choleskyReduction {N | 2<=N } // Size Parameter
+given // Inputs
+double A {i,j | 0 <= j && j <= i && i < N};
+returns
+double L {i,j | 0 <= j && j <= i&& i < N};
+through
+L[i,j] = case
+       	 {| i==j==0}:	sqrt(A[i,j]);
+       	 {| i==j>0}:	sqrt(A[i,j] -
+	    		  reduce(+, [k], {|0<=k<i}: L[i,k]*L[i,k]));
+       	 {| i>j==0}:	A[i,j]/L[j,j];
+       	 {| i>j>0}:	(A[i,j] -
+	    		  reduce(+,[k],{|0<=k<j}: L[i,k]*L[j,k])
+			  )/L[j,j];
+esac;
+.

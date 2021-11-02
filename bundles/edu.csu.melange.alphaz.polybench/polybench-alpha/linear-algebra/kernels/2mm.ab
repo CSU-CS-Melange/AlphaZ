@@ -1,0 +1,18 @@
+//E := alpha*A*B*C + beta*D
+//contradicts with definition -- 2 Matrix Multiplications (D=A.B; E=C.D)
+affine 2mm {P,Q,R,S|(P,Q,R,S)>0}
+	input
+		double alpha;
+		double beta;
+		double A{i,j|0<=i<P && 0<=j<Q};
+		double B{i,j|0<=i<Q && 0<=j<R};
+		double C{i,j|0<=i<R && 0<=j<S};
+		double D{i,j|0<=i<P && 0<=j<S};
+	output
+		double E{i,j|0<=i<P && 0<=j<S};
+	local
+		double temp{i,j|0<=i<P && 0<=j<R};
+	let
+		temp[i,j] = alpha * reduce(+, [k], A[i,k] * B[k,j]);
+		E[i,j] = beta*D[i,j] + reduce(+, [k], temp[i,k] * C[k,j]);
+.

@@ -1,0 +1,13 @@
+* 2 August 2018: Polybench updated to 4.2.1 version (only change was "syr2k" kernel)
+
+(Still) TODO: check all benchmark with a verifier code to ensure that the kernel gets the same result than their C counterpart
+
+
+
+*** Remark:
+ - Symmetric/triangular matrices are stored in a triangular fashion (in the opposite of the C benchmark, where the full matrix is stored).
+ 	This is fine right now because of AlphaZ code generator which allocates the whole bounding box.
+ 	However, if this is optimised, we should decide about if we want a good Alphabets implementation (triangular allocation) or
+ 		an implementation comparable to the C one (rectangular allocation)
+
+

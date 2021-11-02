@@ -1,0 +1,22 @@
+affine trisolv {n| n-2>=0 }
+	given
+		double A {i0,i1| -i0+n-1>=0 && i1>=0 && i0-i1>=0 } ;
+		double c {i0| -i0+n-1>=0 && i0>=0 } ;
+	using
+		double S1 {i0,i1| -i0+i1-1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double S2 {i0,i1| -i0+i1-1==0 && -i0+n-2>=0 && i0+1>=0 } ;
+		double S2_uni1A {i0,i1| -i0+i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+	through
+		S1[i0,i1] = case
+			{ | i0==0 } : c[i1] - A[i1,i0] * S2_uni1A ;
+			{ | i0-1>=0 } : S1[i0-1,i1] - A[i1,i0] * S2_uni1A ;
+		esac;
+		S2[i0,i1] = case
+			{ | i0+1==0 } : c[i1] / A[i1,i0+1] ;
+			{ | i0>=0 } : S1 / A[i1,i0+1] ;
+		esac;
+		S2_uni1A[i0,i1] = case
+			{ | -i0+i1==0 } : S2[i0-1,i1] ;
+			{ | -i0+i1-1>=0 } : S2_uni1A[i0,i1-1] ;
+		esac;
+.

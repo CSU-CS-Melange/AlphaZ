@@ -1,0 +1,25 @@
+affine floyd-warshall {n| n-2>=0 }
+	input
+		double path {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+	output
+		double pathOut {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+	local
+		double S0 {k,i,j| -i+n-1>=0 && j>=0 && i>=0 && -j+n-1>=0 && -k+n-1>=0 && k>=0 } ;
+	let
+		S0[k,i,j] = case
+			{ | k-1>=0 && k-i>=0 && k-j>=0 } : if S0[k-1,i,j] < S0[k-1,i,k] + S0[k-1,k,j] then S0[k-1,i,j] else S0[k-1,i,k] +
+			S0[k-1,k,j] ;
+			{ | k-1>=0 && -k+i-1>=0 && k-j>=0 } : if S0[k-1,i,j] < S0[k-1,i,k] + S0[k,k,j] then S0[k-1,i,j] else S0[k-1,i,k] +
+			S0[k,k,j] ;
+			{ | -k+j-1>=0 && k-i>=0 && k-1>=0 } : if S0[k-1,i,j] < S0[k,i,k] + S0[k-1,k,j] then S0[k-1,i,j] else S0[k,i,k] +
+			S0[k-1,k,j] ;
+			{ | -k+j-1>=0 && -k+i-1>=0 && k-1>=0 } : if S0[k-1,i,j] < S0[k,i,k] + S0[k,k,j] then S0[k-1,i,j] else S0[k,i,k] +
+			S0[k,k,j] ;
+			{ | k==0 && i-1>=0 && j-1>=0 } : if path[i,j] < S0[k,i,k] + S0[k,k,j] then path[i,j] else S0[k,i,k] + S0[k,k,j] ;
+			{ | i==0 && k==0 && j-1>=0 } : if path[i,j] < S0[k,i,k] + path[k,j] then path[i,j] else S0[k,i,k] + path[k,j] ;
+			{ | j==0 && k==0 && i-1>=0 } : if path[i,j] < path[i,k] + S0[k,k,j] then path[i,j] else path[i,k] + S0[k,k,j] ;
+			{ | j==0 && i==0 && k==0 } : if path[i,j] < path[i,k] + path[k,j] then path[i,j] else path[i,k] + path[k,j] ;
+		esac;
+		
+		pathOut[i0,i1] = S0[n-1,i0,i1];
+.

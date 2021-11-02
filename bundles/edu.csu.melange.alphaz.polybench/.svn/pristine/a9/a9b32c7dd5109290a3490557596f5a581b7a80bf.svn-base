@@ -1,0 +1,20 @@
+//Floyd-Warshall algorithm for computing shortest paths
+affine floyd-warshall {N|N>0}
+	input
+		//weight of the edge from node i to j
+		// infinity if there is no edge
+		int weight {i,j|0<=(i,j)<N};
+	output
+		//length of the shortest path from node i to j
+		int shortestPaths {i,j|0<=(i,j)<N};
+		
+	local
+		int paths {k,i,j|0<=(i,j)<N && -1<=k<N};
+	let
+		paths[k,i,j] = case
+				{|k==-1} : weight[i,j];
+				{|k>=0}  : min(paths[k-1,i,j], paths[k-1,i,k] + paths[k-1,k,j]);
+		esac;
+		
+		shortestPaths[i,j] = paths[N-1,i,j];
+.

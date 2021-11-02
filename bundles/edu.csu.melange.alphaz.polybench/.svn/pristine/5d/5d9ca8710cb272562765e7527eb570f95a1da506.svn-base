@@ -1,0 +1,33 @@
+paramLB = 2;
+
+echo(CtoAlphabets("./datamining/correlation/correlation.pp.c", paramLB));
+echo(CtoAlphabets("./datamining/covariance/covariance.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/2mm/2mm.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/3mm/3mm.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/atax/atax.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/bicg/bicg.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/cholesky/cholesky.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/doitgen/doitgen.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/gemm/gemm.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/gemver/gemver.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/gesummv/gesummv.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/mvt/mvt.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/symm/symm.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/syr2k/syr2k.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/syrk/syrk.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/trisolv/trisolv.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/kernels/trmm/trmm.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/solvers/durbin/durbin.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/solvers/dynprog/dynprog.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/solvers/gramschmidt/gramschmidt.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/solvers/lu/lu.pp.c", paramLB));
+echo(CtoAlphabets("./linear-algebra/solvers/ludcmp/ludcmp.pp.c", paramLB));
+echo(CtoAlphabets("./medley/floyd-warshall/floyd-warshall.pp.c", paramLB));
+echo(CtoAlphabets("./medley/reg_detect/reg_detect.pp.c", paramLB));
+echo(CtoAlphabets("./stencils/adi/adi.pp.c", paramLB));
+echo(CtoAlphabets("./stencils/fdtd-2d/fdtd-2d.pp.c", paramLB));
+echo(CtoAlphabets("./stencils/fdtd-apml/fdtd-apml.pp.c", paramLB));
+echo(CtoAlphabets("./stencils/jacobi-1d-imper/jacobi-1d-imper.pp.c", paramLB));
+echo(CtoAlphabets("./stencils/jacobi-2d-imper/jacobi-2d-imper.pp.c", paramLB));
+echo(CtoAlphabets("./stencils/seidel-2d/seidel-2d.pp.c", paramLB));
+

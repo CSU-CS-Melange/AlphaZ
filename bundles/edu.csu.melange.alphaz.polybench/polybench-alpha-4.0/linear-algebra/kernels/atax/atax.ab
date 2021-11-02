@@ -1,0 +1,15 @@
+// Author: Waruna Ranasinghe
+
+//(transpose of A).A.x (A_T times A.x)
+affine atax {M,N|(M,N)>0}
+	input
+		double A{i,j|0<=i<M && 0<=j<N};
+		double x{i|0<=i<N};
+	output
+		double y{i|0<=i<N};
+	local
+		double temp{i|0<=i<M};
+	let
+		temp[i] = reduce(+, [j], A[i,j] * x[j]);
+		y[k]    = reduce(+, [i], A[i,k] * temp[i]);
+.

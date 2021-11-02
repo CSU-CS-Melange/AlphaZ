@@ -1,0 +1,36 @@
+double sqrt (,double) ;
+affine correlation {m,n| m-2>=0 && n-2>=0 }
+	given
+		double eps { | } ;
+		double float_n { | } ;
+		double data {i0,i1| -i1+m-1>=0 && -i0+n-1>=0 && i1>=0 && i0>=0 } ;
+	using
+		double S2 {j,i| -j+m-1>=0 && -i+n-1>=0 && i>=0 && j>=0 } ;
+		double S3 {j| j>=0 && -j+m-1>=0 } ;
+		double S5 {j,i| -j+m-1>=0 && -i+n-1>=0 && i>=0 && j>=0 } ;
+		double S6 {j| j>=0 && -j+m-1>=0 } ;
+		double S8 {j| j>=0 && -j+m-1>=0 } ;
+		double S9 {i,j| -j+m-1>=0 && -i+n-1>=0 && j>=0 && i>=0 } ;
+		double S10 {i,j| -j+m-1>=0 && -i+n-1>=0 && j>=0 && i>=0 } ;
+		double S13 {j1,j2,i| -i+n-1>=0 && j1>=0 && i>=0 && -j2+m-1>=0 && -j1+j2-1>=0 } ;
+		double S14 {j1,j2| -j2+m-1>=0 && -j1+j2-1>=0 && j1>=0 } ;
+	through
+		S2[j,i] = case
+			{ | i==0 } : 0.0 + data[i,j] ;
+			{ | i-1>=0 } : S2[j,i-1] + data[i,j] ;
+		esac;
+		S3[j] = S2[j,n-1] / float_n;
+		S5[j,i] = case
+			{ | i==0 } : 0.0 + (data[i,j] - S3[j]) * (data[i,j] - S3[j]) ;
+			{ | i-1>=0 } : S5[j,i-1] + (data[i,j] - S3[j]) * (data[i,j] - S3[j]) ;
+		esac;
+		S6[j] = S5[j,n-1] / float_n;
+		S8[j] = if sqrt (S6) <= eps then 1.0 else sqrt (S6);
+		S9[i,j] = data - S3[j];
+		S10[i,j] = S9 / (sqrt (float_n) * S8[j]);
+		S13[j1,j2,i] = case
+			{ | i==0 } : 0.0 + S10[i,j1] * S10[i,j2] ;
+			{ | i-1>=0 } : S13[j1,j2,i-1] + S10[i,j1] * S10[i,j2] ;
+		esac;
+		S14[j1,j2] = S13[j1,j2,n-1];
+.

@@ -1,0 +1,21 @@
+affine kernel_doitgen_scop_0 {nr,nq,np|nr-2>=0 && nq-2>=0 && np-2>=0}
+input
+double A {i0,i1,i2|i0>=0 && -i2+np-1>=0 && -i0+nr-1>=0 && i2>=0 && i1>=0 && -i1+nq-1>=0};
+double C4 {i0,i1|i0>=0 && -i0+np-1>=0 && -i1+np-1>=0 && i1>=0};
+double sum {i0,i1,i2|i0>=0 && i2-np>=0 && -i0+nr-1>=0 && i1>=0 && -i2+nr-1>=0 && -i1+nq-1>=0};
+output
+local
+double S0 {r,q,p|r>=0 && -p+np-1>=0 && -r+nr-1>=0 && p>=0 && q>=0 && -q+nq-1>=0};
+double S1 {r,q,p,s|-r+nr-1>=0 && r>=0 && -q+nq-1>=0 && s>=0 && p>=0 && -p+np-1>=0 && q>=0 && -s+np-1>=0};
+double S2 {r,q,p|-q+nq-1>=0 && r>=0 && -r+nr-1>=0 && p>=0 && q>=0 && -p+nr-1>=0};
+let
+S0[r,q,p] = [0];
+S1[r,q,p,s] = case
+{|s==0} : (S0[r,q,p] + (A[r,q,s] * C4[s,p]));
+{|s-1>=0} : (S1[r,q,p,s-1] + (A[r,q,s] * C4[s,p]));
+esac;
+S2[r,q,p] = case
+{|-p+np-1>=0} : S1[r,q,p,np-1];
+{|p-np>=0} : sum;
+esac;
+.

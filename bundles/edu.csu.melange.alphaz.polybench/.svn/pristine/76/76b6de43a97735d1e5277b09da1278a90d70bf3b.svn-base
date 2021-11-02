@@ -1,0 +1,37 @@
+affine scop_new {n|n>=2}
+	input
+		double A {i0,i1|-i0+n>=0 && i1>=0 && n-2>=0 && i0>=0 && -i1+n>=0};
+		double b {i0|i0-1>=0 && -i0+n>=0 && n-2>=0};
+	local
+		double S0 {|n>=2};
+		double S1 {i,j|-i+j-1>=0 && -j+n>=0 && i>=0 && -i+n-1>=0 && n>=2};
+		double S2 {i,j,k|k>=0 && i-k-1>=0 && -i+j-1>=0 && -j+n>=0 && i>=0 && -i+n-1>=0 && n>=2};
+		double S3 {i,j|-i+j-1>=0 && -j+n>=0 && i>=0 && -i+n-1>=0 && n>=2};
+		double S4 {i,j|-i+j-1>=0 && -j+n>=0 && i>=0 && -i+n-1>=0 && n>=2};
+		double S5 {i,j,k|k>=0 && i-k>=0 && -i+j-1>=0 && -j+n>=0 && i>=0 && -i+n-1>=0 && n>=2};
+		double S6 {i,j|-i+j-1>=0 && -j+n>=0 && i>=0 && -i+n-1>=0 && n>=2};
+		double S7 {|n>=2};
+		double S8 {i|i-1>=0 && -i+n>=0 && n>=2};
+		double S9 {i,j|j>=0 && i-j-1>=0 && i-1>=0 && -i+n>=0 && n>=2};
+		double S10 {i|i-1>=0 && -i+n>=0 && n>=2};
+		double S11 {|n>=2};
+		double S12 {i|i>=0 && -i+n-1>=0 && n>=2};
+		double S13 {i,j|i+j-n>=0 && -j+n>=0 && i>=0 && -i+n-1>=0 && n>=2};
+		double S14 {i|i>=0 && -i+n-1>=0 && n>=2};
+	let
+		S0[] = 1.0;
+		S1[i, j] = A[j, i];
+		S2[i, j, k] = (case {i,j,k|k==0 && i-1>=0 && -i+j-1>=0 && -j+n>=0} : S1[i, j]; {i,j,k|k-1>=0 && i-k-1>=0 && -i+j-1>=0 && -j+n>=0} : S2[i, j, k-1]; esac -(S3[k, j] *case {i,j,k|k-1>=0 && i-k-1>=0 && -i+j-1>=0 && -j+n>=0} : S6[k-1, i]; {i,j,k|k==0} : A[k, i]; esac));
+		S3[i, j] = (case {i,j|j-1==0 && i==0 && n-2>=0} : S1[0, 1]; {i,j|i==0 && -j+n>=0 && j-2>=0} : S1[0, j]; {i,j|i-1>=0 && -i+j-1>=0 && -j+n>=0} : S2[i, j, i-1]; esac /case {i,j|i-1>=0 && -i+j-1>=0 && -j+n>=0} : S6[i-1, i]; {i,j|i==0} : A[i, i]; esac);
+		S4[i, j] = A[i+1, j];
+		S5[i, j, k] = (case {i,j,k|k==0 && j-1==0 && i==0 && n-2>=0} : S4[0, 1]; {i,j,k|k==0 && -i+j-1==0 && i-1>=0 && -i+n-1>=0} : S4[j-1, j]; {i,j,k|k==0 && i>=0 && -i+j-2>=0 && -j+n>=0} : S4[i, j]; {i,j,k|k-1>=0 && i-k>=0 && -i+j-1>=0 && -j+n>=0} : S5[i, j, k-1]; esac -(case {i,j,k|k>=0 && i-k-1>=0 && -i+j-1>=0 && -j+n>=0} : S3[k, i+1]; {i,j,k|-i+k==0 && i>=0 && n-2>=0 && -i+j-1>=0 && -j+n>=0} : S3[k, k+1]; esac *case {i,j,k|k-1>=0 && i-k>=0 && -i+j-1>=0 && -j+n>=0} : S6[k-1, j]; {i,j,k|k==0} : A[k, j]; esac));
+		S6[i, j] = case {i,j|j-1==0 && i==0 && n-2>=0} : S5[0, 1, 0]; {i,j|-i+j-2>=0 && i>=0 && -j+n>=0} : S5[i, j, i]; {i,j|-i+j-1==0 && i-1>=0 && -i+n-1>=0} : S5[j-1, j, j-1]; esac;
+		S7[] = S0[];
+		S8[i] = b[i];
+		S9[i, j] = (case {i,j|j==0 && i-1==0 && n-2>=0} : S8[1]; {i,j|j==0 && -i+n>=0 && i-2>=0} : S8[i]; {i,j|-i+n>=0 && i-j-1>=0 && j-1>=0} : S9[i, j-1]; esac -(S3[j, i] *case {i,j|j==0 && i-1>=0 && n-2>=0 && -i+n>=0} : S7[]; {i,j|-i+n>=0 && j-1>=0 && i-j-1>=0} : S10[j]; esac));
+		S10[i] = case {i|i-1==0 && n-2>=0} : S9[1, 0]; {i|-i+n>=0 && i-2>=0} : S9[i, i-1]; esac;
+		S11[] = (S10[n] /S6[n-1, n]);
+		S12[i] = case {i|i-n+1==0 && n-2>=0} : S7[]; {i|i>=0 && -i+n-2>=0} : S10[n-i-1]; esac;
+		S13[i, j] = (case {i,j|j-n==0 && i==0 && n-2>=0} : S12[0]; {i,j|i+j-n==0 && -i+n-1>=0 && i-1>=0} : S12[i]; {i,j|-i+n-1>=0 && -j+n>=0 && i+j-n-1>=0} : S13[i, j-1]; esac -(case {i,j|-i+n-2>=0 && i+j-n>=0 && -j+n>=0} : S6[n-i-2, j]; {i,j|i-n+1==0} : A[-i+n-1, j]; esac *case {i,j|j-n==0 && -i+n-1>=0 && n-2>=0 && i>=0} : S11[]; {i,j|-i+n-1>=0 && i+j-n>=0 && -j+n-1>=0} : S14[n-j-1]; esac));
+		S14[i] = (case {i|i==0 && n-2>=0} : S13[0, n]; {i|-i+n-1>=0 && i-1>=0} : S13[i, n]; esac /case {i|i>=0 && -i+n-2>=0} : S6[n-i-2, n-i-1]; {i|i-n+1==0} : A[-i+n-1, -i+n-1]; esac);
+.

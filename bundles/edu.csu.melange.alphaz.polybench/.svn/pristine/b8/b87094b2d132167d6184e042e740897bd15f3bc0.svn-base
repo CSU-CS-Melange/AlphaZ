@@ -1,0 +1,20 @@
+affine mvt {n| n-2>=0 }
+	given
+		double A {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double x1 {i0| -i0+n-1>=0 && i0>=0 } ;
+		double x2 {i0| -i0+n-1>=0 && i0>=0 } ;
+		double y_1 {i0| -i0+n-1>=0 && i0>=0 } ;
+		double y_2 {i0| -i0+n-1>=0 && i0>=0 } ;
+	using
+		double S0 {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double S1 {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+	through
+		S0[i0,i1] = case
+			{ | i1-1>=0 } : S0[i0,i1-1] + A * y_1[i1] ;
+			{ | i1==0 } : x1[i0] + A * y_1[i1] ;
+		esac;
+		S1[i0,i1] = case
+			{ | i1-1>=0 } : S1[i0,i1-1] + A[i1,i0] * y_2[i1] ;
+			{ | i1==0 } : x2[i0] + A[i1,i0] * y_2[i1] ;
+		esac;
+.

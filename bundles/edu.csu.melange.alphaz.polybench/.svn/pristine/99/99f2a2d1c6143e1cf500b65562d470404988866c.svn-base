@@ -1,0 +1,44 @@
+affine reg_detect {niter,maxgrid,length| niter-2>=0 && maxgrid-2>=0 && length-2>=0 }
+	given
+		int sum_tang {i0,i1| i0>=0 && -i0+i1>=0 && -i1+maxgrid-1>=0 } ;
+	using
+		int S0 {i0,i1,i2,i3| -i3+length-1>=0 && -i0+niter-1>=0 && i0>=0 && i3>=0 && i1+i2>=0 && -i2+maxgrid-1>=0 && -i1>=0 }
+		;
+		int S1 {i0,i1,i2,i3| i3==0 && -i1>=0 && -i0+niter-1>=0 && i0>=0 && i1+i2>=0 && -i2+maxgrid-1>=0 } ;
+		int S2 {i0,i1,i2,i3| -i3+length-1>=0 && -i0+niter-1>=0 && i0>=0 && i3-1>=0 && i1+i2>=0 && -i2+maxgrid-1>=0 && -i1>=0
+		} ;
+		int S3 {i0,i1,i2,i3| i3-length+1==0 && -i1>=0 && -i0+niter-1>=0 && i0>=0 && -i2+maxgrid-1>=0 && i1+i2-1>=0 } ;
+		int S4 {i0,i1,i2,i3| i3-length+1==0 && i1+i2==0 && i1+maxgrid-1>=0 && i0>=0 && -i0+niter-1>=0 && -i1>=0 } ;
+		int S5 {i0,i1,i2,i3| i3-length+1==0 && -i1>=0 && -i0+niter-1>=0 && i0>=0 && -i2+maxgrid-1>=0 && i1+i2-1>=0 } ;
+		int S3_bound {i0,i1,i2,i3| i3-length+1==0 && i1+i2==0 && i1+maxgrid-1>=0 && i0>=0 && -i0+niter-1>=0 && -i1>=0 } ;
+	through
+		S0[i0,i1,i2,i3] = sum_tang[i1+i2,i2];
+		S1[i0,i1,i2,i3] = case
+			{ | i0-1>=0 } : S0 ;
+			{ | i0==0 } : S0 ;
+		esac;
+		S2[i0,i1,i2,i3] = case
+			{ | i3-1==0 && i0==0 } : S1[i0,i1,i2,i3-1] + S0 ;
+			{ | i3-1==0 && i0-1>=0 } : S1[i0,i1,i2,i3-1] + S0 ;
+			{ | i0==0 && i3-2>=0 } : S2[i0,i1,i2,i3-1] + S0 ;
+			{ | i0-1>=0 && i3-2>=0 } : S2[i0,i1,i2,i3-1] + S0 ;
+		esac;
+		S3[i0,i1,i2,i3] = case
+			{ | i0-1>=0 } : S2 ;
+			{ | i0==0 } : S2 ;
+		esac;
+		S4[i0,i1,i2,i3] = case
+			{ | i0-1>=0 } : S3_bound[i0,2i1+i2,-i1,i3] ;
+			{ | i0==0 } : S3_bound[i0,2i1+i2,-i1,i3] ;
+		esac;
+		S5[i0,i1,i2,i3] = case
+			{ | i1+i2-1==0 && i0==0 } : S4[i0,-i2+1,i1+2i2-2,i3] + S3 ;
+			{ | i1+i2-1==0 && i0-1>=0 } : S4[i0,-i2+1,i1+2i2-2,i3] + S3 ;
+			{ | i0==0 && i1+i2-2>=0 } : S5[i0,i1,i2-1,i3] + S3 ;
+			{ | i0-1>=0 && i1+i2-2>=0 } : S5[i0,i1,i2-1,i3] + S3 ;
+		esac;
+		S3_bound[i0,i1,i2,i3] = case
+			{ | i0-1>=0 } : S2 ;
+			{ | i0==0 } : S2 ;
+		esac;
+.

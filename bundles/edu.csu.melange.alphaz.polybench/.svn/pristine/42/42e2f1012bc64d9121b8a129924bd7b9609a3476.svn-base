@@ -1,0 +1,20 @@
+affine syr2k {ni,nj| ni-2>=0 && nj-2>=0 }
+	given
+		double alpha { | } ;
+		double beta { | } ;
+		double A {i0,i1| -i0+ni-1>=0 && -i1+nj-1>=0 && i1>=0 && i0>=0 } ;
+		double B {i0,i1| -i0+ni-1>=0 && -i1+nj-1>=0 && i1>=0 && i0>=0 } ;
+		double C {i0,i1| -i1+ni-1>=0 && -i0+ni-1>=0 && i1>=0 && i0>=0 } ;
+	using
+		double S1 {i0,i1,i2| -i0+ni-1>=0 && i0>=0 && i2>=0 && i1>=0 && -i1+ni-1>=0 && -i2+nj-1>=0 } ;
+		double S2 {i0,i1,i2| -i0+ni-1>=0 && i0>=0 && i2>=0 && i1>=0 && -i1+ni-1>=0 && -i2+nj-1>=0 } ;
+	through
+		S1[i0,i1,i2] = case
+			{ | i2==0 } : C[i0,i1] * beta + alpha * A[i0,i2] * B[i1,i2] ;
+			{ | i2-1>=0 } : S2[i0,i1,i2-1] + alpha * A[i0,i2] * B[i1,i2] ;
+		esac;
+		S2[i0,i1,i2] = case
+			{ | i2==0 } : S1[i0,i1,0] + alpha * B[i0,i2] * A[i1,i2] ;
+			{ | i2-1>=0 } : S1 + alpha * B[i0,i2] * A[i1,i2] ;
+		esac;
+.

@@ -1,0 +1,22 @@
+affine gesummv {n| n-2>=0 }
+	given
+		double alpha { | } ;
+		double beta { | } ;
+		double A {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double B {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double x {i0| -i0+n-1>=0 && i0>=0 } ;
+	using
+		double S2 {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double S3 {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+		double S4 {i0,i1| i1-n+1==0 && -i0+n-1>=0 && i0>=0 } ;
+	through
+		S2[i0,i1] = case
+			{ | i1==0 } : A * x[i1] +[0];
+			{ | i1-1>=0 } : A * x[i1] + S2[i0,i1-1] ;
+		esac;
+		S3[i0,i1] = case
+			{ | i1==0 } : B * x[i1] +[0];
+			{ | i1-1>=0 } : B * x[i1] + S3[i0,i1-1] ;
+		esac;
+		S4[i0,i1] = alpha * S2 + beta * S3;
+.

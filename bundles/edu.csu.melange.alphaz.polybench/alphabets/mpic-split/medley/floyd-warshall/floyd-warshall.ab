@@ -1,0 +1,74 @@
+affine floyd-warshall {n| n-2>=0 }
+	input
+		double path {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+	local
+		double S0 {i0,i1,i2| i0-i1-1>=0 && i2>=0 && i1>=0 && i0-i2-1>=0 && -i0+n-1>=0 } || {i0,i1,i2| i0-i1-1>=0 && i1>=0 &&
+		-i2+n-1>=0 && -i0+i2-1>=0 } || {i0,i1,i2| -i0+i1-1>=0 && i2>=0 && -i1+n-1>=0 && i0-i2-1>=0 } || {i0,i1,i2|
+		-i0+i1-1>=0 && -i1+n-1>=0 && -i2+n-1>=0 && -i0+i2-1>=0 && i0>=0 } ;
+		double S0_uni1A {i0,i1,i2| -i1+n-1>=0 && i1>=0 && -i2+n-1>=0 && -i0+i2>=0 && i0>=0 } ;
+		double S0_uni1B {i0,i1,i2| -i1+n-1>=0 && i1>=0 && -i0+n-1>=0 && -i0+i2>=0 && 2i0-i2>=0 } ;
+		double S0_uni2A {i0,i1,i2| -i1+n-1>=0 && i2>=0 && -i0+i1>=0 && -i2+n-1>=0 && i0>=0 } ;
+		double S0_uni2B {i0,i1,i2| -i0+i1>=0 && i2>=0 && 2i0-i1>=0 && -i2+n-1>=0 && -i0+n-1>=0 } ;
+		double S0_bound {i0,i1,i2| -i0+i1==0 && -i0+n-1>=0 && i2>=0 && i0>=0 && -i2+n-1>=0 } || {i0,i1,i2| -i0+i2==0 &&
+		-i1+n-1>=0 && i1>=0 && -i0+n-1>=0 && i0>=0 } ;
+	let
+		S0[i0,i1,i2] = case
+			{ | -i0+i1+1==0 && -i0+i2+1>=0 && i0-i2>=0 } || { | -i0+i2+1==0 && i0-i1>=0 && -i0+i1+1>=0 } : if
+			S0_bound[i0-1,i1,i2] < S0_uni1A[i0-1,i1,i2] + S0_uni2A[i0-1,i1,i2] then S0_bound[i0-1,i1,i2] else
+			S0_uni1A[i0-1,i1,i2] + S0_uni2A[i0-1,i1,i2] ;
+			{ | -i0+i2+1==0 && i0-i1-2>=0 } : if S0_bound[i0-1,i1,i2] < S0_uni1A[i0-1,i1,i2] + S0_uni2B[i0-1,2i0-i1-2,i2] then
+			S0_bound[i0-1,i1,i2] else S0_uni1A[i0-1,i1,i2] + S0_uni2B[i0-1,2i0-i1-2,i2] ;
+			{ | -i0+i1+1==0 && i0-i2-2>=0 } : if S0_bound[i0-1,i1,i2] < S0_uni1B[i0-1,i1,2i0-i2-2] + S0_uni2A[i0-1,i1,i2] then
+			S0_bound[i0-1,i1,i2] else S0_uni1B[i0-1,i1,2i0-i2-2] + S0_uni2A[i0-1,i1,i2] ;
+			{ | i0-i1-2>=0 && i0-i2-2>=0 } : if S0[i0-1,i1,i2] < S0_uni1B[i0-1,i1,2i0-i2-2] + S0_uni2B[i0-1,2i0-i1-2,i2] then
+			S0[i0-1,i1,i2] else S0_uni1B[i0-1,i1,2i0-i2-2] + S0_uni2B[i0-1,2i0-i1-2,i2] ;
+			{ | -i0+i2+1==0 && -i0+i1-1>=0 } : if S0_bound[i0-1,i1,i2] < S0_uni1A[i0-1,i1,i2] + S0_uni2A then
+			S0_bound[i0-1,i1,i2] else S0_uni1A[i0-1,i1,i2] + S0_uni2A ;
+			{ | -i0+i1-1>=0 && i0-i2-2>=0 } : if S0[i0-1,i1,i2] < S0_uni1B[i0-1,i1,2i0-i2-2] + S0_uni2A then S0[i0-1,i1,i2] else
+			S0_uni1B[i0-1,i1,2i0-i2-2] + S0_uni2A ;
+			{ | -i0+i1+1==0 && -i0+i2-1>=0 } : if S0_bound[i0-1,i1,i2] < S0_uni1A + S0_uni2A[i0-1,i1,i2] then
+			S0_bound[i0-1,i1,i2] else S0_uni1A + S0_uni2A[i0-1,i1,i2] ;
+			{ | i0-i1-2>=0 && -i0+i2-1>=0 } : if S0[i0-1,i1,i2] < S0_uni1A + S0_uni2B[i0-1,2i0-i1-2,i2] then S0[i0-1,i1,i2] else
+			S0_uni1A + S0_uni2B[i0-1,2i0-i1-2,i2] ;
+			{ | -i0+i1-1>=0 && i0-1>=0 && -i0+i2-1>=0 } : if S0[i0-1,i1,i2] < S0_uni1A + S0_uni2A then S0[i0-1,i1,i2] else
+			S0_uni1A + S0_uni2A ;
+			{ | i0==0 && i1-1>=0 && i2-1>=0 } : if path[i1,i2] < S0_uni1A + S0_uni2A then path[i1,i2] else S0_uni1A + S0_uni2A ;
+		esac;
+		S0_uni1A[i0,i1,i2] = case
+			{ | -i0+i2==0 } : S0_bound ;
+			{ | -i0+i2-1>=0 } : S0_uni1A[i0,i1,i2-1] ;
+		esac;
+		S0_uni1B[i0,i1,i2] = case
+			{ | -i0+i2==0 } : S0_bound[i0,i1,2i0-i2] ;
+			{ | -i0+i2-1>=0 } : S0_uni1B[i0,i1,i2-1] ;
+		esac;
+		S0_uni2A[i0,i1,i2] = case
+			{ | -i0+i1==0 } : S0_bound ;
+			{ | -i0+i1-1>=0 } : S0_uni2A[i0,i1-1,i2] ;
+		esac;
+		S0_uni2B[i0,i1,i2] = case
+			{ | -i0+i1==0 } : S0_bound[i0,2i0-i1,i2] ;
+			{ | -i0+i1-1>=0 } : S0_uni2B[i0,i1-1,i2] ;
+		esac;
+		S0_bound[i0,i1,i2] = case
+			{ | -i0+i2==0 && -i0+i1==0 && i0-1>=0 } : if S0[i0-1,i1,i2] < S0_uni1A[i0-1,i1,i2] + S0_uni2A[i0-1,i1,i2] then
+			S0[i0-1,i1,i2] else S0_uni1A[i0-1,i1,i2] + S0_uni2A[i0-1,i1,i2] ;
+			{ | -i0+i1+1==0 && i0-i2>=0 && -i0+i2+1>=0 } || { | -i0+i2+1==0 && i0-i1>=0 && -i0+i1+1>=0 } : if
+			S0_bound[i0-1,i1,i2] < S0_uni1A[i0-1,i1,i2] + S0_uni2A[i0-1,i1,i2] then S0_bound[i0-1,i1,i2] else
+			S0_uni1A[i0-1,i1,i2] + S0_uni2A[i0-1,i1,i2] ;
+			{ | -i0+i2==0 && i0-i1-2>=0 } : if S0[i0-1,i1,i2] < S0_uni1A[i0-1,i1,i2] + S0_uni2B[i0-1,2i0-i1-2,i2] then
+			S0[i0-1,i1,i2] else S0_uni1A[i0-1,i1,i2] + S0_uni2B[i0-1,2i0-i1-2,i2] ;
+			{ | -i0+i1==0 && i0-i2-2>=0 } : if S0[i0-1,i1,i2] < S0_uni1B[i0-1,i1,2i0-i2-2] + S0_uni2A[i0-1,i1,i2] then
+			S0[i0-1,i1,i2] else S0_uni1B[i0-1,i1,2i0-i2-2] + S0_uni2A[i0-1,i1,i2] ;
+			{ | -i0+i2==0 && i0-1>=0 && -i0+i1-1>=0 } : if S0[i0-1,i1,i2] < S0_uni1A[i0-1,i1,i2] + S0_uni2A then S0[i0-1,i1,i2]
+			else S0_uni1A[i0-1,i1,i2] + S0_uni2A ;
+			{ | -i0+i1==0 && -i0+i2-1>=0 && i0-1>=0 } : if S0[i0-1,i1,i2] < S0_uni1A + S0_uni2A[i0-1,i1,i2] then S0[i0-1,i1,i2]
+			else S0_uni1A + S0_uni2A[i0-1,i1,i2] ;
+			{ | i1==0 && i0==0 && i2-1>=0 } : if path[i1,i2] < S0_uni1A + path[i0,i2] then path[i1,i2] else S0_uni1A +
+			path[i0,i2] ;
+			{ | i2==0 && i0==0 && i1-1>=0 } : if path[i1,i2] < path[i1,i0] + S0_uni2A then path[i1,i2] else path[i1,i0] +
+			S0_uni2A ;
+			{ | i2==0 && i1==0 && i0==0 } : if path[i1,i2] < path[i1,i0] + path[i0,i2] then path[i1,i2] else path[i1,i0] +
+			path[i0,i2] ;
+		esac;
+.

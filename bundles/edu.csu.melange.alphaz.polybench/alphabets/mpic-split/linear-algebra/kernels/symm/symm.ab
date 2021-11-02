@@ -1,0 +1,67 @@
+affine symm {ni,nj| ni-2>=0 && nj-3>=0 }
+	input
+		double alpha { | } ;
+		double beta { | } ;
+		double A {i0,i1| -i1+ni-1>=0 && -i0+nj-3>=0 && i1>=0 && i0>=0 } || {i0,i1| -i0+i1==0 && i0>=0 && -i0+ni-1>=0 } ;
+		double B {i0,i1| -i0+ni-1>=0 && -i1+nj-1>=0 && i1>=0 && i0>=0 } || {i0,i1| -i0+i1-2>=0 && -i1+nj-1>=0 && i0>=0 } ;
+		double C {i0,i1| -i0+i1-2>=0 && -i1+nj-1>=0 && i0>=0 } || {i0,i1| -i1+nj-1>=0 && -i0+ni-1>=0 && i1>=0 && i0-i1+1>=0
+		&& i0>=0 } ;
+	local
+		double S1 {i0,i1,i2| -i0+i1-2>=0 && i0>=0 && i2>=0 && -i1+nj-1>=0 && -i2+ni-1>=0 } ;
+		double S2 {i0,i1,i2| i0>=0 && -i1-i2-3>=0 && 2i1+i2>=0 && -i1+nj-1>=0 && -i0+ni-1>=0 } ;
+		double S3 {i0,i1,i2| -i0+i2==0 && -i0+ni-1>=0 && i0>=0 && i1>=0 && -i1+nj-1>=0 } ;
+		double S2_uni1A {i0,i1,i2| -i0+ni-1>=0 && i1-2>=0 && -i1+i2>=0 && -i1+nj-1>=0 && i0-i2-1>=0 } || {i0,i1,i2| i0>=0 &&
+		i1-2>=0 && -i1+i2>=0 && -i1+nj-1>=0 && -i0+i2-1>=0 && -i0+ni-1>=0 } ;
+		double S2_uni1B {i0,i1,i2| i0>=0 && i1-2>=0 && i1+i2>=0 && -i1+nj-1>=0 && -i0-i2-1>=0 && -i0+ni-1>=0 } || {i0,i1,i2|
+		-i0+ni-1>=0 && i1-2>=0 && -i2>=0 && i1+i2>=0 && -i1+nj-1>=0 && i0+i2-1>=0 } ;
+		double S2_uni1B_bound {i0,i1,i2| i0+i2==0 && i0>=0 && i1-2>=0 && -i0+i1>=0 && -i1+nj-1>=0 && -i0+ni-1>=0 } ;
+		double S2_bound {i0,i1,i2| i1+i2+2==0 && -i0+ni-1>=0 && i0>=0 && -i1+nj-1>=0 && i1-2>=0 } ;
+		double S2_uni1A_bound {i0,i1,i2| -i0+i2==0 && -i0+ni-1>=0 && i1-2>=0 && i0-i1>=0 && -i1+nj-1>=0 } ;
+	let
+		S1[i0,i1,i2] = case
+			{ | i2-1>=0 && i0-i2>=0 } : S1[i0,i1,i2-1] + alpha * A[i0,i2] * B[i2,i1] ;
+			{ | -i0+i2-2>=0 } : S1[i0,i1,i2-1] + alpha * A[i0,i2] * B[i2,i1] ;
+			{ | -i0+i2-1==0 } : S3[i0,i1,i2-1] + alpha * A[i2-1,i2] * B[i2,i1] ;
+			{ | i2==0 } : C[i0,i1] + alpha * A[i0,i2] * B[i2,i1] ;
+		esac;
+		S2[i0,i1,i2] = case
+			{ | 2i1+i2==0 && i0==0 } :[0]+ B[i0,i1] * A[i0,i0] ;
+			{ | 2i1+i2==0 && i0-1>=0 } :[0]+ B[2i1+i2,i1] * A[2i1+i2,i0] ;
+			{ | i0==0 && 2i1+i2-1>=0 } : S2[i0,i1,i2-1] + B[2i1+i2,i1] * A[2i1+i2,i0] ;
+			{ | 2i1+i2-1>=0 && i0-1>=0 } : S2[i0,i1,i2-1] + B[2i1+i2,i1] * A[2i1+i2,i0] ;
+		esac;
+		S3[i0,i1,i2] = case
+			{ | -i0+i1-2>=0 && i0-1>=0 } : beta * S1 + alpha * A[i2,i2] * B[i2,i1] + alpha * S2_uni1B_bound[i2,i1,-i0] ;
+			{ | i0==0 && i1-2>=0 } : beta * S1 + alpha * A[i2,i2] * B[i2,i1] + alpha * S2_uni1B_bound[i2,i1,-i0] ;
+			{ | i1==0 && i0==0 } : beta * C[i2,i1] + alpha * A[i2,i1] * B[i2,i1] + alpha *[0];
+			{ | i1==0 && i0-1>=0 } : beta * C[i2,i1] + alpha * A[i2,i2] * B[i2,i1] + alpha *[0];
+			{ | i1-1==0 && i0==0 } : beta * C[i2,i1] + alpha * A[i2,i1-1] * B[i2,i1] + alpha *[0];
+			{ | i1-1==0 && i0-1>=0 } : beta * C[i2,i1] + alpha * A[i2,i2] * B[i2,i1] + alpha *[0];
+			{ | i0-i1>=0 && i1-2>=0 } : beta * C[i2,i1] + alpha * A[i2,i2] * B[i2,i1] + alpha * S2_uni1A_bound[i2,i1,i0] ;
+			{ | -i0+i1-1==0 && i0-1>=0 } : beta * C[i2,i1] + alpha * A[i2,i2] * B[i2,i1] + alpha * S2_uni1B_bound[i2,i1,-i0] ;
+		esac;
+		S2_uni1A[i0,i1,i2] = case
+			{ | -i1+i2==0 } : S2_bound[i0,i1,-2i1+i2-2] ;
+			{ | -i1+i2-1>=0 && i0-i2>=0 } || { | -i1+i2-1>=0 && -i0+i2-2>=0 } : S2_uni1A[i0,i1,i2-1] ;
+			{ | -i0+i2-1==0 && i0-i1>=0 } : S2_uni1A_bound[i0,i1,i2-1] ;
+		esac;
+		S2_uni1B[i0,i1,i2] = case
+			{ | i1+i2==0 } : S2_bound[i0,i1,-2i1-i2-2] ;
+			{ | -i0-i2>=0 && i1+i2-1>=0 } || { | i0+i2-2>=0 && i1+i2-1>=0 } : S2_uni1B[i0,i1,i2-1] ;
+			{ | i0+i2-1==0 && -i0+i1>=0 } : S2_uni1B_bound[i0,i1,i2-1] ;
+		esac;
+		S2_uni1B_bound[i0,i1,i2] = case
+			{ | -i0+i1==0 } : S2_bound[i0,i1,-2i1-i2-2] ;
+			{ | -i0+i1-1>=0 } : S2_uni1B[i0,i1,i2-1] ;
+		esac;
+		S2_bound[i0,i1,i2] = case
+			{ | i1-2==0 && i0==0 } :[0]+ B[i0,i1] * A[i0,i0] ;
+			{ | i1-2==0 && i0-1>=0 } :[0]+ B[2i1+i2,i1] * A[2i1+i2,i0] ;
+			{ | i0==0 && i1-3>=0 } : S2[i0,i1,i2-1] + B[2i1+i2,i1] * A[2i1+i2,i0] ;
+			{ | i0-1>=0 && i1-3>=0 } : S2[i0,i1,i2-1] + B[2i1+i2,i1] * A[2i1+i2,i0] ;
+		esac;
+		S2_uni1A_bound[i0,i1,i2] = case
+			{ | -i0+i1==0 } : S2_bound[i0,i1,-2i1+i2-2] ;
+			{ | i0-i1-1>=0 } : S2_uni1A[i0,i1,i2-1] ;
+		esac;
+.

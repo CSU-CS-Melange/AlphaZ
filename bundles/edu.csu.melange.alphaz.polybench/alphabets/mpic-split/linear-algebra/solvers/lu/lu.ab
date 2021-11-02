@@ -1,0 +1,42 @@
+affine lu {n| n-2>=0 }
+	input
+		double A {i0,i1| -i0+n-1>=0 && i1>=0 && i0>=0 && -i1+n-1>=0 } ;
+	local
+		double S0 {i0,i1,i2| -2i0+i1+1==0 && i0-i2+n-1>=0 && i0>=0 && -2i0+i2-1>=0 } ;
+		double S1 {i0,i1,i2| -2i0+i1-2>=0 && i0-i1+n-1>=0 && -2i0+i2-2>=0 && i0-i2+n-1>=0 && i0>=0 } ;
+		double S1_uni1A {i0,i1,i2| i0-i1+n-1>=0 && -i1+i2>=0 && i0>=0 && -2i0+i1-2>=0 && -i0+i1-i2+n-1>=0 } ;
+		double S1_uni2A {i0,i1,i2| i0-i1+n-1>=0 && -2i0+i1>=0 && i0-1>=0 && i0-i2+n-1>=0 && -2i0+i2>=0 } ;
+		double S0_uni1A {i0,i1,i2| i0-i1+n-1>=0 && -2i0+i1>=0 && -2i0+i2-1>=0 && i0-i2+n-1>=0 && i0>=0 } ;
+		double S1_bound {i0,i1,i2| -2i0+i2-1==0 && -2i0+i1-1>=0 && i0-i1+n-1>=0 && i0>=0 } || {i0,i1,i2| -2i0+i1-1==0 &&
+		i0-i2+n-1>=0 && i0>=0 && -2i0+i2-1>=0 } ;
+		double S1_uni1A_bound {i0,i1,i2| -2i0+i1-1==0 && i0>=0 && i0-i2+n>=0 && -i0+n-2>=0 && -2i0+i2-1>=0 } ;
+	let
+		S0[i0,i1,i2] = case
+			{ | i0-1>=0 } : S1_bound[-i0+i1,i1,-2i0+i1+i2] / S1_uni1A_bound[-i0+i1,i1,i2] ;
+			{ | i0==0 } : A[i1-i0+1,i2-i0] / A[i1-i0+1,i0] ;
+		esac;
+		S1[i0,i1,i2] = case
+			{ | i0-1>=0 } : S1[i0-1,i1-1,i2-1] - S1_uni2A * S0_uni1A ;
+			{ | i0==0 } : A[i1-i0,i2-i0] - A[i1-i0,i0] * S0_uni1A ;
+		esac;
+		S1_uni1A[i0,i1,i2] = case
+			{ | -i1+i2==0 } : S1_bound[i0,i1,2i0-i1+i2+1] ;
+			{ | -i1+i2-1>=0 } : S1_uni1A[i0,i1,i2-1] ;
+		esac;
+		S1_uni2A[i0,i1,i2] = case
+			{ | -2i0+i2==0 } : S1_bound[i0-1,i1-1,i2-1] ;
+			{ | -2i0+i2-1>=0 } : S1_uni2A[i0,i1,i2-1] ;
+		esac;
+		S0_uni1A[i0,i1,i2] = case
+			{ | -2i0+i1==0 } : S0[i1-i0,i1-1,i1+i2-2i0] ;
+			{ | -2i0+i1-1>=0 } : S0_uni1A[i0,i1-1,i2] ;
+		esac;
+		S1_bound[i0,i1,i2] = case
+			{ | i0-1>=0 } : S1[i0-1,i1-1,i2-1] - S1_uni2A * S0_uni1A ;
+			{ | i0==0 } : A[i1-i0,i2-i0] - A[i1-i0,i0] * S0_uni1A ;
+		esac;
+		S1_uni1A_bound[i0,i1,i2] = case
+			{ | -2i0+i2-1==0 } : S1_bound[i0,i1,2i0-i1+i2+1] ;
+			{ | -2i0+i2-2>=0 } : S1_uni1A_bound[i0,i1,i2-1] ;
+		esac;
+.
