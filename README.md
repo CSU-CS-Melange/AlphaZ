@@ -1,5 +1,5 @@
 ## AlphaZ copy to gitlab
-
+  
 This repository contains (partial) copy of source code for AlphaZ system 
 developed at Colorado State University:
  http://www.cs.colostate.edu/AlphaZ/wiki/
