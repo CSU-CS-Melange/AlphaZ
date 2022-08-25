@@ -18,11 +18,11 @@ Also the test project contains many examples:
 
 ### Installation
 
-1. Install Eclipse IDE for Java Developers. In the following version 2019-03 is
+1. Install Eclipse IDE for Java Developers. In the following version 2021-12 is
 assumed.
 2. Launch eclipse and select a fresh workspace.
 3. ``Help -> Install new software``
-   - Select "2019-03 - http://download.eclipse.org/releases/2019-03" as the repository to work with.
+   - Select "2021-12 - http://download.eclipse.org/releases/2021-12" as the repository to work with.
    - Search for "Xtext" and select ``Xtext Complete SDK`` and install.
    (you may find two or more, but pick one - it shows up under multiple categories, but they are the same thing)
 4. ``Help -> Install new software``
@@ -44,12 +44,12 @@ assumed.
 ### Instructions for Installing from Source Code
 
 1. Checkout AlphaZ projects from git repository (here).
-2. Install Eclipse IDE for Java Developers. In the following version 2019-03 is
+2. Install Eclipse IDE for Java Developers. In the following version 2021-12 is
 assumed.
 3. Launch eclipse and select a fresh workspace.
 4. Open ``Preferences -> Java -> Compiler`` and set ``Compiler compliance level`` to 1.8.
 5. ``Help -> Install new software``
-   - Select "2019-03 - http://download.eclipse.org/releases/2019-03" as the repository to work with.
+   - Select "2021-12 - http://download.eclipse.org/releases/2021-12" as the repository to work with.
    - Search for "Xtext" and select ``Xtext Complete SDK`` and install.
    (you may find two or more, but pick one - it shows up under multiple categories, but they are the same thing)
 6. ``Help -> Install new software``
