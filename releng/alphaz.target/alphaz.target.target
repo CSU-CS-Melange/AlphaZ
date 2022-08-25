@@ -36,8 +36,7 @@
 <unit id="org.eclipse.xtend.sdk.feature.group" range="[2.16.0,3.0.0)"/>
 <unit id="org.eclipse.xtext.sdk.feature.group" range="[2.16.0,3.0.0)"/>
 <unit id="org.eclipse.equinox.sdk.feature.group" range="[3.13.0,4.0.0)"/>
-<!--<repository location="http://download.eclipse.org/releases/2018-12/"/>-->
-<repository location="http://mirror.ibcp.fr/pub/eclipse/releases//2019-03/"/>
+<repository location="http://mirror.ibcp.fr/pub/eclipse/releases/2021-12/"/>
 </location>
 
 </locations>
