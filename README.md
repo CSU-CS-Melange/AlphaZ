@@ -15,7 +15,7 @@ However, note that new Macs with Apple M1 processors currently only work when in
 
 For examples of how to use AlphaZ, see the original wiki at CSU (linked above).
 Also the test project contains many examples:
-  https://gitlab.inria.fr/Alpha/alphaz/tree/master/tests/edu.csu.melange.alphaz.mde.tests
+  https://mustang.cs.colostate.edu:3000/melange/AlphaZ/src/master/tests/edu.csu.melange.alphaz.mde.tests
 
 ### Installation
 
