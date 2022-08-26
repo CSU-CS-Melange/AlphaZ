@@ -68,4 +68,9 @@ Do the steps above and then additionally do the following:
 3. Select ``Import projects -> General -> Existing Projects into Workspace``
     - Select root directory to be where the git repository was checked out
     - Import all projects
-   
+
+Note for Apple M1 Macs, if you just want to be able to run AlphaZ, then you can subsequently close and remove all projects except for these two: 
+* ``edu.csu.melange.jnimap.cloog``
+* ``edu.csu.melange.jnimap.isl``
+
+(these are the projects that contain the prebuilt ARM binaries and the projects must be open in your workspace in order for Eclipse to see them)
