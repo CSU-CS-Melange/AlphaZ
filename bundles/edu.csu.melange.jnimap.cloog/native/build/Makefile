@@ -4,7 +4,7 @@ AUTODETECT=0
 SYSTEM=$(shell uname -s)
 ifeq ($(SYSTEM),Darwin)
 	HOST=Macosx
-	ARCH=$(shell sysctl -a hw.optional.x86_64 | cut -d" " -f2)
+	ARCH=$(shell sysctl -a hw.optional | grep 'arm64\|x86_64' | cut -d" " -f2)
 	ifeq ($(ARCH),1)
 		ARCH=64
 		AUTODETECT=1

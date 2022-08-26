@@ -1,8 +1,8 @@
 include Macosx_64/user.mk
+include Macosx_64/init.mk
 include Macosx_64/libraries.mk
 
 GECOS_PTRSIZE = (long)
-ARCH = 64
 JAVA_INC=-I$(JAVA_HOME)/include $(JAVA_EXTRA_INC)
 
 OBJS=Cloog_ClastExprType_native.o\
@@ -40,8 +40,8 @@ CFLAGS = -m$(ARCH) -fPIC -O3 -Wall -Wextra -Wno-unused-label -Wno-unused-paramet
 
 LIBS = \
 	-Wl,-rpath,./.jnimap.temp.macosx_64 \
-	./.jnimap.temp.macosx_64/libisl.15.dylib \
-	./.jnimap.temp.macosx_64/libgmp.10.dylib \
+	./.jnimap.temp.macosx_64/libisl.$(ISL_VERSION).dylib \
+	./.jnimap.temp.macosx_64/libgmp.$(GMP_VERSION).dylib \
 	./.jnimap.temp.macosx_64/libcloog-isl.4.dylib \
 	$(EXTRA_LIBS)
 
@@ -53,7 +53,7 @@ Q=
 
 all: 
 	@echo usage :
-	@echo  - make lib : compile macosx_64_libjnicloog.so
+	@echo  - make lib : compile macosx_$(ARCH_TYPE)_libjnicloog.so
 	@echo  - make clean
 
 ###############################
@@ -61,25 +61,25 @@ all:
 ###############################
 
 clean: 
-	rm -rf ../../lib/macosx_64_libjnicloog.so *.o ../*.o fr_irisa_cairn_jnimap_cloog_jni_CloogNative.h fr_irisa_cairn_jnimap_cloog_jni_CloogNative_UserModules.h ../../lib/Cloog_macosx_64/*
+	rm -rf ../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so *.o ../*.o fr_irisa_cairn_jnimap_cloog_jni_CloogNative.h fr_irisa_cairn_jnimap_cloog_jni_CloogNative_UserModules.h ../../lib/Cloog_macosx_$(ARCH_TYPE)/*
 	
-lib: ../../lib/macosx_64_libjnicloog.so
+lib: ../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so
 
 #Final file to be created.
-../../lib/macosx_64_libjnicloog.so : $(OBJS) $(EXTRA_OBJS) libs_macosx_64
+../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so : $(OBJS) $(EXTRA_OBJS) libs_macosx_64
 	$(V)mkdir -p ../../lib/
 	$(Q)@echo "  [LINK] $@"
-	$(V)$(CC) $(CFLAGS) -o ../../lib/macosx_64_libjnicloog.so -shared $(OBJS) $(EXTRA_OBJS) $(LIBS)
+	$(V)$(CC) $(CFLAGS) -o ../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so -shared $(OBJS) $(EXTRA_OBJS) $(LIBS)
 	$(V)cd ../../lib/ && \
-	mkdir -p Cloog_macosx_64/ && \
-	mv ../native/build/.jnimap.temp.macosx_64/* ./Cloog_macosx_64/
+	mkdir -p Cloog_macosx_$(ARCH_TYPE)/ && \
+	mv ../native/build/.jnimap.temp.macosx_64/* ./Cloog_macosx_$(ARCH_TYPE)/
 	$(V)$(MAKE) -f Macosx_64/Makefile fixInstallNames
 	$(V)rm -rf ./.jnimap.temp.macosx_64/
 
 libs_macosx_64:
 	$(V)mkdir -p ./.jnimap.temp.macosx_64
-	$(V)cp $(ISL_LIBDIR)/libisl.15.dylib .jnimap.temp.macosx_64/libisl.15.dylib
-	$(V)cp $(GMP_LIBDIR)/libgmp.10.dylib .jnimap.temp.macosx_64/libgmp.10.dylib
+	$(V)cp $(ISL_LIBDIR)/libisl.$(ISL_VERSION).dylib .jnimap.temp.macosx_64/libisl.$(ISL_VERSION).dylib
+	$(V)cp $(GMP_LIBDIR)/libgmp.$(GMP_VERSION).dylib .jnimap.temp.macosx_64/libgmp.$(GMP_VERSION).dylib
 	$(V)cp $(CLOOG_LIBDIR)/libcloog-isl.4.dylib .jnimap.temp.macosx_64/libcloog-isl.4.dylib
 
 fr_irisa_cairn_jnimap_cloog_jni_CloogNative_UserModules.h : fr_irisa_cairn_jnimap_cloog_jni_CloogNative.h
@@ -192,30 +192,30 @@ CloogUser_addons.o : ../CloogUser_addons.c fr_irisa_cairn_jnimap_cloog_jni_Cloog
 
 fixInstallNames:
 	@echo "  [RPATH FIX] ISL"
-	@A=`otool -L ../../lib/macosx_64_libjnicloog.so | grep libisl.15.dylib | colrm 1 8 | cut -d" " -f1`; \
+	@A=`otool -L ../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so | grep libisl.$(ISL_VERSION).dylib | colrm 1 8 | cut -d" " -f1`; \
 		if [ "$$A" != "" ]; then \
-			(if [ "$$A" != "@rpath/libisl.15.dylib" ]; then \
-				install_name_tool -change "$$A" "@rpath/libisl.15.dylib" "../../lib/macosx_64_libjnicloog.so"; \
+			(if [ "$$A" != "@rpath/libisl.$(ISL_VERSION).dylib" ]; then \
+				install_name_tool -change "$$A" "@rpath/libisl.$(ISL_VERSION).dylib" "../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so"; \
 			fi); fi
-	@A=`otool -L ../../lib/Cloog_macosx_64/libcloog-isl.4.dylib | grep libisl.15.dylib | colrm 1 8 | cut -d" " -f1`; \
+	@A=`otool -L ../../lib/Cloog_macosx_$(ARCH_TYPE)/libcloog-isl.4.dylib | grep libisl.$(ISL_VERSION).dylib | colrm 1 8 | cut -d" " -f1`; \
 		if [ "$$A" != "" ]; then \
-			(if [ "$$A" != "@rpath/libisl.15.dylib" ]; then \
-				install_name_tool -change "$$A" "@rpath/libisl.15.dylib" "../../lib/Cloog_macosx_64/libcloog-isl.4.dylib"; \
+			(if [ "$$A" != "@rpath/libisl.$(ISL_VERSION).dylib" ]; then \
+				install_name_tool -change "$$A" "@rpath/libisl.$(ISL_VERSION).dylib" "../../lib/Cloog_macosx_$(ARCH_TYPE)/libcloog-isl.4.dylib"; \
 			fi); fi
 	@echo "  [RPATH FIX] GMP"
-	@A=`otool -L ../../lib/macosx_64_libjnicloog.so | grep libgmp.10.dylib | colrm 1 8 | cut -d" " -f1`; \
+	@A=`otool -L ../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so | grep libgmp.$(GMP_VERSION).dylib | colrm 1 8 | cut -d" " -f1`; \
 		if [ "$$A" != "" ]; then \
-			(if [ "$$A" != "@rpath/libgmp.10.dylib" ]; then \
-				install_name_tool -change "$$A" "@rpath/libgmp.10.dylib" "../../lib/macosx_64_libjnicloog.so"; \
+			(if [ "$$A" != "@rpath/libgmp.$(GMP_VERSION).dylib" ]; then \
+				install_name_tool -change "$$A" "@rpath/libgmp.$(GMP_VERSION).dylib" "../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so"; \
 			fi); fi
-	@A=`otool -L ../../lib/Cloog_macosx_64/libcloog-isl.4.dylib | grep libgmp.10.dylib | colrm 1 8 | cut -d" " -f1`; \
+	@A=`otool -L ../../lib/Cloog_macosx_$(ARCH_TYPE)/libcloog-isl.4.dylib | grep libgmp.$(GMP_VERSION).dylib | colrm 1 8 | cut -d" " -f1`; \
 		if [ "$$A" != "" ]; then \
-			(if [ "$$A" != "@rpath/libgmp.10.dylib" ]; then \
-				install_name_tool -change "$$A" "@rpath/libgmp.10.dylib" "../../lib/Cloog_macosx_64/libcloog-isl.4.dylib"; \
+			(if [ "$$A" != "@rpath/libgmp.$(GMP_VERSION).dylib" ]; then \
+				install_name_tool -change "$$A" "@rpath/libgmp.$(GMP_VERSION).dylib" "../../lib/Cloog_macosx_$(ARCH_TYPE)/libcloog-isl.4.dylib"; \
 			fi); fi
 	@echo "  [RPATH FIX] CLOOG"
-	@A=`otool -L ../../lib/macosx_64_libjnicloog.so | grep libcloog-isl.4.dylib | colrm 1 8 | cut -d" " -f1`; \
+	@A=`otool -L ../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so | grep libcloog-isl.4.dylib | colrm 1 8 | cut -d" " -f1`; \
 		if [ "$$A" != "" ]; then \
 			(if [ "$$A" != "@rpath/libcloog-isl.4.dylib" ]; then \
-				install_name_tool -change "$$A" "@rpath/libcloog-isl.4.dylib" "../../lib/macosx_64_libjnicloog.so"; \
+				install_name_tool -change "$$A" "@rpath/libcloog-isl.4.dylib" "../../lib/macosx_$(ARCH_TYPE)_libjnicloog.so"; \
 			fi); fi
