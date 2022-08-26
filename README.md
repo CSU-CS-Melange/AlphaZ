@@ -1,4 +1,4 @@
-## AlphaZ copy to gitlab
+## AlphaZ 
 
 This repository contains (partial) copy of source code for AlphaZ system 
 developed at Colorado State University:
@@ -10,7 +10,7 @@ and the connection was not well maintained when projects hosted on Inria
 includes all plugins that are no longer used by GeCoS and AlphaZ specific. 
 All other plugins are fetched from new GeCoS update sites.
 
-Follow the instructions below to install AlphaZ. It should work for Linux and Macos (64 bits only).
+Follow the instructions below to install AlphaZ. It should work for Linux and Macosx (64 bits only) including M1 processors.
 
 For examples of how to use AlphaZ, see the original wiki at CSU (linked above).
 Also the test project contains many examples:
@@ -19,18 +19,19 @@ Also the test project contains many examples:
 ### Installation
 
 1. Install Eclipse IDE for Java Developers. In the following version 2021-12 is
-assumed.
+assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
 2. Launch eclipse and select a fresh workspace.
 3. ``Help -> Install new software``
    - Select "2021-12 - http://download.eclipse.org/releases/2021-12" as the repository to work with.
    - Search for "Xtext" and select ``Xtext Complete SDK`` and install.
    (you may find two or more, but pick one - it shows up under multiple categories, but they are the same thing)
-4. ``Help -> Install new software``
-   - Click on ``Add...`` to add a new repository: ``http://gecos.gforge.inria.fr/updatesite/gecos/``
-   - Make sure "Work with:" points to the added repository 
-   - Select the following:
-       * EMF Tools
-       * Framework
+4. ``Help -> Install new software -> Manage...``
+   - Click on ``Add...`` to add a new repository.
+   - Create entries for the following 7 locations:
+       * Name: ``gecos framework``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-framework/artifacts/``
+       * Name: ``gecos emf tools``  
+         Location: ``
        * Graph Tools
        * JNI Mapper
        * Tom Mapping
@@ -45,7 +46,7 @@ assumed.
 
 1. Checkout AlphaZ projects from git repository (here).
 2. Install Eclipse IDE for Java Developers. In the following version 2021-12 is
-assumed.
+assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
 3. Launch eclipse and select a fresh workspace.
 4. Open ``Preferences -> Java -> Compiler`` and set ``Compiler compliance level`` to 1.8.
 5. ``Help -> Install new software``
