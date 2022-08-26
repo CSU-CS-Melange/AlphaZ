@@ -60,7 +60,7 @@ assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
 
 ### Instructions for Installing from Source Code
 
-Do the steps above and the additionally do the following:
+Do the steps above and then additionally do the following:
 
 1. Checkout AlphaZ projects from git repository (here)
 2. Open ``Preferences -> Java -> Compiler`` and set ``Compiler compliance level`` to 1.8
