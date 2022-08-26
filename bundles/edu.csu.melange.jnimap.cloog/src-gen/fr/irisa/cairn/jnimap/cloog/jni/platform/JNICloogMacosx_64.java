@@ -10,12 +10,24 @@ public class JNICloogMacosx_64 extends JNICloogAbstractPlatform {
 	}
 
 	public void loadPlatformLibraries() {
+		
 		// Get input stream from jar resource
-		String lib = "macosx_64_libjnicloog.so";
+		String lib;
+		String libDirectory;
+		if (System.getProperty("os.arch").equals("aarch64")) {
+			// M1 macs
+			lib = "macosx_arm64_libjnicloog.so";
+			libDirectory = "Cloog_macosx_arm64";
+		} else {
+			// Intel macs
+			lib = "macosx_64_libjnicloog.so";
+			libDirectory = "Cloog_macosx_64";
+		}
+		
 		try {
 			//Copy other dynamic libraries from jar to temporary location
 			//Copy CLOOG
-			copyLibToTemp("Cloog_macosx_64" + File.separator, "libcloog-isl.4.dylib");
+			copyLibToTemp(libDirectory + File.separator, "libcloog-isl.4.dylib");
 			//Copy the binding object file from jar to temporary location
 			File JNIDLL = copyLibToTemp("", lib);
 			// Finally, load the dll

@@ -1,5 +1,5 @@
 #PROTECTED REGION ID(user_Macosx_64) ENABLED START#
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
 JAVA_EXTRA_INC= -I$(JAVA_HOME)/Headers -I$(JAVA_HOME)/include/darwin/
 
 EXTRA_LIBS = -L/usr/local/lib/

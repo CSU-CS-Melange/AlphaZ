@@ -10,7 +10,7 @@ CFG_OPTIONS= \
 --enable-shared \
 --enable-portable-binary \
 --with-clang=no \
---with-gmp-prefix=/usr/local/
+--with-gmp-prefix=/opt/homebrew/Cellar/gmp/6.2.1_1/
 #--with-int=imath-32
 #--with-gmp=system \
 #--with-gmp-prefix=$(PREFIX_BASE)

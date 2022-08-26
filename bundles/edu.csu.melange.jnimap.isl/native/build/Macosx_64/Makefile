@@ -1,8 +1,8 @@
 include Macosx_64/user.mk
 include Macosx_64/libraries.mk
+include Macosx_64/init.mk
 
 GECOS_PTRSIZE = (long)
-ARCH = 64
 JAVA_INC=-I$(JAVA_HOME)/include $(JAVA_EXTRA_INC)
 
 OBJS=ISL_ISLFold_native.o\
@@ -98,8 +98,8 @@ CFLAGS = -m$(ARCH) -fPIC -O3 -Wall -Wextra -Wno-unused-label -Wno-unused-paramet
 LIBS = \
 	-Wl,-rpath,./.jnimap.temp.macosx_64 \
 	 \
-	./.jnimap.temp.macosx_64/libisl.15.dylib \
-	./.jnimap.temp.macosx_64/libgmp.10.dylib \
+	./.jnimap.temp.macosx_64/libisl.$(ISL_VERSION).dylib \
+	./.jnimap.temp.macosx_64/libgmp.$(GMP_VERSION).dylib \
 	$(EXTRA_LIBS)
 
 # Path to the ISLNative class file
@@ -110,7 +110,7 @@ Q=
 
 all: 
 	@echo usage :
-	@echo  - make lib : compile macosx_64_libjniisl.so
+	@echo  - make lib : compile macosx_$(ARCH_TYPE)_libjniisl.so
 	@echo  - make clean
 
 ###############################
@@ -118,25 +118,25 @@ all:
 ###############################
 
 clean: 
-	rm -rf ../../lib/macosx_64_libjniisl.so *.o ../*.o fr_irisa_cairn_jnimap_isl_jni_ISLNative.h fr_irisa_cairn_jnimap_isl_jni_ISLNative_UserModules.h ../../lib/ISL_macosx_64/*
+	rm -rf ../../lib/macosx_$(ARCH_TYPE)_libjniisl.so *.o ../*.o fr_irisa_cairn_jnimap_isl_jni_ISLNative.h fr_irisa_cairn_jnimap_isl_jni_ISLNative_UserModules.h ../../lib/ISL_macosx_$(ARCH_TYPE)/*
 	
-lib: ../../lib/macosx_64_libjniisl.so
+lib: ../../lib/macosx_$(ARCH_TYPE)_libjniisl.so
 
 #Final file to be created.
-../../lib/macosx_64_libjniisl.so : $(OBJS) $(EXTRA_OBJS) libs_macosx_64
+../../lib/macosx_$(ARCH_TYPE)_libjniisl.so : $(OBJS) $(EXTRA_OBJS) libs_macosx_64
 	$(V)mkdir -p ../../lib/
 	$(Q)@echo "  [LINK] $@"
-	$(V)$(CC) $(CFLAGS) -o ../../lib/macosx_64_libjniisl.so -shared $(OBJS) $(EXTRA_OBJS) $(LIBS)
+	$(V)$(CC) $(CFLAGS) -o ../../lib/macosx_$(ARCH_TYPE)_libjniisl.so -shared $(OBJS) $(EXTRA_OBJS) $(LIBS)
 	$(V)cd ../../lib/ && \
-	mkdir -p ISL_macosx_64/ && \
-	mv ../native/build/.jnimap.temp.macosx_64/* ./ISL_macosx_64/
+	mkdir -p ISL_macosx_$(ARCH_TYPE)/ && \
+	mv ../native/build/.jnimap.temp.macosx_64/* ./ISL_macosx_$(ARCH_TYPE)/
 	$(V)$(MAKE) -f Macosx_64/Makefile fixInstallNames
 	$(V)rm -rf ./.jnimap.temp.macosx_64/
 
 libs_macosx_64:
 	$(V)mkdir -p ./.jnimap.temp.macosx_64
-	$(V)cp $(ISL_LIBDIR)/libisl.15.dylib .jnimap.temp.macosx_64/libisl.15.dylib
-	$(V)cp $(GMP_LIBDIR)/libgmp.10.dylib .jnimap.temp.macosx_64/libgmp.10.dylib
+	$(V)cp $(ISL_LIBDIR)/libisl.$(ISL_VERSION).dylib .jnimap.temp.macosx_64/libisl.$(ISL_VERSION).dylib
+	$(V)cp $(GMP_LIBDIR)/libgmp.$(GMP_VERSION).dylib .jnimap.temp.macosx_64/libgmp.$(GMP_VERSION).dylib
 
 fr_irisa_cairn_jnimap_isl_jni_ISLNative_UserModules.h : fr_irisa_cairn_jnimap_isl_jni_ISLNative.h
 fr_irisa_cairn_jnimap_isl_jni_ISLNative.h : $(CLASSPATH)/fr/irisa/cairn/jnimap/isl/jni/ISLNative.class
@@ -498,24 +498,24 @@ ISLUser_stdio.o : ../ISLUser_stdio.c fr_irisa_cairn_jnimap_isl_jni_ISLNative.h f
 
 fixInstallNames:
 	@echo "  [RPATH FIX] ISL"
-	@A=`otool -L ../../lib/macosx_64_libjniisl.so | grep libisl.15.dylib | colrm 1 8 | cut -d" " -f1`; \
+	@A=`otool -L ../../lib/macosx_$(ARCH_TYPE)_libjniisl.so | grep libisl.$(ISL_VERSION).dylib | colrm 1 8 | cut -d" " -f1`; \
 		if [ "$$A" != "" ]; then \
-			(if [ "$$A" != "@rpath/libisl.15.dylib" ]; then \
-				install_name_tool -change "$$A" "@rpath/libisl.15.dylib" "../../lib/macosx_64_libjniisl.so"; \
+			(if [ "$$A" != "@rpath/libisl.$(ISL_VERSION).dylib" ]; then \
+				install_name_tool -change "$$A" "@rpath/libisl.$(ISL_VERSION).dylib" "../../lib/macosx_$(ARCH_TYPE)_libjniisl.so"; \
 			fi); fi
-	@A=`otool -L ../../lib/ISL_macosx_64/libgmp.10.dylib | grep libisl.15.dylib | colrm 1 8 | cut -d" " -f1`; \
+	@A=`otool -L ../../lib/ISL_macosx_$(ARCH_TYPE)/libgmp.$(GMP_VERSION).dylib | grep libisl.$(ISL_VERSION).dylib | colrm 1 8 | cut -d" " -f1`; \
 		if [ "$$A" != "" ]; then \
-			(if [ "$$A" != "@rpath/libisl.15.dylib" ]; then \
-				install_name_tool -change "$$A" "@rpath/libisl.15.dylib" "../../lib/ISL_macosx_64/libgmp.10.dylib"; \
+			(if [ "$$A" != "@rpath/libisl.$(ISL_VERSION).dylib" ]; then \
+				install_name_tool -change "$$A" "@rpath/libisl.$(ISL_VERSION).dylib" "../../lib/ISL_macosx_$(ARCH_TYPE)/libgmp.$(GMP_VERSION).dylib"; \
 			fi); fi
 	@echo "  [RPATH FIX] GMP"
-	@A=`otool -L ../../lib/macosx_64_libjniisl.so | grep libgmp.10.dylib | colrm 1 8 | cut -d" " -f1`; \
+	@A=`otool -L ../../lib/macosx_$(ARCH_TYPE)_libjniisl.so | grep libgmp.$(GMP_VERSION).dylib | colrm 1 8 | cut -d" " -f1`; \
 		if [ "$$A" != "" ]; then \
-			(if [ "$$A" != "@rpath/libgmp.10.dylib" ]; then \
-				install_name_tool -change "$$A" "@rpath/libgmp.10.dylib" "../../lib/macosx_64_libjniisl.so"; \
+			(if [ "$$A" != "@rpath/libgmp.$(GMP_VERSION).dylib" ]; then \
+				install_name_tool -change "$$A" "@rpath/libgmp.$(GMP_VERSION).dylib" "../../lib/macosx_$(ARCH_TYPE)_libjniisl.so"; \
 			fi); fi
-	@A=`otool -L ../../lib/ISL_macosx_64/libisl.15.dylib | grep libgmp.10.dylib | colrm 1 8 | cut -d" " -f1`; \
+	@A=`otool -L ../../lib/ISL_macosx_$(ARCH_TYPE)/libisl.$(ISL_VERSION).dylib | grep libgmp.$(GMP_VERSION).dylib | colrm 1 8 | cut -d" " -f1`; \
 		if [ "$$A" != "" ]; then \
-			(if [ "$$A" != "@rpath/libgmp.10.dylib" ]; then \
-				install_name_tool -change "$$A" "@rpath/libgmp.10.dylib" "../../lib/ISL_macosx_64/libisl.15.dylib"; \
+			(if [ "$$A" != "@rpath/libgmp.$(GMP_VERSION).dylib" ]; then \
+				install_name_tool -change "$$A" "@rpath/libgmp.$(GMP_VERSION).dylib" "../../lib/ISL_macosx_$(ARCH_TYPE)/libisl.$(ISL_VERSION).dylib"; \
 			fi); fi
