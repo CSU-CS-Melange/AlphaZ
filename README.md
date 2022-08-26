@@ -54,7 +54,7 @@ assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
        * Uncategorized (expanding this should show the "JNI Barvinok bindings")
    - Install all of the above 
 5. ``Help -> Install new software``
-   - Click on ``Add...`` to add a new repository: ``http://people.irisa.fr/Tomofumi.Yuki/updatesite/alphaz/``
+   - Click on ``Add...`` to add a new repository: ``https://cs.colostate.edu/AlphaZ/update-sites/2022-08.2/``
    - Make sure "Work with:" points to the added repository 
    - Select ``AlphaZ`` and install
 
