@@ -62,7 +62,7 @@ assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
 
 Do the steps above and then additionally do the following:
 
-1. Checkout AlphaZ projects from git repository (here)
+1. Clone the AlphaZ project from the git repository (here)
 2. Open ``Preferences -> Java -> Compiler`` and set ``Compiler compliance level`` to 1.8
 3. Select ``Import projects -> General -> Existing Projects into Workspace``
     - Select root directory to be where the git repository was checked out
