@@ -42,7 +42,7 @@ assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
        * Name: ``gecos tom sdk``  
          Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-tomsdk/artifacts/``
    - Click on ``Apply and Close``
-   - Set "Work with:" to ``--All Available Sites--`` and filter on the string ``gecos`` to populate the list with artifacts from the repositories that were just added
+   - Set "Work with:" to ``--All Available Sites--`` and filter on the string ``gecos`` to populate the list with artifacts from the locations that were just added
    - Select the following:
        * EMF Tools
        * Framework
