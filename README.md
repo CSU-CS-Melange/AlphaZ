@@ -26,16 +26,32 @@ assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
    - Search for "Xtext" and select ``Xtext Complete SDK`` and install.
    (you may find two or more, but pick one - it shows up under multiple categories, but they are the same thing)
 4. ``Help -> Install new software -> Manage...``
-   - Click on ``Add...`` to add a new repository.
-   - Create entries for the following 7 locations:
+   - Click on ``Add...`` to add a new repository. Create entries for the following 7 locations:
        * Name: ``gecos framework``  
          Location: ``https://gecos.gitlabpages.inria.fr/gecos-framework/artifacts/``
        * Name: ``gecos emf tools``  
-         Location: ``
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-emf/artifacts/``
+       * Name: ``gecos graph tools``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-graph/artifacts/``
+       * Name: ``gecos isl``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-isl/artifacts/``
+       * Name: ``gecos jni mapper``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-jnimapper/artifacts/``
+       * Name: ``gecos tom mapping``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-tommapping/artifacts/``
+       * Name: ``gecos tom sdk``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-tomsdk/artifacts/``
+   - Click on ``Apply and Close``
+   - Set "Work with:" to ``--All Available Sites--`` and filter on the string ``gecos`` to populate the list with artifacts from the repositories that were just added.
+   - Select the following:
+       * EMF Tools
+       * Framework
        * Graph Tools
+       * ISL
        * JNI Mapper
        * Tom Mapping
        * Tom SDK
+       * Uncategorized (expanding this should show the "JNI Barvinok bindings")
    - Install all of the above 
 5. ``Help -> Install new software``
    - Click on ``Add...`` to add a new repository: ``http://people.irisa.fr/Tomofumi.Yuki/updatesite/alphaz/``
@@ -53,16 +69,33 @@ assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
    - Select "2021-12 - http://download.eclipse.org/releases/2021-12" as the repository to work with.
    - Search for "Xtext" and select ``Xtext Complete SDK`` and install.
    (you may find two or more, but pick one - it shows up under multiple categories, but they are the same thing)
-6. ``Help -> Install new software``
-   - Click on ``Add...`` to add a new repository: ``http://gecos.gforge.inria.fr/updatesite/gecos/``
-   - Make sure "Work with:" points to the added repository 
+6. ``Help -> Install new software -> Manage...``
+   - Click on ``Add...`` to add a new repository. Create entries for the following 7 locations:
+       * Name: ``gecos framework``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-framework/artifacts/``
+       * Name: ``gecos emf tools``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-emf/artifacts/``
+       * Name: ``gecos graph tools``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-graph/artifacts/``
+       * Name: ``gecos isl``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-isl/artifacts/``
+       * Name: ``gecos jni mapper``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-jnimapper/artifacts/``
+       * Name: ``gecos tom mapping``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-tommapping/artifacts/``
+       * Name: ``gecos tom sdk``  
+         Location: ``https://gecos.gitlabpages.inria.fr/gecos-tools/gecos-tools-tomsdk/artifacts/``
+   - Click on ``Apply and Close``
+   - Set "Work with:" to ``--All Available Sites--`` and filter on the string ``gecos`` to populate the list with artifacts from the repositories that were just added.
    - Select the following:
        * EMF Tools
        * Framework
        * Graph Tools
+       * ISL
        * JNI Mapper
        * Tom Mapping
        * Tom SDK
+       * Uncategorized (expanding this should show the "JNI Barvinok bindings")
    - Install all of the above 
 7. Select ``Import projects -> General -> Existing Projects into Workspace``
     - Select root directory to be where the git repository was checked out
