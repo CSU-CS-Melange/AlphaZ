@@ -9,7 +9,8 @@
 #EXTRA_INCDIR = -I/usr/local/include/
 
 #JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home
-JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+#JAVA_HOME = /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home
+JAVA_HOME = /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
 JAVA_EXTRA_INC= -I$(JAVA_HOME)/Headers -I$(JAVA_HOME)/include/darwin/
 
 #amorvan

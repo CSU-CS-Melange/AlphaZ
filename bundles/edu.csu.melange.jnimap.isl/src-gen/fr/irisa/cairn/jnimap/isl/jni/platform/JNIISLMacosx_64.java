@@ -10,14 +10,26 @@ public class JNIISLMacosx_64 extends JNIISLAbstractPlatform {
 	}
 
 	public void loadPlatformLibraries() {
+		
 		// Get input stream from jar resource
-		String lib = "macosx_64_libjniisl.so";
+		String lib;
+		String libDirectory;
+		if (System.getProperty("os.arch").equals("aarch64")) {
+			// M1 macs
+			lib = "macosx_arm64_libjniisl.so";
+			libDirectory = "ISL_macosx_arm64";
+		} else {
+			// Intel macs
+			lib = "macosx_64_libjniisl.so";
+			libDirectory = "ISL_macosx_64";
+		}
+		
 		try {
 			//Copy other dynamic libraries from jar to temporary location
 			//Copy ISL
-			copyLibToTemp("ISL_macosx_64" + File.separator, "libisl.15.dylib");
+			copyLibToTemp(libDirectory + File.separator, "libisl.15.dylib");
 			//Copy GMP
-			copyLibToTemp("ISL_macosx_64" + File.separator, "libgmp.10.dylib");
+			copyLibToTemp(libDirectory + File.separator, "libgmp.10.dylib");
 			//Copy the binding object file from jar to temporary location
 			File JNIDLL = copyLibToTemp("", lib);
 			// Finally, load the dll

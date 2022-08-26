@@ -1,12 +1,12 @@
-METHOD=#GIT
-VERSION=0.20
+METHOD=GIT
+VERSION=0.15
 
 # isl git repo name
 GITREP=isl
 
 ### if METHOD = GIT, clone from GITADDR @head or @ CHECKOUT if specified
 GITADDR=git://repo.or.cz/isl.git
-#CHECKOUT=79fed64e9227b5c1814df23829901d32c1811ae1
+CHECKOUT=isl-0.15
 
 ### else, download archive (FILE) from URL and unzip  
 DLDIR=$(GITREP)-$(VERSION)
