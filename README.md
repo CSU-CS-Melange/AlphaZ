@@ -10,7 +10,8 @@ and the connection was not well maintained when projects hosted on Inria
 includes all plugins that are no longer used by GeCoS and AlphaZ specific. 
 All other plugins are fetched from new GeCoS update sites.
 
-Follow the instructions below to install AlphaZ. It should work for Linux and Macosx (64 bits only) including M1 processors.
+Follow the instructions below to install AlphaZ. It should work for Linux and Macosx (64 bits only).
+However, note that new Macs with the Apple M1 processors currently only works when installing from source below.
 
 For examples of how to use AlphaZ, see the original wiki at CSU (linked above).
 Also the test project contains many examples:
