@@ -1,0 +1,9 @@
+affine SquareMM {N|N>0}
+given
+	float A, B {i,j| 0<=(i,j)<N};
+returns
+	float C {i,j| 0<=(i,j)<N};
+using // No local variables
+through
+   C[i,j]      = reduce(+, [k], A[i,k]*B[k,j]);
+.

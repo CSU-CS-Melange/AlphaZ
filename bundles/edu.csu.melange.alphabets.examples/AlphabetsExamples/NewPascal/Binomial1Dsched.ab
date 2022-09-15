@@ -1,0 +1,27 @@
+affine Binomial {N|N>0}
+input
+output
+	int C {i| 0<=i<=N};
+	bool Th_Ttrue, Th_Ctrue;
+local
+	int T {i,j| 0<=j<=i<=N};
+	int Sched_T {i,j| 0<=j<=i<=N};
+	int Sched_C {i| 0<=i<=N};
+	bool Th_T {i,j| 0<=j<=i<=N};
+	bool Th_C {i| 0<=i<=N};
+let
+	C[i] = T[N,i];
+	T[i,j] = case
+		{|j==0} || {|i==j} : 1;
+		{|0<j<i}         : T[i-1,j-1] + T[i-1,j];
+   	esac;
+   	Sched_T[i,j] = [i];
+   	Sched_C[i] = [N+1];
+ 	Th_C[i] = Sched_C[i] > Sched_T[N,i];
+	Th_T[i,j] = Sched_T[i,j] > case
+		{|j==0} || {|i==j} : -1;
+		{|0<j<i}         : max(Sched_T[i-1,j-1], Sched_T[i-1,j]);
+   	esac;
+   	Th_Ttrue[] = reduce(and, [i,j], Th_T);
+   	Th_Ctrue[] = reduce(and, [i], Th_C);
+.

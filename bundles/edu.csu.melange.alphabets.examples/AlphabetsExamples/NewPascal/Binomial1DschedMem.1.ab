@@ -1,0 +1,52 @@
+int mod(int, int); 
+affine Binomial {N|N>0}
+input
+output
+	bool Th_schedTtrue, Th_schedCtrue, Th_memTtrue, Th_memCtrue;
+	int Checksum;
+local
+	bool Th_memT {i,j| 0<=j<=i<=N};
+	bool Th_memC {i| 0<=i<=N};
+	int C {i| 0<=i<=N};
+	int T {i,j| 0<=j<=i<=N};
+	int Sched_T, Mem_Td0, Mem_Td1 {i,j| 0<=j<=i<=N};
+	int Sched_C, Mem_C {i| 0<=i<=N};
+	bool Th_schedT {i,j| 0<=j<=i<=N};
+	bool Th_schedC {i| 0<=i<=N};
+let
+//  Equations for the original computation
+	C[i] = T[N,i];
+	T[i,j] = case
+		{|j==0} || {|i==j} : 1;
+		{|0<j<i}         : T[i-1,j-1] + T[i-1,j];
+   	esac;
+   	Checksum[] = reduce(+,[i], C[i]);
+
+//	Target mapping functions
+
+   	Sched_T[i,j] = [i];
+   	Sched_C[i] = [N+1];
+	Mem_Td1[i,j] = mod([i],2);
+	Mem_Td0[i,j] = [j];
+	Mem_C[i] = [i];
+	
+//  Theorems that the mapping functions must satisfy
+	
+ 	Th_schedC[i] = Sched_C[i] > Sched_T[N,i];
+	Th_schedT[i,j] = Sched_T[i,j] > case
+		{|j==0} || {|i==j} : -1;
+		{|0<j<i}         : max(Sched_T[i-1,j-1], Sched_T[i-1,j]);
+   	esac;
+   	Th_memT[i,j] = false and (Mem_C[j]==[j]);  // The claim about the memory allocation of T is not yet proved 
+   	Th_memC[i] = reduce(and, [ii,jj], {| 0<=jj<=ii<=N}:
+   				not ((Mem_Td0[ii,jj] == Mem_Td0[N,i]) and (Mem_Td1[ii,jj] == Mem_Td1[N,i]) and (Sched_T[ii,jj] > Sched_T[N,i]))
+   				or (Sched_T[ii,jj] > Sched_C[i]));
+
+//	The claim that all theorems are true -- this should be true when the
+// code produced by generateWriteC is executed
+ 
+   	Th_schedTtrue[] = reduce(and, [i,j], Th_schedT);
+   	Th_schedCtrue[] = reduce(and, [i], Th_schedC);
+   	Th_memTtrue[] = reduce(and, [i,j], Th_memT);
+   	Th_memCtrue[] = reduce(and, [i], Th_memC);
+.
