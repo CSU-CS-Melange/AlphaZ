@@ -3,7 +3,7 @@ mapping ISL[linux_32, linux_64, cygwin_32, mingw_32, macosx_32, macosx_64];
 library {
 	libname = "ISL";
 	linux_32 = "libisl.so.13";
-	linux_64 = "libisl.so.15";
+	linux_64 = "libisl.so.19";
 	macosx_32 = "libisl.13.dylib";
 	macosx_64 = "libisl.15.dylib";
 }

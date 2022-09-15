@@ -1,9 +1,9 @@
 #PROTECTED REGION ID(libraries_Macosx_64) ENABLED START#
-      ISL_INCDIR= $(HOME)/complibs/usr/local/cloog/cloog-test/include
-      ISL_LIBDIR=$(HOME)/complibs/usr/local/cloog/cloog-test/lib
+      ISL_INCDIR=$(HOME)/complibs/usr/local/include
+      ISL_LIBDIR=$(HOME)/complibs/usr/local/lib
 
-      GMP_INCDIR=/usr/include/x86_64-linux-gnu
-      GMP_LIBDIR=/usr/lib/x86_64-linux-gnu
+      GMP_INCDIR=$(HOME)/complibs/usr/local/include
+      GMP_LIBDIR=$(HOME)/complibs/usr/local/lib
 #
 #      PIP_INCDIR= $(HOME)/complibs/usr/local/include
 #      PIP_LIBDIR=$(HOME)/complibs/usr/local/lib
