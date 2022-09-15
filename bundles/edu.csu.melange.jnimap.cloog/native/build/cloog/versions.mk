@@ -1,12 +1,12 @@
 METHOD=GIT
-VERSION=0.18.4
+VERSION=0.20.0
 
 # barvinok git repo name
 GITREP=cloog
 
 ### if METHOD = GIT, clone from GITADDR @head or @ CHECKOUT if specified
-GITADDR=git://repo.or.cz/cloog.git
-CHECKOUT=cloog-0.18.4
+GITADDR=git@github.com:periscop/cloog.git
+CHECKOUT=cloog-0.20.0
 
 ### else, download archive (FILE) from URL and unzip  
 DLDIR=$(GITREP)-$(VERSION)

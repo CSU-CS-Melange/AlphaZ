@@ -40,7 +40,7 @@ CFLAGS = -m$(ARCH) -fPIC -O3 -Wall -Wextra -Wno-unused-label -Wno-unused-paramet
 
 LIBS = \
 	-Wl,-rpath,./.jnimap.temp.linux_64 \
-	./.jnimap.temp.linux_64/libisl.so.15 \
+	./.jnimap.temp.linux_64/libisl.so.19 \
 	./.jnimap.temp.linux_64/libgmp.so.10 \
 	./.jnimap.temp.linux_64/libcloog-isl.so.4 \
 	$(EXTRA_LIBS)
@@ -78,7 +78,7 @@ lib: ../../lib/linux_64_libjnicloog.so
 
 libs_linux_64:
 	$(V)mkdir -p ./.jnimap.temp.linux_64
-	$(V)cp $(ISL_LIBDIR)/libisl.so.15 .jnimap.temp.linux_64/libisl.so.15
+	$(V)cp $(ISL_LIBDIR)/libisl.so.19 .jnimap.temp.linux_64/libisl.so.19
 	$(V)cp $(GMP_LIBDIR)/libgmp.so.10 .jnimap.temp.linux_64/libgmp.so.10
 	$(V)cp $(CLOOG_LIBDIR)/libcloog-isl.so.4 .jnimap.temp.linux_64/libcloog-isl.so.4
 
@@ -192,7 +192,7 @@ CloogUser_addons.o : ../CloogUser_addons.c fr_irisa_cairn_jnimap_cloog_jni_Cloog
 
 fixInstallNames:
 	@echo "  [RPATH FIX] ISL"
-	patchelf --set-rpath ./.jnimap.temp.linux_64/ ../../lib/Cloog_linux_64/libisl.so.15
+	patchelf --set-rpath ./.jnimap.temp.linux_64/ ../../lib/Cloog_linux_64/libisl.so.19
 	@echo "  [RPATH FIX] GMP"
 	patchelf --set-rpath ./.jnimap.temp.linux_64/ ../../lib/Cloog_linux_64/libgmp.so.10
 	@echo "  [RPATH FIX] CLOOG"
