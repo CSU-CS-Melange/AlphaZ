@@ -1,0 +1,15 @@
+affine matrix_product {P, Q, R|P>1 && Q>1 && R>1}
+       input  float A {i,k| 0<=i<P && 0<=k<Q};
+              float B {k,j| 0<=k<Q && 0<=j<R}; 
+     output  float C {i,j,k| 0<=i<P && 0<=j<R && k==Q+1};
+local // local an accumulator locally
+   float temp_C {i,j,k|0<=i<P && 0<=j<R && 0<=k<=Q};
+let
+   temp_C[i,j,k] = case
+               // For the computation of the value of temp_C at (i,j,k),
+               // we need the value of temp_C at (i,j,k-1), A at (i,k) and B at (k,j)
+               {|k>0}  : temp_C[i,j,k-1] + A[i,k-1]*B[k-1,j];
+               {|k==0} : 0; // Initialization of the accumulator
+            esac;
+   C[i,j,k]      = temp_C[i,j,k-1];
+.

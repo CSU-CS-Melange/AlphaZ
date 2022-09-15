@@ -1,0 +1,20 @@
+affine Fib {N | N > 1}
+input
+output
+	int f;
+local
+	int fib {i | i >= 0 && -i >= -N};
+let
+	fib =case
+			{i |i <= 1}: 1;
+			{i |i >= 2}: (i -> i-1)@(case
+										{i |i <= 1}: 1;
+										{i |i >= 2}: (i -> i-1)@fib + (i -> i-2)@fib;
+									esac)
+						 + (i -> i-2)@(case
+										{i |i <= 1}: 1;
+										{i |i >= 2}: (i -> i-1)@fib + (i -> i-2)@fib;
+									esac);
+						esac;
+	f = (->N)@fib;
+.
