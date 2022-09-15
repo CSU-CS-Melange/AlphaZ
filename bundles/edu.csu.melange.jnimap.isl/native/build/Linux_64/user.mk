@@ -4,7 +4,7 @@
 CC ?= gcc
 EXTRA_CFLAGS =
 
-JAVA_HOME = /usr/lib/jvm/java-8-oracle
+JAVA_HOME = /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.342.b07-2.el8_6.x86_64
 #JAVA_HOME = /usr/lib/jvm/java-7-openjdk-amd64
 #JAVA_HOME = /udd/malle/soft/jdk1.7.0_51/
 #JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.19.x86_64

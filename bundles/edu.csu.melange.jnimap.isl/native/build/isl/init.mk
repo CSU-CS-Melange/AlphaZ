@@ -1,5 +1,5 @@
 #Makefile
-PREFIX_BASE=$(HOME)/complibs/usr/local/cloog-test/
+PREFIX_BASE=$(HOME)/complibs/usr/local/
 
 
 SYSTEM=$(shell uname -s)
