@@ -35,6 +35,7 @@ workspace/
 # library source
 bundles/edu.csu.melange.jnimap.cloog/native/build/cloog/cloog-*
 bundles/edu.csu.melange.jnimap.isl/native/build/isl/isl-*
+bundles/edu.csu.melange.jnimap.isl/native/build/gmp/gmp-*
 tests/edu.csu.melange.alphaz.mde.tests/regression/codegen/codes/
 
 # git
