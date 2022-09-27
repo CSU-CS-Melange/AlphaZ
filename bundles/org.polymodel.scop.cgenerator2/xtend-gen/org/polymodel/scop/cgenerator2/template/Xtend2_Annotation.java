@@ -18,11 +18,11 @@ public class Xtend2_Annotation {
   protected CharSequence _annotationBeforeStatement(final IScopAnnotation ann) {
     return null;
   }
-  
+
   protected CharSequence _annotationAfterStatement(final IScopAnnotation ann) {
     return null;
   }
-  
+
   protected CharSequence _annotationBeforeStatement(final ParallelLoopAnnotation p) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#pragma omp parallel for ");
@@ -61,7 +61,7 @@ public class Xtend2_Annotation {
     }
     return _builder;
   }
-  
+
   protected CharSequence _annotationBeforeStatement(final ParallelBlockAnnotation p) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#pragma omp parallel ");
@@ -80,7 +80,7 @@ public class Xtend2_Annotation {
     }
     return _builder;
   }
-  
+
   protected CharSequence _annotationBeforeStatement(final BarrierAnnotation b) {
     CharSequence _xifexpression = null;
     boolean _isBefore = b.isBefore();
@@ -91,7 +91,7 @@ public class Xtend2_Annotation {
     }
     return _xifexpression;
   }
-  
+
   protected CharSequence _annotationAfterStatement(final BarrierAnnotation b) {
     CharSequence _xifexpression = null;
     boolean _isBefore = b.isBefore();
@@ -103,7 +103,7 @@ public class Xtend2_Annotation {
     }
     return _xifexpression;
   }
-  
+
   protected CharSequence _annotationBeforeStatement(final VectorizationAnnotation v) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -117,13 +117,13 @@ public class Xtend2_Annotation {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected CharSequence _annotationBeforeStatement(final SingleAnnotation s) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#pragma omp single");
     return _builder;
   }
-  
+
   protected CharSequence _annotationBeforeStatement(final DescriptionAnnotation d) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//");
@@ -131,7 +131,7 @@ public class Xtend2_Annotation {
     _builder.append(_description);
     return _builder;
   }
-  
+
   public CharSequence annotationBeforeStatement(final IScopAnnotation b) {
     if (b instanceof BarrierAnnotation) {
       return _annotationBeforeStatement((BarrierAnnotation)b);
@@ -152,7 +152,7 @@ public class Xtend2_Annotation {
         Arrays.<Object>asList(b).toString());
     }
   }
-  
+
   public CharSequence annotationAfterStatement(final IScopAnnotation b) {
     if (b instanceof BarrierAnnotation) {
       return _annotationAfterStatement((BarrierAnnotation)b);

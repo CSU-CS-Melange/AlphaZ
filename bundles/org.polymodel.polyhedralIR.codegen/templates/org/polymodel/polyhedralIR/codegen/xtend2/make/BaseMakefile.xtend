@@ -80,7 +80,7 @@ class BaseMakefile {
 			$(CC) «name»-wrapper.c -o «name» $(OBJS) $(CFLAGS) $(LIBRARIES)
 		
 		check: $(OBJS)
-			$(CC) «name»-wrapper.c -o «name».check $(OBJS) $(CFLAGS) $(LIBRARIES) -D«CHECKING_FLAG»
+			$(CC) «name»-wrapper.c -o «name».check $(OBJS) $(CFLAGS) $(LIBRARIES) -D«CHECKING_FLAG» -D«RANDOM_FLAG»
 		
 		verify: $(OBJS) «verifyName».o
 			$(CC) «name»-wrapper.c -o «name».verify $(OBJS) «verifyName».o $(CFLAGS) $(LIBRARIES) -D«VERIFY_FLAG»

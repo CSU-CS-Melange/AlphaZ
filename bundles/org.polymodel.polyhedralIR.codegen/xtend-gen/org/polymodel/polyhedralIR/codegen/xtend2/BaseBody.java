@@ -12,10 +12,6 @@ import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.polymodel.polyhedralIR.Domain;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseDomain;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseMemoryAllocation;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseStatement;
-import org.polymodel.polyhedralIR.codegen.xtend2.Utility;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.BasicBody;
 import org.polymodel.polyhedralIR.polyIRCG.Body;
@@ -40,23 +36,23 @@ public class BaseBody {
   @Inject
   @Extension
   private BaseStatement stmtExtensions;
-  
+
   @Inject
   @Extension
   private BaseDomain domainExtensions;
-  
+
   @Inject
   @Extension
   private BaseMemoryAllocation mallocs;
-  
+
   protected CharSequence _code(final Body body) {
     return null;
   }
-  
+
   protected CharSequence _code(final BasicBody body) {
     return body.getString();
   }
-  
+
   protected CharSequence _code(final ParameterCheck body) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("///Parameter checking");
@@ -76,7 +72,7 @@ public class BaseBody {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected CharSequence _code(final VariableInitialization b) {
     CharSequence _xblockexpression = null;
     {
@@ -135,7 +131,7 @@ public class BaseBody {
     }
     return _xblockexpression;
   }
-  
+
   protected CharSequence _code(final FlagVariableReset b) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence _reset = this.mallocs.reset(b);
@@ -143,7 +139,7 @@ public class BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   protected CharSequence _code(final VariableFinalization b) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence _mfree = this.mallocs.mfree(b);
@@ -151,7 +147,7 @@ public class BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   protected CharSequence _code(final Loop body) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<Statement, CharSequence> _function = (Statement s) -> {
@@ -189,7 +185,7 @@ public class BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   protected CharSequence _code(final TiledCLoop body) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -247,7 +243,7 @@ public class BaseBody {
     }
     return _builder;
   }
-  
+
   public CharSequence generateLoopNest(final Loop l) {
     StringConcatenation _builder = new StringConcatenation();
     final ScopRoot scop = l.generateScop();
@@ -282,14 +278,14 @@ public class BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   public CharSequence name(final StructManagement psm) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = psm.getInstance().getName();
     _builder.append(_name);
     return _builder;
   }
-  
+
   protected CharSequence _code(final PackStruct pps) {
     StringConcatenation _builder = new StringConcatenation();
     String _typeString = pps.getInstance().getTypeString();
@@ -316,7 +312,7 @@ public class BaseBody {
     }
     return _builder;
   }
-  
+
   protected CharSequence _code(final CustomPackStruct cpps) {
     StringConcatenation _builder = new StringConcatenation();
     String _typeString = cpps.getInstance().getTypeString();
@@ -343,7 +339,7 @@ public class BaseBody {
     }
     return _builder;
   }
-  
+
   /**
    * If there are more than one array then icc cannot distinguish whether there are aliasing
    * In order to hint the compiler we use "restrict" keyword in the declaration
@@ -407,7 +403,7 @@ public class BaseBody {
     }
     return _builder;
   }
-  
+
   public CharSequence code(final Body body) {
     if (body instanceof TiledCLoop) {
       return _code((TiledCLoop)body);

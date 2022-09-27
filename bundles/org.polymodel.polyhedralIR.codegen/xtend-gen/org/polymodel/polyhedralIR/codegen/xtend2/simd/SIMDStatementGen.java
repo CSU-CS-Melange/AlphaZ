@@ -5,7 +5,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.polymodel.polyhedralIR.codegen.xtend2.BaseIndices;
 import org.polymodel.polyhedralIR.codegen.xtend2.BaseStatement;
-import org.polymodel.polyhedralIR.codegen.xtend2.simd.SIMDCExpression;
 import org.polymodel.polyhedralIR.polyIRCG.SIMD.SIMDStatement;
 
 /**
@@ -16,11 +15,11 @@ public class SIMDStatementGen extends BaseStatement {
   @Inject
   @Extension
   private SIMDCExpression expression;
-  
+
   @Inject
   @Extension
   private BaseIndices indices;
-  
+
   public CharSequence statementDefine(final SIMDStatement stmt) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#define ");

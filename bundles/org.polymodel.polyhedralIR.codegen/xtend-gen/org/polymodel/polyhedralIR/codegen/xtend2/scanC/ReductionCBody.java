@@ -7,7 +7,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.polymodel.algebra.IntExpression;
 import org.polymodel.polyhedralIR.codegen.xtend2.BaseMemoryAllocation;
-import org.polymodel.polyhedralIR.codegen.xtend2.scanC.ScanCBody;
 import org.polymodel.polyhedralIR.polyIRCG.BasicBody;
 import org.polymodel.polyhedralIR.polyIRCG.Body;
 import org.polymodel.polyhedralIR.polyIRCG.C.CLoop;
@@ -32,7 +31,7 @@ public class ReductionCBody extends ScanCBody {
   @Inject
   @Extension
   private BaseMemoryAllocation malloc;
-  
+
   @Override
   protected CharSequence _code(final ScanBody b) {
     StringConcatenation _builder = new StringConcatenation();
@@ -411,7 +410,7 @@ public class ReductionCBody extends ScanCBody {
     }
     return _builder;
   }
-  
+
   @Override
   public CharSequence code(final Body b) {
     if (b instanceof TiledCLoop) {

@@ -36,8 +36,8 @@ Detailed options can be given through optional argument.
 		    alphaz.mde.CodeGen.generateScheduledCode( program, system, outDir);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-//		    System.out.println("Unexpected Exception");
-//		    e.printStackTrace();
+		    System.out.println("Unexpected Exception");
+		    e.printStackTrace();
 		    throw new RuntimeException("Exception to terminate script");
 		}
 	}//function

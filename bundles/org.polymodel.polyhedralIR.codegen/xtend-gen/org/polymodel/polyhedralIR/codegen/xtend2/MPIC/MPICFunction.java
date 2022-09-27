@@ -71,7 +71,7 @@ public class MPICFunction extends BaseFunction {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   public CharSequence generateChunkSizeComputation(final AffineSystem system) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//default chunk size is computed when given chunk size is invalid");
@@ -132,7 +132,7 @@ public class MPICFunction extends BaseFunction {
     _builder.newLine();
     return _builder;
   }
-  
+
   public String generateNumberOfTilesComputation(final AffineSystem system) {
     Domain udom = null;
     EList<VariableDeclaration> _locals = system.getLocals();

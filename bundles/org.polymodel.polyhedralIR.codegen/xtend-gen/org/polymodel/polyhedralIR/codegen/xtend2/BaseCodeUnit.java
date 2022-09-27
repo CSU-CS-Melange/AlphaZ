@@ -7,9 +7,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseFunction;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseMemoryAccess;
-import org.polymodel.polyhedralIR.codegen.xtend2.Utility;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.CodeUnit;
 import org.polymodel.polyhedralIR.polyIRCG.CodeUnitHeader;
@@ -25,11 +22,11 @@ public class BaseCodeUnit {
   @Inject
   @Extension
   private BaseFunction function;
-  
+
   @Inject
   @Extension
   private BaseMemoryAccess memory;
-  
+
   public CharSequence generate(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence _commonIncludes = this.commonIncludes(unit);
@@ -108,7 +105,7 @@ public class BaseCodeUnit {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   public CharSequence commonIncludes(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("// This file is generated from test alphabets program by code generator in alphaz");
@@ -134,7 +131,7 @@ public class BaseCodeUnit {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence externalFunctionInclude(final CodeUnit unit) {
     CharSequence _xifexpression = null;
     int _size = unit.getCompilationUnit().getProgram().getExternalFunctionDeclarations().size();
@@ -151,7 +148,7 @@ public class BaseCodeUnit {
     }
     return _xifexpression;
   }
-  
+
   public CharSequence commonMacroDefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("// Common Macros");
@@ -186,7 +183,7 @@ public class BaseCodeUnit {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence commonMacroUndefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//Common Macro undefs");
@@ -217,7 +214,7 @@ public class BaseCodeUnit {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence commonFuncDefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("// Common functions for min and max");
@@ -351,7 +348,7 @@ public class BaseCodeUnit {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence globalVariablesDeclaration(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -396,7 +393,7 @@ public class BaseCodeUnit {
     }
     return _builder;
   }
-  
+
   public CharSequence subsystemFunctionDeclaration(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -418,7 +415,7 @@ public class BaseCodeUnit {
     }
     return _builder;
   }
-  
+
   public CharSequence localFunctionDeclaration(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -446,7 +443,7 @@ public class BaseCodeUnit {
     }
     return _builder;
   }
-  
+
   public CharSequence memoryMacroDefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//Memory Macros");
@@ -461,7 +458,7 @@ public class BaseCodeUnit {
     }
     return _builder;
   }
-  
+
   public CharSequence memoryMacroUndefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//Memory Macros");
@@ -476,15 +473,15 @@ public class BaseCodeUnit {
     }
     return _builder;
   }
-  
+
   public Object compileTimeParameterDef(final CompileTimeParameter param) {
     return null;
   }
-  
+
   public Object compileTimeParameterUndef(final CompileTimeParameter param) {
     return null;
   }
-  
+
   public String filename(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = unit.getSystem().getName();
@@ -492,7 +489,7 @@ public class BaseCodeUnit {
     _builder.append(".c");
     return _builder.toString();
   }
-  
+
   public CharSequence headerDefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -505,11 +502,11 @@ public class BaseCodeUnit {
     }
     return _builder;
   }
-  
+
   protected CharSequence _header(final CodeUnitHeader header) {
     return null;
   }
-  
+
   protected CharSequence _header(final DeclareStructs header) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -522,7 +519,7 @@ public class BaseCodeUnit {
     }
     return _builder;
   }
-  
+
   public CharSequence structDef(final Struct s) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = s.getName();
@@ -546,7 +543,7 @@ public class BaseCodeUnit {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence header(final CodeUnitHeader header) {
     if (header instanceof DeclareStructs) {
       return _header((DeclareStructs)header);

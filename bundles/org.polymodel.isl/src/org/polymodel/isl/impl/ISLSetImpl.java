@@ -643,9 +643,16 @@ public class ISLSetImpl extends DomainImpl implements ISLSet {
 		return createDomain;
 	}
 	
+	//public static int counter = 0;
+	
 	@Override
 	public boolean isUniverse() {
+		//int x = 0;
+		//if (counter == 68)
+		//	x = 0;
+		//System.out.println("--> " + counter++ + this.toString());
 		JNIISLSet d1 = getJNIset();
+		
 		return d1.plainIsUniverse();
 	}
 

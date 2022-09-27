@@ -102,7 +102,7 @@ public class PCOTBody extends BaseBody {
     }
     return _xblockexpression;
   }
-  
+
   public CharSequence eq0(final AbstractVariable p) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = p.getName();
@@ -110,7 +110,7 @@ public class PCOTBody extends BaseBody {
     _builder.append(" == 0");
     return _builder;
   }
-  
+
   public CharSequence TwLETs(final RecursionBody rb, final List<AbstractVariable> tileWidth, final int i) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = tileWidth.get(i).getName();
@@ -120,7 +120,7 @@ public class PCOTBody extends BaseBody {
     _builder.append(_get);
     return _builder;
   }
-  
+
   public CharSequence fcall(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = f.getName();
@@ -134,7 +134,7 @@ public class PCOTBody extends BaseBody {
     _builder.append(");");
     return _builder;
   }
-  
+
   public CharSequence htw(final RecursionBody rb, final List<AbstractVariable> tileWidth, final int dim) {
     CharSequence _xblockexpression = null;
     {
@@ -157,7 +157,7 @@ public class PCOTBody extends BaseBody {
     }
     return _xblockexpression;
   }
-  
+
   public CharSequence recursionCalls(final RecursionBody rb, final Struct recurS) {
     CharSequence _xblockexpression = null;
     {
@@ -217,7 +217,7 @@ public class PCOTBody extends BaseBody {
     }
     return _xblockexpression;
   }
-  
+
   public CharSequence recursionCall(final RecursionBody rb, final Struct recurS, final List<Boolean> side) {
     CharSequence _xblockexpression = null;
     {
@@ -334,37 +334,37 @@ public class PCOTBody extends BaseBody {
     }
     return _xblockexpression;
   }
-  
+
   private CharSequence curRecur() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("recurStruct");
     return _builder;
   }
-  
+
   private CharSequence newRecur() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("newRecur");
     return _builder;
   }
-  
+
   private CharSequence halfTW(final int dim) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("htw");
     _builder.append((dim + 1));
     return _builder;
   }
-  
+
   private IntegerRange bandRange(final RecursionBody rb) {
     int _bandStart = rb.getBandStart();
     int _bandEnd = rb.getBandEnd();
     return new IntegerRange(_bandStart, _bandEnd);
   }
-  
+
   private int maxBandWidth(final Struct recurS) {
     int _length = ((Object[])Conversions.unwrapArray(recurS.getMembers(), Object.class)).length;
     return (_length / 2);
   }
-  
+
   private List<AbstractVariable> tileWidth(final RecursionBody rb, final Struct recurS) {
     final int bandWidth = this.maxBandWidth(recurS);
     EList<AbstractVariable> _members = recurS.getMembers();
@@ -376,7 +376,7 @@ public class PCOTBody extends BaseBody {
     final List<AbstractVariable> tileWidth = _members.subList(_plus, _plus_2);
     return tileWidth;
   }
-  
+
   private List<AbstractVariable> tileIndex(final RecursionBody rb, final Struct recurS) {
     EList<AbstractVariable> _members = recurS.getMembers();
     int _bandStart = rb.getBandStart();
@@ -385,7 +385,7 @@ public class PCOTBody extends BaseBody {
     final List<AbstractVariable> tileIndex = _members.subList(_bandStart, _plus);
     return tileIndex;
   }
-  
+
   private void productRecur(final Set<List<Boolean>> result, final int maxDim, final IntegerRange range, final List<Boolean> current) {
     int _size = current.size();
     boolean _equals = (maxDim == _size);
@@ -408,7 +408,7 @@ public class PCOTBody extends BaseBody {
     }
     return;
   }
-  
+
   public CharSequence code(final Body body) {
     if (body instanceof TiledCLoop) {
       return _code((TiledCLoop)body);

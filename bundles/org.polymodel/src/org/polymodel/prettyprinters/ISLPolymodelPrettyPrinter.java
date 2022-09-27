@@ -8,6 +8,7 @@ import org.polymodel.Domain;
 import org.polymodel.Function;
 import org.polymodel.Label;
 import org.polymodel.Relation;
+import org.polymodel.algebra.IntConstraint;
 import org.polymodel.algebra.IntConstraintSystem;
 import org.polymodel.algebra.prettyprinter.algebra.ISLPrettyPrinter;
 import org.polymodel.algebra.prettyprinter.algebra.IVariableResolver;
@@ -43,6 +44,7 @@ public class ISLPolymodelPrettyPrinter extends AbstractPolymodelPrettyPrinter {
 		return buffer.toString();
 	}
 
+	//public static int counter = 0;
 	@Override
 	public void visitDomain(Domain d) {
 		buffer.append("[");
@@ -59,7 +61,11 @@ public class ISLPolymodelPrettyPrinter extends AbstractPolymodelPrettyPrinter {
 			buffer.append("] ");
 		}
 		buffer.append(": ");
+		//int x = 0;
+		//if (counter == 391)
+		//	x = 0;
 		appendEnclosed(d.getPolyhedra(), " or ");
+		//System.out.println("==> " + counter++);
 		buffer.append("}");
 	}
 

@@ -46,6 +46,10 @@ public class AlphabetsPrettyPrinter extends AbstractPrettyPrinter {
 			break;
 		case ComparisonOperator.GE_VALUE:
 			intConstraint.getLhs().accept(this);
+			// LOUIS - hack, actually fix when you have time
+			if (intConstraint.getLhs().toString().equals("0*T")) {
+				this.buffer.append("0");
+			}
 			buffer.append(">=");
 			intConstraint.getRhs().accept(this);
 			break;
@@ -79,7 +83,8 @@ public class AlphabetsPrettyPrinter extends AbstractPrettyPrinter {
 	}
 
 	public void visitAffineTerm(AffineTerm affineTerm) {
-		if (affineTerm.getCoef() == 0 && affineTerm.getVariable() != null) return;
+		if (affineTerm.getCoef() == 0 && affineTerm.getVariable() != null) 
+			return;
 		if (affineTerm.getCoef() == 0 && affineTerm.getVariable() == null) {buffer.append("0"); return; }
 		if (affineTerm.getCoef() == -1) {
 			buffer.append("-");

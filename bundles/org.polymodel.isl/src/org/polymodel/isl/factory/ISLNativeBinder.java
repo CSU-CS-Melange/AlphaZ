@@ -160,9 +160,14 @@ public class ISLNativeBinder {
 //			List<Variable> parameters) {
 //		return islFunction(ISLFactory.islMap(input), inputs, outputs, parameters);
 //	}
-	
+	//public static int counter = 0;
 	public static JNIISLSet jniIslSet(ISLSet set) {
 		String s = PolymodelPrettyPrinter.print(set, OUTPUT_FORMAT.ISL);
+		//if (counter == 315) {
+		//	s = PolymodelPrettyPrinter.print(set, OUTPUT_FORMAT.ISL);
+		//	s = "[T,N,cT,cL0,cM0,cS] -> {[ct,u] : exists e0 : (-ct+32*e0 = 0) and (T-2 >= 0) and (ct-32 >= 0) and (T-ct >= 0) and (u-1 >= 0) and (N-u-1 >= 0) and (-cL0+cM0-1 >= 0) and (N-2 >= 0) and (cT-1 >= 0) and (T-cT >= 0) and (cT-cS >= 0) and (cS-1 >= 0) and (cL0-4 >= 0) and (N-cL0-4 >= 0) and (cM0-4 >= 0) and (N-cM0-4 >= 0) and (-cL0+u >= 0) and (cM0-u >= 0)}";
+		//}
+		//counter++;
 		return ISLFactory.islSet(s);
 	}
 	

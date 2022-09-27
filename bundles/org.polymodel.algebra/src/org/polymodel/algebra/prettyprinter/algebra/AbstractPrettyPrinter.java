@@ -1,8 +1,10 @@
 package org.polymodel.algebra.prettyprinter.algebra;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.*;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -79,6 +81,20 @@ public abstract class AbstractPrettyPrinter extends EObjectImpl implements Algeb
 						((AffineExpression)algebraVisitable).getTerms().get(0).getVariable() == null;
 				if (! no_enclose) { 
 					buffer.append("("); 
+				}
+				// add existential clauses if needed
+				// this is a hack
+				// LOUIS - HACK
+				if (Pattern.compile(".*[^a-z]e[0-9][0-9]*.*").matcher(algebraVisitable.toString()).matches() && 
+						this instanceof ISLPrettyPrinter &&
+						algebraVisitable instanceof IntConstraint) {
+					List<String> existentialVars = new ArrayList<>();
+					for (int i=0; i<5; i++) {
+						if (Pattern.compile(".*[^a-z]e"+i+"[^0-9].*").matcher(algebraVisitable.toString()).matches())
+							existentialVars.add("e"+i);
+					}
+					
+					buffer.append("exists " + String.join(", ", existentialVars) + " : ");
 				}
 				algebraVisitable.accept(this);
 				if (! no_enclose) { 

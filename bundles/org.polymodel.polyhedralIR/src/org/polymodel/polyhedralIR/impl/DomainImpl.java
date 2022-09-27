@@ -144,6 +144,11 @@ public class DomainImpl extends EObjectImpl implements Domain {
 	 */
 	public Domain intersection(Domain domain) {
 		Domain newDomain = PolyhedralIRFactory.eINSTANCE.createDomain();
+		/*try {
+			org.polymodel.Domain x = this.getPMdomain();
+			org.polymodel.Domain y = domain.getPMdomain();
+			org.polymodel.Domain z = x.intersection(y);
+		} catch (Exception e) {}*/
 		newDomain.setPMdomain(this.getPMdomain().intersection(domain.getPMdomain()));
 		assert(newDomain.getPMdomain() != null);
 		return newDomain;

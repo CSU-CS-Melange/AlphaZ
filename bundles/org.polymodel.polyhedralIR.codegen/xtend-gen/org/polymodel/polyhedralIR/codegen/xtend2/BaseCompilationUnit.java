@@ -11,7 +11,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.polymodel.polyhedralIR.ExternalFunctionDeclaration;
 import org.polymodel.polyhedralIR.Program;
 import org.polymodel.polyhedralIR.Type;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseCodeUnit;
 import org.polymodel.polyhedralIR.polyIRCG.CodeUnit;
 import org.polymodel.polyhedralIR.polyIRCG.CompilationUnit;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForC;
@@ -21,7 +20,7 @@ public class BaseCompilationUnit {
   @Inject
   @Extension
   private BaseCodeUnit extensions;
-  
+
   public String externalFunctionHeader(final Program p) {
     String _xifexpression = null;
     int _size = p.getExternalFunctionDeclarations().size();
@@ -35,7 +34,7 @@ public class BaseCompilationUnit {
     }
     return _xifexpression;
   }
-  
+
   public CharSequence externalFunctionDeclaration(final ExternalFunctionDeclaration exFunc) {
     StringConcatenation _builder = new StringConcatenation();
     Type _output = exFunc.getOutput();
@@ -52,11 +51,11 @@ public class BaseCompilationUnit {
     _builder.append(")");
     return _builder;
   }
-  
+
   public String name(final Type type) {
     return type.toString();
   }
-  
+
   public Map<String, String> generate(final CompilationUnit unit) {
     final TreeMap<String, String> files = new TreeMap<String, String>();
     files.put(CodeGenConstantsForC.EXTERNAL_FUNCTION_HEADER_NAME, this.externalFunctionHeader(unit.getProgram()));

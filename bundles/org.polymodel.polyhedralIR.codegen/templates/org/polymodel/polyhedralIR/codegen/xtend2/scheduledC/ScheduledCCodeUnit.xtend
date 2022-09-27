@@ -22,11 +22,13 @@ class ScheduledCCodeUnit extends BaseCodeUnit {
 		#undef RMIN
 	'''
 	
+	/*
+	 * Louis omit these for Macosx
 	override commonIncludes(CodeUnit unit) '''
 		«super.commonIncludes(unit)»
 		#include <omp.h>
 		#include <immintrin.h>
 		#include <malloc.h>
 	'''
-	
+	 */
 }

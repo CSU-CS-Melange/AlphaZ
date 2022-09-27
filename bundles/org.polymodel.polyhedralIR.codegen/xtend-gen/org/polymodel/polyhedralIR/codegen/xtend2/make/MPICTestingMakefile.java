@@ -2,7 +2,6 @@ package org.polymodel.polyhedralIR.codegen.xtend2.make;
 
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.polymodel.polyhedralIR.codegen.xtend2.make.TestingMakefile;
 
 @SuppressWarnings("all")
 public class MPICTestingMakefile extends TestingMakefile {
@@ -12,7 +11,7 @@ public class MPICTestingMakefile extends TestingMakefile {
     _builder.append("mpicc");
     return _builder;
   }
-  
+
   @Override
   public CharSequence includes() {
     StringConcatenation _builder = new StringConcatenation();
@@ -21,7 +20,7 @@ public class MPICTestingMakefile extends TestingMakefile {
     _builder.append(" -I$(MPI_INCLUDE_DIR)");
     return _builder;
   }
-  
+
   @Override
   public CharSequence makefile(final CharSequence name, final List<CharSequence> names, final CharSequence verifyName, final boolean omp) {
     StringConcatenation _builder = new StringConcatenation();

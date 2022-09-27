@@ -2,7 +2,6 @@ package org.polymodel.polyhedralIR.codegen.xtend2.make;
 
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.polymodel.polyhedralIR.codegen.xtend2.make.BaseMakefile;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForC;
 
 /**
@@ -18,7 +17,7 @@ public class TestingMakefile extends BaseMakefile {
     _builder.append(" -W");
     return _builder;
   }
-  
+
   @Override
   public CharSequence objects(final List<CharSequence> names) {
     StringConcatenation _builder = new StringConcatenation();
@@ -35,7 +34,7 @@ public class TestingMakefile extends BaseMakefile {
     _builder_2.append(objs);
     return _builder_2;
   }
-  
+
   @Override
   public CharSequence makeObjs(final List<CharSequence> names) {
     StringConcatenation _builder = new StringConcatenation();
@@ -63,7 +62,7 @@ public class TestingMakefile extends BaseMakefile {
     _builder_2.append(objs);
     return _builder_2;
   }
-  
+
   @Override
   public CharSequence makefile(final CharSequence name, final List<CharSequence> names, final CharSequence verifyName, final boolean omp) {
     StringConcatenation _builder = new StringConcatenation();

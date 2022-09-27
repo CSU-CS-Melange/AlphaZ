@@ -12,9 +12,6 @@ import org.polymodel.algebra.IntExpression;
 import org.polymodel.algebra.Variable;
 import org.polymodel.algebra.affine.AffineExpression;
 import org.polymodel.algebra.factory.IntExpressionBuilder;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseExpression;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseIndices;
-import org.polymodel.polyhedralIR.codegen.xtend2.Utility;
 import org.polymodel.polyhedralIR.polyIRCG.BasicStatement;
 import org.polymodel.polyhedralIR.polyIRCG.C.EquationAsStatement;
 import org.polymodel.polyhedralIR.polyIRCG.CustomProviderStatement;
@@ -25,11 +22,11 @@ public class BaseStatement {
   @Inject
   @Extension
   private BaseExpression expression;
-  
+
   @Inject
   @Extension
   private BaseIndices indices;
-  
+
   protected CharSequence _statementDefine(final BasicStatement stmt) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#define ");
@@ -43,7 +40,7 @@ public class BaseStatement {
     _builder.append(_statement);
     return _builder;
   }
-  
+
   protected CharSequence _statementDefine(final EquationAsStatement stmt) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#define ");
@@ -60,7 +57,7 @@ public class BaseStatement {
     _builder.append(_print);
     return _builder;
   }
-  
+
   protected CharSequence _statementDefine(final CustomProviderStatement stmt) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#define ");
@@ -74,7 +71,7 @@ public class BaseStatement {
     _builder.append(_body);
     return _builder;
   }
-  
+
   private List<IntExpression> toExpr(final List<Variable> vars) {
     ArrayList<IntExpression> exprs = new ArrayList<IntExpression>();
     for (final Variable v : vars) {
@@ -82,7 +79,7 @@ public class BaseStatement {
     }
     return exprs;
   }
-  
+
   public CharSequence writeAccess(final EquationAsStatement stmt) {
     CharSequence _xifexpression = null;
     boolean _isScalar = Utility.isScalar(stmt.getVariable());
@@ -118,7 +115,7 @@ public class BaseStatement {
     }
     return _xifexpression;
   }
-  
+
   public CharSequence statementUndefine(final Statement stmt) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#undef ");
@@ -126,7 +123,7 @@ public class BaseStatement {
     _builder.append(_name);
     return _builder;
   }
-  
+
   public CharSequence statementDefine(final Statement stmt) {
     if (stmt instanceof BasicStatement) {
       return _statementDefine((BasicStatement)stmt);
