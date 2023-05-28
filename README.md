@@ -15,7 +15,7 @@ However, note that new Macs with Apple M1 processors currently only work when in
 
 For examples of how to use AlphaZ, see the original wiki at CSU (linked above).
 Also the test project contains many examples:
-  https://mustang.cs.colostate.edu:3000/melange/AlphaZ/src/master/tests/edu.csu.melange.alphaz.mde.tests
+  https://github.com/CSU-CS-Melange/AlphaZ/tree/main/tests/edu.csu.melange.alphaz.mde.tests
 
 ### Installation
 
@@ -55,7 +55,7 @@ assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
        * Uncategorized (expanding this should show the "JNI Barvinok bindings")
    - Install all of the above 
 5. ``Help -> Install new software``
-   - Click on ``Add...`` to add a new repository: ``https://cs.colostate.edu/AlphaZ/update-sites/2022-08.2/``
+   - Click on ``Add...`` to add a new repository: ``https://csu-cs-melange.github.io/AlphaZ/``
    - Make sure "Work with:" points to the added repository 
    - Select ``AlphaZ`` and install
 
