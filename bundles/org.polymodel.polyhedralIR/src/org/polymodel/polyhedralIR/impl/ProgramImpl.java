@@ -319,7 +319,7 @@ public class ProgramImpl extends EObjectImpl implements Program {
 		for (ExternalFunctionDeclaration extFunc : this.getExternalFunctionDeclarations()) {
 			ExternalFunctionDeclaration extFuncCopy = PolyhedralIRFactory.eINSTANCE.createExternalFunctionDeclaration();
 			extFuncCopy.setName(extFunc.getName());
-			extFuncCopy.setOutput(EcoreUtil.copy(extFuncCopy.getOutput()));
+			extFuncCopy.setOutput(EcoreUtil.copy(extFunc.getOutput()));
 			for (Type t : extFunc.getInputs())
 				extFuncCopy.getInputs().add(EcoreUtil.copy(t));
 			copy.getExternalFunctionDeclarations().add(extFuncCopy);

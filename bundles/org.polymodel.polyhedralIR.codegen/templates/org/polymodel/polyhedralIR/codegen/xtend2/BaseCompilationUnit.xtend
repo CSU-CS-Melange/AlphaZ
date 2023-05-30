@@ -16,7 +16,7 @@ class BaseCompilationUnit {
 	
 	def String externalFunctionHeader(Program p) {
 		if (p.externalFunctionDeclarations.size > 0) {
-			"//External Functions\n" + p.externalFunctionDeclarations.join("\n", [ex|ex.externalFunctionDeclaration])
+			"//External Functions\n" + p.externalFunctionDeclarations.join("\n", [ex|ex.externalFunctionDeclaration + ";"])
 		}
 	}
 
