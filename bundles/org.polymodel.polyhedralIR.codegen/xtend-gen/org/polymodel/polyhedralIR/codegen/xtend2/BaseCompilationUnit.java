@@ -11,7 +11,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.polymodel.polyhedralIR.ExternalFunctionDeclaration;
 import org.polymodel.polyhedralIR.Program;
 import org.polymodel.polyhedralIR.Type;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseCodeUnit;
 import org.polymodel.polyhedralIR.polyIRCG.CodeUnit;
 import org.polymodel.polyhedralIR.polyIRCG.CompilationUnit;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForC;
@@ -28,7 +27,8 @@ public class BaseCompilationUnit {
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
       final Function1<ExternalFunctionDeclaration, CharSequence> _function = (ExternalFunctionDeclaration ex) -> {
-        return this.externalFunctionDeclaration(ex);
+        CharSequence _externalFunctionDeclaration = this.externalFunctionDeclaration(ex);
+        return (_externalFunctionDeclaration + ";");
       };
       String _join = IterableExtensions.<ExternalFunctionDeclaration>join(p.getExternalFunctionDeclarations(), "\n", _function);
       _xifexpression = ("//External Functions\n" + _join);
