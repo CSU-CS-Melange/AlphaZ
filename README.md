@@ -1,5 +1,7 @@
 ## AlphaZ 
 
+![Nightly builds](https://github.com/CSU-CS-Melange/AlphaZ/actions/workflows/build.yml/badge.svg?event=schedule)
+
 This repository contains (partial) copy of source code for AlphaZ system 
 developed at Colorado State University:
  http://www.cs.colostate.edu/AlphaZ/wiki/
@@ -11,16 +13,15 @@ includes all plugins that are no longer used by GeCoS and AlphaZ specific.
 All other plugins are fetched from new GeCoS update sites.
 
 Follow the instructions below to install AlphaZ. It should work for Linux and Macosx (64 bits only).
-However, note that new Macs with Apple M1 processors currently only work when installing from source below.
 
 For examples of how to use AlphaZ, see the original wiki at CSU (linked above).
-Also the test project contains many examples:
-  https://github.com/CSU-CS-Melange/AlphaZ/tree/main/tests/edu.csu.melange.alphaz.mde.tests
+Also the test project contains many examples:  
+https://github.com/CSU-CS-Melange/AlphaZ/tree/main/tests/edu.csu.melange.alphaz.mde.tests
 
 ### Installation
 
-1. Install Eclipse IDE for Java Developers. In the following version 2021-12 is
-assumed: https://www.eclipse.org/downloads/packages/release/2021-12/r
+1. Install Eclipse IDE for Java Developers. In the following version 2021-12 (4.22) is
+assumed: https://archive.eclipse.org/eclipse/downloads/drops4/R-4.22-202111241800/
 2. Launch eclipse and select a fresh workspace
 3. ``Help -> Install new software``
    - Select "2021-12 - http://download.eclipse.org/releases/2021-12" as the repository to work with
@@ -69,8 +70,7 @@ Do the steps above and then additionally do the following:
     - Select root directory to be where the git repository was checked out
     - Import all projects
 
-Note for Apple M1 Macs, if you just want to be able to run AlphaZ, then you can subsequently close and remove all projects except for these two: 
-* ``edu.csu.melange.jnimap.cloog``
-* ``edu.csu.melange.jnimap.isl``
+### Eclipse Bundles
 
-(these are the projects that contain the prebuilt ARM binaries and the projects must be open in your workspace in order for Eclipse to see them)
+Alternatively, you can download a pre-bundled version of Eclipse with AlphaZ from the following link:  
+https://csu-cs-melange.github.io/AlphaZ/
