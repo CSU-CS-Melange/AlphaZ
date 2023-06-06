@@ -86,6 +86,7 @@ if [[ $OS == "mac" ]]; then
     # create eclipse disk image file
     rm -f "eclipse-alphaz-$version.dmg"
     ln -s /Applications alphaz-bundle/Applications
+    xattr -cr ./alphaz-bundle/Eclipse.app # gecos/alphaz plugins are not "officially" signed
     hdiutil create -fs HFS+ -srcfolder alphaz-bundle -volname "eclipse-alphaz-$version" "eclipse-alphaz-$version.dmg"
 fi
 
