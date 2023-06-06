@@ -20,7 +20,15 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
+            const keys_to_clear = [
+              'cache-plugin',
+              'cache-eclipse-linux-x86',
+              'cache-eclipse-mac-x86'
+            ]
             for (const cache of caches.data.actions_caches) {
+              if (!keys_to_clear.includes(cache.key)) {
+                continue
+              }
               console.log(cache)
               github.rest.actions.deleteActionsCacheById({
                 owner: context.repo.owner,
@@ -103,6 +111,13 @@ jobs:
         distribution: 'zulu'
         java-version: '11'
 
+    - name: Cache eclipse download
+      id: cache-eclipse-download-mac-x86
+      uses: actions/cache@v3
+      with:
+        path: eclipse-download-mac-x86
+        key: eclipse-download-mac-x86
+
     - name: Cache alphaz plugin
       id: cache-plugin
       uses: actions/cache@v3
@@ -121,7 +136,18 @@ jobs:
       run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
     - name: Build mac x86 bundle
-      run: ./scripts/make-bundle.sh mac-x86
+      env: 
+        BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+        P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+        KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      run: |
+        echo $BUILD_CERTIFICATE_BASE64 | base64 --decode > certificate.p12
+        security create-keychain -p $KEYCHAIN_PASSWORD build.keychain
+        security default-keychain -s build.keychain
+        security unlock-keychain -p $KEYCHAIN_PASSWORD build.keychain
+        security import certificate.p12 -k build.keychain -P $P12_PASSWORD -T /usr/bin/codesign
+        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD build.keychain > /dev/null
+        ./scripts/make-bundle.sh mac-x86
 
 
   deploy:

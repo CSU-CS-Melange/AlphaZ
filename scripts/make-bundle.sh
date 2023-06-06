@@ -59,10 +59,11 @@ if [[ $OS == "linux" ]]; then
 fi
 
 if [[ $OS == "mac" ]]; then
-    if [[ ! -f eclipse.dmg ]]; then
-        wget -O eclipse.dmg $eclipse_url
+    mkdir -p eclipse-download-mac-x86
+    if [[ ! -f eclipse-download-mac-x86/eclipse.dmg ]]; then
+        wget -O eclipse-download-mac-x86/eclipse.dmg $eclipse_url
     fi
-    hdiutil attach -nobrowse -mountpoint eclipse-mnt eclipse.dmg 
+    hdiutil attach -nobrowse -mountpoint eclipse-mnt eclipse-download-mac-x86/eclipse.dmg 
     rm -rf alphaz-bundle/
     mkdir alphaz-bundle/
     cp -R eclipse-mnt/Eclipse.app alphaz-bundle/
@@ -85,9 +86,16 @@ if [[ $OS == "mac" ]]; then
     fi
     # create eclipse disk image file
     rm -f "eclipse-alphaz-$version.dmg"
+    # sign the disk image if in action runner
+    if [[ -n "$IN_ACTION_RUNNER" ]]; then
+        eclipse_app="./alphaz-bundle/Eclipse.app"
+        signing_identity=`security find-identity -v -p codesigning | cut -d' ' -f 4`
+        /usr/bin/codesign --force -s $signing_identity $eclipse_app -v
+    fi
+    # add a symlink for the dmg and create the disk image
     ln -s /Applications alphaz-bundle/Applications
-    xattr -cr ./alphaz-bundle/Eclipse.app # gecos/alphaz plugins are not "officially" signed
     hdiutil create -fs HFS+ -srcfolder alphaz-bundle -volname "eclipse-alphaz-$version" "eclipse-alphaz-$version.dmg"
+
 fi
 
 mkdir -p eclipse-bundle-$version
