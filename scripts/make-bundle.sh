@@ -71,34 +71,32 @@ if [[ $OS == "mac" ]]; then
 
     eclipse_instance="./alphaz-bundle/Eclipse.app/Contents/MacOS/eclipse"
 
-#    # install GeCoS & Xtext plugins
-#    bash ./scripts/install-plugins.sh $eclipse_instance scripts/resources/required-plugins.p2f
-#    
-#    # install AlphaZ plugin
-#    if [[ -n "$IN_ACTION_RUNNER" ]]; then
-#        $eclipse_instance \
-#            -nosplash \
-#            -application org.eclipse.equinox.p2.director \
-#            -repository file:///Users/runner/work/AlphaZ/AlphaZ/releng/alphaz.update/target/repository \
-#            -installIU alphaz.feature.feature.group
-#    else
-#        bash ./scripts/install-plugins.sh $eclipse_instance scripts/resources/alphaz-plugins-master.p2f
-#    fi
-#    # create eclipse disk image file
-#    rm -f "eclipse-alphaz-$version.dmg"
-#    ln -s /Applications alphaz-bundle/Applications
-#    hdiutil create -fs HFS+ -srcfolder alphaz-bundle -volname "eclipse-alphaz-$version" "eclipse-alphaz-$version.dmg"
-
+    # install GeCoS & Xtext plugins
+    bash ./scripts/install-plugins.sh $eclipse_instance scripts/resources/required-plugins.p2f
+    
+    # install AlphaZ plugin
+    if [[ -n "$IN_ACTION_RUNNER" ]]; then
+        $eclipse_instance \
+            -nosplash \
+            -application org.eclipse.equinox.p2.director \
+            -repository file:///Users/runner/work/AlphaZ/AlphaZ/releng/alphaz.update/target/repository \
+            -installIU alphaz.feature.feature.group
+    else
+        bash ./scripts/install-plugins.sh $eclipse_instance scripts/resources/alphaz-plugins-master.p2f
+    fi
+    # create eclipse disk image file
+    rm -f "eclipse-alphaz-$version.dmg"
     # sign the disk image if in action runner
     if [[ -n "$IN_ACTION_RUNNER" ]]; then
         eclipse_app="./alphaz-bundle/Eclipse.app"
         signing_identity=`security find-identity -v -p codesigning | cut -d' ' -f 4`
-        echo "/usr/bin/codesign -s $signing_identity $eclipse_app -v"
         /usr/bin/codesign --force -s $signing_identity $eclipse_app -v
-
     fi
+    # add a symlink for the dmg and create the disk image
+    ln -s /Applications alphaz-bundle/Applications
+    hdiutil create -fs HFS+ -srcfolder alphaz-bundle -volname "eclipse-alphaz-$version" "eclipse-alphaz-$version.dmg"
 
 fi
 
-#mkdir -p eclipse-bundle-$version
-#mv eclipse-alphaz-$version.$suffix eclipse-bundle-$version/
+mkdir -p eclipse-bundle-$version
+mv eclipse-alphaz-$version.$suffix eclipse-bundle-$version/
