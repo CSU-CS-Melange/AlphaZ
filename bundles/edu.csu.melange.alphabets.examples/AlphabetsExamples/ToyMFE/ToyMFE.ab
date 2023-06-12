@@ -1,0 +1,17 @@
+affine ToyMFE {N | N >= 1}
+input
+	int A, B {i | 0<=i<=N};
+output
+	int last;
+local
+	int T {i,j | 0<=i<=j<N};
+let
+	T[i,j]=
+	case
+		{|i==0 && j==0}:	A[i]+ B[j];
+		{|i==0 && j>0}:		T[i, j-1] + B[j];
+		{|i==j>0}:			A[i] + T[i-1, j-1];
+		{|0<i<j}:			min (T[i-1,j], T[i-1,j-1] + A[i] + B[j], T[i,j-1]);
+	esac;
+	last[] = T[N,N];
+.
