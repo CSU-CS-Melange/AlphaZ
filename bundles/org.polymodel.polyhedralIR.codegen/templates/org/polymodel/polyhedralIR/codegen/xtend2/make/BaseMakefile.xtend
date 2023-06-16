@@ -74,11 +74,7 @@ class BaseMakefile {
 		makefile(name, names, verifyName, omp, false)
 	}
 
-	def CharSequence makefile(CharSequence name, List<CharSequence> names, CharSequence verifyName, boolean omp, boolean withVerification) {
-		val x = makeObjs(names)
-		println("asdf")
-	
-	'''
+	def CharSequence makefile(CharSequence name, List<CharSequence> names, CharSequence verifyName, boolean omp, boolean withVerification)	'''
 		CFLAGS=«IF omp»«ompflag» «ENDIF» «cflagsOptimization» «cflagsOthers» «includes»
 		LIBRARIES=«libraries»
 		CC?=«cc»
@@ -111,6 +107,5 @@ class BaseMakefile {
 		clean:
 			rm -f *.o «name» «name».check«IF withVerification» «name».verify «name».verify-rand«ENDIF»
 	'''
-	}
 	
 }
