@@ -74,7 +74,11 @@ class BaseMakefile {
 		makefile(name, names, verifyName, omp, false)
 	}
 
-	def CharSequence makefile(CharSequence name, List<CharSequence> names, CharSequence verifyName, boolean omp, boolean withVerification) '''
+	def CharSequence makefile(CharSequence name, List<CharSequence> names, CharSequence verifyName, boolean omp, boolean withVerification) {
+		val x = makeObjs(names)
+		println("asdf")
+	
+	'''
 		CFLAGS=«IF omp»«ompflag» «ENDIF» «cflagsOptimization» «cflagsOthers» «includes»
 		LIBRARIES=«libraries»
 		CC?=«cc»
@@ -89,6 +93,7 @@ class BaseMakefile {
 		
 		check: $(OBJS)
 			$(CC) «name»-wrapper.c -o «name».check $(OBJS) $(CFLAGS) $(LIBRARIES) -D«CHECKING_FLAG»
+		
 		«IF withVerification»
 		verify: $(OBJS) «verifyName».o
 			$(CC) «name»-wrapper.c -o «name».verify $(OBJS) «verifyName».o $(CFLAGS) $(LIBRARIES) -D«VERIFY_FLAG»
@@ -96,11 +101,16 @@ class BaseMakefile {
 		verify-rand: $(OBJS) «verifyName».o
 			$(CC) «name»-wrapper.c -o «name».verify-rand $(OBJS) «verifyName».o $(CFLAGS) $(LIBRARIES) -D«VERIFY_FLAG» -D«RANDOM_FLAG»
 		
+		«ENDIF»
 		«makeObjs(names)»
+		«IF withVerification»
 		«verifyName».o : «verifyName».c
 			$(CC) «verifyName».c -o «verifyName».o $(CFLAGS) $(LIBRARIES) -c
+		
 		«ENDIF»
 		clean:
 			rm -f *.o «name» «name».check«IF withVerification» «name».verify «name».verify-rand«ENDIF»
 	'''
+	}
+	
 }
