@@ -137,6 +137,9 @@ public class PolyIRCodeGen {
 	
 	//for test now
 	public static void generateMakefile(AbstractModule module, AffineSystem system, boolean omp, String outDir){
+		generateMakefile(module, system, omp, outDir, false);
+	}
+	public static void generateMakefile(AbstractModule module, AffineSystem system, boolean omp, String outDir, boolean withVerification){
 		File dir = new File(outDir);
 		if (!dir.exists() && !dir.mkdirs()) {
 			throw new RuntimeException("Failed to create output directory : " + outDir);
@@ -146,15 +149,15 @@ public class PolyIRCodeGen {
 		List<AffineSystem> systems = SystemCallAnalysis.getUsedSystems(system);
 		Map<String, String> codes;
 		if (module != null) {
-			codes = Xtend2MakefileGen.generate(module, system, systems, omp);
+			codes = Xtend2MakefileGen.generate(module, system, systems, omp, withVerification);
 		} else {
-			codes = Xtend2MakefileGen.generate(system, systems, omp);
+			codes = Xtend2MakefileGen.generate(system, systems, omp, withVerification);
 		}
 		for (String file : codes.keySet()) {
 			writeFile(dir, file, codes.get(file));
 		}
 	}
-	
+
 	public static void generateMakefile(AbstractModule module, AffineSystem system, String outDir){
 		generateMakefile(module, system, false, outDir);
 	}
@@ -163,6 +166,10 @@ public class PolyIRCodeGen {
 		generateMakefile(null, system, false, outDir);
 	}
 	
+	public static void generateMakefile(AffineSystem system, String outDir, boolean withVerification){
+		generateMakefile(null, system, false, outDir, withVerification);
+	}
+
 	public static void generateOMPMakefile(AbstractModule module, AffineSystem system, String outDir){
 		generateMakefile(module, system, true, outDir);
 	}
