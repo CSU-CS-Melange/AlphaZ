@@ -11,8 +11,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.polymodel.Domain;
 import org.polymodel.algebra.Variable;
 import org.polymodel.polyhedralIR.WhileInfo;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseBody;
-import org.polymodel.polyhedralIR.codegen.xtend2.StateOfLoop;
 import org.polymodel.polyhedralIR.factory.PolyhedralIRUserFactory;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.Body;

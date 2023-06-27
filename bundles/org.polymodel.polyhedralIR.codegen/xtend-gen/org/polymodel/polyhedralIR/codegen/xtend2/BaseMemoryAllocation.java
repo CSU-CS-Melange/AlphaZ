@@ -11,8 +11,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.polymodel.algebra.Variable;
 import org.polymodel.polyhedralIR.DATATYPE;
 import org.polymodel.polyhedralIR.Type;
-import org.polymodel.polyhedralIR.codegen.xtend2.Indexed;
-import org.polymodel.polyhedralIR.codegen.xtend2.Utility;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.BasicVariable;
 import org.polymodel.polyhedralIR.polyIRCG.CodeGenVariable;

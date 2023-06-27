@@ -11,18 +11,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.polymodel.algebra.IntConstraintSystem;
 import org.polymodel.algebra.Variable;
 import org.polymodel.algebra.prettyprinter.algebra.OUTPUT_FORMAT;
-import org.polymodel.polyhedralIR.AffineSystem;
-import org.polymodel.polyhedralIR.Domain;
-import org.polymodel.polyhedralIR.ExternalFunctionDeclaration;
-import org.polymodel.polyhedralIR.ParameterDomain;
-import org.polymodel.polyhedralIR.PolyhedralIRVisitable;
-import org.polymodel.polyhedralIR.Program;
-import org.polymodel.polyhedralIR.ShowUtility;
-import org.polymodel.polyhedralIR.StandardEquation;
-import org.polymodel.polyhedralIR.Type;
-import org.polymodel.polyhedralIR.UseEquation;
-import org.polymodel.polyhedralIR.VariableDeclaration;
-import org.polymodel.polyhedralIR.VariableIdentifier;
 
 @SuppressWarnings("all")
 public class Show {

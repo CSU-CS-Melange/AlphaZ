@@ -101,11 +101,11 @@ class WrapperCFunction extends BaseFunction {
 					elapsed_time = (((double) time.tv_sec) + ((double) time.tv_usec)/1000000) - elapsed_time;
 					
 					FILE * fp«VERIFY_POSTFIX» = fopen( "trace«VERIFY_POSTFIX».dat","a+");
-					if (fp == NULL) {
+					if (fp«VERIFY_POSTFIX» == NULL) {
 							printf("I couldn't open trace«VERIFY_POSTFIX».dat for writing.\n");
 							exit(EXIT_FAILURE);
 					}
-					fprintf(fp, "«func.paramDomain.params.join("\\t", [p|"%ld"])»\t%lf\n",«func.paramDomain.params.join(",", [p|p.name])»,elapsed_time);
+					fprintf(fp«VERIFY_POSTFIX», "«func.paramDomain.params.join("\\t", [p|"%ld"])»\t%lf\n",«func.paramDomain.params.join(",", [p|p.name])»,elapsed_time);
 					fclose(fp«VERIFY_POSTFIX»);
 				#endif
 			#endif
