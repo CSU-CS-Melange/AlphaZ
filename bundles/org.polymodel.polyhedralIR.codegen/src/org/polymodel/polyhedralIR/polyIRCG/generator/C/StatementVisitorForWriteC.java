@@ -85,7 +85,13 @@ public class StatementVisitorForWriteC extends PolyhedralIRInheritedDepthFirstVi
 	protected StatementVisitorForWriteC(CodeUnit unit, TargetMapping mapping) {
 		this.unit = unit;
 		this.targetMapping = mapping;
-		this.verifyPrefix = unit.getSystem().getName().endsWith("_verify") ? "verify_" : "";
+		if (unit.getSystem().getName().endsWith("_verify")) {
+			this.verifyPrefix = "verify_";
+			ExpressionPrinterForWriteC.verifyPrefix = "verify_";
+		} else {
+			this.verifyPrefix = "";
+			ExpressionPrinterForWriteC.verifyPrefix = "";
+		}
 	}
 
 	@Override
