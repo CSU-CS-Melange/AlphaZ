@@ -31,6 +31,8 @@ import org.polymodel.polyhedralIR.targetMapping.TargetMapping;
  */
 public class ExpressionPrinterForWriteC extends ExpressionPrinterForC {
 	
+	public static String verifyPrefix = "";
+
 	protected ExpressionPrinterForWriteC(TargetMapping tm) {
 		super(tm, false);
 	}
@@ -83,12 +85,12 @@ public class ExpressionPrinterForWriteC extends ExpressionPrinterForC {
 		if (ms.getDomain().getNIndices() == 0) {
 			//scalars are dereferenced in the original 
 			original = "\\*"+ms.getName();
-			replace = String.format("%s%s\\(%s)", CodeGenConstantsForC.WRITEC_EVAL_PREFIX, ms.getName(), CodeGenUtility.toStringList(names, ","));
+			replace = String.format("%s%s%s\\(%s)", CodeGenConstantsForC.WRITEC_EVAL_PREFIX, verifyPrefix, ms.getName(), CodeGenUtility.toStringList(names, ","));
 		} else {
 			//Add prefix to make it evaluation function
 			original = ms.getName()+"\\(";
 			//variables have other indices following
-			replace = String.format("%s%s\\(%s,", CodeGenConstantsForC.WRITEC_EVAL_PREFIX, ms.getName(), CodeGenUtility.toStringList(names, ","));
+			replace = String.format("%s%s%s\\(%s,", CodeGenConstantsForC.WRITEC_EVAL_PREFIX, verifyPrefix, ms.getName(), CodeGenUtility.toStringList(names, ","));
 		}
 		
 		
