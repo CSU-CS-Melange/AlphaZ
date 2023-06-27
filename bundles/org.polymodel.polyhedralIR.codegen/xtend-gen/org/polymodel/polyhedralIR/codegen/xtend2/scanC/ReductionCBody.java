@@ -7,7 +7,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.polymodel.algebra.IntExpression;
 import org.polymodel.polyhedralIR.codegen.xtend2.BaseMemoryAllocation;
-import org.polymodel.polyhedralIR.codegen.xtend2.scanC.ScanCBody;
 import org.polymodel.polyhedralIR.polyIRCG.BasicBody;
 import org.polymodel.polyhedralIR.polyIRCG.Body;
 import org.polymodel.polyhedralIR.polyIRCG.C.CLoop;

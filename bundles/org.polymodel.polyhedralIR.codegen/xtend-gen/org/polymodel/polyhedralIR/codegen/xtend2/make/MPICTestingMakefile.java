@@ -2,7 +2,6 @@ package org.polymodel.polyhedralIR.codegen.xtend2.make;
 
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.polymodel.polyhedralIR.codegen.xtend2.make.TestingMakefile;
 
 @SuppressWarnings("all")
 public class MPICTestingMakefile extends TestingMakefile {

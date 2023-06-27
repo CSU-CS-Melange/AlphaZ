@@ -3,7 +3,6 @@ package org.polymodel.polyhedralIR.codegen.xtend2;
 import com.google.inject.Inject;
 import java.util.Map;
 import org.eclipse.xtext.xbase.lib.Extension;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseCompilationUnit;
 import org.polymodel.polyhedralIR.polyIRCG.CompilationUnit;
 
 @SuppressWarnings("all")

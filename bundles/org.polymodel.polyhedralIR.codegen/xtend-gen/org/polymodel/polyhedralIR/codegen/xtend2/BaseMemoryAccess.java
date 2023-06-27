@@ -9,8 +9,6 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.polymodel.algebra.IntExpression;
 import org.polymodel.polyhedralIR.WhileInfo;
-import org.polymodel.polyhedralIR.codegen.xtend2.BaseIndices;
-import org.polymodel.polyhedralIR.codegen.xtend2.Utility;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.BasicVariable;
 import org.polymodel.polyhedralIR.polyIRCG.CodeGenVariable;
