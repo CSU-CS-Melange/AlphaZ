@@ -254,8 +254,10 @@ public class WrapperCFunction extends BaseFunction {
     _builder.append(".dat\",\"a+\");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
-    _builder.append("if (fp == NULL) {");
-    _builder.newLine();
+    _builder.append("if (fp");
+    _builder.append(CodeGenConstantsForC.VERIFY_POSTFIX, "\t\t\t");
+    _builder.append(" == NULL) {");
+    _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t\t\t");
     _builder.append("printf(\"I couldn\'t open trace");
     _builder.append(CodeGenConstantsForC.VERIFY_POSTFIX, "\t\t\t\t\t");
@@ -268,7 +270,9 @@ public class WrapperCFunction extends BaseFunction {
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t\t");
-    _builder.append("fprintf(fp, \"");
+    _builder.append("fprintf(fp");
+    _builder.append(CodeGenConstantsForC.VERIFY_POSTFIX, "\t\t\t");
+    _builder.append(", \"");
     final Function1<Variable, CharSequence> _function_4 = (Variable p) -> {
       return "%ld";
     };
