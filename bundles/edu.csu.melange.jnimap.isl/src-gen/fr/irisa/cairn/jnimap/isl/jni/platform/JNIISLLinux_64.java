@@ -15,7 +15,7 @@ public class JNIISLLinux_64 extends JNIISLAbstractPlatform {
 		try {
 			//Copy other dynamic libraries from jar to temporary location
 			//Copy ISL
-			copyLibToTemp("ISL_linux_64" + File.separator, "libisl.so.15");
+			copyLibToTemp("ISL_linux_64" + File.separator, "libisl.so.19");
 			//Copy GMP
 			copyLibToTemp("ISL_linux_64" + File.separator, "libgmp.so.10");
 			//Copy the binding object file from jar to temporary location

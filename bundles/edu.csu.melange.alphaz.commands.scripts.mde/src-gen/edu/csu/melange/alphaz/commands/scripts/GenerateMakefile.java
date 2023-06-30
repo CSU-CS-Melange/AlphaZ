@@ -23,6 +23,26 @@ public class GenerateMakefile  {
 		}
 	}//function
 	
+	/**
+	Generates Makefile to compile generated code + wrapper.
+	**/
+	public GenerateMakefile(@IModuleArgumentName(name="program") Program program,
+@IModuleArgumentName(name="system") String system,
+@IModuleArgumentName(name="CodeGenOptions") CodeGenOptions CodeGenOptions,
+@IModuleArgumentName(name="outDir") String outDir,
+@IModuleArgumentName(name="withVerification") boolean withVerification) {
+	    try {
+		    alphaz.mde.CodeGen.generateMakefile(program,system,CodeGenOptions,outDir,withVerification);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		    //System.out.println("Unexpected Exception");
+		    //e.printStackTrace();
+		    throw new RuntimeException("Exception to terminate script");
+		}
+	}//function
+	
+	
+	
     
 	/**
 	TODO : add description (to the model)
@@ -57,7 +77,22 @@ public class GenerateMakefile  {
 		}
 	}//function
 	
-    
+	/**
+	TODO : add description (to the model)
+	**/
+	public GenerateMakefile(@IModuleArgumentName(name="program") Program program,
+@IModuleArgumentName(name="system") String system,
+@IModuleArgumentName(name="outDir") String outDir,
+@IModuleArgumentName(name="withVerification") boolean withVerification) {
+	    try {
+		    alphaz.mde.CodeGen.generateMakefile( program, system, outDir, withVerification);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		    //System.out.println("Unexpected Exception");
+		    //e.printStackTrace();
+		    throw new RuntimeException("Exception to terminate script");
+		}
+	}//function
 
 	/**
 	TODO : add description (to the model)

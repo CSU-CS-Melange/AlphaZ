@@ -1,0 +1,10 @@
+affine MM {P,Q,R| (P,Q,R)>0}
+given
+	float A {i,j | 0<=i<P && 0<=j<Q};
+	float B {i,j | 0<=i<Q && 0<=j<R};
+returns
+	float C {i,j | 0<=i<P && 0<=j<R};
+using // No local variables
+through
+   C[i,j]      = reduce(+, [k], A[i,k]*B[k,j]);
+.

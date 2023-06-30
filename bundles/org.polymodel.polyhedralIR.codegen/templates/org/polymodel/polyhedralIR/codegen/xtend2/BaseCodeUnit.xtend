@@ -20,7 +20,11 @@ class BaseCodeUnit {
 	def generate(CodeUnit unit) '''
 		«unit.commonIncludes»
 		
-		«unit.externalFunctionInclude»
+		«IF isVerification(unit)»
+			«unit.externalFunctionIncludeDeclarationsOnly»
+		«ELSE»
+			«unit.externalFunctionInclude»
+		«ENDIF»
 		
 		«unit.commonMacroDefs»
 		
@@ -67,6 +71,19 @@ class BaseCodeUnit {
 		#include <float.h>
 	'''
 	
+	def isVerification(CodeUnit unit) {
+		unit.system.name.endsWith("_verify")
+	}
+
+	def externalFunctionIncludeDeclarationsOnly(CodeUnit unit) {
+		val baseUnit = new BaseCompilationUnit
+		if (unit.compilationUnit.program.externalFunctionDeclarations.size > 0) {
+			baseUnit.externalFunctionHeader(unit.compilationUnit.program)
+		} else {
+			''''''
+		}
+	}
+
 	def externalFunctionInclude(CodeUnit unit) {
 		if (unit.compilationUnit.program.externalFunctionDeclarations.size > 0) {
 			'''#include "«EXTERNAL_FUNCTION_HEADER_NAME»"'''	

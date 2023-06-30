@@ -98,7 +98,7 @@ CFLAGS = -m$(ARCH) -fPIC -O3 -Wall -Wextra -Wno-unused-label -Wno-unused-paramet
 LIBS = \
 	-Wl,-rpath,./.jnimap.temp.linux_64 \
 	 \
-	./.jnimap.temp.linux_64/libisl.so.15 \
+	./.jnimap.temp.linux_64/libisl.so.19 \
 	./.jnimap.temp.linux_64/libgmp.so.10 \
 	$(EXTRA_LIBS)
 
@@ -135,7 +135,7 @@ lib: ../../lib/linux_64_libjniisl.so
 
 libs_linux_64:
 	$(V)mkdir -p ./.jnimap.temp.linux_64
-	$(V)cp $(ISL_LIBDIR)/libisl.so.15 .jnimap.temp.linux_64/libisl.so.15
+	$(V)cp $(ISL_LIBDIR)/libisl.so.19 .jnimap.temp.linux_64/libisl.so.19
 	$(V)cp $(GMP_LIBDIR)/libgmp.so.10 .jnimap.temp.linux_64/libgmp.so.10
 
 fr_irisa_cairn_jnimap_isl_jni_ISLNative_UserModules.h : fr_irisa_cairn_jnimap_isl_jni_ISLNative.h
@@ -498,6 +498,6 @@ ISLUser_stdio.o : ../ISLUser_stdio.c fr_irisa_cairn_jnimap_isl_jni_ISLNative.h f
 
 fixInstallNames:
 	@echo "  [RPATH FIX] ISL"
-	patchelf --set-rpath ./.jnimap.temp.linux_64/ ../../lib/ISL_linux_64/libisl.so.15
+	patchelf --set-rpath ./.jnimap.temp.linux_64/ ../../lib/ISL_linux_64/libisl.so.19
 	@echo "  [RPATH FIX] GMP"
 	patchelf --set-rpath ./.jnimap.temp.linux_64/ ../../lib/ISL_linux_64/libgmp.so.10

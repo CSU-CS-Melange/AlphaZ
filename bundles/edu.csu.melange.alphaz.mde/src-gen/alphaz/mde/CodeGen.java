@@ -188,7 +188,10 @@ Detailed options can be given through optional argument.
 	/**
 	Generates Makefile to compile generated code + wrapper.
 	**/
-	public static void generateMakefile(  Program program , String system , CodeGenOptions CodeGenOptions , String outDir ) {
+	public static void generateMakefile(  Program program , String system , CodeGenOptions CodeGenOptions , String outDir) {
+		generateMakefile(program, system, CodeGenOptions, outDir, false);
+	}
+	public static void generateMakefile(  Program program , String system , CodeGenOptions CodeGenOptions , String outDir , boolean withVerification) {
 		/*PROTECTED REGION ID(alphaz.mde.codegen.generateMakefile) ENABLED START*/
 		try {
 			boolean tiledWavefront = false;
@@ -232,7 +235,7 @@ Detailed options can be given through optional argument.
 				return;
 			}
 			
-			PolyIRCodeGen.generateMakefile(program.getSystem(system), outDir);
+			PolyIRCodeGen.generateMakefile(program.getSystem(system), outDir, withVerification);
 		} catch (Exception e) {
 			PolyIRCodeGen.generateMakefile(program.getSystem(system), outDir);
 		}
@@ -255,7 +258,12 @@ Detailed options can be given through optional argument.
 		generateMakefile( program, system, null , outDir);
 	}
 	
-
+	/**
+	TODO : add description (to the model)
+	**/
+	public static void generateMakefile( Program program, String system, String outDir, boolean withVerification) {
+		generateMakefile( program, system, null , outDir, withVerification);
+	}
 
 	/**
 	TODO : add description (to the model)

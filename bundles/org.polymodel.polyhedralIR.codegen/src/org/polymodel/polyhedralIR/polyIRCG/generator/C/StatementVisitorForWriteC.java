@@ -65,6 +65,7 @@ public class StatementVisitorForWriteC extends PolyhedralIRInheritedDepthFirstVi
 	//Input
 	protected final CodeUnit unit;
 	protected final TargetMapping targetMapping;
+	private String verifyPrefix;
 	
 	//local
 	protected ComputeReductionNumber reductionNumbers;
@@ -84,8 +85,14 @@ public class StatementVisitorForWriteC extends PolyhedralIRInheritedDepthFirstVi
 	protected StatementVisitorForWriteC(CodeUnit unit, TargetMapping mapping) {
 		this.unit = unit;
 		this.targetMapping = mapping;
+		if (unit.getSystem().getName().endsWith("_verify")) {
+			this.verifyPrefix = "verify_";
+			ExpressionPrinterForWriteC.verifyPrefix = "verify_";
+		} else {
+			this.verifyPrefix = "";
+			ExpressionPrinterForWriteC.verifyPrefix = "";
+		}
 	}
-	
 
 	@Override
 	public void inAffineSystem(AffineSystem a) {
@@ -172,7 +179,7 @@ public class StatementVisitorForWriteC extends PolyhedralIRInheritedDepthFirstVi
 		}
 		Statement stmt = _fact.createStatement(
 				CodeGenUtility.createStatementName(unit, 0), var.getDomain().copy(), 
-				CodeGenConstantsForC.WRITEC_EVAL_PREFIX+var.getName()+"("+
+				CodeGenConstantsForC.WRITEC_EVAL_PREFIX+this.verifyPrefix+var.getName()+"("+
 						CodeGenUtility.toStringList(evalFuncParams, ",")+")");
 		
 		// Remove time domain from the statements in the loop. So that an 
@@ -237,7 +244,10 @@ public class StatementVisitorForWriteC extends PolyhedralIRInheritedDepthFirstVi
 	
 	@Override
 	public void outStandardEquation(StandardEquation s) {
-		Function function = _fact.createFunction(CodeGenConstantsForC.WRITEC_EVAL_PREFIX+s.getVariable().getName(), s.getVariable().getType());
+		Function function = _fact.createFunction(
+				CodeGenConstantsForC.WRITEC_EVAL_PREFIX+this.verifyPrefix+s.getVariable().getName(),
+				s.getVariable().getType()
+		);
 		
 		//Add loop indices as function parameters
 		for (Variable iv : s.getVariable().getDomain().getIndices()) {

@@ -11,6 +11,10 @@ import org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForC;
 @SuppressWarnings("all")
 public class BaseMakefile {
   public Map<String, String> generate(final AffineSystem system, final List<AffineSystem> systems, final boolean omp) {
+    return this.generate(system, systems, omp, false);
+  }
+  
+  public Map<String, String> generate(final AffineSystem system, final List<AffineSystem> systems, final boolean omp, final boolean withVerification) {
     final TreeMap<String, String> files = new TreeMap<String, String>();
     final LinkedList<CharSequence> systemNames = new LinkedList<CharSequence>();
     for (final AffineSystem sys : systems) {
@@ -19,7 +23,7 @@ public class BaseMakefile {
     String _name = system.getName();
     String _name_1 = system.getName();
     String _plus = (_name_1 + CodeGenConstantsForC.VERIFY_POSTFIX);
-    files.put("Makefile", this.makefile(_name, systemNames, _plus, omp).toString());
+    files.put("Makefile", this.makefile(_name, systemNames, _plus, omp, withVerification).toString());
     return files;
   }
 
@@ -103,6 +107,10 @@ public class BaseMakefile {
   }
 
   public CharSequence makefile(final CharSequence name, final List<CharSequence> names, final CharSequence verifyName, final boolean omp) {
+    return this.makefile(name, names, verifyName, omp, false);
+  }
+  
+  public CharSequence makefile(final CharSequence name, final List<CharSequence> names, final CharSequence verifyName, final boolean omp, final boolean withVerification) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("CFLAGS=");
     {
@@ -135,7 +143,12 @@ public class BaseMakefile {
     _builder.append(_objects);
     _builder.newLineIfNotEmpty();
     _builder.append("all: plain check");
-    _builder.newLine();
+    {
+      if (withVerification) {
+        _builder.append(" verify verify-rand");
+      }
+    }
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("debug: CFLAGS =-DDEBUG -g -Wall -Wextra");
     CharSequence _cflagsOthers_1 = this.cflagsOthers();
@@ -145,7 +158,6 @@ public class BaseMakefile {
     _builder.newLineIfNotEmpty();
     _builder.append("debug: all");
     _builder.newLine();
-    _builder.append("\t\t");
     _builder.newLine();
     _builder.append("plain: $(OBJS)");
     _builder.newLine();
@@ -170,54 +182,62 @@ public class BaseMakefile {
     _builder.append(CodeGenConstantsForC.RANDOM_FLAG, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("verify: $(OBJS) ");
-    _builder.append(verifyName);
-    _builder.append(".o");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("$(CC) ");
-    _builder.append(name, "\t");
-    _builder.append("-wrapper.c -o ");
-    _builder.append(name, "\t");
-    _builder.append(".verify $(OBJS) ");
-    _builder.append(verifyName, "\t");
-    _builder.append(".o $(CFLAGS) $(LIBRARIES) -D");
-    _builder.append(CodeGenConstantsForC.VERIFY_FLAG, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    _builder.append("verify-rand: $(OBJS) ");
-    _builder.append(verifyName);
-    _builder.append(".o");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("$(CC) ");
-    _builder.append(name, "\t");
-    _builder.append("-wrapper.c -o ");
-    _builder.append(name, "\t");
-    _builder.append(".verify-rand $(OBJS) ");
-    _builder.append(verifyName, "\t");
-    _builder.append(".o $(CFLAGS) $(LIBRARIES) -D");
-    _builder.append(CodeGenConstantsForC.VERIFY_FLAG, "\t");
-    _builder.append(" -D");
-    _builder.append(CodeGenConstantsForC.RANDOM_FLAG, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
+    {
+      if (withVerification) {
+        _builder.append("verify: $(OBJS) ");
+        _builder.append(verifyName);
+        _builder.append(".o");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("$(CC) ");
+        _builder.append(name, "\t");
+        _builder.append("-wrapper.c -o ");
+        _builder.append(name, "\t");
+        _builder.append(".verify $(OBJS) ");
+        _builder.append(verifyName, "\t");
+        _builder.append(".o $(CFLAGS) $(LIBRARIES) -D");
+        _builder.append(CodeGenConstantsForC.VERIFY_FLAG, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.newLine();
+        _builder.append("verify-rand: $(OBJS) ");
+        _builder.append(verifyName);
+        _builder.append(".o");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("$(CC) ");
+        _builder.append(name, "\t");
+        _builder.append("-wrapper.c -o ");
+        _builder.append(name, "\t");
+        _builder.append(".verify-rand $(OBJS) ");
+        _builder.append(verifyName, "\t");
+        _builder.append(".o $(CFLAGS) $(LIBRARIES) -D");
+        _builder.append(CodeGenConstantsForC.VERIFY_FLAG, "\t");
+        _builder.append(" -D");
+        _builder.append(CodeGenConstantsForC.RANDOM_FLAG, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.newLine();
+      }
+    }
     CharSequence _makeObjs = this.makeObjs(names);
     _builder.append(_makeObjs);
     _builder.newLineIfNotEmpty();
-    _builder.append(verifyName);
-    _builder.append(".o : ");
-    _builder.append(verifyName);
-    _builder.append(".c");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("$(CC) ");
-    _builder.append(verifyName, "\t");
-    _builder.append(".c -o ");
-    _builder.append(verifyName, "\t");
-    _builder.append(".o $(CFLAGS) $(LIBRARIES) -c");
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
+    {
+      if (withVerification) {
+        _builder.append(verifyName);
+        _builder.append(".o : ");
+        _builder.append(verifyName);
+        _builder.append(".c");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("$(CC) ");
+        _builder.append(verifyName, "\t");
+        _builder.append(".c -o ");
+        _builder.append(verifyName, "\t");
+        _builder.append(".o $(CFLAGS) $(LIBRARIES) -c");
+        _builder.newLineIfNotEmpty();
+        _builder.newLine();
+      }
+    }
     _builder.append("clean:");
     _builder.newLine();
     _builder.append("\t");
@@ -225,11 +245,16 @@ public class BaseMakefile {
     _builder.append(name, "\t");
     _builder.append(" ");
     _builder.append(name, "\t");
-    _builder.append(".check ");
-    _builder.append(name, "\t");
-    _builder.append(".verify ");
-    _builder.append(name, "\t");
-    _builder.append(".verify-rand");
+    _builder.append(".check");
+    {
+      if (withVerification) {
+        _builder.append(" ");
+        _builder.append(name, "\t");
+        _builder.append(".verify ");
+        _builder.append(name, "\t");
+        _builder.append(".verify-rand");
+      }
+    }
     _builder.newLineIfNotEmpty();
     return _builder;
   }

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?p2f version='1.0.0'?>
+<p2f version='1.0.0'>
+  <ius size='1'>
+    <iu id='alphaz.feature.feature.group' name='AlphaZ' version='0.1.0'>
+      <repositories size='1'>
+        <repository location='https://csu-cs-melange.github.io/AlphaZ'/>
+      </repositories>
+    </iu>
+  </ius>
+</p2f>

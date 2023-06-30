@@ -33,9 +33,18 @@ public class BaseCodeUnit {
     _builder.append(_commonIncludes);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    CharSequence _externalFunctionInclude = this.externalFunctionInclude(unit);
-    _builder.append(_externalFunctionInclude);
-    _builder.newLineIfNotEmpty();
+    {
+      boolean _isVerification = this.isVerification(unit);
+      if (_isVerification) {
+        CharSequence _externalFunctionIncludeDeclarationsOnly = this.externalFunctionIncludeDeclarationsOnly(unit);
+        _builder.append(_externalFunctionIncludeDeclarationsOnly);
+        _builder.newLineIfNotEmpty();
+      } else {
+        CharSequence _externalFunctionInclude = this.externalFunctionInclude(unit);
+        _builder.append(_externalFunctionInclude);
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.newLine();
     CharSequence _commonMacroDefs = this.commonMacroDefs(unit);
     _builder.append(_commonMacroDefs);
@@ -131,7 +140,29 @@ public class BaseCodeUnit {
     _builder.newLine();
     return _builder;
   }
-
+  
+  public boolean isVerification(final CodeUnit unit) {
+    return unit.getSystem().getName().endsWith("_verify");
+  }
+  
+  public CharSequence externalFunctionIncludeDeclarationsOnly(final CodeUnit unit) {
+    CharSequence _xblockexpression = null;
+    {
+      final BaseCompilationUnit baseUnit = new BaseCompilationUnit();
+      CharSequence _xifexpression = null;
+      int _size = unit.getCompilationUnit().getProgram().getExternalFunctionDeclarations().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _xifexpression = baseUnit.externalFunctionHeader(unit.getCompilationUnit().getProgram());
+      } else {
+        StringConcatenation _builder = new StringConcatenation();
+        _xifexpression = _builder;
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+  
   public CharSequence externalFunctionInclude(final CodeUnit unit) {
     CharSequence _xifexpression = null;
     int _size = unit.getCompilationUnit().getProgram().getExternalFunctionDeclarations().size();

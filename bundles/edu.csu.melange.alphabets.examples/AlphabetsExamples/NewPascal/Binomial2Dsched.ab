@@ -1,0 +1,42 @@
+int lmax_d1(int, int, int, int); 
+int lmax_d2(int, int, int, int);
+bool lexgt(int, int, int, int); 
+
+affine Binomial {N|N>0}
+input
+output
+	int checksum;
+	bool Th_Ttrue, Th_Ctrue;
+local
+	int C {i| 0<=i<=N};
+	int T {i,j| 0<=j<=i<=N};
+	int Sched_T_d1, Sched_T_d2 {i,j| 0<=j<=i<=N};
+	int Sched_C_d1, Sched_C_d2 {i| 0<=i<=N};
+	bool Th_T {i,j| 0<=j<=i<=N};
+	bool Th_C {i| 0<=i<=N};
+let
+	checksum[] = reduce(+, [i], C[i]);
+	C[i] = T[N,i];
+	T[i,j] = case
+		{|j==0} || {|i==j} : 1;
+		{|0<j<i}         : T[i-1,j-1] + T[i-1,j];
+   	esac;
+   	Sched_T_d1[i,j] = [i];
+   	Sched_T_d2[i,j] = [j];
+   	Sched_C_d1[i] = [N+1];
+   	Sched_C_d2[i] = [i];
+ 	Th_C[i] = lexgt(Sched_C_d1[i], Sched_C_d2[i], Sched_T_d1[N,i], Sched_T_d2[N,i]);
+	Th_T[i,j] = lexgt(Sched_T_d1[i,j], Sched_T_d2[i,j], 
+		case
+		{|j==0} || {|i==j} : -1;
+		{|0<j<i}         : lmax_d1(Sched_T_d1[i-1,j-1], Sched_T_d2[i-1,j-1],
+								   Sched_T_d1[i-1,j], Sched_T_d2[i-1,j]);
+   		esac,
+   		case
+		{|j==0} || {|i==j} : -1;
+		{|0<j<i}         : lmax_d2(Sched_T_d1[i-1,j-1], Sched_T_d2[i-1,j-1],
+								   Sched_T_d1[i-1,j], Sched_T_d2[i-1,j]);
+   		esac);
+   	Th_Ttrue[] = reduce(and, [i,j], Th_T);
+   	Th_Ctrue[] = reduce(and, [i], Th_C);
+.

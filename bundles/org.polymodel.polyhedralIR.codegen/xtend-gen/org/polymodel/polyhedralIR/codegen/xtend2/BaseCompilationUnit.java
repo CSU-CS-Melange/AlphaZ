@@ -27,7 +27,8 @@ public class BaseCompilationUnit {
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
       final Function1<ExternalFunctionDeclaration, CharSequence> _function = (ExternalFunctionDeclaration ex) -> {
-        return this.externalFunctionDeclaration(ex);
+        CharSequence _externalFunctionDeclaration = this.externalFunctionDeclaration(ex);
+        return (_externalFunctionDeclaration + ";");
       };
       String _join = IterableExtensions.<ExternalFunctionDeclaration>join(p.getExternalFunctionDeclarations(), "\n", _function);
       _xifexpression = ("//External Functions\n" + _join);
