@@ -32,7 +32,7 @@ public class CAnnotationForMPIC extends Xtend2_Annotation {
     }
     return _xifexpression;
   }
-
+  
   @Override
   protected CharSequence _annotationAfterStatement(final BarrierAnnotation ba) {
     CharSequence _xifexpression = null;
@@ -53,7 +53,7 @@ public class CAnnotationForMPIC extends Xtend2_Annotation {
     }
     return _xifexpression;
   }
-
+  
   @Override
   public CharSequence annotationBeforeStatement(final IScopAnnotation ba) {
     if (ba instanceof BarrierAnnotation) {
@@ -75,7 +75,7 @@ public class CAnnotationForMPIC extends Xtend2_Annotation {
         Arrays.<Object>asList(ba).toString());
     }
   }
-
+  
   @Override
   public CharSequence annotationAfterStatement(final IScopAnnotation ba) {
     if (ba instanceof BarrierAnnotation) {

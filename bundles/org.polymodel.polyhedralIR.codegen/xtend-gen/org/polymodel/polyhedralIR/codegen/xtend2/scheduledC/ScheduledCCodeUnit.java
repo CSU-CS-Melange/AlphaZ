@@ -24,7 +24,7 @@ public class ScheduledCCodeUnit extends BaseCodeUnit {
     _builder.newLine();
     return _builder;
   }
-
+  
   @Override
   public CharSequence commonMacroUndefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();

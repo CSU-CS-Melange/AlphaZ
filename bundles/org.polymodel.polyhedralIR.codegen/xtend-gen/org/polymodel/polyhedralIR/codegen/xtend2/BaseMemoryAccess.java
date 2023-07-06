@@ -18,11 +18,11 @@ public class BaseMemoryAccess {
   @Inject
   @Extension
   private BaseIndices indices;
-
+  
   protected CharSequence _memoryMacroDef(final BasicVariable v) {
     return null;
   }
-
+  
   protected CharSequence _memoryMacroDef(final CodeGenVariable v) {
     CharSequence _xifexpression = null;
     WhileInfo _whileInfo = v.getCodeunit().getSystem().getWhileInfo();
@@ -64,11 +64,11 @@ public class BaseMemoryAccess {
     }
     return _xifexpression;
   }
-
+  
   protected CharSequence _arrayIndexing(final AbstractVariable v) {
     return null;
   }
-
+  
   protected CharSequence _arrayIndexing(final CodeGenVariable v) {
     CharSequence _xifexpression = null;
     boolean _isScalar = Utility.isScalar(v);
@@ -84,11 +84,11 @@ public class BaseMemoryAccess {
     }
     return _xifexpression;
   }
-
+  
   protected CharSequence _memoryMacroUndef(final BasicVariable v) {
     return null;
   }
-
+  
   protected CharSequence _memoryMacroUndef(final CodeGenVariable v) {
     CharSequence _xifexpression = null;
     boolean _isScalar = Utility.isScalar(v);
@@ -102,7 +102,7 @@ public class BaseMemoryAccess {
     }
     return _xifexpression;
   }
-
+  
   public CharSequence memoryMacroDef(final AbstractVariable v) {
     if (v instanceof BasicVariable) {
       return _memoryMacroDef((BasicVariable)v);
@@ -113,7 +113,7 @@ public class BaseMemoryAccess {
         Arrays.<Object>asList(v).toString());
     }
   }
-
+  
   public CharSequence arrayIndexing(final AbstractVariable v) {
     if (v instanceof CodeGenVariable) {
       return _arrayIndexing((CodeGenVariable)v);
@@ -124,7 +124,7 @@ public class BaseMemoryAccess {
         Arrays.<Object>asList(v).toString());
     }
   }
-
+  
   public CharSequence memoryMacroUndef(final AbstractVariable v) {
     if (v instanceof BasicVariable) {
       return _memoryMacroUndef((BasicVariable)v);

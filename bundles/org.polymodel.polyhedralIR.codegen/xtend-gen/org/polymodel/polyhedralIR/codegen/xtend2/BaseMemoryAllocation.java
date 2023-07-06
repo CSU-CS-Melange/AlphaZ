@@ -40,7 +40,7 @@ public class BaseMemoryAllocation {
     };
     return IterableExtensions.<CodeGenVariable>reduce(Iterables.<CodeGenVariable>filter(vars, CodeGenVariable.class), _function);
   }
-
+  
   public CharSequence reset(final FlagVariableReset b) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<CodeGenVariable, Boolean> _function = (CodeGenVariable e) -> {
@@ -55,27 +55,27 @@ public class BaseMemoryAllocation {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   protected Boolean _ofType(final AbstractVariable t, final DATATYPE dt) {
     return null;
   }
-
+  
   protected Boolean _ofType(final CodeGenVariable v, final DATATYPE dt) {
     DATATYPE _typeID = v.getType().getTypeID();
     return Boolean.valueOf(Objects.equal(_typeID, dt));
   }
-
+  
   protected Boolean _ofType(final BasicVariable v, final DATATYPE dt) {
     String _type = v.getType();
     String _name = dt.getName();
     return Boolean.valueOf(Objects.equal(_type, _name));
   }
-
+  
   public CharSequence reset(final AbstractVariable v, final boolean isVariableInit) {
     StringConcatenation _builder = new StringConcatenation();
     return _builder;
   }
-
+  
   public CharSequence malloc(final VariableInitialization b) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//Memory Allocation");
@@ -106,7 +106,7 @@ public class BaseMemoryAllocation {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   public String declareMalloLoopIterators(final int dim) {
     if ((dim <= 0)) {
       StringConcatenation _builder = new StringConcatenation();
@@ -137,7 +137,7 @@ public class BaseMemoryAllocation {
     _builder_2.append(";");
     return _builder_2.toString();
   }
-
+  
   public CharSequence mfree(final VariableFinalization b) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -185,7 +185,7 @@ public class BaseMemoryAllocation {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   protected CharSequence _malloc(final VRegister reg) {
     StringConcatenation _builder = new StringConcatenation();
     String _regTypeString = reg.getRegTypeString();
@@ -197,7 +197,7 @@ public class BaseMemoryAllocation {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   public CharSequence scalarAllocation(final CodeGenVariable v, final String varNamePostfix) {
     CharSequence _xifexpression = null;
     boolean _isGlobal = v.isGlobal();
@@ -217,32 +217,32 @@ public class BaseMemoryAllocation {
     }
     return _xifexpression;
   }
-
+  
   public CharSequence scalarAllocation(final CodeGenVariable v) {
     return this.scalarAllocation(v, "");
   }
-
+  
   public CharSequence malloc(final AbstractVariable v) {
     return this.malloc(v, "", true);
   }
-
+  
   public CharSequence malloc(final AbstractVariable v, final boolean allocate) {
     return this.malloc(v, "", allocate);
   }
-
+  
   /**
    * verNamePostfix is used to add verify postfix
    */
   public CharSequence malloc(final AbstractVariable v, final String varNamePostfix) {
     return this.malloc(v, varNamePostfix, true);
   }
-
+  
   protected CharSequence _malloc(final AbstractVariable v, final String varNamePostfix, final boolean allocate) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/** malloc not imlemented for the given type **/");
     return _builder;
   }
-
+  
   protected CharSequence _malloc(final CodeGenVariable v, final String varNamePostfix, final boolean allocate) {
     CharSequence _xblockexpression = null;
     {
@@ -294,7 +294,7 @@ public class BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-
+  
   public CharSequence mallocLinearlized(final CodeGenVariable v, final String varNamePostfix) {
     CharSequence _xblockexpression = null;
     {
@@ -326,7 +326,7 @@ public class BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-
+  
   public CharSequence malloc1D(final CodeGenVariable v, final String varNamePostfix) {
     CharSequence _xblockexpression = null;
     {
@@ -358,7 +358,7 @@ public class BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-
+  
   protected CharSequence variableDeclaration(final CharSequence varDecl, final CharSequence varName) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(varDecl);
@@ -367,7 +367,7 @@ public class BaseMemoryAllocation {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   /**
    * Helper to do all malloc and mallocCheck in a consistent manner
    */
@@ -408,11 +408,11 @@ public class BaseMemoryAllocation {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   private CharSequence malloc(final CharSequence varName, final CharSequence type, final CharSequence vol) {
     return this.malloc("", varName, type, vol, false);
   }
-
+  
   private CharSequence mallocMD(final CodeGenVariable v, final String varNamePostfix) {
     CharSequence _xblockexpression = null;
     {
@@ -455,7 +455,7 @@ public class BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-
+  
   private CharSequence mallocMDrecurse(final CodeGenVariable v, final String varNamePostfix, final int dim) {
     CharSequence _xblockexpression = null;
     {
@@ -515,7 +515,7 @@ public class BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-
+  
   private String getMDmallocAccess(final int dim) {
     StringConcatenation _builder = new StringConcatenation();
     String access = _builder.toString();
@@ -534,7 +534,7 @@ public class BaseMemoryAllocation {
     }
     return access;
   }
-
+  
   private CharSequence getMallocAccessToLinearized(final CodeGenVariable v, final String varNamePostfix) {
     CharSequence _xblockexpression = null;
     {
@@ -567,7 +567,7 @@ public class BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-
+  
   private CharSequence getMDPointer(final CodeGenVariable v, final int dim) {
     CharSequence _xblockexpression = null;
     {
@@ -591,7 +591,7 @@ public class BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-
+  
   private String getFirstMDmallocAccess(final int dim) {
     StringConcatenation _builder = new StringConcatenation();
     String access = _builder.toString();
@@ -607,25 +607,25 @@ public class BaseMemoryAllocation {
     }
     return access;
   }
-
+  
   public CharSequence mfree(final AbstractVariable v) {
     return this.mfree(v, "", false);
   }
-
+  
   public CharSequence mfree(final AbstractVariable v, final String varNamePostfix) {
     return this.mfree(v, varNamePostfix, false);
   }
-
+  
   public CharSequence mfree(final AbstractVariable v, final boolean isSpecial) {
     return this.mfree(v, "", isSpecial);
   }
-
+  
   protected CharSequence _mfree(final AbstractVariable v, final String varNamePostfix, final boolean isSpecial) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("/** mfree not implemented for AbstractVariable **/");
     return _builder;
   }
-
+  
   protected CharSequence _mfree(final CodeGenVariable v, final String varNamePostfix, final boolean isSpecial) {
     CharSequence _xblockexpression = null;
     {
@@ -704,7 +704,7 @@ public class BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-
+  
   private CharSequence mfreeMD(final CodeGenVariable v, final String varNamePostfix) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -724,7 +724,7 @@ public class BaseMemoryAllocation {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   private CharSequence mfreeMDrecurse(final CodeGenVariable v, final String varNamePostfix, final int dim) {
     CharSequence _xblockexpression = null;
     {
@@ -772,7 +772,7 @@ public class BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-
+  
   public Boolean ofType(final AbstractVariable v, final DATATYPE dt) {
     if (v instanceof BasicVariable) {
       return _ofType((BasicVariable)v, dt);
@@ -785,11 +785,11 @@ public class BaseMemoryAllocation {
         Arrays.<Object>asList(v, dt).toString());
     }
   }
-
+  
   public CharSequence malloc(final VRegister reg) {
     return _malloc(reg);
   }
-
+  
   public CharSequence malloc(final AbstractVariable v, final String varNamePostfix, final boolean allocate) {
     if (v instanceof CodeGenVariable) {
       return _malloc((CodeGenVariable)v, varNamePostfix, allocate);
@@ -800,7 +800,7 @@ public class BaseMemoryAllocation {
         Arrays.<Object>asList(v, varNamePostfix, allocate).toString());
     }
   }
-
+  
   public CharSequence mfree(final AbstractVariable v, final String varNamePostfix, final boolean isSpecial) {
     if (v instanceof CodeGenVariable) {
       return _mfree((CodeGenVariable)v, varNamePostfix, isSpecial);

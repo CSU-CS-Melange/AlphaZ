@@ -31,7 +31,7 @@ public class ReductionCBody extends ScanCBody {
   @Inject
   @Extension
   private BaseMemoryAllocation malloc;
-
+  
   @Override
   protected CharSequence _code(final ScanBody b) {
     StringConcatenation _builder = new StringConcatenation();
@@ -410,7 +410,7 @@ public class ReductionCBody extends ScanCBody {
     }
     return _builder;
   }
-
+  
   @Override
   public CharSequence code(final Body b) {
     if (b instanceof TiledCLoop) {

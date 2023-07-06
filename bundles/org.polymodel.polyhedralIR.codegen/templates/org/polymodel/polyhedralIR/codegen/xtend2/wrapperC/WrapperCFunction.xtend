@@ -262,7 +262,7 @@ class WrapperCFunction extends BaseFunction {
 		#endif
 	'''
 	
-	def private printIndex(VariableDeclaration v, CharSequence macroIndex) {
+	def protected printIndex(VariableDeclaration v, CharSequence macroIndex) {
 		if (v.domain.NIndices > 0) {
 			'''printf("«v.name»(«v.domain.indices.join(",", [e|"%ld"])»)=",«macroIndex»);'''
 		} else {
@@ -270,14 +270,14 @@ class WrapperCFunction extends BaseFunction {
 		}
 	}
 	
-	def private varAccess(VariableDeclaration v, CharSequence macroIndex, boolean isSpecial) {
+	def protected varAccess(VariableDeclaration v, CharSequence macroIndex, boolean isSpecial) {
 		if (v.output && macroIndex == null) {
 			varAccess(v.name, " ", isSpecial);
 		} else {
 			varAccess(v.name, macroIndex, isSpecial);
 		}
 	}
-	def private varAccess(CharSequence vName, CharSequence macroIndex, boolean isSpecial) {
+	def protected varAccess(CharSequence vName, CharSequence macroIndex, boolean isSpecial) {
 		'''«vName»«IF macroIndex != null && macroIndex.length > 0»(«macroIndex»)«ENDIF»«IF (macroIndex == null || macroIndex.length == 0) && isSpecial»()«ENDIF»''';
 	}
 	

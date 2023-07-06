@@ -26,6 +26,11 @@ public class CodeGenOptions {
 		return options;
 	}
 	
+	public static CodeGenOptions scheduledABFTCDefault() {
+		ABFTCodeGenOptions options = new ABFTCodeGenOptions();
+		return options;
+	}
+	
 	public static CodeGenOptions scheduledCHybridGPUDefault(int dimToAddChecks) {
 		CodeGenOptions options = new CodeGenOptions();
 		options.flattenArrays = false;
@@ -61,4 +66,5 @@ public class CodeGenOptions {
 		GPU,
 		X10
 	}
+
 }
