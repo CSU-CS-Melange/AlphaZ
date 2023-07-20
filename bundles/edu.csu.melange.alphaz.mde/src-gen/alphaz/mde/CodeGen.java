@@ -219,25 +219,25 @@ Detailed options can be given through optional argument.
 			}
 			
 			if(tiledVec && tiledWavefront){
-				PolyIRCodeGen.generateOMPMakefile(new SIMDMakefileModule(), program.getSystem(system), outDir);
+				PolyIRCodeGen.generateOMPMakefile(new SIMDMakefileModule(), program.getSystem(system), outDir, withVerification);
 				return;
 			}else if(tiledVec && !tiledWavefront){
-				PolyIRCodeGen.generateMakefile(new SIMDMakefileModule(), program.getSystem(system), outDir);
+				PolyIRCodeGen.generateMakefile(new SIMDMakefileModule(), program.getSystem(system), outDir, withVerification);
 				return;
 			}else if(!tiledVec && tiledWavefront){
-				PolyIRCodeGen.generateOMPMakefile(program.getSystem(system), outDir);
+				PolyIRCodeGen.generateOMPMakefile(program.getSystem(system), outDir, withVerification);
 				return;
 			}
 			
 			if(program.getSystem(system).getTargetMapping().getSpaceTimeLevels().get(0).getParallelizationSpecifications().size() > 0){
-				PolyIRCodeGen.generateOMPMakefile(program.getSystem(system), outDir);
+				PolyIRCodeGen.generateOMPMakefile(program.getSystem(system), outDir, withVerification);
 				//PolyIRCodeGen.generateMakefile(new OpenMPMakefileModule(), program.getSystem(system), true, outDir);
 				return;
 			}
 			
 			PolyIRCodeGen.generateMakefile(program.getSystem(system), outDir, withVerification);
 		} catch (Exception e) {
-			PolyIRCodeGen.generateMakefile(program.getSystem(system), outDir);
+			PolyIRCodeGen.generateMakefile(program.getSystem(system), outDir, withVerification);
 		}
 		/*PROTECTED REGION END*/
 	}
