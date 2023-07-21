@@ -159,22 +159,30 @@ public class PolyIRCodeGen {
 	}
 
 	public static void generateMakefile(AbstractModule module, AffineSystem system, String outDir){
-		generateMakefile(module, system, false, outDir);
+		generateMakefile(module, system, outDir, false);
+	}
+	public static void generateMakefile(AbstractModule module, AffineSystem system, String outDir, boolean withVerification){
+		generateMakefile(module, system, false, outDir, withVerification);
 	}
 	
 	public static void generateMakefile(AffineSystem system, String outDir){
 		generateMakefile(null, system, false, outDir);
 	}
-	
 	public static void generateMakefile(AffineSystem system, String outDir, boolean withVerification){
 		generateMakefile(null, system, false, outDir, withVerification);
 	}
 
 	public static void generateOMPMakefile(AbstractModule module, AffineSystem system, String outDir){
-		generateMakefile(module, system, true, outDir);
+		generateOMPMakefile(module, system, outDir, false);
+	}
+	public static void generateOMPMakefile(AbstractModule module, AffineSystem system, String outDir, boolean withVerification){
+		generateMakefile(module, system, true, outDir, withVerification);
 	}
 	
 	public static void generateOMPMakefile(AffineSystem system, String outDir){
-		generateMakefile(null, system, true, outDir);
+		generateOMPMakefile(system, outDir, false);
+	}
+	public static void generateOMPMakefile(AffineSystem system, String outDir, boolean withVerification){
+		generateMakefile(null, system, true, outDir, withVerification);
 	}
 }
