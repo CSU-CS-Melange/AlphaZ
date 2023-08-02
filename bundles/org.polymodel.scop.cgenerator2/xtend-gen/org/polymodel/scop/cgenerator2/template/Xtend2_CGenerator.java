@@ -23,14 +23,13 @@ import org.polymodel.scop.ScopGuard;
 import org.polymodel.scop.ScopRoot;
 import org.polymodel.scop.ScopStatementMacro;
 import org.polymodel.scop.cgenerator2.CGenerator;
-import org.polymodel.scop.cgenerator2.template.Xtend2_Annotation;
 
 @SuppressWarnings("all")
 public class Xtend2_CGenerator {
   @Inject
   @Extension
   private Xtend2_Annotation annotation;
-  
+
   public CharSequence generate(final ScopRoot root) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -43,7 +42,7 @@ public class Xtend2_CGenerator {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   public CharSequence generate(final AbstractScopNode node) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -67,7 +66,7 @@ public class Xtend2_CGenerator {
     }
     return _builder;
   }
-  
+
   protected CharSequence _statementBody(final ScopBlock s) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("{");
@@ -85,7 +84,7 @@ public class Xtend2_CGenerator {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected CharSequence _statementBody(final ScopFor s) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("for(");
@@ -120,28 +119,28 @@ public class Xtend2_CGenerator {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   protected CharSequence _toCString(final Variable v) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = v.getName();
     _builder.append(_name);
     return _builder;
   }
-  
+
   protected CharSequence _toCString(final IntExpression ie) {
     StringConcatenation _builder = new StringConcatenation();
     String _string = ie.simplify().toString(OUTPUT_FORMAT.C);
     _builder.append(_string);
     return _builder;
   }
-  
+
   protected CharSequence _toCString(final IntConstraint ic) {
     StringConcatenation _builder = new StringConcatenation();
     String _string = ic.simplify().toString(OUTPUT_FORMAT.C);
     _builder.append(_string);
     return _builder;
   }
-  
+
   protected CharSequence _statementBody(final ScopGuard s) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -183,7 +182,7 @@ public class Xtend2_CGenerator {
     }
     return _builder;
   }
-  
+
   public CharSequence printConstraintSystem(final IntConstraintSystem ics) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("(");
@@ -195,7 +194,7 @@ public class Xtend2_CGenerator {
     _builder.append(")");
     return _builder;
   }
-  
+
   protected CharSequence _statementBody(final ScopAssignment s) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence _cString = this.toCString(s.getLHS());
@@ -206,7 +205,7 @@ public class Xtend2_CGenerator {
     _builder.append(";");
     return _builder;
   }
-  
+
   protected CharSequence _statementBody(final ScopStatementMacro s) {
     CharSequence _xifexpression = null;
     boolean _isInlined = CGenerator.isInlined(s.getName());
@@ -233,7 +232,7 @@ public class Xtend2_CGenerator {
     }
     return _xifexpression;
   }
-  
+
   public CharSequence statementBody(final AbstractScopNode s) {
     if (s instanceof ScopAssignment) {
       return _statementBody((ScopAssignment)s);
@@ -250,7 +249,7 @@ public class Xtend2_CGenerator {
         Arrays.<Object>asList(s).toString());
     }
   }
-  
+
   public CharSequence toCString(final AlgebraVisitable ic) {
     if (ic instanceof IntConstraint) {
       return _toCString((IntConstraint)ic);

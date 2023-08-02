@@ -10,7 +10,7 @@ public class Xtend2CodeGenTop {
   @Inject
   @Extension
   private BaseCompilationUnit extensions;
-  
+
   public Map<String, String> generate(final CompilationUnit unit) {
     return this.extensions.generate(unit);
   }

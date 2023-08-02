@@ -25,6 +25,7 @@ public class PolymodelPrettyPrinter {
 			throw new UnsupportedOperationException(
 					"Default output not yet implemented");
 		}
+		
 		return visitor.print(object);
 	}
 	

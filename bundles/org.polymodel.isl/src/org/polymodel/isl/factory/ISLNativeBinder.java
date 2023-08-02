@@ -160,9 +160,14 @@ public class ISLNativeBinder {
 //			List<Variable> parameters) {
 //		return islFunction(ISLFactory.islMap(input), inputs, outputs, parameters);
 //	}
-	
+	//public static int counter = 0;
 	public static JNIISLSet jniIslSet(ISLSet set) {
 		String s = PolymodelPrettyPrinter.print(set, OUTPUT_FORMAT.ISL);
+		//if (counter == 315) {
+		//	s = PolymodelPrettyPrinter.print(set, OUTPUT_FORMAT.ISL);
+		//	s = "[T,N,cT,cL0,cM0,cS] -> {[ct,u] : exists e0 : (-ct+32*e0 = 0) and (T-2 >= 0) and (ct-32 >= 0) and (T-ct >= 0) and (u-1 >= 0) and (N-u-1 >= 0) and (-cL0+cM0-1 >= 0) and (N-2 >= 0) and (cT-1 >= 0) and (T-cT >= 0) and (cT-cS >= 0) and (cS-1 >= 0) and (cL0-4 >= 0) and (N-cL0-4 >= 0) and (cM0-4 >= 0) and (N-cM0-4 >= 0) and (-cL0+u >= 0) and (cM0-u >= 0)}";
+		//}
+		//counter++;
 		return ISLFactory.islSet(s);
 	}
 	
@@ -1194,24 +1199,31 @@ public class ISLNativeBinder {
 	
 	
 	
-	public static IntConstraintSystem intConstraintSystem(JNIISLBasicSet set,
+	public static IntConstraintSystem intConstraintSystem(JNIISLBasicSet set_in,
 			List<? extends Variable> inputs, List<? extends Variable> parameters, List<ExistentialVariable> existentialVars) {
 		List<OutputDimension> outputs = new ArrayList<OutputDimension>();
 		List<IntConstraint> constraints = new ArrayList<IntConstraint>();
 	
-		JNIISLMatrix matrix = set.getEqualityMatrix(JNIISLDimType.isl_dim_cst, JNIISLDimType.isl_dim_param, JNIISLDimType.isl_dim_set, 
+		JNIISLSet set = set_in.copy().toSet().computeDivs();
+		List<JNIISLBasicSet> bsets = set.getBasicSets();
+		if (bsets.size() > 1) {
+			System.err.println("This is an edge case with multiple basic sets, fix me " + set_in.toString());
+		}
+		JNIISLBasicSet bset = set.getBasicSets().get(0).copy();
+		
+		JNIISLMatrix matrix = bset.getEqualityMatrix(JNIISLDimType.isl_dim_cst, JNIISLDimType.isl_dim_param, JNIISLDimType.isl_dim_set, 
 				JNIISLDimType.isl_dim_div);
-		long divPos = (set.getSpace().getNbDims(JNIISLDimType.isl_dim_set) + set.getSpace().getNbDims(JNIISLDimType.isl_dim_param) + 1);
+		long divPos = (bset.getSpace().getNbDims(JNIISLDimType.isl_dim_set) + bset.getSpace().getNbDims(JNIISLDimType.isl_dim_param) + 1);
 		//populateDivTerms(matrix, (int) divPos, inputs, outputs, parameters, existentialVars);
 		int numDiv = (int)(matrix.getNbCols() - divPos);
-		populateDivTermsLocalSpace(set, (int) numDiv, inputs, outputs, parameters, existentialVars);
+		populateDivTermsLocalSpace(bset, (int) numDiv, inputs, outputs, parameters, existentialVars);
 			
 		for ( int i = 0; i < matrix.getNbRows(); i++ ) {
 			IntConstraint c = constraint(matrix, i, inputs, outputs, parameters, existentialVars, true);
 			constraints.add(c);
 		}
 
-		matrix = set.getInequalityMatrix(JNIISLDimType.isl_dim_cst, JNIISLDimType.isl_dim_param, 
+		matrix = bset.getInequalityMatrix(JNIISLDimType.isl_dim_cst, JNIISLDimType.isl_dim_param, 
 					JNIISLDimType.isl_dim_set, JNIISLDimType.isl_dim_div);
 
 		for ( int i = 0; i < matrix.getNbRows(); i++ ) {

@@ -26,45 +26,45 @@ public class BaseMakefile {
     files.put("Makefile", this.makefile(_name, systemNames, _plus, omp, withVerification).toString());
     return files;
   }
-  
+
   public CharSequence cflagsOptimization() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("-O3");
     return _builder;
   }
-  
+
   public CharSequence cflagsOthers() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(" ");
     _builder.append("-std=c99");
     return _builder;
   }
-  
+
   public CharSequence includes() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(" ");
     _builder.append("-I/usr/include/malloc/");
     return _builder;
   }
-  
+
   public CharSequence libraries() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("-lm");
     return _builder;
   }
-  
+
   public CharSequence ompflag() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("-fopenmp");
     return _builder;
   }
-  
+
   public CharSequence cc() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("gcc");
     return _builder;
   }
-  
+
   public CharSequence objects(final List<CharSequence> names) {
     StringConcatenation _builder = new StringConcatenation();
     String objs = _builder.toString();
@@ -79,7 +79,7 @@ public class BaseMakefile {
     _builder_2.append(objs);
     return _builder_2;
   }
-  
+
   public CharSequence makeObjs(final List<CharSequence> names) {
     StringConcatenation _builder = new StringConcatenation();
     String objs = _builder.toString();
@@ -105,7 +105,7 @@ public class BaseMakefile {
     _builder_2.append(objs);
     return _builder_2;
   }
-  
+
   public CharSequence makefile(final CharSequence name, final List<CharSequence> names, final CharSequence verifyName, final boolean omp) {
     return this.makefile(name, names, verifyName, omp, false);
   }
@@ -178,6 +178,8 @@ public class BaseMakefile {
     _builder.append(name, "\t");
     _builder.append(".check $(OBJS) $(CFLAGS) $(LIBRARIES) -D");
     _builder.append(CodeGenConstantsForC.CHECKING_FLAG, "\t");
+    _builder.append(" -D");
+    _builder.append(CodeGenConstantsForC.RANDOM_FLAG, "\t");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     {

@@ -107,6 +107,7 @@ public class ContextDomainCalculator extends PolyhedralIRInheritedDepthFirstVisi
 			//*/
 			
 			expr.setContextDomain(expr.getExpressionDomain().intersection(context));
+			int x = 0;
 		}
 		
 		expr.getContextDomain().simplify();

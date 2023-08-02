@@ -1,14 +1,18 @@
 package org.polymodel.prettyprinters;
 
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.polymodel.PolymodelVisitable;
 import org.polymodel.algebra.AlgebraVisitable;
 import org.polymodel.algebra.prettyprinter.algebra.AbstractPrettyPrinter;
 import org.polymodel.impl.PolymodelVisitorImpl;
+import org.polymodel.ExistentialVariable;
 
 public abstract class AbstractPolymodelPrettyPrinter extends PolymodelVisitorImpl{
 	protected final StringBuffer buffer;
 	protected AbstractPrettyPrinter algebraPrinter;
+	protected List<ExistentialVariable> existentialVars;
 	
 	public AbstractPolymodelPrettyPrinter(AbstractPrettyPrinter algebraPrinter){
 		this.buffer = new StringBuffer();

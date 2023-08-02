@@ -24,7 +24,7 @@ public class ScheduledCCodeUnit extends BaseCodeUnit {
     _builder.newLine();
     return _builder;
   }
-  
+
   @Override
   public CharSequence commonMacroUndefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
@@ -38,21 +38,6 @@ public class ScheduledCCodeUnit extends BaseCodeUnit {
     _builder.append("#undef RMAX");
     _builder.newLine();
     _builder.append("#undef RMIN");
-    _builder.newLine();
-    return _builder;
-  }
-  
-  @Override
-  public CharSequence commonIncludes(final CodeUnit unit) {
-    StringConcatenation _builder = new StringConcatenation();
-    CharSequence _commonIncludes = super.commonIncludes(unit);
-    _builder.append(_commonIncludes);
-    _builder.newLineIfNotEmpty();
-    _builder.append("#include <omp.h>");
-    _builder.newLine();
-    _builder.append("#include <immintrin.h>");
-    _builder.newLine();
-    _builder.append("#include <malloc.h>");
     _builder.newLine();
     return _builder;
   }

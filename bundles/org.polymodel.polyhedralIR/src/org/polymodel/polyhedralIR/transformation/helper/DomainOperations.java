@@ -533,6 +533,7 @@ public class DomainOperations {
 				depFunc.add("");
 			}
 			List<String> domainConstraints = new ArrayList<String>(mat.getNbRows());
+			int __c = 0;
 			for (MatrixRow row : mat.getRows()) {
 				// Equality has a chance that it is about the dependence
 				if (row.get(0) == 0) { // FIXME 1/0 is swapped vs actual polylib
@@ -598,10 +599,14 @@ public class DomainOperations {
 					}
 					if (!wasDep) {
 						domainConstraints.add(PolyhedralIRUtility.toConstraint(row, params, indices).toString(OUTPUT_FORMAT.ALPHABETS));
+						System.out.println(__c++ + "  XX  " + domainConstraints.get(domainConstraints.size()-1));
 					}
 				} else {
+					if (__c == 7)
+						System.out.println("hey");
 					IntConstraint constraint = PolyhedralIRUtility.toConstraint(row, params, indices);
 					domainConstraints.add(constraint.toString(OUTPUT_FORMAT.ALPHABETS));
+					System.out.println(__c++ + "  YY  " + domainConstraints.get(domainConstraints.size()-1));
 				}
 			}
 

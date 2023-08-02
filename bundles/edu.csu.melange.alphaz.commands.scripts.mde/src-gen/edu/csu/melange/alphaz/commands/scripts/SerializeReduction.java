@@ -33,7 +33,7 @@ public class SerializeReduction  {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		    //System.out.println("Unexpected Exception");
-		    //e.printStackTrace();
+		    e.printStackTrace();
 		    throw new RuntimeException("Exception to terminate script");
 		}
 	}//function

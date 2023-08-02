@@ -26,11 +26,11 @@ public class WrapperCCodeUnit extends BaseCodeUnit {
   @Inject
   @Extension
   private BaseIndices indices;
-  
+
   @Inject
   @Extension
   private BaseMemoryAccess access;
-  
+
   @Override
   public CharSequence commonIncludes(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
@@ -43,11 +43,9 @@ public class WrapperCCodeUnit extends BaseCodeUnit {
     _builder.newLine();
     _builder.append("#include <sys/errno.h>");
     _builder.newLine();
-    _builder.append("#include <omp.h>");
-    _builder.newLine();
     return _builder;
   }
-  
+
   @Override
   public CharSequence commonMacroDefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
@@ -61,7 +59,7 @@ public class WrapperCCodeUnit extends BaseCodeUnit {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   @Override
   public CharSequence commonMacroUndefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
@@ -73,13 +71,13 @@ public class WrapperCCodeUnit extends BaseCodeUnit {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-  
+
   @Override
   public CharSequence commonFuncDefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     return _builder;
   }
-  
+
   @Override
   public CharSequence memoryMacroDefs(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
@@ -147,7 +145,7 @@ public class WrapperCCodeUnit extends BaseCodeUnit {
     }
     return _builder;
   }
-  
+
   protected CharSequence getMemSpaceAccess(final CodeGenVariable v) {
     CharSequence _xifexpression = null;
     int _nIndices = v.getDomain().getNIndices();
@@ -165,7 +163,7 @@ public class WrapperCCodeUnit extends BaseCodeUnit {
     }
     return _xifexpression;
   }
-  
+
   protected CharSequence iterToMemSpace(final AffineFunction f) {
     CharSequence _xifexpression = null;
     int _dimRHS = f.getDimRHS();
@@ -186,18 +184,18 @@ public class WrapperCCodeUnit extends BaseCodeUnit {
     }
     return _xifexpression;
   }
-  
+
   @Override
   public CharSequence memoryMacroUndefs(final CodeUnit unit) {
     return super.memoryMacroUndefs(unit);
   }
-  
+
   @Override
   public CharSequence externalFunctionInclude(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
     return _builder;
   }
-  
+
   @Override
   public String filename(final CodeUnit unit) {
     StringConcatenation _builder = new StringConcatenation();
