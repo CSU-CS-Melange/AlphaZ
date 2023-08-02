@@ -35,30 +35,30 @@ public class ScanCBody extends BaseBody {
   @Inject
   @Extension
   private BaseMemoryAllocation malloc;
-
+  
   protected String functionParameters(final Function f) {
     final Function1<AbstractVariable, CharSequence> _function = (AbstractVariable p) -> {
       return p.asParameter();
     };
     return IterableExtensions.<AbstractVariable>join(f.getSignature().getParameters(), ", ", _function);
   }
-
+  
   protected String functionParameters(final OriginDomainVolume b) {
     return this.functionParameters(b.getFunction());
   }
-
+  
   protected String functionParameters(final VolumeFunction b) {
     return this.functionParameters(b.getFunction());
   }
-
+  
   protected String functionParameters(final VolumeFunctionDerivative b) {
     return this.functionParameters(b.getFunction());
   }
-
+  
   protected String functionParameters(final BoundComputation b) {
     return this.functionParameters(b.getFunction());
   }
-
+  
   protected CharSequence _code(final OriginDomainVolume b) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("int volume = 0;");
@@ -73,7 +73,7 @@ public class ScanCBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   protected CharSequence _code(final VolumeFunction b) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("int volume = 0;");
@@ -94,7 +94,7 @@ public class ScanCBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   protected CharSequence _code(final VolumeFunctionDerivative b) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("int volume = 0;");
@@ -112,7 +112,7 @@ public class ScanCBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   protected CharSequence _code(final BoundComputation b) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("double fx, df, dx;");
@@ -225,7 +225,7 @@ public class ScanCBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   protected CharSequence _code(final ScanBody b) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//Get the number of threads");
@@ -692,7 +692,7 @@ public class ScanCBody extends BaseBody {
     }
     return _builder;
   }
-
+  
   public CharSequence code(final Body b) {
     if (b instanceof TiledCLoop) {
       return _code((TiledCLoop)b);

@@ -25,11 +25,11 @@ public class BaseFunction {
   @Inject
   @Extension
   private BaseBody extensions;
-
+  
   public String nameEsc(final FunctionSignature fs) {
     return this.nameEsc(fs.getName());
   }
-
+  
   public String nameEsc(final String fname) {
     String name = fname.replaceAll("\\-", "_");
     boolean _matches = name.matches("\\d.+");
@@ -39,7 +39,7 @@ public class BaseFunction {
       return name;
     }
   }
-
+  
   public CharSequence prototype(final FunctionSignature fs) {
     StringConcatenation _builder = new StringConcatenation();
     String _returnType = fs.getReturnType();
@@ -56,7 +56,7 @@ public class BaseFunction {
     _builder.append(")");
     return _builder;
   }
-
+  
   public CharSequence functionSignature(final Function f) {
     EList<AbstractVariable> _inputs = f.getInputs();
     EList<AbstractVariable> _outputs = f.getOutputs();
@@ -65,7 +65,7 @@ public class BaseFunction {
     };
     return this.fullSignature(f.getSignature(), IterableExtensions.<AbstractVariable>filter(Iterables.<AbstractVariable>concat(_inputs, _outputs), _function));
   }
-
+  
   public CharSequence fullSignature(final FunctionSignature fs, final Iterable<AbstractVariable> globals) {
     StringConcatenation _builder = new StringConcatenation();
     String _returnType = fs.getReturnType();
@@ -82,7 +82,7 @@ public class BaseFunction {
     _builder.append(")");
     return _builder;
   }
-
+  
   private CharSequence functionParam(final AbstractVariable p, final Iterable<AbstractVariable> globals) {
     StringConcatenation _builder = new StringConcatenation();
     String _asParameterType = p.asParameterType();
@@ -101,7 +101,7 @@ public class BaseFunction {
     _builder.append(_name);
     return _builder;
   }
-
+  
   public CharSequence code(final Function func) {
     CharSequence _xifexpression = null;
     boolean _isInlined = func.isInlined();
@@ -124,7 +124,7 @@ public class BaseFunction {
     }
     return _xifexpression;
   }
-
+  
   public CharSequence functionBody(final Function func) {
     CharSequence _xblockexpression = null;
     {

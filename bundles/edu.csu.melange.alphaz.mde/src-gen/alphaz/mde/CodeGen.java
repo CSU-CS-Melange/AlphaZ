@@ -13,12 +13,14 @@ import org.polymodel.polyhedralIR.AffineSystem;
 import org.polymodel.polyhedralIR.Domain;
 import org.polymodel.polyhedralIR.Program;
 import org.polymodel.polyhedralIR.factory.PolyhedralIRUtility;
+import org.polymodel.polyhedralIR.polyIRCG.generator.ABFTCodeGenOptions;
 import org.polymodel.polyhedralIR.polyIRCG.generator.CodeGenOptions;
 import org.polymodel.polyhedralIR.polyIRCG.generator.PolyIRCodeGen;
 import org.polymodel.polyhedralIR.polyIRCG.generator.TiledCodeGenOptions;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.PCOT.PCOTC;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.ScheduledC;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.WriteC;
+import org.polymodel.polyhedralIR.polyIRCG.generator.C.wrapper.ABFTWrapperGeneratorForC;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.wrapper.WrapperGeneratorForC;
 import org.polymodel.polyhedralIR.polyIRCG.generator.modules.makefile.MPICTestingMakefileModule;
 import org.polymodel.polyhedralIR.polyIRCG.generator.modules.makefile.SIMDMakefileModule;
@@ -145,14 +147,20 @@ Detailed options can be given through optional argument.
 	public static void generateWrapper( Program program, String system, String outDir) {
 		generateWrapper( program, system, getDefaultCodeGenOptions(program, system) , outDir);
 	}
-	
-
 
 	/**
 	TODO : add description (to the model)
 	**/
 	public static void generateWrapper( Program program, String system) {
 		generateWrapper( program, system, getDefaultCodeGenOptions(program, system) , "./" );
+	}
+	
+	public static void generateABFTWrapper(Program program, String system, String outDir) {
+		ABFTWrapperGeneratorForC.generate(program.getSystem(system), getDefaultCodeGenOptions(program, system), outDir);
+	}
+	
+	public static void generateABFTWrapper(Program program, String system, ABFTCodeGenOptions options, String outDir) {
+		ABFTWrapperGeneratorForC.generate(program.getSystem(system), options, outDir);
 	}
 	
 	/**
@@ -324,6 +332,10 @@ Detailed options can be given through optional argument.
 		/*PROTECTED REGION END*/
 	}
 
+	public static CodeGenOptions createCGOptionForScheduledABFTC() {
+		// TODO Auto-generated method stub
+		return CodeGenOptions.scheduledABFTCDefault();
+	}
 
 	/**
 	Creates instance of CodeGenOptions for Hybrid ScheduledC for GPU using dimToInsertChecks to insert checks.
@@ -657,5 +669,13 @@ Register block size only corresponds to the data dimensions of stencil computati
 		return options;
 		/*PROTECTED REGION END*/
 	}
+
+	public static ABFTCodeGenOptions setCGOptionForScheduledABFTC(ABFTCodeGenOptions options, String key, String value) {
+		
+		options.set(key, value);
+		
+		return options;
+	}
+
 
 }//end CodeGen

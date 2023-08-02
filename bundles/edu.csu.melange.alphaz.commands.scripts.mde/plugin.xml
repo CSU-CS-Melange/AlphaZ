@@ -531,6 +531,15 @@ Detailed options can be given through optional argument.
             Generates a wrapper code for the given sytem using the specified TargetMapping.
          </description>
       </module>
+      
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.GenerateABFTWrapper"
+            iterative="false"
+            name="generateABFTWrapper">
+         <description>
+            Generates an augmented version of the plain wrapper code for the given sytem using the specified TargetMapping.
+         </description>
+      </module>
 
       <module
             class="edu.csu.melange.alphaz.commands.scripts.GenerateVerificationCode"
@@ -563,6 +572,24 @@ Detailed options can be given through optional argument.
             class="edu.csu.melange.alphaz.commands.scripts.CreateCGOptionForScheduledC"
             iterative="false"
             name="createCGOptionForScheduledC">
+         <description>
+            Creates instance of CodeGenOptions for ScheduledC using default values.
+         </description>
+      </module>
+      
+       <module
+            class="edu.csu.melange.alphaz.commands.scripts.CreateCGOptionForABFTScheduledC"
+            iterative="false"
+            name="createCGOptionForABFTScheduledC">
+         <description>
+            Creates instance of CodeGenOptions for ScheduledC using default values.
+         </description>
+      </module>
+      
+      <module
+            class="edu.csu.melange.alphaz.commands.scripts.SetCGOptionForABFTScheduledC"
+            iterative="false"
+            name="setCGOptionForABFTScheduledC">
          <description>
             Creates instance of CodeGenOptions for ScheduledC using default values.
          </description>

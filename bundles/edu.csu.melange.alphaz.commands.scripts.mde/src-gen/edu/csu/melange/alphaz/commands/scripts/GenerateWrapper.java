@@ -57,8 +57,6 @@ public class GenerateWrapper  {
 		}
 	}//function
 	
-    
-
 
 	public void compute(){
 		

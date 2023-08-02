@@ -12,29 +12,29 @@ import org.eclipse.xtext.xbase.lib.Pure;
 public class StateOfLoop {
   @Accessors
   private boolean firstLoop;
-
+  
   @Accessors
   private boolean lastLoop;
-
+  
   public StateOfLoop(final boolean firstLoop, final boolean lastLoop) {
     this.firstLoop = firstLoop;
     this.lastLoop = lastLoop;
   }
-
+  
   @Pure
   public boolean isFirstLoop() {
     return this.firstLoop;
   }
-
+  
   public void setFirstLoop(final boolean firstLoop) {
     this.firstLoop = firstLoop;
   }
-
+  
   @Pure
   public boolean isLastLoop() {
     return this.lastLoop;
   }
-
+  
   public void setLastLoop(final boolean lastLoop) {
     this.lastLoop = lastLoop;
   }

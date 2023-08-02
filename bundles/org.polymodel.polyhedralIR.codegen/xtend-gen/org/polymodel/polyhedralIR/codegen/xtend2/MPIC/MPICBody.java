@@ -49,11 +49,11 @@ public class MPICBody extends BaseBody {
   @Inject
   @Extension
   private BaseStatement stmtExtensions;
-
+  
   @Inject
   @Extension
   private BaseDomain domainExtensions;
-
+  
   protected CharSequence _code(final MPICLoop body) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<Statement, CharSequence> _function = (Statement s) -> {
@@ -121,7 +121,7 @@ public class MPICBody extends BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   public CharSequence generateLoopNest(final MPICLoop l) {
     StringConcatenation _builder = new StringConcatenation();
     final DTiledLoop tiled = l.generateDTiledLoop();
@@ -143,7 +143,7 @@ public class MPICBody extends BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   public CharSequence generate(final DTiledLoop tiled) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence _generate = this.generate(tiled.getScop(), tiled);
@@ -151,7 +151,7 @@ public class MPICBody extends BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   /**
    * Branch code generation to customized code gen once its in the tiled block.
    * ScopBlock and ScopGuard that separates tilable blocks are generated like the normal generation.
@@ -177,7 +177,7 @@ public class MPICBody extends BaseBody {
     }
     return _xblockexpression;
   }
-
+  
   public String generate(final AbstractScopNode node, final CharSequence recvStartBody, final CharSequence recvEndBody, final CharSequence sendBody) {
     String _xblockexpression = null;
     {
@@ -196,7 +196,7 @@ public class MPICBody extends BaseBody {
     }
     return _xblockexpression;
   }
-
+  
   public CharSequence generate(final ScopRoot sr, final DTiledLoop tiled) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -209,7 +209,7 @@ public class MPICBody extends BaseBody {
     }
     return _builder;
   }
-
+  
   protected CharSequence _generate(final ScopGuard s, final DTiledLoop tiled) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -252,7 +252,7 @@ public class MPICBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   protected CharSequence _generate(final ScopBlock sg, final DTiledLoop tiled) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("{");
@@ -270,7 +270,7 @@ public class MPICBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   public CharSequence customGenerate(final AbstractScopNode n, final DTiledBlock tb) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("{");
@@ -283,7 +283,7 @@ public class MPICBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   public CharSequence receiveStart(final DTiledBlock tb) {
     StringConcatenation _builder = new StringConcatenation();
     final DTilingOptions opts = tb.getContainerLoop().getDtilingOptions();
@@ -349,7 +349,7 @@ public class MPICBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   public CharSequence receiveEnd(final DTiledBlock tb) {
     StringConcatenation _builder = new StringConcatenation();
     final DTilingOptions opts = tb.getContainerLoop().getDtilingOptions();
@@ -418,7 +418,7 @@ public class MPICBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   public CharSequence sendBody(final DTiledBlock tb) {
     StringConcatenation _builder = new StringConcatenation();
     final DTilingOptions opts = tb.getContainerLoop().getDtilingOptions();
@@ -543,7 +543,7 @@ public class MPICBody extends BaseBody {
     _builder.newLine();
     return _builder;
   }
-
+  
   public CharSequence code(final Body body) {
     if (body instanceof MPICLoop) {
       return _code((MPICLoop)body);
@@ -574,7 +574,7 @@ public class MPICBody extends BaseBody {
         Arrays.<Object>asList(body).toString());
     }
   }
-
+  
   public CharSequence generate(final AbstractScopNode sg, final DTiledLoop tiled) {
     if (sg instanceof ScopBlock) {
       return _generate((ScopBlock)sg, tiled);

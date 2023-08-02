@@ -35,11 +35,11 @@ public class SIMDBody extends BaseBody {
   @Inject
   @Extension
   private BaseStatement stmtExtensions;
-
+  
   @Inject
   @Extension
   private BaseMemoryAllocation mallocs;
-
+  
   protected CharSequence _code(final VRegisterInitialization body) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence _malloc = this.malloc(body);
@@ -47,7 +47,7 @@ public class SIMDBody extends BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   public CharSequence malloc(final VRegisterInitialization b) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//Memory Declaration for SIMD registers");
@@ -60,7 +60,7 @@ public class SIMDBody extends BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   protected CharSequence _code(final SIMDLoop body) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<Statement, CharSequence> _function = (Statement s) -> {
@@ -110,7 +110,7 @@ public class SIMDBody extends BaseBody {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   protected CharSequence _code(final TiledSIMDCLoop body) {
     StringConcatenation _builder = new StringConcatenation();
     {
@@ -180,7 +180,7 @@ public class SIMDBody extends BaseBody {
     }
     return _builder;
   }
-
+  
   public CharSequence code(final Body body) {
     if (body instanceof TiledSIMDCLoop) {
       return _code((TiledSIMDCLoop)body);
