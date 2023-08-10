@@ -1,0 +1,29 @@
+affine init { _P,_N0,_N1,_K0,_K1,_PK0,_PK1 | 0<_P,_N0,_N1,_K0,_K1,_PK0,_PK1 }
+	input
+		double kernel { i,j | -_K0<=i<=_K0 && -_K1<=j<=_K1 };
+	output
+		double padded_kernel { i,j | -_PK0<=i<=_PK0 && -_PK1<=j<=_PK1 };
+		//double padded_kernel_cp { i,j | -_PK0<=i<=_PK0 && -_PK1<=j<=_PK1 };
+		double patch { i,j | -_PK0<=i<_N0+_PK0 && -_PK1<=j<_N1+_PK1 };
+		//double patch_cp { i,j | -_PK0<=i<_N0+_PK0 && -_PK1<=j<_N1+_PK1 };
+	let
+		padded_kernel[i,j] = case
+			{|-_K0<=i<=_K0 && -_K1<=j<=_K1} : kernel[i,j];
+			{|-_K0>i} || {|i>_K0} || {|-_K1>j} || {|j>_K1} : 0.0;
+		esac;
+		
+		patch[i,j] = case 
+			{|0<=i<_N0 && 0<=j<_N1} : 1.0;
+			{|0>i} || {|i>=_N0} || {|0>j} || {|j>=_N1} : 0.0;
+		esac;
+.
+
+affine conv { _K0,_K1,_L0,_L1 | 0<_K0<=_L0 && 0<_K1<=_L1 }
+	input
+		double kernel { i,j | -_K0<=i<=_K0 && -_K1<=j<=_K1 };
+		double arr { i,j | 0<=i<_L0 && 0<=j<_L1 };
+	output
+		double out { i,j | 0<=i<_L0 && 0<=j<_L1 };
+	let	
+		out[i,j] = reduce(+, (i,j,p,q->i,j), {|0<=i+p<_L0 && 0<=j+q<_L1} : arr[i+p,j+q] * kernel[-p,-q]);
+.

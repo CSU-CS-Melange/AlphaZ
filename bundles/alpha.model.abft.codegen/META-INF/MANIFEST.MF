@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Codegen
+Bundle-SymbolicName: alpha.model.abft.codegen
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: alphaz.codegen
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ edu.csu.melange.alphaz.mde;bundle-version="1.0.0",
+ org.polymodel.polyhedralIR.codegen;bundle-version="1.0.0"
+Export-Package: alpha.model.abft.codegen
