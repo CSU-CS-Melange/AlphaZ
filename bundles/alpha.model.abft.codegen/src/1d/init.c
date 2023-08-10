@@ -107,7 +107,7 @@ inline double __min_double(double x, double y){
 #define padded_kernel(i) padded_kernel[i]
 #define patch(i) patch[i]
 
-void init(long _P0, long _N0, long _K0, long _PK0, double* kernel, double* padded_kernel, double* patch){
+void init(long _P0, long _N0, long _K0, long _PK0, float* kernel, float* padded_kernel, float* patch){
 	///Parameter checking
 	if (!((_P0 >= 1 && _N0 >= 1 && _K0 >= 1 && _PK0 >= 1))) {
 		printf("The value of parameters are not valid.\n");

@@ -37,7 +37,7 @@ public class Compile {
       int _size = ((List<String>)Conversions.doWrapArray(args)).size();
       boolean _lessThan = (_size < 4);
       if (_lessThan) {
-        InputOutput.<String>println("usage: alphabets_file cT cJx codegen_file [output_directory]");
+        InputOutput.<String>println("usage: alphabets_file H L codegen_file [output_directory]");
         return;
       }
       final String abFile = args[0];
@@ -175,7 +175,7 @@ public class Compile {
         _builder_4.append(_name_6);
         _builder_4.append("_scc");
         options.weightsVar = _builder_4.toString();
-        options.dataType = "double";
+        options.dataType = "float";
         options.patchVar = "patch";
         options.patchSize = patchSize;
         options.cT = cTSize;
@@ -209,7 +209,11 @@ public class Compile {
       } else {
         CodeGen.generateWrapper(prog, system.getName(), outDir);
       }
-      PolyIRCodeGen.generateABFTMakefile(system, outDir);
+      if ((!isBaseline)) {
+        PolyIRCodeGen.generateABFTMakefile(system, outDir);
+      } else {
+        CodeGen.generateMakefile(prog, system.getName(), outDir);
+      }
       if ((!isBaseline)) {
         StringConcatenation _builder_7 = new StringConcatenation();
         _builder_7.append("/");

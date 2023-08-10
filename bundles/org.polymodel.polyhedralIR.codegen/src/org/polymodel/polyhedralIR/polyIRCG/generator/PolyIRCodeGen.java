@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.polymodel.polyhedralIR.AffineSystem;
 import org.polymodel.polyhedralIR.analysis.SystemCallAnalysis;
+import org.polymodel.polyhedralIR.codegen.xtend2.Xtend2ABFTMakefileGen;
 import org.polymodel.polyhedralIR.codegen.xtend2.Xtend2CodeGen;
 import org.polymodel.polyhedralIR.codegen.xtend2.Xtend2MakefileGen;
 import org.polymodel.polyhedralIR.polyIRCG.CompilationUnit;
@@ -155,6 +156,22 @@ public class PolyIRCodeGen {
 		} else {
 			codes = Xtend2MakefileGen.generate(system, systems, omp, withVerification);
 		}
+		for (String file : codes.keySet()) {
+			writeFile(dir, file, codes.get(file));
+		}
+	}
+	
+	public static void generateABFTMakefile(AffineSystem system, String outDir) {
+		File dir = new File(outDir);
+		if (!dir.exists() && !dir.mkdirs()) {
+			throw new RuntimeException("Failed to create output directory : " + outDir);
+		}
+		//find the used system for the current system
+		List<AffineSystem> systems = SystemCallAnalysis.getUsedSystems(system);
+		Map<String, String> codes;
+		
+		codes = Xtend2ABFTMakefileGen.generate(system, systems);
+		
 		for (String file : codes.keySet()) {
 			writeFile(dir, file, codes.get(file));
 		}

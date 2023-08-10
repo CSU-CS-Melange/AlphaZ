@@ -1207,7 +1207,7 @@ public class ISLNativeBinder {
 		JNIISLSet set = set_in.copy().toSet().computeDivs();
 		List<JNIISLBasicSet> bsets = set.getBasicSets();
 		if (bsets.size() > 1) {
-			System.err.println("This is an edge case with multiple basic sets, fix me " + set_in.toString());
+			//System.err.println("This is an edge case with multiple basic sets, fix me " + set_in.toString());
 		}
 		JNIISLBasicSet bset = set.getBasicSets().get(0).copy();
 		

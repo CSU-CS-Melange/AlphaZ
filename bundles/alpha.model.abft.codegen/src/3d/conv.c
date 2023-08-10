@@ -102,14 +102,14 @@ inline double __min_double(double x, double y){
 
 
 //Local Function Declarations
-double reduce_conv_out_1(long, long, long, long, long, long, int, int, int, double***, double***);
+float reduce_conv_out_1(long, long, long, long, long, long, int, int, int, float***, float***);
 
 //Memory Macros
 #define kernel(i,j,k) kernel[i][j][k]
 #define arr(i,j,k) arr[i][j][k]
 #define out(i,j,k) out[i][j][k]
 
-void conv(long _K0, long _K1, long _K2, long _L0, long _L1, long _L2, double*** kernel, double*** arr, double*** out){
+void conv(long _K0, long _K1, long _K2, long _L0, long _L1, long _L2, float*** kernel, float*** arr, float*** out){
 	///Parameter checking
 	if (!((_K0 >= 1 && _L0 >= _K0 && _K1 >= 1 && _L1 >= _K1 && _K2 >= 1 && _L2 >= _K2))) {
 		printf("The value of parameters are not valid.\n");
@@ -137,8 +137,8 @@ void conv(long _K0, long _K1, long _K2, long _L0, long _L1, long _L2, double*** 
 	
 	//Memory Free
 }
-double reduce_conv_out_1(long _K0, long _K1, long _K2, long _L0, long _L1, long _L2, int ip, int jp, int kp, double*** arr, double*** kernel){
-	double reduceVar = 0;
+float reduce_conv_out_1(long _K0, long _K1, long _K2, long _L0, long _L1, long _L2, int ip, int jp, int kp, float*** arr, float*** kernel){
+	float reduceVar = 0;
 	#define S1(i,j,k,p,q,r) reduceVar = (reduceVar)+((arr(i+p,j+q,k+r))*(kernel(-p+_K0,-q+_K1,-r+_K2)))
 	{
 		//Domain

@@ -17,11 +17,11 @@ public class Show {
   public String toString(final PolyhedralIRVisitable o) {
     return this.print(o, false).toString();
   }
-
+  
   public String toSimplifiedString(final PolyhedralIRVisitable o) {
     return this.print(o, true).toString();
   }
-
+  
   protected CharSequence _print(final Program o, final boolean simplify) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<ExternalFunctionDeclaration, CharSequence> _function = (ExternalFunctionDeclaration e) -> {
@@ -39,7 +39,7 @@ public class Show {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   protected CharSequence _print(final ExternalFunctionDeclaration o, final boolean simplify) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence _print = this.print(o.getOutput(), simplify);
@@ -57,14 +57,14 @@ public class Show {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   protected CharSequence _print(final Type o, final boolean simplify) {
     StringConcatenation _builder = new StringConcatenation();
     String _cName = o.getCName();
     _builder.append(_cName);
     return _builder;
   }
-
+  
   protected CharSequence _print(final AffineSystem o, final boolean simplify) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("affine ");
@@ -146,7 +146,7 @@ public class Show {
     _builder.newLine();
     return _builder;
   }
-
+  
   protected CharSequence _print(final Domain o, final boolean simplify) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<Variable, CharSequence> _function = (Variable i) -> {
@@ -159,7 +159,7 @@ public class Show {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   protected CharSequence _print(final ParameterDomain o, final boolean simplify) {
     StringConcatenation _builder = new StringConcatenation();
     EList<Variable> _params = o.getParams();
@@ -174,7 +174,7 @@ public class Show {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   protected CharSequence print(final List<IntConstraintSystem> ics, final String indices) {
     CharSequence _xifexpression = null;
     boolean _isEmpty = ics.isEmpty();
@@ -194,7 +194,7 @@ public class Show {
     }
     return _xifexpression;
   }
-
+  
   protected CharSequence _print(final VariableDeclaration o, final boolean simplify) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence _print = this.print(o.getType(), simplify);
@@ -209,14 +209,14 @@ public class Show {
     _builder.newLineIfNotEmpty();
     return _builder;
   }
-
+  
   protected CharSequence _print(final VariableIdentifier o, final boolean simplify) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = o.getName();
     _builder.append(_name);
     return _builder;
   }
-
+  
   protected CharSequence print(final EObject o, final boolean simplify) {
     if (o instanceof ParameterDomain) {
       return _print((ParameterDomain)o, simplify);

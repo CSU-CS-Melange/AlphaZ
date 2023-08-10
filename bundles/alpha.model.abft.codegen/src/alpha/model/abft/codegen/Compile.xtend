@@ -17,7 +17,7 @@ class Compile {
 	def static void main(String[] args) {
 		
 		if (args.size < 4) {
-			println("usage: alphabets_file cT cJx codegen_file [output_directory]")
+			println("usage: alphabets_file H L codegen_file [output_directory]")
 			return;
 		}
 		
@@ -89,7 +89,7 @@ class Compile {
 			
 			options = CodeGen.createCGOptionForScheduledABFTC as ABFTCodeGenOptions
 			options.weightsVar = '''W_«stencilVar.varID.name»_scc'''
-			options.dataType = 'double'
+			options.dataType = 'float'
 			options.patchVar = 'patch'
 			options.patchSize = patchSize
 			options.cT = cTSize
@@ -112,7 +112,11 @@ class Compile {
 			CodeGen.generateWrapper(prog, system.name, outDir);
 		}
 		
-		PolyIRCodeGen.generateABFTMakefile(system, outDir);
+		if (!isBaseline) {
+			PolyIRCodeGen.generateABFTMakefile(system, outDir);
+		} else {
+			CodeGen.generateMakefile(prog, system.name, outDir)
+		}
 		
 		if (!isBaseline) {
 			// Output the pre-generated convolution code

@@ -9,6 +9,7 @@ public class ABFTCodeGenOptions extends CodeGenOptions {
 	public String cT;
 	public String cJx;
 	public String kernel;
+	public int numDims;
 	
 	
 	public void set(String key, String value) {
@@ -20,6 +21,7 @@ public class ABFTCodeGenOptions extends CodeGenOptions {
 			case "cT":			cT = value;
 			case "cJx":			cJx = value;
 			case "kernel":		kernel = value;
+			case "numDims":		numDims = Integer.parseInt(value);
 			
 			default: // do nothing
 		}

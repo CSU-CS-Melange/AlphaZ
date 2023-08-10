@@ -18,13 +18,13 @@ generateScheduledCode(prog, convSys, "./");
 
 
 # check init
-out = "codegen/"+convSys+outSuffix+"/test-init";
-generateScheduledCode(prog, initSys, out);
-generateWrapper(prog, initSys, out);
-generateMakefile(prog, initSys, out);
+#out = "codegen/"+convSys+outSuffix+"/test-init";
+#generateScheduledCode(prog, initSys, out);
+#generateWrapper(prog, initSys, out);
+#generateMakefile(prog, initSys, out);
 
 # check conv
-out = "codegen/"+convSys+outSuffix+"/test-conv";
-generateScheduledCode(prog, convSys, out);
-generateWrapper(prog, convSys, out);
-generateMakefile(prog, convSys, out);
+#out = "codegen/"+convSys+outSuffix+"/test-conv";
+#generateScheduledCode(prog, convSys, out);
+#generateWrapper(prog, convSys, out);
+#generateMakefile(prog, convSys, out);
