@@ -12,6 +12,9 @@ ForceCoB(prog, initSys, "patch",            "(i,j->i+_PK0,j+_PK1)");
 
 ForceCoB(prog, convSys, "kernel", "(i,j->i+_K0,j+_K1)");
 
+setSpaceTimeMap(prog, initSys, "padded_kernel", "(i,j->0,i,j)");
+setSpaceTimeMap(prog, initSys, "patch",         "(i,j->1,i,j)");
+
 generateScheduledCode(prog, initSys, "./");
 generateScheduledCode(prog, convSys, "./");
 

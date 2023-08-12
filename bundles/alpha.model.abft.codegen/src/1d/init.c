@@ -115,58 +115,44 @@ void init(long _P0, long _N0, long _K0, long _PK0, float* kernel, float* padded_
 	}
 	//Memory Allocation
 	
-	#define S0(i) padded_kernel(i) = 0.0
-	#define S1(i) padded_kernel(i) = kernel(-_PK0+i+_K0)
-	#define S2(i) padded_kernel(i) = 0.0
-	#define S3(i) patch(i) = 0.0
-	#define S4(i) patch(i) = 1.0
-	#define S5(i) patch(i) = 0.0
+	#define S0(i,i1) padded_kernel(i1) = 0.0
+	#define S1(i,i1) padded_kernel(i1) = kernel(-_PK0+i1+_K0)
+	#define S2(i,i1) padded_kernel(i1) = 0.0
+	#define S3(i,i1) patch(i1) = 0.0
+	#define S4(i,i1) patch(i1) = 1.0
+	#define S5(i,i1) patch(i1) = 0.0
 	{
 		//Domain
-		//{i|_P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && _PK0>=_K0+i+1 && i>=0 && 2_PK0>=i}
-		//{i|_K0+i>=_PK0 && _K0+_PK0>=i && _P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && i>=0 && 2_PK0>=i}
-		//{i|_P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && i>=_K0+_PK0+1 && i>=0 && 2_PK0>=i}
-		//{i|_P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && _PK0>=i+1 && _N0+2_PK0>=i+1 && i>=0}
-		//{i|i>=_PK0 && _N0+_PK0>=i+1 && _P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && _N0+2_PK0>=i+1 && i>=0}
-		//{i|_P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && i>=_N0+_PK0 && _N0+2_PK0>=i+1 && i>=0}
-		int c1;
-		for(c1=0;c1 <= -_K0+_PK0-1;c1+=1)
+		//{i,i1|i==0 && _P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && _PK0>=_K0+i1+1 && i1>=0 && 2_PK0>=i1}
+		//{i,i1|i==0 && _K0+i1>=_PK0 && _K0+_PK0>=i1 && _P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && i1>=0 && 2_PK0>=i1}
+		//{i,i1|i==0 && _P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && i1>=_K0+_PK0+1 && i1>=0 && 2_PK0>=i1}
+		//{i,i1|i==1 && _P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && _PK0>=i1+1 && _N0+2_PK0>=i1+1 && i1>=0}
+		//{i,i1|i==1 && i1>=_PK0 && _N0+_PK0>=i1+1 && _P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && _N0+2_PK0>=i1+1 && i1>=0}
+		//{i,i1|i==1 && _P0>=1 && _N0>=1 && _K0>=1 && _PK0>=1 && i1>=_N0+_PK0 && _N0+2_PK0>=i1+1 && i1>=0}
+		int c2;
+		for(c2=0;c2 <= -_K0+_PK0-1;c2+=1)
 		 {
-		 	S0((c1));
-		 	S3((c1));
+		 	S0((0),(c2));
 		 }
-		for(c1=max(0,-_K0+_PK0);c1 <= _PK0-1;c1+=1)
+		for(c2=max(0,-_K0+_PK0);c2 <= min(2*_PK0,_K0+_PK0);c2+=1)
 		 {
-		 	S1((c1));
-		 	S3((c1));
+		 	S1((0),(c2));
 		 }
-		for(c1=_PK0;c1 <= min(2*_PK0,min(_K0+_PK0,_N0+_PK0-1));c1+=1)
+		for(c2=_K0+_PK0+1;c2 <= 2*_PK0;c2+=1)
 		 {
-		 	S1((c1));
-		 	S4((c1));
+		 	S2((0),(c2));
 		 }
-		for(c1=_N0+_PK0;c1 <= min(2*_PK0,_K0+_PK0);c1+=1)
+		for(c2=0;c2 <= _PK0-1;c2+=1)
 		 {
-		 	S1((c1));
-		 	S5((c1));
+		 	S3((1),(c2));
 		 }
-		for(c1=_K0+_PK0+1;c1 <= min(2*_PK0,_N0+_PK0-1);c1+=1)
+		for(c2=_PK0;c2 <= _N0+_PK0-1;c2+=1)
 		 {
-		 	S2((c1));
-		 	S4((c1));
+		 	S4((1),(c2));
 		 }
-		for(c1=max(_N0+_PK0,_K0+_PK0+1);c1 <= 2*_PK0;c1+=1)
+		for(c2=_N0+_PK0;c2 <= _N0+2*_PK0-1;c2+=1)
 		 {
-		 	S2((c1));
-		 	S5((c1));
-		 }
-		for(c1=2*_PK0+1;c1 <= _N0+_PK0-1;c1+=1)
-		 {
-		 	S4((c1));
-		 }
-		for(c1=max(_N0+_PK0,2*_PK0+1);c1 <= _N0+2*_PK0-1;c1+=1)
-		 {
-		 	S5((c1));
+		 	S5((1),(c2));
 		 }
 	}
 	#undef S0
