@@ -70,8 +70,6 @@ public class WrapperCFunction extends BaseFunction {
     _builder.append(_verifyPrototype);
     _builder.newLineIfNotEmpty();
     _builder.newLine();
-    _builder.append("//main");
-    _builder.newLine();
     _builder.append("int main(int argc, char** argv) {");
     _builder.newLine();
     _builder.append("\t");

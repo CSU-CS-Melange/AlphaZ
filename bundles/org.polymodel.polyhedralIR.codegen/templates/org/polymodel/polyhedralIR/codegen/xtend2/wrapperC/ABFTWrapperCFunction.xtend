@@ -40,6 +40,9 @@ class ABFTWrapperCFunction extends WrapperCFunction {
 			void init(long, long, long, long, long, long, long, long, long, long, «dType»***, «dType»***, «dType»***);
 			void conv(long, long, long, long,  long, long, «dType»***, «dType»***, «dType»***);
 			«ENDIF»
+			
+			double ERR_DETECTION_THRESHOLD;
+			
 			«super.code(func)»
 		'''
 		return ret
@@ -476,12 +479,24 @@ class ABFTWrapperCFunction extends WrapperCFunction {
 		val macroIndex = b.specialVar.varDecl.domain.macroIndices
 		val macroIndexB = b.specialVar.varDecl.domain.indices.join(",", [e|"(long) "+e.toString])
 		val macroName = b.statements.get(0).name
+		
+		val macroCodeNoPrompt = '''printf("«bCPrintfSpecifier»\n",var_«b.specialVar.varDecl.varAccess(accessIndex, true)»);'''
+		val macroCode = '''«b.specialVar.varDecl.printIndex(macroIndexB)»printf("«bCPrintfSpecifier»\n",var_«b.specialVar.varDecl.varAccess(accessIndex, true)»);'''
+		val printCondition = '''(fabsf(var_«b.specialVar.varDecl.varAccess(accessIndex, true)»)>ERR_DETECTION_THRESHOLD)'''
 		'''
 		{
+			// Set error detection threshold
+			const char* threshold = getenv("THRESHOLD");
+			if (threshold==NULL) {
+				ERR_DETECTION_THRESHOLD = 1e-06;
+			} else {
+				ERR_DETECTION_THRESHOLD = atof(threshold);
+			}
+			
 			#ifdef «NO_PROMT_FLAG»
-				#define «macroName»(«macroIndex») printf("«bCPrintfSpecifier»\n",var_«b.specialVar.varDecl.varAccess(accessIndex, true)»)
+				#define «macroName»(«macroIndex») do { if «printCondition» { «macroCodeNoPrompt» }} while(0)
 			#else
-				#define «macroName»(«macroIndex») «b.specialVar.varDecl.printIndex(macroIndexB)»printf("«bCPrintfSpecifier»\n",var_«b.specialVar.varDecl.varAccess(accessIndex, true)»)
+				#define «macroName»(«macroIndex») do { if «printCondition» { «macroCode» }} while(0)
 			#endif
 			«b.generateLoopNest»
 			#undef «macroName»

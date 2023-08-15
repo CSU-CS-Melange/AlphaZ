@@ -18,8 +18,8 @@ class ABFTMakefile extends BaseMakefile {
 		plain: $(OBJS)
 			$(CC) «name»-wrapper.c -o «name» $(OBJS) $(CFLAGS) $(LIBRARIES)
 		
-		check: $(OBJS)
-			$(CC) «name»-wrapper.c -o «name».check $(OBJS) $(CFLAGS) $(LIBRARIES) -D«CHECKING_FLAG» -D«RANDOM_FLAG»
+		check: «name»-err.o init.o conv.o
+			$(CC) «name»-wrapper.c -o «name».check «name»-err.o init.o conv.o $(CFLAGS) $(LIBRARIES) -D«CHECKING_FLAG» -D«RANDOM_FLAG»
 		
 		init.o : init.c
 			$(CC) init.c -o init.o $(CFLAGS) $(LIBRARIES) -c
@@ -28,6 +28,8 @@ class ABFTMakefile extends BaseMakefile {
 			$(CC) conv.c -o conv.o $(CFLAGS) $(LIBRARIES) -c
 		
 		«makeObjs(names)»
+		«name»-err.o: «name»-err.c
+			$(CC) «name»-err.c -o «name»-err.o $(CFLAGS) $(LIBRARIES) -c
 		
 		clean:
 			rm -f *.o «name» «name».check«IF withVerification» «name».verify «name».verify-rand«ENDIF»

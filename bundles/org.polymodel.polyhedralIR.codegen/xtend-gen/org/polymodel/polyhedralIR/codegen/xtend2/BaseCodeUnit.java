@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import java.util.Arrays;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -27,92 +28,105 @@ public class BaseCodeUnit {
   @Extension
   private BaseMemoryAccess memory;
   
-  public CharSequence generate(final CodeUnit unit) {
-    StringConcatenation _builder = new StringConcatenation();
-    CharSequence _commonIncludes = this.commonIncludes(unit);
-    _builder.append(_commonIncludes);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
+  public String generate(final CodeUnit unit) {
+    String _xblockexpression = null;
     {
-      boolean _isVerification = this.isVerification(unit);
-      if (_isVerification) {
-        CharSequence _externalFunctionIncludeDeclarationsOnly = this.externalFunctionIncludeDeclarationsOnly(unit);
-        _builder.append(_externalFunctionIncludeDeclarationsOnly);
-        _builder.newLineIfNotEmpty();
-      } else {
-        CharSequence _externalFunctionInclude = this.externalFunctionInclude(unit);
-        _builder.append(_externalFunctionInclude);
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.newLine();
-    CharSequence _commonMacroDefs = this.commonMacroDefs(unit);
-    _builder.append(_commonMacroDefs);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    CharSequence _commonFuncDefs = this.commonFuncDefs(unit);
-    _builder.append(_commonFuncDefs);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    CharSequence _headerDefs = this.headerDefs(unit);
-    _builder.append(_headerDefs);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    {
-      EList<CompileTimeParameter> _compileTimeParameters = unit.getCompileTimeParameters();
-      for(final CompileTimeParameter param : _compileTimeParameters) {
-        Object _compileTimeParameterDef = this.compileTimeParameterDef(param);
-        _builder.append(_compileTimeParameterDef);
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    _builder.newLine();
-    CharSequence _globalVariablesDeclaration = this.globalVariablesDeclaration(unit);
-    _builder.append(_globalVariablesDeclaration);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    CharSequence _subsystemFunctionDeclaration = this.subsystemFunctionDeclaration(unit);
-    _builder.append(_subsystemFunctionDeclaration);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    CharSequence _localFunctionDeclaration = this.localFunctionDeclaration(unit);
-    _builder.append(_localFunctionDeclaration);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    CharSequence _memoryMacroDefs = this.memoryMacroDefs(unit);
-    _builder.append(_memoryMacroDefs);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    {
+      StringConcatenation _builder = new StringConcatenation();
       final Function1<Function, Boolean> _function = (Function f) -> {
         boolean _isInlined = f.isInlined();
         return Boolean.valueOf((!_isInlined));
       };
-      Iterable<Function> _filter = IterableExtensions.<Function>filter(unit.getFunctions(), _function);
-      for(final Function func : _filter) {
-        CharSequence _code = this.function.code(func);
-        _builder.append(_code);
-        _builder.newLineIfNotEmpty();
+      CharSequence _code = this.function.code(((Function[])Conversions.unwrapArray(IterableExtensions.<Function>filter(unit.getFunctions(), _function), Function.class))[0]);
+      _builder.append(_code);
+      final String x = _builder.toString();
+      StringConcatenation _builder_1 = new StringConcatenation();
+      CharSequence _commonIncludes = this.commonIncludes(unit);
+      _builder_1.append(_commonIncludes);
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      {
+        boolean _isVerification = this.isVerification(unit);
+        if (_isVerification) {
+          CharSequence _externalFunctionIncludeDeclarationsOnly = this.externalFunctionIncludeDeclarationsOnly(unit);
+          _builder_1.append(_externalFunctionIncludeDeclarationsOnly);
+          _builder_1.newLineIfNotEmpty();
+        } else {
+          CharSequence _externalFunctionInclude = this.externalFunctionInclude(unit);
+          _builder_1.append(_externalFunctionInclude);
+          _builder_1.newLineIfNotEmpty();
+        }
       }
-    }
-    _builder.newLine();
-    CharSequence _memoryMacroUndefs = this.memoryMacroUndefs(unit);
-    _builder.append(_memoryMacroUndefs);
-    _builder.newLineIfNotEmpty();
-    _builder.newLine();
-    {
-      EList<CompileTimeParameter> _compileTimeParameters_1 = unit.getCompileTimeParameters();
-      for(final CompileTimeParameter param_1 : _compileTimeParameters_1) {
-        Object _compileTimeParameterUndef = this.compileTimeParameterUndef(param_1);
-        _builder.append(_compileTimeParameterUndef);
-        _builder.newLineIfNotEmpty();
+      _builder_1.newLine();
+      CharSequence _commonMacroDefs = this.commonMacroDefs(unit);
+      _builder_1.append(_commonMacroDefs);
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      CharSequence _commonFuncDefs = this.commonFuncDefs(unit);
+      _builder_1.append(_commonFuncDefs);
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      CharSequence _headerDefs = this.headerDefs(unit);
+      _builder_1.append(_headerDefs);
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      {
+        EList<CompileTimeParameter> _compileTimeParameters = unit.getCompileTimeParameters();
+        for(final CompileTimeParameter param : _compileTimeParameters) {
+          Object _compileTimeParameterDef = this.compileTimeParameterDef(param);
+          _builder_1.append(_compileTimeParameterDef);
+          _builder_1.newLineIfNotEmpty();
+        }
       }
+      _builder_1.newLine();
+      CharSequence _globalVariablesDeclaration = this.globalVariablesDeclaration(unit);
+      _builder_1.append(_globalVariablesDeclaration);
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      CharSequence _subsystemFunctionDeclaration = this.subsystemFunctionDeclaration(unit);
+      _builder_1.append(_subsystemFunctionDeclaration);
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      CharSequence _localFunctionDeclaration = this.localFunctionDeclaration(unit);
+      _builder_1.append(_localFunctionDeclaration);
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      CharSequence _memoryMacroDefs = this.memoryMacroDefs(unit);
+      _builder_1.append(_memoryMacroDefs);
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      {
+        final Function1<Function, Boolean> _function_1 = (Function f) -> {
+          boolean _isInlined = f.isInlined();
+          return Boolean.valueOf((!_isInlined));
+        };
+        Iterable<Function> _filter = IterableExtensions.<Function>filter(unit.getFunctions(), _function_1);
+        for(final Function func : _filter) {
+          CharSequence _code_1 = this.function.code(func);
+          _builder_1.append(_code_1);
+          _builder_1.newLineIfNotEmpty();
+        }
+      }
+      _builder_1.newLine();
+      CharSequence _memoryMacroUndefs = this.memoryMacroUndefs(unit);
+      _builder_1.append(_memoryMacroUndefs);
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.newLine();
+      {
+        EList<CompileTimeParameter> _compileTimeParameters_1 = unit.getCompileTimeParameters();
+        for(final CompileTimeParameter param_1 : _compileTimeParameters_1) {
+          Object _compileTimeParameterUndef = this.compileTimeParameterUndef(param_1);
+          _builder_1.append(_compileTimeParameterUndef);
+          _builder_1.newLineIfNotEmpty();
+        }
+      }
+      _builder_1.newLine();
+      CharSequence _commonMacroUndefs = this.commonMacroUndefs(unit);
+      _builder_1.append(_commonMacroUndefs);
+      _builder_1.newLineIfNotEmpty();
+      final String ret = _builder_1.toString();
+      _xblockexpression = ret;
     }
-    _builder.newLine();
-    CharSequence _commonMacroUndefs = this.commonMacroUndefs(unit);
-    _builder.append(_commonMacroUndefs);
-    _builder.newLineIfNotEmpty();
-    return _builder;
+    return _xblockexpression;
   }
   
   public CharSequence commonIncludes(final CodeUnit unit) {

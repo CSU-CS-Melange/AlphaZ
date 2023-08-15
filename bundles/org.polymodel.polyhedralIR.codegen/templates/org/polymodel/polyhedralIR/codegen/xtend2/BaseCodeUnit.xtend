@@ -17,7 +17,9 @@ class BaseCodeUnit {
 	@Inject extension BaseMemoryAccess memory
 	
 
-	def generate(CodeUnit unit) '''
+	def generate(CodeUnit unit) {
+	val x = '''«unit.functions.filter(f|!f.inlined).get(0).code»'''
+	val ret = '''
 		«unit.commonIncludes»
 		
 		«IF isVerification(unit)»
@@ -56,6 +58,8 @@ class BaseCodeUnit {
 		
 		«unit.commonMacroUndefs»
 	'''
+	ret
+	}
 
 	def commonIncludes(CodeUnit unit) '''
 		// This file is generated from test alphabets program by code generator in alphaz

@@ -35,6 +35,7 @@ import org.polymodel.polyhedralIR.polyIRCG.C.CVariable;
 import org.polymodel.polyhedralIR.polyIRCG.SIMD.SIMDFunction;
 import org.polymodel.polyhedralIR.polyIRCG.factory.PolyIRCGSIMDUserFactory;
 import org.polymodel.polyhedralIR.polyIRCG.factory.PolyIRCGUserFactory;
+import org.polymodel.polyhedralIR.polyIRCG.generator.ABFTCodeGenOptions;
 import org.polymodel.polyhedralIR.polyIRCG.generator.CodeGenOptions;
 import org.polymodel.polyhedralIR.polyIRCG.generator.CodeGenUtility;
 import org.polymodel.polyhedralIR.polyIRCG.generator.PolyIRCodeGen.CODEGEN;
@@ -93,7 +94,7 @@ public class ScheduledC extends CodeGeneratorTemplateForC {
 			}
 		}
 	}
-	
+
 	/**
 	 * Static method for public access to ScheduledC code generator for the whole program
 	 * It generates one file for each system

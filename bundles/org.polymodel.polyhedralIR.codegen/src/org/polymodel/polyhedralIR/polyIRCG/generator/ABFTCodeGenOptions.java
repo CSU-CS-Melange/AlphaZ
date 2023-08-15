@@ -10,6 +10,7 @@ public class ABFTCodeGenOptions extends CodeGenOptions {
 	public String cJx;
 	public String kernel;
 	public int numDims;
+	public boolean doErrorInjection = false;
 	
 	
 	public void set(String key, String value) {

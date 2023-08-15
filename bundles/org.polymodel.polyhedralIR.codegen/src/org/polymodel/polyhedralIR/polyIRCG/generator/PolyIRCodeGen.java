@@ -13,6 +13,7 @@ import org.polymodel.polyhedralIR.codegen.xtend2.Xtend2CodeGen;
 import org.polymodel.polyhedralIR.codegen.xtend2.Xtend2MakefileGen;
 import org.polymodel.polyhedralIR.polyIRCG.CompilationUnit;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForC;
+import org.polymodel.polyhedralIR.polyIRCG.generator.modules.ABFTScheduledCModule;
 import org.polymodel.polyhedralIR.polyIRCG.generator.modules.ABFTWrapperCModule;
 import org.polymodel.polyhedralIR.polyIRCG.generator.modules.MPICModule;
 import org.polymodel.polyhedralIR.polyIRCG.generator.modules.PCOTCModule;
@@ -47,6 +48,7 @@ public class PolyIRCodeGen {
 		PGAS_C(new WriteCModule()),
 		WRAPPER_C(new WrapperCModule()),
 		ABFT_WRAPPER_C(new ABFTWrapperCModule()),
+		ABFT_SCHEDULED_C(new ABFTScheduledCModule()),
 		WRAPPER_PGASC(new WrapperCModule()),
 		SCAN_C(new ScanCModule()),
 		REDUCTION_C(new ReductionCModule()),

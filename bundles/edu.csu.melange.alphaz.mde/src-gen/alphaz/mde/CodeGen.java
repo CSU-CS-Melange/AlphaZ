@@ -18,6 +18,7 @@ import org.polymodel.polyhedralIR.polyIRCG.generator.CodeGenOptions;
 import org.polymodel.polyhedralIR.polyIRCG.generator.PolyIRCodeGen;
 import org.polymodel.polyhedralIR.polyIRCG.generator.TiledCodeGenOptions;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.PCOT.PCOTC;
+import org.polymodel.polyhedralIR.polyIRCG.generator.C.ErrorInjectionScheduledC;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.ScheduledC;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.WriteC;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.wrapper.ABFTWrapperGeneratorForC;
@@ -64,8 +65,6 @@ Detailed options can be given through optional argument.
 	public static void generateScheduledCode( Program program, String system, String outDir) {
 		generateScheduledCode( program, system, getDefaultCodeGenOptions(program, system) , outDir, false );
 	}
-	
-
 
 	/**
 	TODO : add description (to the model)
@@ -161,6 +160,10 @@ Detailed options can be given through optional argument.
 	
 	public static void generateABFTWrapper(Program program, String system, ABFTCodeGenOptions options, String outDir) {
 		ABFTWrapperGeneratorForC.generate(program.getSystem(system), options, outDir);
+	}
+	
+	public static void generateErrorInjectionScheduledCode(Program program, String system, ABFTCodeGenOptions options, String outDir) {
+		ErrorInjectionScheduledC.generate(program.getSystem(system), options, outDir);
 	}
 	
 	/**

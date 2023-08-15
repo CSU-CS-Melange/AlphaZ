@@ -45,7 +45,6 @@ class WrapperCFunction extends BaseFunction {
 		«func.mainFunctionPrototype»
 		«func.verifyPrototype»
 		
-		//main
 		int main(int argc, char** argv) {
 			«func.checkNumberOfArgs»
 			

@@ -203,10 +203,26 @@ public class Compile {
       _builder_6.append(")");
       TargetMapping.setMemoryMap(prog, _name_7, _name_8, _name_9, _builder_6.toString(), 
         "2,");
-      CodeGen.generateScheduledCode(prog, system.getName(), outDir);
       if ((options != null)) {
+        CodeGen.generateErrorInjectionScheduledCode(prog, system.getName(), options, outDir);
+        StringConcatenation _builder_7 = new StringConcatenation();
+        _builder_7.append(outDir);
+        String _name_10 = system.getName();
+        _builder_7.append(_name_10);
+        _builder_7.append(".c");
+        StringConcatenation _builder_8 = new StringConcatenation();
+        _builder_8.append(outDir);
+        String _name_11 = system.getName();
+        _builder_8.append(_name_11);
+        _builder_8.append("-err.c");
+        Files.move(
+          Paths.get(_builder_7.toString()), 
+          Paths.get(_builder_8.toString()), 
+          StandardCopyOption.REPLACE_EXISTING);
+        CodeGen.generateScheduledCode(prog, system.getName(), options, outDir);
         CodeGen.generateABFTWrapper(prog, system.getName(), options, outDir);
       } else {
+        CodeGen.generateScheduledCode(prog, system.getName(), outDir);
         CodeGen.generateWrapper(prog, system.getName(), outDir);
       }
       if ((!isBaseline)) {
@@ -215,22 +231,22 @@ public class Compile {
         CodeGen.generateMakefile(prog, system.getName(), outDir);
       }
       if ((!isBaseline)) {
-        StringConcatenation _builder_7 = new StringConcatenation();
-        _builder_7.append("/");
-        _builder_7.append(D);
-        _builder_7.append("d/conv.c");
-        StringConcatenation _builder_8 = new StringConcatenation();
-        _builder_8.append(outDir);
-        _builder_8.append("conv.c");
-        Compile.copyFile(_builder_7.toString(), _builder_8.toString());
         StringConcatenation _builder_9 = new StringConcatenation();
         _builder_9.append("/");
         _builder_9.append(D);
-        _builder_9.append("d/init.c");
+        _builder_9.append("d/conv.c");
         StringConcatenation _builder_10 = new StringConcatenation();
         _builder_10.append(outDir);
-        _builder_10.append("init.c");
+        _builder_10.append("conv.c");
         Compile.copyFile(_builder_9.toString(), _builder_10.toString());
+        StringConcatenation _builder_11 = new StringConcatenation();
+        _builder_11.append("/");
+        _builder_11.append(D);
+        _builder_11.append("d/init.c");
+        StringConcatenation _builder_12 = new StringConcatenation();
+        _builder_12.append(outDir);
+        _builder_12.append("init.c");
+        Compile.copyFile(_builder_11.toString(), _builder_12.toString());
       }
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);

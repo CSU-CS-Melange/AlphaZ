@@ -105,10 +105,18 @@ class Compile {
 			"2,"
 		);
 		
-		CodeGen.generateScheduledCode(prog, system.name, outDir);
+		
 		if (options !== null) {
+			CodeGen.generateErrorInjectionScheduledCode(prog, system.name, options, outDir);
+			Files.move(
+				Paths.get('''«outDir»«system.name».c'''), 
+				Paths.get('''«outDir»«system.name»-err.c'''),
+				StandardCopyOption.REPLACE_EXISTING);
+			
+			CodeGen.generateScheduledCode(prog, system.name, options, outDir);
 			CodeGen.generateABFTWrapper(prog, system.name, options, outDir);
 		} else {
+			CodeGen.generateScheduledCode(prog, system.name, outDir);
 			CodeGen.generateWrapper(prog, system.name, outDir);
 		}
 		
