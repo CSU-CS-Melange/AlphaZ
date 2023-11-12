@@ -6,7 +6,14 @@ on:
       - main
   schedule:
     - cron:  '0 9 * * *'  # 3am MT, 9am UTC
-
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Manual dispatch'  
 jobs:
   clear-cache:
     runs-on: ubuntu-latest
