@@ -1,5 +1,8 @@
 package org.polymodel.algebra.prettyprinter.algebra;
 
+import java.util.ArrayList;
+
+import org.eclipse.emf.common.util.EList;
 import org.polymodel.algebra.ComparisonOperator;
 import org.polymodel.algebra.CompositeIntExpression;
 import org.polymodel.algebra.CompositeOperator;
@@ -73,7 +76,25 @@ public class ISLPrettyPrinter extends AbstractPrettyPrinter {
 	}
 
 	public void visitAffineExpression(AffineExpression a) {
-		separateAffine(a.getTerms());
+		EList<AffineTerm> affineTerms = a.getTerms();
+		preprendExistential(affineTerms);
+		separateAffine(affineTerms);
+	}
+	
+	public void preprendExistential(EList<AffineTerm> terms) {
+		ArrayList<String> existentials = new ArrayList<>();
+		for (AffineTerm term : terms) {
+			Variable var =  term.getVariable();
+			// Not the cleanest way to check if variable is existential
+			// but we cannot import org.polymodel.ExistentialVariable
+			// without creating a circular build dependence
+			if (var != null && var.getClass().toString().contains("Existential")) { 
+				existentials.add(term.getVariable().getName());
+			}
+		}
+		if (existentials.size() == 0)
+			return;
+		buffer.append("exists " + String.join(", ", existentials) + " : ");
 	}
 
 	public void visitAffineTerm(AffineTerm affineTerm) {
