@@ -33,6 +33,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.xbase.lib,
  tom.mapping;bundle-version="1.0.0",
  fr.irisa.cairn.eclipse.tom,
- fr.irisa.cairn.tools;bundle-version="1.0.0",
- org.polymodel;bundle-version="1.0.0"
+ fr.irisa.cairn.tools;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
+Import-Package: org.polymodel
