@@ -35,4 +35,3 @@ Require-Bundle: org.eclipse.core.runtime,
  fr.irisa.cairn.eclipse.tom,
  fr.irisa.cairn.tools;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Import-Package: org.polymodel
