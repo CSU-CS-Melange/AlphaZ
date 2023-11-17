@@ -19,6 +19,7 @@ import org.polymodel.polyhedralIR.expression.BinaryExpression;
 import org.polymodel.polyhedralIR.expression.ConstantExpression;
 import org.polymodel.polyhedralIR.expression.ExternalFunctionCall;
 import org.polymodel.polyhedralIR.expression.MultiArgExpression;
+import org.polymodel.polyhedralIR.expression.ReduceExpression;
 import org.polymodel.polyhedralIR.expression.RestrictExpression;
 import org.polymodel.polyhedralIR.expression.UnaryExpression;
 import org.polymodel.polyhedralIR.expression.VariableExpression;
@@ -284,5 +285,11 @@ public class PrintAST extends PolyhedralIRInheritedDepthFirstVisitorImpl {
 		} else {
 			printStr("+-- ", m.getOperator().toString());
 		}
+	}
+
+	@Override
+	public void inReduceExpression(ReduceExpression r) {
+		inExpression(r);
+		printStr("+-- ", r.getOP().toString());
 	}
 }
