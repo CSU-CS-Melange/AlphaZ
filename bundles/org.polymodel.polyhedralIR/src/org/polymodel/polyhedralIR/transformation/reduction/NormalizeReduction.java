@@ -97,7 +97,7 @@ public class NormalizeReduction {
 	public static StandardEquation apply(ReduceExpression reduce, String varName) {
 		//base check
 		if (reduce.eContainer() instanceof StandardEquation) {
-			throw new RuntimeException("This reduction is already normalized.");
+			return (StandardEquation)reduce.eContainer();
 		}
 		AffineSystem system;
 		if (reduce.getContainerEquation() instanceof StandardEquation)
