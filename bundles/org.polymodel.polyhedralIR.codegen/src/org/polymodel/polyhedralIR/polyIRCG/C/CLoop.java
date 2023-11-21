@@ -53,4 +53,6 @@ public interface CLoop extends Loop {
 	 */
 	void setUseMacros(boolean value);
 
+	public abstract boolean isABFTLoop();
+
 } // CLoop

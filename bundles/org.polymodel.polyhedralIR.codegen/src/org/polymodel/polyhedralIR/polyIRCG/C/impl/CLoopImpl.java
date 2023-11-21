@@ -11,6 +11,7 @@ package org.polymodel.polyhedralIR.polyIRCG.C.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.polymodel.polyhedralIR.polyIRCG.Function;
 import org.polymodel.polyhedralIR.polyIRCG.C.CLoop;
 import org.polymodel.polyhedralIR.polyIRCG.C.CPackage;
 import org.polymodel.polyhedralIR.polyIRCG.impl.LoopImpl;
@@ -162,6 +163,13 @@ public class CLoopImpl extends LoopImpl implements CLoop {
 		result.append(useMacros);
 		result.append(')');
 		return result.toString();
+	}
+	
+	public boolean isABFTLoop() {
+		if (!(this.eContainer instanceof Function))
+			return false;
+		Function f = (Function)this.eContainer;
+		return f.getName().contains("scc_abft");
 	}
 
 } //CLoopImpl

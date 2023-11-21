@@ -13,6 +13,7 @@ import org.polymodel.DimensionsManager;
 import org.polymodel.Domain;
 
 import fr.irisa.cairn.jnimap.isl.jni.ISL_FORMAT;
+import fr.irisa.cairn.jnimap.isl.jni.JNIISLSet;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '
@@ -58,7 +59,9 @@ public interface ISLSet extends Domain {
 	ISLMap nextRelation(int depth, DimensionsManager manager);
 
 	ISLMap nextRelation(int depth, int power, DimensionsManager manager);
-
+	
+	JNIISLSet getJNIset(); 
+	
 	Map<ISLSet,ISLFunction> next(int depth, DimensionsManager manager);
 
 	Map<ISLSet,ISLFunction> next(int depth, int power, DimensionsManager manager);

@@ -61,5 +61,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.polymodel.scop.cgenerator2;bundle-version="1.0.0",
  com.google.inject,
  org.eclipse.xtend.lib;bundle-version="2.17.0",
- edu.csu.melange.jnimap.isl;bundle-version="1.8.1"
+ edu.csu.melange.jnimap.isl;bundle-version="1.8.1",
+ fr.irisa.cairn.jnimap.isl;bundle-version="2.4.0"
 Bundle-ActivationPolicy: lazy

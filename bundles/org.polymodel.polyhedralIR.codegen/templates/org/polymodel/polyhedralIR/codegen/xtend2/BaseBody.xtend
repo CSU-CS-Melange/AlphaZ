@@ -20,6 +20,9 @@ import org.polymodel.scop.cgenerator2.MacroBodyProvider
 import static org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForC.*
 
 import static extension org.polymodel.polyhedralIR.codegen.xtend2.Utility.*
+import org.polymodel.polyhedralIR.polyIRCG.C.CLoop
+import org.polymodel.polyhedralIR.Domain
+import org.polymodel.isl.ISLSet
 
 class BaseBody {
 	
@@ -76,15 +79,33 @@ class BaseBody {
 		«b.mfree»
 	'''
 	
+	def boolean isChecksumLoop(Loop l) {
+		if (!(l instanceof CLoop))
+			return false
+		val cl = l as CLoop
+		cl.isABFTLoop
+	}
+	
+	def String islSyntax(Domain domain, String name) {
+		(domain.PMdomain as ISLSet).JNIset.setTupleName(name).toString
+	}
+	
 	def dispatch code(Loop body) '''
 		«body.statements.join("\n", [s|s.statementDefine])»
 		{
 			//Domain
+		«IF body.isChecksumLoop»
+			«FOR stmt : body.statements»
+				#pragma isl '«stmt.domain.islSyntax(stmt.name)»'
+			«ENDFOR»
+		}
+		«ELSE»
 			«FOR stmt : body.statements»
 				//«stmt.domain»
 			«ENDFOR»
 			«body.generateLoopNest»
 		}
+		«ENDIF»
 		«body.statements.join("\n", [s|s.statementUndefine])»
 	'''
 	
@@ -105,7 +126,7 @@ class BaseBody {
 			«body.getOptimizedPointLoop().statements.join("\n", [s|s.statementUndefine])»
 		«ENDIF»
 	'''
-	
+		
 	def generateLoopNest(Loop l) '''
 		«val scop = l.generateScop»
 		«IF l.declareIterators && l.iteratorNames.size > 0»

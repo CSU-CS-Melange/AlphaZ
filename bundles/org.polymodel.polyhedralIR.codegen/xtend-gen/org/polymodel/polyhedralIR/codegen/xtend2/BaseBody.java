@@ -11,10 +11,12 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.polymodel.isl.ISLSet;
 import org.polymodel.polyhedralIR.Domain;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.BasicBody;
 import org.polymodel.polyhedralIR.polyIRCG.Body;
+import org.polymodel.polyhedralIR.polyIRCG.C.CLoop;
 import org.polymodel.polyhedralIR.polyIRCG.C.ParameterCheck;
 import org.polymodel.polyhedralIR.polyIRCG.C.TiledCLoop;
 import org.polymodel.polyhedralIR.polyIRCG.CustomPackStruct;
@@ -148,6 +150,23 @@ public class BaseBody {
     return _builder;
   }
   
+  public boolean isChecksumLoop(final Loop l) {
+    boolean _xblockexpression = false;
+    {
+      if ((!(l instanceof CLoop))) {
+        return false;
+      }
+      final CLoop cl = ((CLoop) l);
+      _xblockexpression = cl.isABFTLoop();
+    }
+    return _xblockexpression;
+  }
+  
+  public String islSyntax(final Domain domain, final String name) {
+    org.polymodel.Domain _pMdomain = domain.getPMdomain();
+    return ((ISLSet) _pMdomain).getJNIset().setTupleName(name).toString();
+  }
+  
   protected CharSequence _code(final Loop body) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<Statement, CharSequence> _function = (Statement s) -> {
@@ -162,21 +181,40 @@ public class BaseBody {
     _builder.append("//Domain");
     _builder.newLine();
     {
-      EList<Statement> _statements = body.getStatements();
-      for(final Statement stmt : _statements) {
+      boolean _isChecksumLoop = this.isChecksumLoop(body);
+      if (_isChecksumLoop) {
+        {
+          EList<Statement> _statements = body.getStatements();
+          for(final Statement stmt : _statements) {
+            _builder.append("\t");
+            _builder.append("#pragma isl \'");
+            String _islSyntax = this.islSyntax(stmt.getDomain(), stmt.getName());
+            _builder.append(_islSyntax, "\t");
+            _builder.append("\'");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("}");
+        _builder.newLine();
+      } else {
+        {
+          EList<Statement> _statements_1 = body.getStatements();
+          for(final Statement stmt_1 : _statements_1) {
+            _builder.append("\t");
+            _builder.append("//");
+            Domain _domain = stmt_1.getDomain();
+            _builder.append(_domain, "\t");
+            _builder.newLineIfNotEmpty();
+          }
+        }
         _builder.append("\t");
-        _builder.append("//");
-        Domain _domain = stmt.getDomain();
-        _builder.append(_domain, "\t");
+        CharSequence _generateLoopNest = this.generateLoopNest(body);
+        _builder.append(_generateLoopNest, "\t");
         _builder.newLineIfNotEmpty();
+        _builder.append("}");
+        _builder.newLine();
       }
     }
-    _builder.append("\t");
-    CharSequence _generateLoopNest = this.generateLoopNest(body);
-    _builder.append(_generateLoopNest, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("}");
-    _builder.newLine();
     final Function1<Statement, CharSequence> _function_1 = (Statement s) -> {
       return this.stmtExtensions.statementUndefine(s);
     };
