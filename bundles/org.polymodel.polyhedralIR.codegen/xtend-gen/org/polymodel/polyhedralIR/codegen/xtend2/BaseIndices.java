@@ -18,23 +18,23 @@ public class BaseIndices {
     StringConcatenation _builder = new StringConcatenation();
     return _builder;
   }
-  
+
   protected CharSequence _getMacroIndices(final CodeGenVariable v) {
     return this.getMacroIndicesL(v.getDomain().getIndices());
   }
-  
+
   public CharSequence getMacroIndices(final Domain dom) {
     return this.getMacroIndicesL(dom.getIndices());
   }
-  
+
   public CharSequence getMacroIndices(final AffineFunction func) {
     return this.getMacroIndicesL(func.getIndices());
   }
-  
+
   public CharSequence getMacroIndices(final VariableDeclaration v) {
     return this.getMacroIndicesL(v.getDomain().getIndices());
   }
-  
+
   public CharSequence getMacroIndicesL(final List<Variable> indices) {
     CharSequence _xifexpression = null;
     int _size = indices.size();
@@ -50,7 +50,7 @@ public class BaseIndices {
     }
     return _xifexpression;
   }
-  
+
   public CharSequence getMacroIndicesExceptTime(final List<Variable> indices) {
     CharSequence _xifexpression = null;
     int _size = indices.size();
@@ -70,7 +70,7 @@ public class BaseIndices {
     }
     return _xifexpression;
   }
-  
+
   public CharSequence getMacroIndices(final AbstractVariable v) {
     if (v instanceof CodeGenVariable) {
       return _getMacroIndices((CodeGenVariable)v);

@@ -28,7 +28,7 @@ public class BaseDomain {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Prints the constraints after simplify in context with the given context.
    */
@@ -41,11 +41,11 @@ public class BaseDomain {
     }
     return _xblockexpression;
   }
-  
+
   public CharSequence printConstraints(final Domain dom) {
     return this.printConstraints(dom.getPMdomain());
   }
-  
+
   public CharSequence printConstraints(final org.polymodel.Domain dom) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<IntConstraintSystem, CharSequence> _function = (IntConstraintSystem poly) -> {
@@ -55,7 +55,7 @@ public class BaseDomain {
     _builder.append(_join);
     return _builder;
   }
-  
+
   public CharSequence printConstraints(final IntConstraintSystem system) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("(");

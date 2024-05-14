@@ -38,19 +38,19 @@ public class WrapperCFunction extends BaseFunction {
   @Inject
   @Extension
   private BaseDomain domainExtensions;
-  
+
   @Inject
   @Extension
   private BaseIndices indices;
-  
+
   @Inject
   @Extension
   private BaseMemoryAllocation memory;
-  
+
   @Inject
   @Extension
   private BaseBody body;
-  
+
   /**
    * The main function is totally different from other code generators.
    * Assumes there is only one function for wrapper; the main
@@ -351,11 +351,11 @@ public class WrapperCFunction extends BaseFunction {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected ParameterDomain getParamDomain(final Function func) {
     return func.getCodeunit().getSystem().getParameters();
   }
-  
+
   protected CharSequence checkNumberOfArgs(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//Check number of args");
@@ -384,7 +384,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected CharSequence readParameters(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("char *end = 0;");
@@ -467,7 +467,7 @@ public class WrapperCFunction extends BaseFunction {
     }
     return _builder;
   }
-  
+
   protected CharSequence parameterCheck(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("///Parameter checking");
@@ -487,11 +487,11 @@ public class WrapperCFunction extends BaseFunction {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected String mainFunctionName(final Function f) {
     return this.nameEsc(f.getCodeunit().getSystem().getName());
   }
-  
+
   protected Iterable<EObject> mainFunctionParameters(final Function f) {
     EList<Variable> _params = this.getParamDomain(f).getParams();
     final Function1<AbstractVariable, Boolean> _function = (AbstractVariable e) -> {
@@ -500,14 +500,14 @@ public class WrapperCFunction extends BaseFunction {
     Iterable<AbstractVariable> _filter = IterableExtensions.<AbstractVariable>filter(f.getCodeunit().getVariables(), _function);
     return Iterables.<EObject>concat(_params, _filter);
   }
-  
+
   protected CharSequence _asParameter(final Variable v) {
     StringConcatenation _builder = new StringConcatenation();
     String _name = v.getName();
     _builder.append(_name);
     return _builder;
   }
-  
+
   protected CharSequence _asParameter(final CVariable v) {
     CharSequence _xifexpression = null;
     boolean _isScalar = Utility.isScalar(v);
@@ -525,24 +525,24 @@ public class WrapperCFunction extends BaseFunction {
     }
     return _xifexpression;
   }
-  
+
   protected CharSequence _asParameterType(final Variable v) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("long");
     return _builder;
   }
-  
+
   protected CharSequence _asParameterType(final CVariable v) {
     StringConcatenation _builder = new StringConcatenation();
     String _pointerType = v.getPointerType();
     _builder.append(_pointerType);
     return _builder;
   }
-  
+
   protected CharSequence _asVerifyParameter(final Variable v) {
     return this.asParameter(v);
   }
-  
+
   protected CharSequence _asVerifyParameter(final CVariable v) {
     CharSequence _xifexpression = null;
     final Function1<Function, Boolean> _function = (Function f) -> {
@@ -572,7 +572,7 @@ public class WrapperCFunction extends BaseFunction {
     }
     return _xifexpression;
   }
-  
+
   protected CharSequence mainFunctionPrototype(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("void ");
@@ -587,7 +587,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.append(");");
     return _builder;
   }
-  
+
   protected CharSequence verifyPrototype(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("void ");
@@ -603,7 +603,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.append(");");
     return _builder;
   }
-  
+
   protected CharSequence mainFunctionCall(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     String _mainFunctionName = this.mainFunctionName(f);
@@ -617,7 +617,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.append(");");
     return _builder;
   }
-  
+
   protected CharSequence verifyFunctionCall(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     String _mainFunctionName = this.mainFunctionName(f);
@@ -632,7 +632,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.append(");");
     return _builder;
   }
-  
+
   protected CharSequence inputInitialization(final InputInitialization b) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<AffineExpression, CharSequence> _function = (AffineExpression e) -> {
@@ -711,7 +711,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.newLine();
     return _builder;
   }
-  
+
   public CharSequence userInput(final InputInitialization b, final CharSequence macroName, final CharSequence macroNameB, final CharSequence macroIndex, final CharSequence accessIndex) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#ifdef ");
@@ -756,7 +756,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.newLine();
     return _builder;
   }
-  
+
   private CharSequence printIndex(final VariableDeclaration v, final CharSequence macroIndex) {
     CharSequence _xifexpression = null;
     int _nIndices = v.getDomain().getNIndices();
@@ -786,7 +786,7 @@ public class WrapperCFunction extends BaseFunction {
     }
     return _xifexpression;
   }
-  
+
   private CharSequence varAccess(final VariableDeclaration v, final CharSequence macroIndex, final boolean isSpecial) {
     CharSequence _xifexpression = null;
     if ((v.isOutput() && Objects.equal(macroIndex, null))) {
@@ -796,7 +796,7 @@ public class WrapperCFunction extends BaseFunction {
     }
     return _xifexpression;
   }
-  
+
   private CharSequence varAccess(final CharSequence vName, final CharSequence macroIndex, final boolean isSpecial) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(vName);
@@ -814,7 +814,7 @@ public class WrapperCFunction extends BaseFunction {
     }
     return _builder;
   }
-  
+
   protected CharSequence printOutput(final OutputPrinting b) {
     StringConcatenation _builder = new StringConcatenation();
     final Function1<AffineExpression, CharSequence> _function = (AffineExpression e) -> {
@@ -909,7 +909,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected CharSequence verifyOutput(final OutputVerification b) {
     CharSequence _xblockexpression = null;
     {
@@ -1139,11 +1139,11 @@ public class WrapperCFunction extends BaseFunction {
     }
     return _xblockexpression;
   }
-  
+
   protected Object tilingHandling(final Function f) {
     return null;
   }
-  
+
   protected CharSequence malloc(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//Memory Allocation");
@@ -1179,7 +1179,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected CharSequence mfree(final Function f) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("//Memory Free");
@@ -1210,7 +1210,7 @@ public class WrapperCFunction extends BaseFunction {
     _builder.newLine();
     return _builder;
   }
-  
+
   protected CharSequence asParameter(final EObject v) {
     if (v instanceof CVariable) {
       return _asParameter((CVariable)v);
@@ -1221,7 +1221,7 @@ public class WrapperCFunction extends BaseFunction {
         Arrays.<Object>asList(v).toString());
     }
   }
-  
+
   protected CharSequence asParameterType(final EObject v) {
     if (v instanceof CVariable) {
       return _asParameterType((CVariable)v);
@@ -1232,7 +1232,7 @@ public class WrapperCFunction extends BaseFunction {
         Arrays.<Object>asList(v).toString());
     }
   }
-  
+
   protected CharSequence asVerifyParameter(final EObject v) {
     if (v instanceof CVariable) {
       return _asVerifyParameter((CVariable)v);
