@@ -43,6 +43,8 @@ public class WrapperCCodeUnit extends BaseCodeUnit {
     _builder.newLine();
     _builder.append("#include <sys/errno.h>");
     _builder.newLine();
+    _builder.append("#include <omp.h>");
+    _builder.newLine();
     return _builder;
   }
 
