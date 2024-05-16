@@ -231,12 +231,16 @@ public class ReduceExpressionImpl extends ExpressionImpl implements ReduceExpres
 				} else {
 					if (expressionType.getTypeID().equals(DATATYPE.FLOATING_POINT)) {
 						if (expressionType.getWidth() == DATATYPE.SINGLE_PRECISION_WIDTH) {
-							return affine(term(-1, IntExpressionBuilder.var("FLT_MAX")));
+							return affine(term(-1, IntExpressionBuilder.var("FLT_MIN")));
 						} else {
-							return affine(term(-1, IntExpressionBuilder.var("DBL_MAX")));
+							return affine(term(-1, IntExpressionBuilder.var("DBL_MIN")));
 						}
 					} else {
-						return affine(term(1, IntExpressionBuilder.var("INT_MIN")));
+						if (expressionType.getWidth() == DATATYPE.LONG_WIDTH) {
+							return affine(term(1, IntExpressionBuilder.var("LONG_MIN")));
+						} else {
+							return affine(term(1, IntExpressionBuilder.var("INT_MIN")));						
+						}
 //						IntMin min = IntegerExpressionUserFactory.intMin();
 //						IntExpressionBuilder.
 //						min.setSigned(true);
@@ -252,7 +256,11 @@ public class ReduceExpressionImpl extends ExpressionImpl implements ReduceExpres
 						return affine(term(1, IntExpressionBuilder.var("DBL_MAX")));
 					}
 				} else {
-					return affine(term(1, IntExpressionBuilder.var("INT_MAX")));
+					if (expressionType.getWidth() == DATATYPE.LONG_WIDTH) {
+						return affine(term(1, IntExpressionBuilder.var("LONG_MAX")));
+					} else {
+						return affine(term(1, IntExpressionBuilder.var("INT_MAX")));						
+					}
 //					IntMax max = IntegerExpressionUserFactory.intMax();
 //					max.setSigned(getExpressionType().getSigned() == SIGNED.SIGNED);
 //					max.setWidth(getExpressionType().getWidth());
