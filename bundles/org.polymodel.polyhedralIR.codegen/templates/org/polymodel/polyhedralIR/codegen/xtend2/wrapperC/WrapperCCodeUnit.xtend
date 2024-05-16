@@ -21,7 +21,6 @@ class WrapperCCodeUnit extends BaseCodeUnit {
 		#include <time.h>
 		#include <sys/time.h>
 		#include <sys/errno.h>
-		#include <omp.h>
 	'''
 	
 	override commonMacroDefs(CodeUnit unit) '''
