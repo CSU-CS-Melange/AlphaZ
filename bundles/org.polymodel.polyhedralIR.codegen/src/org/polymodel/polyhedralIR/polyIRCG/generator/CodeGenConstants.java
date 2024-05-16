@@ -6,6 +6,6 @@ public class CodeGenConstants {
 	
 	//epsilon for checking against verification code
 	public static final String EPSILON_NAME = "EPSILON";
-	public static final double EPSILON_DEFAULT = 0.000000001;
+	public static final double EPSILON_DEFAULT = 0.0001;
 
 }

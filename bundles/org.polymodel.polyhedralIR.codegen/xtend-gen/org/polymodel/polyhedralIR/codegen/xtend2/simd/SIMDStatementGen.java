@@ -15,11 +15,11 @@ public class SIMDStatementGen extends BaseStatement {
   @Inject
   @Extension
   private SIMDCExpression expression;
-  
+
   @Inject
   @Extension
   private BaseIndices indices;
-  
+
   public CharSequence statementDefine(final SIMDStatement stmt) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("#define ");

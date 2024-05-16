@@ -34,17 +34,17 @@ public class WriteCMemoryAllocation extends BaseMemoryAllocation {
     }
     return _xblockexpression;
   }
-  
+
   @Override
   public CharSequence reset(final AbstractVariable v, final boolean isVariableInit) {
     return this.resestDispatch(v, isVariableInit);
   }
-  
+
   protected CharSequence _resestDispatch(final AbstractVariable v, final boolean isVariableInit) {
     StringConcatenation _builder = new StringConcatenation();
     return _builder;
   }
-  
+
   protected CharSequence _resestDispatch(final CodeGenVariable v, final boolean isVariableInit) {
     CharSequence _xifexpression = null;
     Boolean _ofType = this.ofType(v, DATATYPE.CHAR);
@@ -154,7 +154,7 @@ public class WriteCMemoryAllocation extends BaseMemoryAllocation {
     }
     return _xifexpression;
   }
-  
+
   public CharSequence resestDispatch(final AbstractVariable v, final boolean isVariableInit) {
     if (v instanceof CodeGenVariable) {
       return _resestDispatch((CodeGenVariable)v, isVariableInit);
