@@ -219,7 +219,7 @@ Prints out the entire program when target system is unspecified.
 				System.err.println(result.printParseErrors());
 				return null;
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("IOException : " + e.getMessage());
 		}

@@ -178,6 +178,7 @@ public class BaseMakefile {
     _builder.append(name, "\t");
     _builder.append(".check $(OBJS) $(CFLAGS) $(LIBRARIES) -D");
     _builder.append(CodeGenConstantsForC.CHECKING_FLAG, "\t");
+    _builder.append(" -DRANDOM");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     {

@@ -20,12 +20,16 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.polymodel.AbstractRelation;
 import org.polymodel.DimensionsManager;
 import org.polymodel.DomainDimensions;
+import org.polymodel.Function;
+import org.polymodel.Relation;
 import org.polymodel.algebra.IntConstraintSystem;
 import org.polymodel.algebra.IntExpression;
 import org.polymodel.algebra.Variable;
 import org.polymodel.algebra.factory.IntExpressionBuilder;
 import org.polymodel.algebra.reductions.ReductionExpression;
 import org.polymodel.factory.PolymodelComponent;
+import org.polymodel.isl.ISLFunction;
+import org.polymodel.isl.ISLMap;
 import org.polymodel.isl.ISLSet;
 import org.polymodel.polyhedralIR.AffineFunction;
 import org.polymodel.polyhedralIR.Domain;
@@ -206,6 +210,12 @@ public class DomainImpl extends EObjectImpl implements Domain {
 				newDomain.setPMdomain(PolyhedralIRUtility.parseDomain(this.getParamNames(), "{|}").getPMdomain());
 			return newDomain;
 		}
+		
+		ISLFunction f = (ISLFunction) T.getPMmapping();
+		ISLMap r = f.buildRelation(manager);
+		
+		ISLSet d = (ISLSet) this.getPMdomain();
+		ISLSet image = d.image(r);
 		
 		newDomain.setPMdomain(this.getPMdomain().image(T.getPMmapping().buildRelation(manager)));
 		assert(newDomain.getPMdomain() != null);

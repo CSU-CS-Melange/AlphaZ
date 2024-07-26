@@ -191,7 +191,8 @@ public class ISLSetImpl extends DomainImpl implements ISLSet {
 	protected IntConstraintSystem[] applyImage(DomainDimensions dims, AbstractRelation relation) {
 		JNIISLSet set = getJNIset();
 		JNIISLMap map = ISLNativeBinder.jniIslMapNoString(relation);
-		JNIISLSet image = set.apply(map);
+		JNIISLSet image_div = set.apply(map);
+		JNIISLSet image = image_div.removeDivs();
 		//code below is specialized version of buildPolyhedra for operations involving relations
 		List<JNIISLBasicSet> basicSets = image.getBasicSets();
 		IntConstraintSystem polyhedra[] = new IntConstraintSystem[basicSets.size()];

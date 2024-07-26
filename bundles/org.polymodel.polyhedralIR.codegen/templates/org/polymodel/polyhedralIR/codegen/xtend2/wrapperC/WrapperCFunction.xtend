@@ -238,14 +238,21 @@ class WrapperCFunction extends BaseFunction {
 		«var macroIndex = b.specialVar.varDecl.domain.macroIndices»
 		«var macroIndexB = b.specialVar.varDecl.domain.indices.join(",", [e|"(long) "+e.toString])»  
 		«var macroName = b.statements.get(0).name»
+		«val varAcc = b.specialVar.varDecl.varAccess(accessIndex, false)»
+		«IF varAcc.toString == 'W(i)'»
+		{
+			// special handling for weights
+			«b.userInput(macroName, macroIndexB, macroIndex, accessIndex)»
+		«ELSE»
 		{
 			#if defined («RANDOM_FLAG»)
-				#define «macroName»(«macroIndex») («b.specialVar.varDecl.varAccess(accessIndex, false)» = rand()) 
+				#define «macroName»(«macroIndex») («varAcc» = rand()) 
 			#elif defined («CHECKING_FLAG») || defined («VERIFY_FLAG»)
 				«b.userInput(macroName, macroIndexB, macroIndex, accessIndex)»
 			#else
 				#define «macroName»(«macroIndex») («b.specialVar.varDecl.varAccess(macroIndex, false)» = 1)   //Default value
 			#endif
+		«ENDIF»
 			
 			
 			«b.generateLoopNest»
@@ -288,12 +295,13 @@ class WrapperCFunction extends BaseFunction {
 //			'''printf("«v.name»=");'''
 //		}
 //	}
-		
+		//«val specifier = b.specialVar.varDecl.type.CPrintfSpecifier»
 	def protected printOutput(OutputPrinting b) '''
 		«var accessIndex = b.specialVar.getMemoryAccessExpressions.join(",", [e|e.toString])»
 		«var accessIndexWithoutTime = "0,"+b.specialVar.getMemoryAccessExpressions.filter[e|!e.toString.equals("t")].join(",", [e|e.toString])»
 		«var macroIndex = b.specialVar.varDecl.domain.macroIndices»
 		«var macroIndexWithoutTime = b.specialVar.varDecl.domain.indices.getMacroIndicesExceptTime»
+		«val specifier = '%E'»
 
 		«var macroIndexB = b.specialVar.varDecl.domain.indices.join(",", [e|"(long) "+e.toString])»
 		«var macroIndexBWithoutTime = "(long) 0,"+b.specialVar.varDecl.domain.indices.filter[e|!e.toString.equals("t")].join(",", [e|"(long) "+e.toString])»
@@ -302,7 +310,7 @@ class WrapperCFunction extends BaseFunction {
 			#ifdef «NO_PROMT_FLAG»
 				#define «macroName»(«macroIndex») printf("«b.specialVar.varDecl.type.CPrintfSpecifier»\n",var_«b.specialVar.varDecl.varAccess(accessIndex, true)»)
 			#else
-				#define «macroName»(«macroIndex») «b.specialVar.varDecl.printIndex(macroIndexB)»printf("«b.specialVar.varDecl.type.CPrintfSpecifier»\n",var_«b.specialVar.varDecl.varAccess(accessIndex, true)»)
+				#define «macroName»(«macroIndex») «b.specialVar.varDecl.printIndex(macroIndexB)»printf("«specifier»\n",var_«b.specialVar.varDecl.varAccess(accessIndex, true)»)
 			#endif
 			«b.generateLoopNest»
 			#undef «macroName»
