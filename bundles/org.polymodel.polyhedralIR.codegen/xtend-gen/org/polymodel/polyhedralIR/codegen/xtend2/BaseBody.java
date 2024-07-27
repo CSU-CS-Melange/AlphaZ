@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import java.util.Arrays;
-import java.util.HashMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -27,9 +26,6 @@ import org.polymodel.polyhedralIR.polyIRCG.UnpackStruct;
 import org.polymodel.polyhedralIR.polyIRCG.VariableFinalization;
 import org.polymodel.polyhedralIR.polyIRCG.VariableInitialization;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForC;
-import org.polymodel.scop.ScopRoot;
-import org.polymodel.scop.cgenerator2.CGenerator;
-import org.polymodel.scop.cgenerator2.MacroBodyProvider;
 
 @SuppressWarnings("all")
 public class BaseBody {
@@ -58,7 +54,7 @@ public class BaseBody {
     _builder.append("///Parameter checking");
     _builder.newLine();
     _builder.append("if (!(");
-    CharSequence _printConstraints = this.domainExtensions.printConstraints(body.getParameterDomain());
+    Object _printConstraints = this.domainExtensions.printConstraints(body.getParameterDomain());
     _builder.append(_printConstraints);
     _builder.append(")) {");
     _builder.newLineIfNotEmpty();
@@ -245,38 +241,12 @@ public class BaseBody {
   }
 
   public CharSequence generateLoopNest(final Loop l) {
-    StringConcatenation _builder = new StringConcatenation();
-    final ScopRoot scop = l.generateScop();
-    _builder.newLineIfNotEmpty();
-    {
-      if ((l.isDeclareIterators() && (l.getIteratorNames().size() > 0))) {
-        _builder.append("int ");
-        final Function1<String, CharSequence> _function = (String n) -> {
-          return n;
-        };
-        String _join = IterableExtensions.<String>join(l.getIteratorNames(), ",", _function);
-        _builder.append(_join);
-        _builder.append(";");
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    HashMap<String, MacroBodyProvider> stmtBody = new HashMap<String, MacroBodyProvider>();
-    _builder.newLineIfNotEmpty();
-    {
-      final Function1<Statement, Boolean> _function_1 = (Statement s) -> {
-        return Boolean.valueOf(s.isInlined());
-      };
-      Iterable<Statement> _filter = IterableExtensions.<Statement>filter(l.getStatements(), _function_1);
-      for(final Statement s : _filter) {
-        MacroBodyProvider _put = stmtBody.put(s.getName(), s.getMacroBodyProvider());
-        _builder.append(_put);
-        _builder.newLineIfNotEmpty();
-      }
-    }
-    String _generate = CGenerator.generate(scop, stmtBody);
-    _builder.append(_generate);
-    _builder.newLineIfNotEmpty();
-    return _builder;
+    throw new Error("Unresolved compilation problems:"
+      + "\nMacroBodyProvider cannot be resolved to a type."
+      + "\nThe method or field generateScop is undefined for the type Loop"
+      + "\nThe method or field macroBodyProvider is undefined for the type Statement"
+      + "\nCGenerator cannot be resolved to a type."
+      + "\ngenerate cannot be resolved");
   }
 
   public CharSequence name(final StructManagement psm) {

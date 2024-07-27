@@ -1,6 +1,5 @@
 package org.polymodel.polyhedralIR.codegen.xtend2;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import org.eclipse.emf.common.util.EList;
@@ -8,16 +7,9 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.polymodel.Domain;
-import org.polymodel.algebra.Variable;
-import org.polymodel.polyhedralIR.WhileInfo;
-import org.polymodel.polyhedralIR.factory.PolyhedralIRUserFactory;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
-import org.polymodel.polyhedralIR.polyIRCG.Body;
-import org.polymodel.polyhedralIR.polyIRCG.FlagVariableReset;
 import org.polymodel.polyhedralIR.polyIRCG.Function;
 import org.polymodel.polyhedralIR.polyIRCG.FunctionSignature;
-import org.polymodel.polyhedralIR.polyIRCG.Loop;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForC;
 
 @SuppressWarnings("all")
@@ -126,117 +118,11 @@ public class BaseFunction {
   }
 
   public CharSequence functionBody(final Function func) {
-    CharSequence _xblockexpression = null;
-    {
-      StateOfLoop state = new StateOfLoop(true, false);
-      WhileInfo _whileInfo = func.getCodeunit().getSystem().getWhileInfo();
-      boolean isWhile = (!Objects.equal(_whileInfo, null));
-      String timeIndexName = "";
-      if (isWhile) {
-        timeIndexName = func.getCodeunit().getSystem().getWhileInfo().getTimeDomain().getIndexNames().get(0);
-      }
-      Domain _xifexpression = null;
-      if (isWhile) {
-        _xifexpression = func.getCodeunit().getSystem().getWhileInfo().getTimeDomain().getPMdomain().<Domain>lexMin();
-      }
-      Domain lexMinD = _xifexpression;
-      org.polymodel.polyhedralIR.Domain _xifexpression_1 = null;
-      if (isWhile) {
-        _xifexpression_1 = PolyhedralIRUserFactory.eINSTANCE.createDomain(lexMinD);
-      }
-      org.polymodel.polyhedralIR.Domain lexMinPolyIRD = _xifexpression_1;
-      String _xifexpression_2 = null;
-      if (isWhile) {
-        _xifexpression_2 = lexMinPolyIRD.getLowerBound(0).toString();
-      }
-      String lexminOfTime = _xifexpression_2;
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        EList<Body> _bodies = func.getBodies();
-        for(final Body body : _bodies) {
-          {
-            if ((((isWhile && func.isEntryPoint()) && ((body instanceof Loop) || (body instanceof FlagVariableReset))) && (state.isFirstLoop() == true))) {
-              _builder.append("// infinite time loop with index ");
-              _builder.append(timeIndexName);
-              _builder.newLineIfNotEmpty();
-              _builder.append("int ");
-              _builder.append(timeIndexName);
-              _builder.append(";");
-              _builder.newLineIfNotEmpty();
-              _builder.append("for (");
-              _builder.append(timeIndexName);
-              _builder.append("=");
-              _builder.append(lexminOfTime);
-              _builder.append("; ; ");
-              _builder.append(timeIndexName);
-              _builder.append("++) {\t");
-              _builder.newLineIfNotEmpty();
-            }
-          }
-          {
-            if (((((isWhile && func.isEntryPoint()) && (!((body instanceof Loop) || (body instanceof FlagVariableReset)))) && (state.isFirstLoop() == false)) && (state.isLastLoop() == false))) {
-              _builder.append("// Evaluate condition ");
-              _builder.newLine();
-              _builder.append("\t");
-              _builder.append("if (");
-              _builder.append(timeIndexName, "\t");
-              _builder.append(">=(");
-              _builder.append(lexminOfTime, "\t");
-              _builder.append(")+(");
-              String _numberOfTimeIterationsForFirstConditionCheck = func.getNumberOfTimeIterationsForFirstConditionCheck();
-              _builder.append(_numberOfTimeIterationsForFirstConditionCheck, "\t");
-              _builder.append(")-1) { ");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t\t");
-              _builder.append("eval_isCond(");
-              final Function1<Variable, CharSequence> _function = (Variable v) -> {
-                return v.getName();
-              };
-              String _join = IterableExtensions.<Variable>join(func.getCodeunit().getSystem().getParameters().getParams(), ", ", _function);
-              _builder.append(_join, "\t\t");
-              _builder.append(", ");
-              _builder.append(timeIndexName, "\t\t");
-              _builder.append(");");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t\t");
-              _builder.append("if (isCond(");
-              _builder.append(timeIndexName, "\t\t");
-              _builder.append(") == false) {");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t\t\t");
-              _builder.append("printf(\"Breaking time: %d\\n\", ");
-              _builder.append(timeIndexName, "\t\t\t");
-              _builder.append(");");
-              _builder.newLineIfNotEmpty();
-              _builder.append("\t\t\t");
-              _builder.append("break;");
-              _builder.newLine();
-              _builder.append("\t\t");
-              _builder.append("}\t");
-              _builder.newLine();
-              _builder.append("\t");
-              _builder.append("}");
-              _builder.newLine();
-              _builder.append("}");
-              _builder.newLine();
-              _builder.append("\t\t\t\t");
-              state.setLastLoop(true);
-              _builder.newLineIfNotEmpty();
-            }
-          }
-          CharSequence _code = this.extensions.code(body);
-          _builder.append(_code);
-          _builder.newLineIfNotEmpty();
-          {
-            if ((((isWhile && func.isEntryPoint()) && ((body instanceof Loop) || (body instanceof FlagVariableReset))) && (state.isFirstLoop() == true))) {
-              state.setFirstLoop(false);
-              _builder.newLineIfNotEmpty();
-            }
-          }
-        }
-      }
-      _xblockexpression = _builder;
-    }
-    return _xblockexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method getLowerBound(int) is undefined for the type Domain"
+      + "\nThe method or field params is undefined for the type ParameterDomain"
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\ntoString cannot be resolved"
+      + "\njoin cannot be resolved");
   }
 }

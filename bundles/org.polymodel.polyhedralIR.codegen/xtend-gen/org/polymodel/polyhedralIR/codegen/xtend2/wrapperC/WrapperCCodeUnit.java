@@ -4,15 +4,11 @@ import com.google.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.polymodel.algebra.affine.AffineExpression;
 import org.polymodel.polyhedralIR.AffineFunction;
 import org.polymodel.polyhedralIR.VariableDeclaration;
 import org.polymodel.polyhedralIR.codegen.xtend2.BaseCodeUnit;
 import org.polymodel.polyhedralIR.codegen.xtend2.BaseIndices;
 import org.polymodel.polyhedralIR.codegen.xtend2.BaseMemoryAccess;
-import org.polymodel.polyhedralIR.codegen.xtend2.Utility;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.CodeGenVariable;
 import org.polymodel.polyhedralIR.polyIRCG.CodeUnit;
@@ -165,24 +161,11 @@ public class WrapperCCodeUnit extends BaseCodeUnit {
   }
 
   protected CharSequence iterToMemSpace(final AffineFunction f) {
-    CharSequence _xifexpression = null;
-    int _dimRHS = f.getDimRHS();
-    boolean _equals = (_dimRHS == 0);
-    if (_equals) {
-      StringConcatenation _builder = new StringConcatenation();
-      _xifexpression = _builder;
-    } else {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("(");
-      final Function1<AffineExpression, CharSequence> _function = (AffineExpression e) -> {
-        return Utility.toCString(e);
-      };
-      String _join = IterableExtensions.<AffineExpression>join(f.getExpressions(), ",", _function);
-      _builder_1.append(_join);
-      _builder_1.append(")");
-      _xifexpression = _builder_1;
-    }
-    return _xifexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field expressions is undefined for the type AffineFunction"
+      + "\nType mismatch: cannot convert from Object to PolymodelVisitable"
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\njoin cannot be resolved");
   }
 
   @Override

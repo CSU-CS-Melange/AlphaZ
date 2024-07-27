@@ -1,23 +1,11 @@
 package org.polymodel.polyhedralIR.codegen.xtend2.MPIC;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.Iterables;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.polymodel.algebra.IntExpression;
-import org.polymodel.algebra.Variable;
-import org.polymodel.algebra.factory.IntExpressionBuilder;
-import org.polymodel.algebra.reductions.ReductionExpression;
 import org.polymodel.polyhedralIR.AffineSystem;
-import org.polymodel.polyhedralIR.Domain;
-import org.polymodel.polyhedralIR.VariableDeclaration;
 import org.polymodel.polyhedralIR.codegen.xtend2.BaseFunction;
-import org.polymodel.polyhedralIR.codegen.xtend2.Indexed;
-import org.polymodel.polyhedralIR.codegen.xtend2.Utility;
 import org.polymodel.polyhedralIR.polyIRCG.Function;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForDistributed;
 import org.polymodel.polyhedralIR.polyIRCG.generator.C.CodeGenConstantsForTiling;
-import org.polymodel.polyhedralIR.transformation.helper.DomainOperations;
 
 @SuppressWarnings("all")
 public class MPICFunction extends BaseFunction {
@@ -134,47 +122,21 @@ public class MPICFunction extends BaseFunction {
   }
 
   public String generateNumberOfTilesComputation(final AffineSystem system) {
-    Domain udom = null;
-    EList<VariableDeclaration> _locals = system.getLocals();
-    EList<VariableDeclaration> _outputs = system.getOutputs();
-    Iterable<VariableDeclaration> _plus = Iterables.<VariableDeclaration>concat(_locals, _outputs);
-    for (final VariableDeclaration v : _plus) {
-      boolean _equals = Objects.equal(udom, null);
-      if (_equals) {
-        udom = v.getDomain().copy();
-      } else {
-        udom = udom.union(v.getDomain());
-      }
-    }
-    final EList<Integer> orderingDim = system.getTargetMapping().getSpaceTimeLevel(0).getOrderingDimensions();
-    udom = DomainOperations.removeOrderingDimensions(udom, orderingDim);
-    udom.simplify();
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("//number of tiles");
-    String res = _builder.toString();
-    Iterable<Indexed<Variable>> _indexed = Indexed.<Variable>indexed(udom.getIndices());
-    for (final Indexed<Variable> i : _indexed) {
-      {
-        final EList<IntExpression> lbub = udom.getBounds(i.getIndex0());
-        final ReductionExpression size = IntExpressionBuilder.sum(IntExpressionBuilder.sub(lbub.get(1), lbub.get(0)), IntExpressionBuilder.constant(1));
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append(res);
-        _builder_1.newLineIfNotEmpty();
-        _builder_1.append("int ");
-        _builder_1.append(CodeGenConstantsForDistributed.numTilesPrefix);
-        int _index1 = i.getIndex1();
-        _builder_1.append(_index1);
-        _builder_1.append(" = ceild(");
-        String _cString = Utility.toCString(size);
-        _builder_1.append(_cString);
-        _builder_1.append(", ");
-        String _tileSizeName = CodeGenConstantsForTiling.getTileSizeName(i.getIndex1());
-        _builder_1.append(_tileSizeName);
-        _builder_1.append(");");
-        _builder_1.newLineIfNotEmpty();
-        res = _builder_1.toString();
-      }
-    }
-    return res;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field indices is undefined for the type Domain"
+      + "\nThe method getBounds(Object) is undefined for the type Domain"
+      + "\nIntExpressionBuilder cannot be resolved to a type."
+      + "\nIntExpressionBuilder cannot be resolved to a type."
+      + "\nIntExpressionBuilder cannot be resolved to a type."
+      + "\nindexed cannot be resolved"
+      + "\nindex0 cannot be resolved"
+      + "\nsum cannot be resolved"
+      + "\nsub cannot be resolved"
+      + "\nget cannot be resolved"
+      + "\nget cannot be resolved"
+      + "\nconstant cannot be resolved"
+      + "\nindex1 cannot be resolved"
+      + "\ntoCString cannot be resolved"
+      + "\nindex1 cannot be resolved");
   }
 }

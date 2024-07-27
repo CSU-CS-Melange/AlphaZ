@@ -5,9 +5,6 @@ import com.google.inject.Inject;
 import java.util.Arrays;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Extension;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.polymodel.algebra.IntExpression;
 import org.polymodel.polyhedralIR.WhileInfo;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
 import org.polymodel.polyhedralIR.polyIRCG.BasicVariable;
@@ -70,19 +67,11 @@ public class BaseMemoryAccess {
   }
 
   protected CharSequence _arrayIndexing(final CodeGenVariable v) {
-    CharSequence _xifexpression = null;
-    boolean _isScalar = Utility.isScalar(v);
-    boolean _not = (!_isScalar);
-    if (_not) {
-      StringConcatenation _builder = new StringConcatenation();
-      final Function1<IntExpression, CharSequence> _function = (IntExpression e) -> {
-        return Utility.toCString(e);
-      };
-      String _join = IterableExtensions.<IntExpression>join(v.getAccessExpression().getAccessExpressions(), "[", "][", "]", _function);
-      _builder.append(_join);
-      _xifexpression = _builder;
-    }
-    return _xifexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field accessExpressions is undefined for the type MemoryAccessExpression"
+      + "\nType mismatch: cannot convert from Object to PolymodelVisitable"
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\njoin cannot be resolved");
   }
 
   protected CharSequence _memoryMacroUndef(final BasicVariable v) {

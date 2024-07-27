@@ -3,9 +3,6 @@ package org.polymodel.polyhedralIR.codegen.xtend2;
 import java.util.Arrays;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.polymodel.algebra.Variable;
 import org.polymodel.polyhedralIR.AffineFunction;
 import org.polymodel.polyhedralIR.Domain;
 import org.polymodel.polyhedralIR.VariableDeclaration;
@@ -20,55 +17,40 @@ public class BaseIndices {
   }
 
   protected CharSequence _getMacroIndices(final CodeGenVariable v) {
-    return this.getMacroIndicesL(v.getDomain().getIndices());
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field indices is undefined for the type MemoryDomain"
+      + "\ngetMacroIndicesL cannot be resolved");
   }
 
   public CharSequence getMacroIndices(final Domain dom) {
-    return this.getMacroIndicesL(dom.getIndices());
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field indices is undefined for the type Domain"
+      + "\ngetMacroIndicesL cannot be resolved");
   }
 
   public CharSequence getMacroIndices(final AffineFunction func) {
-    return this.getMacroIndicesL(func.getIndices());
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field indices is undefined for the type AffineFunction"
+      + "\ngetMacroIndicesL cannot be resolved");
   }
 
   public CharSequence getMacroIndices(final VariableDeclaration v) {
-    return this.getMacroIndicesL(v.getDomain().getIndices());
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field indices is undefined for the type Domain"
+      + "\ngetMacroIndicesL cannot be resolved");
   }
 
-  public CharSequence getMacroIndicesL(final List<Variable> indices) {
-    CharSequence _xifexpression = null;
-    int _size = indices.size();
-    boolean _greaterThan = (_size > 0);
-    if (_greaterThan) {
-      StringConcatenation _builder = new StringConcatenation();
-      final Function1<Variable, CharSequence> _function = (Variable i) -> {
-        return i.toString();
-      };
-      String _join = IterableExtensions.<Variable>join(indices, ",", _function);
-      _builder.append(_join);
-      _xifexpression = _builder;
-    }
-    return _xifexpression;
+  public CharSequence getMacroIndicesL(final /* List<Variable> */Object indices) {
+    throw new Error("Unresolved compilation problems:"
+      + "\ntoString cannot be resolved");
   }
 
-  public CharSequence getMacroIndicesExceptTime(final List<Variable> indices) {
-    CharSequence _xifexpression = null;
-    int _size = indices.size();
-    boolean _greaterThan = (_size > 1);
-    if (_greaterThan) {
-      StringConcatenation _builder = new StringConcatenation();
-      final Function1<Variable, Boolean> _function = (Variable i) -> {
-        boolean _equals = i.toString().equals("t");
-        return Boolean.valueOf((!_equals));
-      };
-      final Function1<Variable, CharSequence> _function_1 = (Variable i) -> {
-        return i.toString();
-      };
-      String _join = IterableExtensions.<Variable>join(IterableExtensions.<Variable>filter(indices, _function), ",", _function_1);
-      _builder.append(_join);
-      _xifexpression = _builder;
-    }
-    return _xifexpression;
+  public CharSequence getMacroIndicesExceptTime(final /* List<Variable> */Object indices) {
+    throw new Error("Unresolved compilation problems:"
+      + "\ntoString cannot be resolved"
+      + "\nequals cannot be resolved"
+      + "\n! cannot be resolved"
+      + "\ntoString cannot be resolved");
   }
 
   public CharSequence getMacroIndices(final AbstractVariable v) {

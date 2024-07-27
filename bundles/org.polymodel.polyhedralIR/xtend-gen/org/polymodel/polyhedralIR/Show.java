@@ -1,16 +1,11 @@
 package org.polymodel.polyhedralIR;
 
-import com.google.common.collect.Iterables;
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.polymodel.algebra.IntConstraintSystem;
-import org.polymodel.algebra.Variable;
-import org.polymodel.algebra.prettyprinter.algebra.OUTPUT_FORMAT;
 
 @SuppressWarnings("all")
 public class Show {
@@ -148,51 +143,32 @@ public class Show {
   }
 
   protected CharSequence _print(final Domain o, final boolean simplify) {
-    StringConcatenation _builder = new StringConcatenation();
-    final Function1<Variable, CharSequence> _function = (Variable i) -> {
-      return i.getName();
-    };
-    final String indices = IterableExtensions.<Variable>join(o.getIndices(), ",", _function);
-    _builder.newLineIfNotEmpty();
-    CharSequence _print = this.print(ShowUtility.simplifyDomain(o, simplify), indices);
-    _builder.append(_print);
-    _builder.newLineIfNotEmpty();
-    return _builder;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field indices is undefined for the type Domain"
+      + "\nThe method or field name is undefined for the type Object"
+      + "\nThe method simplifyDomain(Domain, boolean) is undefined"
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\njoin cannot be resolved"
+      + "\nprint cannot be resolved");
   }
 
   protected CharSequence _print(final ParameterDomain o, final boolean simplify) {
-    StringConcatenation _builder = new StringConcatenation();
-    EList<Variable> _params = o.getParams();
-    EList<Variable> _indices = o.getIndices();
-    final Function1<Variable, CharSequence> _function = (Variable i) -> {
-      return i.getName();
-    };
-    final String indices = IterableExtensions.<Variable>join(Iterables.<Variable>concat(_params, _indices), ",", _function);
-    _builder.newLineIfNotEmpty();
-    CharSequence _print = this.print(o.getPMdomain().getPolyhedra(), indices);
-    _builder.append(_print);
-    _builder.newLineIfNotEmpty();
-    return _builder;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field params is undefined for the type ParameterDomain"
+      + "\nThe method or field indices is undefined for the type ParameterDomain"
+      + "\nThe method or field name is undefined for the type Object"
+      + "\nThe method or field polyhedra is undefined for the type Domain"
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\n+ cannot be resolved"
+      + "\njoin cannot be resolved"
+      + "\nprint cannot be resolved");
   }
 
-  protected CharSequence print(final List<IntConstraintSystem> ics, final String indices) {
-    CharSequence _xifexpression = null;
-    boolean _isEmpty = ics.isEmpty();
-    if (_isEmpty) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("{");
-      _builder.append(indices);
-      _builder.append("|}");
-      _xifexpression = _builder;
-    } else {
-      final Function1<IntConstraintSystem, CharSequence> _function = (IntConstraintSystem i) -> {
-        String _string = i.toString(OUTPUT_FORMAT.ALPHABETS);
-        String _plus = ((("{" + indices) + "|") + _string);
-        return (_plus + "}");
-      };
-      _xifexpression = IterableExtensions.<IntConstraintSystem>join(ics, " || ", _function);
-    }
-    return _xifexpression;
+  protected CharSequence print(final /* List<IntConstraintSystem> */Object ics, final String indices) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nOUTPUT_FORMAT cannot be resolved to a type."
+      + "\ntoString cannot be resolved"
+      + "\nALPHABETS cannot be resolved");
   }
 
   protected CharSequence _print(final VariableDeclaration o, final boolean simplify) {

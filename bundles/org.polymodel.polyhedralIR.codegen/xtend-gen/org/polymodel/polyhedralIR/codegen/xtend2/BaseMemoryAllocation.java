@@ -3,12 +3,10 @@ package org.polymodel.polyhedralIR.codegen.xtend2;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.Arrays;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.polymodel.algebra.Variable;
 import org.polymodel.polyhedralIR.DATATYPE;
 import org.polymodel.polyhedralIR.Type;
 import org.polymodel.polyhedralIR.polyIRCG.AbstractVariable;
@@ -296,67 +294,15 @@ public class BaseMemoryAllocation {
   }
 
   public CharSequence mallocLinearlized(final CodeGenVariable v, final String varNamePostfix) {
-    CharSequence _xblockexpression = null;
-    {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append(CodeGenConstantsForC.LINEARIZED_ARRAY_PREFIX);
-      String _name = v.getName();
-      _builder.append(_name);
-      _builder.append(varNamePostfix);
-      String varName = _builder.toString();
-      StringConcatenation _builder_1 = new StringConcatenation();
-      String _cName = v.getType().getCName();
-      _builder_1.append(_cName);
-      _builder_1.append("* ");
-      String typeDecl = _builder_1.toString();
-      String vol = Utility.toCString(v.getVolumeExpression(0, v.getDomain().getNIndices()));
-      StringConcatenation _builder_2 = new StringConcatenation();
-      CharSequence _malloc = this.malloc(typeDecl, varName, v.getType().getCName(), vol, v.isAligned());
-      _builder_2.append(_malloc);
-      _builder_2.newLineIfNotEmpty();
-      {
-        boolean _isMDallocation = Utility.isMDallocation(v);
-        if (_isMDallocation) {
-          CharSequence _mallocMD = this.mallocMD(v, varNamePostfix);
-          _builder_2.append(_mallocMD);
-        }
-      }
-      _builder_2.newLineIfNotEmpty();
-      _xblockexpression = _builder_2;
-    }
-    return _xblockexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method getVolumeExpression(int, int) is undefined for the type CodeGenVariable"
+      + "\ntoCString cannot be resolved");
   }
 
   public CharSequence malloc1D(final CodeGenVariable v, final String varNamePostfix) {
-    CharSequence _xblockexpression = null;
-    {
-      StringConcatenation _builder = new StringConcatenation();
-      String _name = v.getName();
-      _builder.append(_name);
-      _builder.append(varNamePostfix);
-      String varName = _builder.toString();
-      String _xifexpression = null;
-      boolean _isGlobal = v.isGlobal();
-      boolean _not = (!_isGlobal);
-      if (_not) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        String _pointerType = v.getPointerType();
-        _builder_1.append(_pointerType);
-        _builder_1.append(" ");
-        _xifexpression = _builder_1.toString();
-      } else {
-        StringConcatenation _builder_2 = new StringConcatenation();
-        _xifexpression = _builder_2.toString();
-      }
-      String typeDecl = _xifexpression;
-      String vol = Utility.toCString(v.getVolumeExpression(0, v.getDomain().getNIndices()));
-      StringConcatenation _builder_3 = new StringConcatenation();
-      CharSequence _malloc = this.malloc(typeDecl, varName, v.getType().getCName(), vol, v.isAligned());
-      _builder_3.append(_malloc);
-      _builder_3.newLineIfNotEmpty();
-      _xblockexpression = _builder_3;
-    }
-    return _xblockexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method getVolumeExpression(int, int) is undefined for the type CodeGenVariable"
+      + "\ntoCString cannot be resolved");
   }
 
   protected CharSequence variableDeclaration(final CharSequence varDecl, final CharSequence varName) {
@@ -414,106 +360,17 @@ public class BaseMemoryAllocation {
   }
 
   private CharSequence mallocMD(final CodeGenVariable v, final String varNamePostfix) {
-    CharSequence _xblockexpression = null;
-    {
-      int _nIndices = v.getDomain().getNIndices();
-      boolean _lessThan = (_nIndices < 2);
-      if (_lessThan) {
-        throw new RuntimeException("Variables with 1D or less should not be allocated as MD arrays.");
-      }
-      String _xifexpression = null;
-      boolean _isGlobal = v.isGlobal();
-      boolean _not = (!_isGlobal);
-      if (_not) {
-        StringConcatenation _builder = new StringConcatenation();
-        String _pointerType = v.getPointerType();
-        _builder.append(_pointerType);
-        _builder.append(" ");
-        _xifexpression = _builder.toString();
-      } else {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _xifexpression = _builder_1.toString();
-      }
-      String typeDecl = _xifexpression;
-      int _nIndices_1 = v.getDomain().getNIndices();
-      int _minus = (_nIndices_1 - 1);
-      CharSequence pointerType = this.getMDPointer(v, _minus);
-      String vol = Utility.toCString(v.getVolumeExpression(0, 1));
-      StringConcatenation _builder_2 = new StringConcatenation();
-      String _name = v.getName();
-      _builder_2.append(_name);
-      _builder_2.append(varNamePostfix);
-      String varName = _builder_2.toString();
-      StringConcatenation _builder_3 = new StringConcatenation();
-      CharSequence _malloc = this.malloc(typeDecl, varName, pointerType, vol, false);
-      _builder_3.append(_malloc);
-      _builder_3.newLineIfNotEmpty();
-      CharSequence _mallocMDrecurse = this.mallocMDrecurse(v, varNamePostfix, 1);
-      _builder_3.append(_mallocMDrecurse);
-      _builder_3.newLineIfNotEmpty();
-      _xblockexpression = _builder_3;
-    }
-    return _xblockexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method getVolumeExpression(int, int) is undefined for the type CodeGenVariable"
+      + "\ntoCString cannot be resolved");
   }
 
   private CharSequence mallocMDrecurse(final CodeGenVariable v, final String varNamePostfix, final int dim) {
-    CharSequence _xblockexpression = null;
-    {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append(CodeGenConstantsForC.MALLOC_LOOP_INDEX);
-      _builder.append(dim);
-      String ite = _builder.toString();
-      String UB = Utility.toCString(v.getVolumeExpression((dim - 1), dim));
-      StringConcatenation _builder_1 = new StringConcatenation();
-      String _name = v.getName();
-      _builder_1.append(_name);
-      _builder_1.append(varNamePostfix);
-      String _mDmallocAccess = this.getMDmallocAccess(dim);
-      _builder_1.append(_mDmallocAccess);
-      String access = _builder_1.toString();
-      int _nIndices = v.getDomain().getNIndices();
-      int _minus = (_nIndices - dim);
-      int _minus_1 = (_minus - 1);
-      CharSequence pointerType = this.getMDPointer(v, _minus_1);
-      String vol = Utility.toCString(v.getVolumeExpression(dim, (dim + 1)));
-      CharSequence accessLin = this.getMallocAccessToLinearized(v, varNamePostfix);
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append("for (");
-      _builder_2.append(ite);
-      _builder_2.append("=0;");
-      _builder_2.append(ite);
-      _builder_2.append(" < ");
-      _builder_2.append(UB);
-      _builder_2.append("; ");
-      _builder_2.append(ite);
-      _builder_2.append("++) {");
-      _builder_2.newLineIfNotEmpty();
-      {
-        int _nIndices_1 = v.getDomain().getNIndices();
-        boolean _lessThan = ((dim + 1) < _nIndices_1);
-        if (_lessThan) {
-          _builder_2.append("\t");
-          CharSequence _malloc = this.malloc(access, pointerType, vol);
-          _builder_2.append(_malloc, "\t");
-          _builder_2.newLineIfNotEmpty();
-          _builder_2.append("\t");
-          CharSequence _mallocMDrecurse = this.mallocMDrecurse(v, varNamePostfix, (dim + 1));
-          _builder_2.append(_mallocMDrecurse, "\t");
-          _builder_2.newLineIfNotEmpty();
-        } else {
-          _builder_2.append("\t");
-          _builder_2.append(access, "\t");
-          _builder_2.append(" = &");
-          _builder_2.append(accessLin, "\t");
-          _builder_2.append(";");
-          _builder_2.newLineIfNotEmpty();
-        }
-      }
-      _builder_2.append("}");
-      _builder_2.newLine();
-      _xblockexpression = _builder_2;
-    }
-    return _xblockexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method getVolumeExpression(int, int) is undefined for the type CodeGenVariable"
+      + "\nThe method getVolumeExpression(int, int) is undefined for the type CodeGenVariable"
+      + "\ntoCString cannot be resolved"
+      + "\ntoCString cannot be resolved");
   }
 
   private String getMDmallocAccess(final int dim) {
@@ -536,36 +393,16 @@ public class BaseMemoryAllocation {
   }
 
   private CharSequence getMallocAccessToLinearized(final CodeGenVariable v, final String varNamePostfix) {
-    CharSequence _xblockexpression = null;
-    {
-      EList<Variable> _indices = v.getDomain().getIndices();
-      int _nIndices = v.getDomain().getNIndices();
-      int _minus = (_nIndices - 1);
-      final Function1<Indexed<Variable>, CharSequence> _function = (Indexed<Variable> e) -> {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("(");
-        _builder.append(CodeGenConstantsForC.MALLOC_LOOP_INDEX);
-        int _index1 = e.getIndex1();
-        _builder.append(_index1);
-        _builder.append("*(");
-        String _cString = Utility.toCString(v.getVolumeExpression(e.getIndex1(), v.getDomain().getNIndices()));
-        _builder.append(_cString);
-        _builder.append("))");
-        return _builder.toString();
-      };
-      String access = IterableExtensions.<Indexed<Variable>>join(Indexed.<Variable>indexed(_indices.subList(0, _minus)), 
-        " + ", _function);
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append(CodeGenConstantsForC.LINEARIZED_ARRAY_PREFIX);
-      String _name = v.getName();
-      _builder.append(_name);
-      _builder.append(varNamePostfix);
-      _builder.append("[");
-      _builder.append(access);
-      _builder.append("]");
-      _xblockexpression = _builder;
-    }
-    return _xblockexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field indices is undefined for the type MemoryDomain"
+      + "\nThe method or field index1 is undefined for the type Object"
+      + "\nThe method getVolumeExpression(Object, int) is undefined for the type CodeGenVariable"
+      + "\nThe method or field index1 is undefined for the type Object"
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\nsubList cannot be resolved"
+      + "\nindexed cannot be resolved"
+      + "\njoin cannot be resolved"
+      + "\ntoCString cannot be resolved");
   }
 
   private CharSequence getMDPointer(final CodeGenVariable v, final int dim) {
@@ -726,51 +563,9 @@ public class BaseMemoryAllocation {
   }
 
   private CharSequence mfreeMDrecurse(final CodeGenVariable v, final String varNamePostfix, final int dim) {
-    CharSequence _xblockexpression = null;
-    {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append(CodeGenConstantsForC.MALLOC_LOOP_INDEX);
-      _builder.append(dim);
-      String ite = _builder.toString();
-      String UB = Utility.toCString(v.getVolumeExpression((dim - 1), dim));
-      StringConcatenation _builder_1 = new StringConcatenation();
-      String _name = v.getName();
-      _builder_1.append(_name);
-      _builder_1.append(varNamePostfix);
-      String _mDmallocAccess = this.getMDmallocAccess(dim);
-      _builder_1.append(_mDmallocAccess);
-      String access = _builder_1.toString();
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append("for (");
-      _builder_2.append(ite);
-      _builder_2.append("=0;");
-      _builder_2.append(ite);
-      _builder_2.append(" < ");
-      _builder_2.append(UB);
-      _builder_2.append("; ");
-      _builder_2.append(ite);
-      _builder_2.append("++) {");
-      _builder_2.newLineIfNotEmpty();
-      {
-        int _nIndices = v.getDomain().getNIndices();
-        boolean _lessThan = ((dim + 2) < _nIndices);
-        if (_lessThan) {
-          _builder_2.append("\t");
-          Object _mfreeMDrecurse = this.mfreeMDrecurse(v, varNamePostfix, (dim + 1));
-          _builder_2.append(_mfreeMDrecurse, "\t");
-          _builder_2.newLineIfNotEmpty();
-        }
-      }
-      _builder_2.append("\t");
-      _builder_2.append("free(");
-      _builder_2.append(access, "\t");
-      _builder_2.append(");");
-      _builder_2.newLineIfNotEmpty();
-      _builder_2.append("}");
-      _builder_2.newLine();
-      _xblockexpression = _builder_2;
-    }
-    return _xblockexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method getVolumeExpression(int, int) is undefined for the type CodeGenVariable"
+      + "\ntoCString cannot be resolved");
   }
 
   public Boolean ofType(final AbstractVariable v, final DATATYPE dt) {
