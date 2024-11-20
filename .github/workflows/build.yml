@@ -104,63 +104,9 @@ jobs:
       run: ./scripts/make-bundle.sh linux-x86
 
 
-  build-bundle-mac-x86:
-    needs: build-plugin
-
-    runs-on: macos-latest
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up java 11
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '11'
-
-    - name: Cache eclipse download
-      id: cache-eclipse-download-mac-x86
-      uses: actions/cache@v3
-      with:
-        path: eclipse-download-mac-x86
-        key: eclipse-download-mac-x86
-
-    - name: Cache alphaz plugin
-      id: cache-plugin
-      uses: actions/cache@v3
-      with:
-        path: ./releng/alphaz.update/target/repository
-        key: cache-plugin
-
-    - name: Cache eclipse bundle mac-x86
-      id: cache-eclipse-mac-x86
-      uses: actions/cache@v3
-      with:
-        path: eclipse-bundle-mac-x86
-        key: cache-eclipse-mac-x86
-
-    - name: Set SHORT_SHA 
-      run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-
-    - name: Build mac x86 bundle
-      env: 
-        BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-        P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-        KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-      run: |
-        echo $BUILD_CERTIFICATE_BASE64 | base64 --decode > certificate.p12
-        security create-keychain -p $KEYCHAIN_PASSWORD build.keychain
-        security default-keychain -s build.keychain
-        security unlock-keychain -p $KEYCHAIN_PASSWORD build.keychain
-        security import certificate.p12 -k build.keychain -P $P12_PASSWORD -T /usr/bin/codesign
-        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $KEYCHAIN_PASSWORD build.keychain > /dev/null
-        ./scripts/make-bundle.sh mac-x86
-
-
   deploy:
     needs: 
     - build-plugin
-    - build-bundle-mac-x86
     - build-bundle-linux-x86
 
     permissions:
