@@ -152,9 +152,6 @@ jobs:
     - name: Move linux-x86 to staging
       run: mv eclipse-bundle-linux-x86/eclipse-alphaz-linux-x86.tar.gz ./releng/alphaz.update/target/repository/downloads/
 
-    - name: Move mac-x86 to staging
-      run: mv eclipse-bundle-mac-x86/eclipse-alphaz-mac-x86.dmg ./releng/alphaz.update/target/repository/downloads/
-
     - name: make update-site readme
       run: ./scripts/make-update-site-readme.sh
  
