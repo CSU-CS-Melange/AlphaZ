@@ -179,9 +179,9 @@ public class MemorySpaceImpl extends EObjectImpl implements MemorySpace {
 
 		for (MemoryMap mmap : getMemoryMaps()) {
 			// we only want the domain of memory map for this variable
-			if (!name.equals(mmap.getVariable().getName())) {
-				continue;
-			}
+//			if (!name.equals(mmap.getVariable().getName())) {
+//				continue;
+//			}
 			AffineFunction inv;
 			try {
 				//inv = tm.getSpaceTimeMap(map.getVariable()).getMapping().inverse();
